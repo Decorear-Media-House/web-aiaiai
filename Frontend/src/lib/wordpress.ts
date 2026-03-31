@@ -1,7 +1,9 @@
 const WP_API_URL =
   process.env.WORDPRESS_API_URL || "http://localhost:8080/wp-json";
 const WP_BASE_URL =
-  process.env.NEXT_PUBLIC_WORDPRESS_URL || "http://localhost:8080";
+  process.env.WORDPRESS_BASE_URL ||
+  process.env.NEXT_PUBLIC_WORDPRESS_URL ||
+  "http://localhost:8080";
 
 /* ------------------------------------------------------------------ */
 /*  WordPress REST API types                                           */
@@ -118,24 +120,31 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
 /*  API functions                                                      */
 /* ------------------------------------------------------------------ */
 
-async function wpFetch<T>(endpoint: string): Promise<T> {
-  const res = await fetch(`${WP_API_URL}${endpoint}`, {
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) throw new Error(`WP API error: ${res.status} ${endpoint}`);
-  return res.json();
+async function wpFetch<T>(endpoint: string, fallback: T): Promise<T> {
+  try {
+    const res = await fetch(`${WP_API_URL}${endpoint}`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) throw new Error(`WP API error: ${res.status} ${endpoint}`);
+    return res.json();
+  } catch (error) {
+    console.warn(`Failed to fetch WordPress endpoint: ${endpoint}`, error);
+    return fallback;
+  }
 }
 
 export async function getPosts(): Promise<BlogPost[]> {
   const posts = await wpFetch<WPPost[]>(
-    "/wp/v2/posts?_embed&per_page=100&orderby=date&order=desc"
+    "/wp/v2/posts?_embed&per_page=100&orderby=date&order=desc",
+    []
   );
   return posts.map(mapWPPostToBlogPost);
 }
 
 export async function getFeaturedPost(): Promise<BlogPost | null> {
   const posts = await wpFetch<WPPost[]>(
-    "/wp/v2/posts?_embed&sticky=true&per_page=1"
+    "/wp/v2/posts?_embed&sticky=true&per_page=1",
+    []
   );
   if (posts.length === 0) return null;
   return mapWPPostToBlogPost(posts[0]);
@@ -143,7 +152,8 @@ export async function getFeaturedPost(): Promise<BlogPost | null> {
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const posts = await wpFetch<WPPost[]>(
-    `/wp/v2/posts?_embed&slug=${encodeURIComponent(slug)}`
+    `/wp/v2/posts?_embed&slug=${encodeURIComponent(slug)}`,
+    []
   );
   if (posts.length === 0) return null;
   return mapWPPostToBlogPost(posts[0]);
@@ -151,7 +161,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
 export async function getCategories(): Promise<string[]> {
   const categories = await wpFetch<WPCategory[]>(
-    "/wp/v2/categories?per_page=100"
+    "/wp/v2/categories?per_page=100",
+    []
   );
   return ["All", ...categories.map((c) => c.name).filter((n) => n !== "Uncategorized")];
 }
@@ -204,12 +215,14 @@ export async function getRelatedPosts(
   limit = 3
 ): Promise<BlogPost[]> {
   const categories = await wpFetch<WPCategory[]>(
-    `/wp/v2/categories?slug=${encodeURIComponent(categorySlug)}`
+    `/wp/v2/categories?slug=${encodeURIComponent(categorySlug)}`,
+    []
   );
   if (categories.length === 0) return [];
 
   const posts = await wpFetch<WPPost[]>(
-    `/wp/v2/posts?_embed&categories=${categories[0].id}&per_page=${limit + 1}`
+    `/wp/v2/posts?_embed&categories=${categories[0].id}&per_page=${limit + 1}`,
+    []
   );
   return posts
     .map(mapWPPostToBlogPost)

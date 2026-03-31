@@ -1,15 +1,19 @@
 services:
   aiaiai-frontend:
+    build:
+      context: ./Frontend
     image: aiaiai-frontend:latest
     container_name: aiaiai-frontend
     restart: unless-stopped
     ports:
       - "3050:3000"
     environment:
-      - WORDPRESS_API_URL=http://aiaiai-wordpress:80/wp-json
-      - NEXT_PUBLIC_WORDPRESS_URL=https://cms-aiaiai.decorear.com
+      WORDPRESS_API_URL: http://aiaiai-wordpress:80/wp-json
+      WORDPRESS_BASE_URL: http://aiaiai-wordpress:80
+      NEXT_PUBLIC_WORDPRESS_URL: http://localhost:8080
     depends_on:
-      - aiaiai-wordpress
+      aiaiai-wordpress:
+        condition: service_healthy
 
   aiaiai-wordpress:
     image: wordpress:6-apache
@@ -22,10 +26,20 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress_password
       WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', 'http://localhost:8080');
+        define('WP_SITEURL', 'http://localhost:8080');
     volumes:
       - wp-content:/var/www/html/wp-content
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     depends_on:
-      - aiaiai-mysql
+      aiaiai-mysql:
+        condition: service_healthy
 
   aiaiai-mysql:
     image: mysql:8.0
@@ -38,6 +52,12 @@ services:
       MYSQL_ROOT_PASSWORD: root_password
     volumes:
       - wp-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uwordpress", "-pwordpress_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
 
 volumes:
   wp-content:

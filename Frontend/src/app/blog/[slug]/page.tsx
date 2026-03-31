@@ -5,6 +5,8 @@ import ArticleHeroSection from "@/components/sections/blog-article/ArticleHeroSe
 import ArticleContentSection from "@/components/sections/blog-article/ArticleContentSection";
 import { getPostBySlug, getRelatedPosts, getRankMathSEO } from "@/lib/wordpress";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
