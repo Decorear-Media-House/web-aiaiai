@@ -21,8 +21,20 @@ Wordpress/index.php
 
 # Node
 node_modules/
+Frontend/.next/
+Frontend/node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 .env
 .env.*
+.vercel/
 
 # Claude
 .claude/image-cache/
