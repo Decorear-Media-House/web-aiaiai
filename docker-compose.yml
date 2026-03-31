@@ -1,0 +1,44 @@
+services:
+  aiaiai-frontend:
+    image: aiaiai-frontend:latest
+    container_name: aiaiai-frontend
+    restart: unless-stopped
+    ports:
+      - "3050:3000"
+    environment:
+      - WORDPRESS_API_URL=http://aiaiai-wordpress:80/wp-json
+      - NEXT_PUBLIC_WORDPRESS_URL=https://cms-aiaiai.decorear.com
+    depends_on:
+      - aiaiai-wordpress
+
+  aiaiai-wordpress:
+    image: wordpress:6-apache
+    container_name: aiaiai-wordpress
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: aiaiai-mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress_password
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp-content:/var/www/html/wp-content
+    depends_on:
+      - aiaiai-mysql
+
+  aiaiai-mysql:
+    image: mysql:8.0
+    container_name: aiaiai-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - wp-db-data:/var/lib/mysql
+
+volumes:
+  wp-content:
+  wp-db-data:

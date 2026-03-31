@@ -1,0 +1,41 @@
+:root {
+  /* Yellow / Brand */
+  --yellow-100: #fef9d0;
+  --yellow-200: #fdf2a0;
+  --yellow-300: #fbe870;
+  --yellow-400: #f8dc3e;
+  --yellow-500: #F1D012;
+  --yellow-600: #c9ad08;
+  --yellow-700: #9e8706;
+  --yellow-800: #726204;
+  --yellow-900: #453b02;
+
+  /* Greys */
+  --grey-50:  #f9f9f9;
+  --grey-100: #f3f3f3;
+  --grey-200: #e8e8e8;
+  --grey-300: #d1d1d1;
+  --grey-400: #b0b0b0;
+  --grey-500: #909090;
+  --grey-600: #6d6d6d;
+  --grey-700: #4f4f4f;
+  --grey-800: #333333;
+  --grey-900: #1a1a1a;
+
+  /* Backgrounds */
+  --bg-primary:   #ffffff;
+  --bg-secondary: #f9f9f9;
+  --bg-dark:      #111111;
+  --bg-card:      #f3f3f3;
+
+  /* Text */
+  --text-primary:   #1a1a1a;
+  --text-secondary: #6d6d6d;
+  --text-inverse:   #ffffff;
+
+  /* Specials */
+  --brand:         var(--yellow-500);
+  --brand-hover:   var(--yellow-600);
+  --border:        var(--grey-200);
+  --border-strong: var(--grey-300);
+}

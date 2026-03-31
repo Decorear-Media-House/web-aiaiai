@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+
+# Playwright MCP logs
+.playwright-mcp/
+
+# WordPress core (track only your custom theme/plugins)
+Wordpress/wp-admin/
+Wordpress/wp-includes/
+Wordpress/wp-content/uploads/
+Wordpress/wp-content/cache/
+Wordpress/wp-content/upgrade/
+Wordpress/wp-content/themes/twenty*/
+Wordpress/wp-content/plugins/*
+!Wordpress/wp-content/plugins/your-custom-plugin/
+Wordpress/wp-*.php
+Wordpress/xmlrpc.php
+Wordpress/license.txt
+Wordpress/readme.html
+Wordpress/index.php
+
+# Node
+node_modules/
+.env
+.env.*
+
+# Claude
+.claude/image-cache/
