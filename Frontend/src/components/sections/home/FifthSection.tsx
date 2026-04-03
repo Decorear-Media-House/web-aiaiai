@@ -2,6 +2,7 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -177,13 +178,35 @@ const IMPACT_CARDS = [
   },
 ] as const;
 
+/* ── Types ────────────────────────────────────────────────────────── */
+
+interface FifthSectionContent {
+  label?: string;
+  heading?: string;
+  description?: string;
+  decorative_image?: string;
+}
+
 /* ── Component ────────────────────────────────────────────────────── */
 
-export default function FifthSection() {
+export default function FifthSection({ content }: { content?: Record<string, unknown> } = {}) {
+  const cms = content as FifthSectionContent | undefined;
+
+  const label = cms?.label ?? "Impact";
+  const heading = cms?.heading ?? "Outcomes We Deliver";
+  const description =
+    cms?.description ??
+    "Every engagement is measured against real business outcomes—not just technical milestones.";
+  const decorativeImage = cms?.decorative_image ? wpImageUrl(cms.decorative_image as string) : "";
+
+  // Split heading into white part + gradient part at last two words
+  const headingWords = heading.split(" ");
+  const gradientPart = headingWords.length > 2 ? headingWords.slice(-2).join(" ") : heading;
+  const whitePart = headingWords.length > 2 ? headingWords.slice(0, -2).join(" ") + " " : "";
   return (
     <section className="relative" style={{ background: "#070E24", overflow: "clip" }}>
 
-      {/* AAA Vector — left screen edge, rotated */}
+      {/* AAA Vector — behind robot, bottom left */}
       <div
         className="pointer-events-none absolute max-lg:hidden"
         style={{
@@ -192,6 +215,7 @@ export default function FifthSection() {
           width: 720,
           height: 720,
           opacity: 0.92,
+          zIndex: 0,
         }}
         aria-hidden="true"
       >
@@ -204,6 +228,29 @@ export default function FifthSection() {
         />
       </div>
 
+      {/* Robot image — bottom left (uploaded via WordPress) */}
+      {decorativeImage && (
+        <div
+          className="pointer-events-none absolute max-lg:hidden"
+          style={{
+            bottom: 0,
+            left: 0,
+            width: 458,
+            height: 573,
+            zIndex: 1,
+          }}
+          aria-hidden="true"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={decorativeImage}
+            alt=""
+            className="w-full h-full"
+            style={{ objectFit: "contain", objectPosition: "bottom left" }}
+          />
+        </div>
+      )}
+
       {/* Decorative blobs */}
       <div className="pointer-events-none absolute" style={{
         width: 400, height: 400, left: 200, top: -80,
@@ -214,12 +261,12 @@ export default function FifthSection() {
         background: "rgba(34,52,254,0.08)", borderRadius: 999, filter: "blur(128px)",
       }} />
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <div className="flex gap-[60px] max-lg:flex-col">
 
-          {/* ── Left sidebar — sticky ── */}
-          <div className="shrink-0 max-lg:w-full" style={{ width: 286 }}>
-            <div className="sticky top-[100px] max-lg:static">
+          {/* ── Left sidebar ── */}
+          <div className="relative shrink-0 max-lg:w-full lg:w-[286px]" style={{ zIndex: 2 }}>
+            <div>
             <FadeUp trigger="scroll" delay={0} className="flex flex-col gap-6">
 
               {/* Label + heading */}
@@ -228,21 +275,21 @@ export default function FifthSection() {
                   style={{ background: "rgba(43,127,255,0.1)", border: "1px solid rgba(43,127,255,0.2)" }}>
                   <AwardIcon />
                   <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", letterSpacing: "0.04em" }}>
-                    Impact
+                    {label}
                   </span>
                 </div>
 
                 <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
-                  <span style={{ color: "#fff" }}>Outcomes{" "}</span>
+                  {whitePart && <span style={{ color: "#fff" }}>{whitePart}</span>}
                   <span style={{
                     backgroundImage: "linear-gradient(90deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                  }}>We Deliver</span>
+                  }}>{gradientPart}</span>
                 </h2>
               </div>
 
               <p style={{ fontFamily: font, fontSize: 15, color: "#8099BE", lineHeight: 1.7 }}>
-                Every engagement is measured against real business outcomes—not just technical milestones.
+                {description}
               </p>
 
               {/* Outcome areas card */}
@@ -275,7 +322,7 @@ export default function FifthSection() {
 
                 {/* Card with gradient glow */}
                 <div
-                  className="flex gap-6 rounded-2xl p-6"
+                  className="flex gap-6 rounded-2xl p-6 max-sm:flex-col max-sm:gap-6"
                   style={{
                     background: `rgba(255,255,255,0.03)`,
                     border: `1px solid ${card.borderColor}`,

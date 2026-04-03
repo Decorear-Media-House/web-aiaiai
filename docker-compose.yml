@@ -31,6 +31,7 @@ services:
         define('WP_SITEURL', 'http://localhost:8080');
     volumes:
       - wp-content:/var/www/html/wp-content
+      - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
       interval: 10s

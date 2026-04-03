@@ -1,6 +1,7 @@
 "use client";
 
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 function SparkleIcon({ color = "#FFA2A2" }: { color?: string }) {
   return (
@@ -12,72 +13,72 @@ function SparkleIcon({ color = "#FFA2A2" }: { color?: string }) {
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/about-mission-bg.jpg
-const BG_IMAGE = "https://www.figma.com/api/mcp/asset/03632a0b-893f-41c2-ba4d-db86236097fb";
+export default function AboutMissionSection({ content }: { content?: Record<string, unknown> }) {
+  const label = (content?.label as string) ?? "Our Mission";
+  const headingWhite1 = (content?.headingWhite1 as string) ?? "We exist to ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "close the gap";
+  const headingWhite2 = (content?.headingWhite2 as string) ?? " between AI ambition and AI in production.";
+  const description = (content?.description as string) ??
+    "Most organizations already see the potential of AI. What they lack is a structured path from idea to operating system—built around their constraints, not a vendor's roadmap.";
+  const bgImage = wpImageUrl((content?.mission_background_image as string) || "/images/about-mission-bg-3ce2d2.png");
+  const bgImageMobile = (content?.mission_background_mobile_image as string) ? wpImageUrl(content!.mission_background_mobile_image as string) : "";
 
-export default function AboutMissionSection() {
   return (
-    <section className="flex min-h-[382px] max-lg:flex-col" style={{ background: "#1A4494" }}>
+    <section className="relative overflow-hidden" style={{ minHeight: 382 }}>
 
-      {/* Left — photo with gradient overlay */}
-      <div className="relative w-1/2 overflow-hidden max-lg:w-full max-lg:min-h-[320px]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={BG_IMAGE}
-          alt="AI partner meeting"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(to left, #1A4494 0%, rgba(26,68,148,0) 60%)" }}
-        />
-      </div>
+      {/* Background image — uses <picture> for desktop/mobile swap */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <picture className="absolute inset-0 w-full h-full">
+        {bgImageMobile && <source media="(max-width: 640px)" srcSet={bgImageMobile} />}
+        <img src={bgImage} alt="" className="w-full h-full object-cover" />
+      </picture>
 
-      {/* Right — text content */}
-      <div className="flex w-1/2 items-center max-lg:w-full" style={{ background: "#1A4494" }}>
-        <div
-          className="flex w-full flex-col gap-6 py-20 pl-10 pr-[112px] max-lg:px-8 max-lg:py-14 max-sm:px-4"
-          style={{ maxWidth: 720 }}
-        >
+      {/* Gradient overlay — dark left, transparent right */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(270deg, rgba(7,17,47,0) 0%, rgba(7,17,47,1) 100%)",
+        }}
+      />
+
+      {/* Content — left aligned */}
+      <div className="relative flex items-center py-10 px-6 sm:py-20 sm:px-[112px] md:mx-auto" style={{ minHeight: 382,maxWidth:1440 }}>
+        <div className="flex flex-col gap-6 max-lg:max-w-full" style={{ maxWidth: 560 }}>
+
           <FadeUp trigger="scroll" delay={0}>
             <div
-              className="inline-flex items-center gap-2 rounded-lg px-4 py-2"
+              className="inline-flex items-center gap-2 rounded-lg px-4 py-2 w-fit"
               style={{
                 background: "rgba(251,44,54,0.1)",
                 border: "1px solid rgba(251,44,54,0.2)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
               }}
             >
-              <SparkleIcon color="#FFA2A2" />
-              <span style={{ fontFamily: font, fontSize: 12, color: "#FFA2A2" }}>Our Mission</span>
+              <SparkleIcon />
+              <span style={{ fontFamily: font, fontSize: 12, color: "#FFA2A2", letterSpacing: "0.04em" }}>
+                {label}
+              </span>
             </div>
           </FadeUp>
 
           <FadeUp trigger="scroll" delay={0.1}>
-            <h2 style={{ fontFamily: font, fontSize: "clamp(24px, 2.5vw, 32px)", fontWeight: 400, lineHeight: 1.3 }}>
-              <span style={{ color: "#fff" }}>Make AI adoption </span>
-              <span
-                style={{
-                  backgroundImage: "linear-gradient(to right, #FF8904, #FF6467)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                practical, outcome-driven,{" "}
-              </span>
-              <span style={{ color: "#fff" }}>and production-ready.</span>
+            <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
+              <span style={{ color: "#fff" }}>{headingWhite1}</span>
+              <span style={{
+                backgroundImage: "linear-gradient(90deg, #FF8904 0%, #FF6467 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>{headingHighlight}</span>
+              <span style={{ color: "#fff" }}>{headingWhite2}</span>
             </h2>
           </FadeUp>
 
           <FadeUp trigger="scroll" delay={0.2}>
-            <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.75 }}>
-              We believe AI should work in the real world — not just in demos. Every engagement
-              we take on is designed to end with a deployed, operating system that your team
-              can run, measure, and grow.
+            <p style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
+              {description}
             </p>
           </FadeUp>
+
         </div>
       </div>
 

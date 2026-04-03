@@ -1,38 +1,66 @@
 "use client";
 
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/robotics/
-const imgHeader6 = "https://www.figma.com/api/mcp/asset/98ddf93d-2056-4400-9c74-902cacbcd44c";
-
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-const STATS = [
+interface HeroContent {
+  chip?: string;
+  heading?: string;
+  description?: string;
+  stats?: { top: string; bottom: string }[];
+  cta_primary?: string;
+  cta_secondary?: string;
+  hero_background_image?: string;
+  background_color?: string;
+}
+
+const DEFAULT_STATS = [
   { top: "Pilot-Ready",  bottom: "Planning"   },
   { top: "SOP-Driven",   bottom: "Operations" },
   { top: "Multi-Site",   bottom: "Scalability" },
 ];
 
-export default function RoboticsHeroSection() {
+export default function RoboticsHeroSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as HeroContent;
+  const chip = c.chip ?? "AI-Enhanced Humanoid Robotics";
+  const heading = c.heading ?? "AI-Enhanced Embodied & Humanoid Robotics Solution";
+  const description = c.description ?? "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, scalable planning, and rollout.";
+  const stats = c.stats ?? DEFAULT_STATS;
+  const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaSecondary = c.cta_secondary ?? "All Services";
+  const bgImage = wpImageUrl((c.hero_background_image as string) || "");
+  const bgColor = c.background_color ?? "#070E24";
   return (
     <section
       style={{
         position: "relative",
         height: 656,
         overflow: "hidden",
-        background: "#070E24",
+        background: bgColor,
       }}
     >
       {/* Background image + gradient overlay */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }} aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgHeader6}
-          alt=""
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+        {bgImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={bgImage}
+            alt=""
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        ) : (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(135deg, #0A1430 0%, #102050 50%, #1A4494 100%)",
+            }}
+          />
+        )}
         <div
           style={{
             position: "absolute",
@@ -102,7 +130,7 @@ export default function RoboticsHeroSection() {
                     <line x1="8.5" y1="11" x2="8.5" y2="13" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round" />
                   </svg>
                   <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                    AI-Enhanced Humanoid Robotics
+                    {chip}
                   </span>
                 </div>
 
@@ -121,12 +149,12 @@ export default function RoboticsHeroSection() {
                     backgroundClip: "text",
                   }}
                 >
-                  AI-Enhanced Embodied &amp; Humanoid Robotics Solution
+                  {heading}
                 </h1>
 
                 {/* Body */}
                 <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center", margin: 0 }}>
-                  Deployment-ready embodied &amp; humanoid robotics with pilot planning, training, SOPs, integration, scalable planning, and rollout.
+                  {description}
                 </p>
               </div>
             </FadeUp>
@@ -134,7 +162,7 @@ export default function RoboticsHeroSection() {
             {/* Stat chips */}
             <FadeUp trigger="mount" delay={0.08}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
-                {STATS.map(({ top, bottom }) => (
+                {stats.map(({ top, bottom }) => (
                   <div
                     key={top}
                     style={{
@@ -194,7 +222,7 @@ export default function RoboticsHeroSection() {
                     textDecoration: "none",
                   }}
                 >
-                  Contact Us
+                  {ctaPrimary}
                 </a>
                 <a
                   href="/services"
@@ -215,7 +243,7 @@ export default function RoboticsHeroSection() {
                     textDecoration: "none",
                   }}
                 >
-                  All Services
+                  {ctaSecondary}
                 </a>
               </div>
             </FadeUp>

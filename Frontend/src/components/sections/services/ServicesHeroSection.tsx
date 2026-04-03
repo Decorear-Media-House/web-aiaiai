@@ -2,11 +2,9 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
-
-// TODO: Replace with local asset in /public/images/services-hero-bg.jpg
-const BG_IMAGE = "https://www.figma.com/api/mcp/asset/ff37b26e-34f2-4556-9757-f27c80fa75cc";
 
 const ROYAL_SHINE = "linear-gradient(158deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
@@ -18,13 +16,36 @@ function SparkleIcon() {
   );
 }
 
-export default function ServicesHeroSection() {
+interface HeroContent {
+  label?: string;
+  heading?: string;
+  description?: string;
+  cta_primary_text?: string;
+  cta_primary_href?: string;
+  cta_secondary_text?: string;
+  cta_secondary_href?: string;
+  background_image?: string;
+  background_color?: string;
+}
+
+export default function ServicesHeroSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as HeroContent;
+  const label = c.label ?? "AI Solution Partner";
+  const heading = c.heading ?? "Services built around\nmeasurable outcomes.";
+  const description = c.description ?? `We don't start with "AI features." We start with outcomes you need. Then define the right delivery pathway and operational model — roadmap, architecture, and rollout plan — so AI can be deployed, governed, and scaled.`;
+  const ctaPrimaryText = c.cta_primary_text ?? "About Us";
+  const ctaPrimaryHref = c.cta_primary_href ?? "/about";
+  const ctaSecondaryText = c.cta_secondary_text ?? "Contact Us";
+  const ctaSecondaryHref = c.cta_secondary_href ?? "#contact";
+  const bgImage = wpImageUrl((c.background_image as string) || "/images/services-security-hero-bg.png");
+  const bgColor = c.background_color ?? "#070E24";
+
   return (
-    <section className="relative overflow-hidden" style={{ background: "#070E24" }}>
+    <section className="relative overflow-hidden" style={{ background: bgColor }}>
       {/* Background image + gradient overlay */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={BG_IMAGE} alt="" className="absolute inset-0 size-full object-cover" />
+        <img src={bgImage} alt="" className="absolute inset-0 size-full object-cover" />
         <div
           className="absolute inset-0"
           style={{ background: "linear-gradient(to bottom, rgba(16,32,80,0.85), rgba(7,14,36,0.85))" }}
@@ -32,7 +53,7 @@ export default function ServicesHeroSection() {
       </div>
 
       <Container className="relative flex items-end" style={{ minHeight: 394 }}>
-        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-lg:flex-col max-lg:items-start">
+        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-sm:pb-10 max-sm:pt-[140px] max-sm:gap-6 max-lg:flex-col max-lg:items-start">
 
           {/* Left column — label + heading */}
           <div className="flex flex-1 min-w-[300px] flex-col gap-6">
@@ -47,7 +68,7 @@ export default function ServicesHeroSection() {
                 }}
               >
                 <SparkleIcon />
-                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>AI Solution Partner</span>
+                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{label}</span>
               </div>
             </FadeUp>
 
@@ -64,7 +85,9 @@ export default function ServicesHeroSection() {
                   backgroundClip: "text",
                 }}
               >
-                Services built around<br />measurable outcomes.
+                {heading.split("\n").map((line, i) => (
+                  <span key={i}>{i > 0 && <br />}{line}</span>
+                ))}
               </h1>
             </FadeUp>
           </div>
@@ -73,7 +96,7 @@ export default function ServicesHeroSection() {
           <div className="flex flex-1 min-w-[300px] flex-col gap-8 justify-end">
             <FadeUp trigger="mount" delay={0.2}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.75 }}>
-                {`We don't start with "AI features." We start with outcomes you need. Then define the right delivery pathway and operational model — roadmap, architecture, and rollout plan — so AI can be deployed, governed, and scaled.`}
+                {description}
               </p>
             </FadeUp>
 
@@ -81,7 +104,7 @@ export default function ServicesHeroSection() {
               <div className="flex flex-wrap gap-4 items-center">
                 {/* Primary button */}
                 <a
-                  href="/about"
+                  href={ctaPrimaryHref}
                   className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-90"
                   style={{
                     fontFamily: font,
@@ -92,11 +115,11 @@ export default function ServicesHeroSection() {
                     boxShadow: "0px 2px 12px 0px rgba(0,119,255,0.8)",
                   }}
                 >
-                  About Us
+                  {ctaPrimaryText}
                 </a>
                 {/* Ghost button */}
                 <a
-                  href="#contact"
+                  href={ctaSecondaryHref}
                   className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-80"
                   style={{
                     fontFamily: font,
@@ -108,7 +131,7 @@ export default function ServicesHeroSection() {
                     WebkitBackdropFilter: "blur(8px)",
                   }}
                 >
-                  Contact Us
+                  {ctaSecondaryText}
                 </a>
               </div>
             </FadeUp>

@@ -5,22 +5,25 @@ import RoboticsUseCasesSection from "@/components/sections/robotics/RoboticsUseC
 import RoboticsOutcomesSection from "@/components/sections/robotics/RoboticsOutcomesSection";
 import RoboticsDeliverablesSection from "@/components/sections/robotics/RoboticsDeliverablesSection";
 import RoboticsCTASection from "@/components/sections/robotics/RoboticsCTASection";
+import { getPageContent, getPageSEO } from "@/lib/wordpress";
 
-export const metadata: Metadata = {
-  title: "AI-Enhanced Humanoid Robotics Solution | Ai-Ai-Ai",
-  description: "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, and scalable rollout.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEO("humanoid", "AI-Enhanced Humanoid Robotics Solution | Ai-Ai-Ai", "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, and scalable rollout.");
+}
 
-export default function RoboticsPage() {
+export default async function RoboticsPage() {
+  const page = await getPageContent("humanoid");
+  const s = page?.sections as Record<string, Record<string, unknown>> | undefined;
+
   return (
     <>
       <Navbar />
       <main>
-        <RoboticsHeroSection />
-        <RoboticsUseCasesSection />
-        <RoboticsOutcomesSection />
-        <RoboticsDeliverablesSection />
-        <RoboticsCTASection />
+        <RoboticsHeroSection content={s?.hero} />
+        <RoboticsUseCasesSection content={s?.useCases} />
+        <RoboticsOutcomesSection content={s?.outcomes} />
+        <RoboticsDeliverablesSection content={s?.deliverables} />
+        <RoboticsCTASection content={s?.cta} />
       </main>
     </>
   );

@@ -10,27 +10,30 @@ import PartnerEngagementSection from "@/components/sections/partner/PartnerEngag
 import PartnerProcessSection from "@/components/sections/partner/PartnerProcessSection";
 import PartnerFAQSection from "@/components/sections/partner/PartnerFAQSection";
 import PartnerCTASection from "@/components/sections/partner/PartnerCTASection";
+import { getPageContent, getPageSEO } from "@/lib/wordpress";
 
-export const metadata: Metadata = {
-  title: "AI Solution Partner | Ai-Ai-Ai",
-  description: "Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEO("partner", "AI Solution Partner | Ai-Ai-Ai", "Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.");
+}
 
-export default function PartnerPage() {
+export default async function PartnerPage() {
+  const page = await getPageContent("partner");
+  const s = page?.sections as Record<string, Record<string, unknown>> | undefined;
+
   return (
     <>
       <Navbar />
       <main>
-        <PartnerHeroSection />
-        <PartnerStatementSection />
-        <PartnerMeaningSection />
-        <PartnerOutcomesSection />
-        <PartnerPhasesSection />
-        <PartnerDeliverablesSection />
-        <PartnerEngagementSection />
-        <PartnerProcessSection />
-        <PartnerFAQSection />
-        <PartnerCTASection />
+        <PartnerHeroSection content={s?.hero} />
+        <PartnerStatementSection content={s?.statement} />
+        <PartnerMeaningSection content={s?.meaning} />
+        <PartnerOutcomesSection content={s?.outcomes} />
+        <PartnerPhasesSection content={s?.phases} />
+        <PartnerDeliverablesSection content={s?.deliverables} />
+        <PartnerEngagementSection content={s?.engagement} />
+        <PartnerProcessSection content={s?.process} />
+        <PartnerFAQSection content={s?.faq} />
+        <PartnerCTASection content={s?.cta} />
       </main>
     </>
   );

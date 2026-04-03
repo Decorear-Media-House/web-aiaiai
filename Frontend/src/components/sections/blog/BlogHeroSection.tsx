@@ -2,6 +2,7 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 function SparkleIcon({ color = "#4A99F5" }: { color?: string }) {
   return (
@@ -25,15 +26,23 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 interface BlogHeroSectionProps {
   search: string;
   onSearchChange: (value: string) => void;
+  content?: Record<string, unknown>;
 }
 
-export default function BlogHeroSection({ search, onSearchChange }: BlogHeroSectionProps) {
+interface BlogHeroContent {
+  background_image?: string;
+}
+
+export default function BlogHeroSection({ search, onSearchChange, content }: BlogHeroSectionProps) {
+  const c = (content ?? {}) as BlogHeroContent;
+  const backgroundImage = c.background_image ? wpImageUrl(c.background_image) : "/images/blog-hero-bg.png";
+
   return (
     <section className="relative overflow-hidden" style={{ background: "#070E24" }}>
       {/* Background image + gradient overlay */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <img
-          src="/images/blog-hero-bg.png"
+          src={backgroundImage}
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />

@@ -4,47 +4,70 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-const CARDS = [
+interface ThirdSectionCard {
+  title: string;
+  description: string;
+  card_image?: string;
+}
+
+interface ThirdSectionContent {
+  label?: string;
+  headingWhite?: string;
+  headingGradient?: string;
+  description?: string;
+  cards?: ThirdSectionCard[];
+}
+
+const DEFAULT_LABEL = "AI is easy to demo. Hard to deploy.";
+const DEFAULT_HEADING_WHITE = "The Problem";
+const DEFAULT_HEADING_GRADIENT = "We Solve";
+const DEFAULT_DESCRIPTION =
+  "Most organizations face at least one of these realities before they can scale AI.";
+
+const DEFAULT_CARDS: ThirdSectionCard[] = [
   {
     title: "Stuck at PoC",
-    desc: "No one owns integration and rollout — AI pilots never reach production.",
-    img: "/images/card1-bg.png",
+    description: "No one owns integration and rollout — AI pilots never reach production.",
   },
   {
     title: "Too Many Use Cases",
-    desc: "Teams can't prioritize without certainty on ROI or a clear starting point.",
-    img: "/images/card2-bg.png",
+    description: "Teams can't prioritize without certainty on ROI or a clear starting point.",
   },
   {
     title: "No Operational Control",
-    desc: "Missing auditability, approval flows, and human-in-the-loop guardrails.",
-    img: "/images/card3-bg.png",
+    description: "Missing auditability, approval flows, and human-in-the-loop guardrails.",
   },
   {
     title: "Security Gaps",
-    desc: "Cameras alone aren't enough — teams need actionable intelligence and workflows.",
-    img: "/images/card4-bg.png",
+    description: "Cameras alone aren't enough — teams need actionable intelligence and workflows.",
   },
   {
     title: "Data Not Ready",
-    desc: "Data exists but isn't structured, governed, or production-grade.",
-    img: "/images/card5-bg.png",
+    description: "Data exists but isn't structured, governed, or production-grade.",
   },
   {
     title: "Physical Automation Risk",
-    desc: "Deploying robots requires safety SOPs, maintenance plans, and escalation paths.",
-    img: "/images/card6-bg.png",
+    description: "Deploying robots requires safety SOPs, maintenance plans, and escalation paths.",
   },
-] as const;
+];
+
+const CARD_IMAGES = [
+  "/images/card1-bg.png",
+  "/images/card2-bg.png",
+  "/images/card3-bg.png",
+  "/images/card4-bg.png",
+  "/images/card5-bg.png",
+  "/images/card6-bg.png",
+];
 
 const CARD_W = 286;
 const CARD_H = 312;
 const CARD_GAP = 24;
 const VISIBLE = 4;
-const MAX_OFFSET = CARDS.length - VISIBLE; /* 2 */
 
 function AlertTriangleIcon() {
   return (
@@ -59,9 +82,22 @@ function AlertTriangleIcon() {
   );
 }
 
-const NUM_DOTS = MAX_OFFSET + 1; // 3 positions: 0, 1, 2
+export default function ThirdSection({ content }: { content?: Record<string, unknown> }) {
+  const wp = content as ThirdSectionContent | undefined;
 
-export default function ThirdSection() {
+  const label = wp?.label ?? DEFAULT_LABEL;
+  const headingWhite = wp?.headingWhite ?? DEFAULT_HEADING_WHITE;
+  const headingGradient = wp?.headingGradient ?? DEFAULT_HEADING_GRADIENT;
+  const description = wp?.description ?? DEFAULT_DESCRIPTION;
+  const cards = (wp?.cards ?? DEFAULT_CARDS).map((card, i) => ({
+    title: card.title,
+    desc: card.description,
+    img: card.card_image ? wpImageUrl(card.card_image) : (CARD_IMAGES[i] ?? CARD_IMAGES[0]),
+  }));
+
+  const MAX_OFFSET = Math.max(cards.length - VISIBLE, 0);
+  const NUM_DOTS = MAX_OFFSET + 1;
+
   const [active, setActive] = useState(0);
   const translateX = Math.min(active, MAX_OFFSET) * (CARD_W + CARD_GAP);
 
@@ -116,7 +152,7 @@ export default function ThirdSection() {
         }}
       />
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <div className="flex flex-col items-center gap-8 text-center">
 
           {/* ── Header ── */}
@@ -132,22 +168,22 @@ export default function ThirdSection() {
               >
                 <AlertTriangleIcon />
                 <span style={{ fontFamily: font, fontSize: 12, color: "#FFA2A2", letterSpacing: "0.04em" }}>
-                  AI is easy to demo. Hard to deploy.
+                  {label}
                 </span>
               </div>
 
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
-                <span style={{ color: "#fff" }}>The Problem</span>
+                <span style={{ color: "#fff" }}>{headingWhite}</span>
                 <span style={{
                   backgroundImage: "linear-gradient(90deg, #FF8904 0%, #FF6467 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                }}>{" "}We Solve</span>
+                }}>{" "}{headingGradient}</span>
               </h2>
 
               <p className="max-w-[560px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.6 }}>
-                Most organizations face at least one of these realities before they can scale AI.
+                {description}
               </p>
             </div>
           </FadeUp>
@@ -167,7 +203,7 @@ export default function ThirdSection() {
                   className="flex transition-transform duration-500 ease-in-out"
                   style={{ gap: CARD_GAP, transform: `translateX(-${translateX}px)` }}
                 >
-                  {CARDS.map((card) => (
+                  {cards.map((card) => (
                     <div
                       key={card.title}
                       className="relative shrink-0 overflow-hidden"
@@ -177,6 +213,7 @@ export default function ThirdSection() {
                         src={card.img}
                         alt={card.title}
                         fill
+                        unoptimized={card.img.startsWith("http")}
                         className="object-cover"
                         sizes="286px"
                       />

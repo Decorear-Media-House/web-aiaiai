@@ -2,11 +2,11 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/about-aieat-logo.png
-const LOGO = "https://www.figma.com/api/mcp/asset/0d2099c2-faf1-4643-ba4d-3261cb2dd9a2";
+const LOGO = "/images/about-aieat-logo.png";
 
 function WaveLines() {
   return (
@@ -48,22 +48,40 @@ function DotGrid() {
   );
 }
 
-export default function AboutLeadershipSection() {
+interface AboutLeadershipContent {
+  heading?: string;
+  description?: string;
+  logo_image?: string;
+  background_color?: string;
+  background_image?: string;
+}
+
+export default function AboutLeadershipSection({ content }: { content?: AboutLeadershipContent }) {
+  const heading = content?.heading ?? "Leadership Credibility";
+  const description = content?.description ??
+    "AI-AI-AI is led by Dr. Chanwit Boonchuay, President of the AI Entrepreneur Association of Thailand (AIEAT), in partnership with Synapses, with strong Computer Vision ecosystem experience through SELEN.";
+  const logoSrc = wpImageUrl((content?.logo_image as string) || LOGO);
+  const bgColor = (content?.background_color as string) || "";
+  const bgImage = (content?.background_image as string) ? wpImageUrl(content!.background_image!) : "";
   return (
     <section
       className="relative overflow-hidden"
       style={{
-        background: "linear-gradient(110deg, #0e1d60 0%, #1a3a90 35%, #1e42a0 55%, #152e80 100%)",
+        background: bgColor || "linear-gradient(110deg, #0e1d60 0%, #1a3a90 35%, #1e42a0 55%, #152e80 100%)",
       }}
     >
+      {bgImage && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={bgImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+      )}
       <WaveLines />
       <DotGrid />
 
-      <Container className="relative py-20">
-        <div className="flex flex-wrap items-center gap-10">
+      <Container className="relative py-20 max-sm:py-10">
+        <div className="flex flex-wrap items-center gap-6 max-sm:flex-col">
 
           {/* Left — display heading + body */}
-          <div className="flex flex-1 min-w-[312px] flex-col gap-6">
+          <div className="flex flex-1 min-w-[312px] max-sm:min-w-0 flex-col gap-6">
             <FadeUp trigger="scroll" delay={0}>
               <h2
                 style={{
@@ -78,25 +96,23 @@ export default function AboutLeadershipSection() {
                   maxWidth: 803,
                 }}
               >
-                Leadership Credibility
+                {heading}
               </h2>
             </FadeUp>
 
             <FadeUp trigger="scroll" delay={0.1}>
-              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.75, maxWidth: 620 }}>
-                Ai-Ai-Ai is led by Dr. Chanwit Boonchuay, President of the AI Entrepreneur
-                Association of Thailand (AIEAT), in partnership with Synapes, with strong
-                Computer Vision ecosystem experience through SELEN.
+              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.75 }}>
+                {description}
               </p>
             </FadeUp>
           </div>
 
           {/* Right — AIEAT logo (white) */}
-          <FadeUp trigger="scroll" delay={0.15} className="shrink-0">
-            <div style={{ width: 389, height: 98 }} className="relative">
+          <FadeUp trigger="scroll" delay={0.15} className="shrink-0 max-sm:w-full">
+            <div style={{ width: 389, height: 98 }} className="relative max-sm:w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={LOGO}
+                src={logoSrc}
                 alt="AI Entrepreneur Association of Thailand"
                 className="size-full object-contain"
                 style={{ filter: "brightness(0) invert(1)" }}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 function ChevronRight() {
   return (
@@ -11,62 +12,63 @@ function ChevronRight() {
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-export default function SecondSection() {
+interface SecondSectionContent {
+  heading?: string;
+  paragraphs?: string[];
+  section_background_image?: string;
+}
+
+export default function SecondSection({ content }: { content?: SecondSectionContent }) {
+  const heading = (content?.heading as string) ?? "Ai-Ai-Ai Co., Ltd.";
+  const bgImage = wpImageUrl((content?.section_background_image as string) || "/images/section2-bg.png");
+  const paragraphs = (content?.paragraphs as string[]) ?? [
+    "Ai-Ai-Ai Co., Ltd. helps organizations adopt AI in a practical, outcome-driven way. We operate as an AI Solution Partner (and AI development partner) to take ideas from AI strategy and roadmap through PoC, MVP, and production deployment—with strong focus on integration, governance, and operating reality.",
+    "We also deliver specialized solutions in Computer Vision security\u00a0/ AI video analytics and humanoid robotics deployment (AgiBo) with innovative AI capabilities.",
+  ];
   return (
-    <section className="flex min-h-[498px] max-lg:flex-col" style={{ background: "#1A4494" }}>
+    <section className="relative overflow-hidden" style={{ minHeight: 498 }}>
 
-      {/* Left — photo with gradient overlay, exactly half the section */}
-      <div className="relative w-1/2 overflow-hidden max-lg:w-full max-lg:min-h-[320px]">
-        <Image
-          src="/images/section2-bg.png"
-          alt="Ai-Ai-Ai team"
-          fill
-          className="object-cover"
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          priority
-        />
-        <div className="absolute inset-0"
-          style={{ background: "linear-gradient(to left, rgba(26,68,148,1) 0%, rgba(26,68,148,0) 60%)" }} />
-      </div>
+      {/* Full background image */}
+      <Image
+        src={bgImage}
+        alt="Ai-Ai-Ai team"
+        fill
+        unoptimized={bgImage.startsWith("http")}
+        className="object-cover"
+        sizes="100vw"
+        priority
+      />
 
-      {/* Right — text content, exactly half with container-aware padding */}
-      <div className="flex w-1/2 items-center max-lg:w-full" style={{ background: "#1A4494" }}>
-        {/*
-          Mirror the Container logic for just the right half:
-          On 1440px screen the full container is 1216px (112px each side).
-          The right half starts at the midpoint (720px from left edge of screen).
-          We give it pl-[112px] to align text with the container grid,
-          and pr-[112px] to match the right edge.
-        */}
-        <div
-          className="flex w-full flex-col gap-6 py-20 pl-[112px] pr-[112px] max-lg:px-8 max-lg:py-14 max-sm:px-4"
-          style={{ maxWidth: 720 }}
-        >
+      {/* Gradient overlay — dark left, transparent right (image shows through on right) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(270deg, rgba(7,17,47,0) 0%, rgba(7,17,47,1) 100%)",
+        }}
+      />
+
+      {/* Content — left aligned */}
+      <div className="relative flex items-center py-20 px-[112px] max-lg:px-8 max-sm:px-6" style={{ minHeight: 498 }}>
+        <div className="flex flex-col gap-6" style={{ maxWidth: 560 }}>
+
           <FadeUp trigger="scroll" delay={0}>
             <h2 style={{ fontFamily: font, fontSize: 32, color: "#fff", fontWeight: 400, lineHeight: 1.3 }}>
-              Ai-Ai-Ai Co., Ltd.
+              {heading}
             </h2>
           </FadeUp>
 
           <FadeUp trigger="scroll" delay={0.1}>
             <div className="flex flex-col gap-4">
-              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
-                Ai-Ai-Ai Co., Ltd. helps organizations adopt AI in a practical,
-                outcome-driven way. We operate as an AI Solution Partner (and AI
-                development partner) to take ideas from AI strategy and roadmap
-                through PoC, MVP, and production deployment—with strong focus on
-                integration, governance, and operating reality.
-              </p>
-              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
-                We also deliver specialized solutions in Computer Vision security&nbsp;/
-                AI video analytics and humanoid robotics deployment (AgiBo) with
-                innovative AI capabilities.
-              </p>
+              {paragraphs.map((text, i) => (
+                <p key={i} style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
+                  {text}
+                </p>
+              ))}
             </div>
           </FadeUp>
 
           <FadeUp trigger="scroll" delay={0.2}>
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-4 pt-2 max-sm:flex-col max-sm:items-start">
               <a href="/about"
                 className="inline-flex items-center gap-2 transition-opacity hover:opacity-90"
                 style={{
@@ -96,6 +98,7 @@ export default function SecondSection() {
               </a>
             </div>
           </FadeUp>
+
         </div>
       </div>
 

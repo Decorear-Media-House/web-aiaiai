@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -67,7 +68,12 @@ const SOCIAL_ICONS = [
 
 /* ── Component ──────────────────────────────────────────────────── */
 
-export default function Footer() {
+interface FooterProps {
+  background_image?: string;
+}
+
+export default function Footer({ background_image }: FooterProps = {}) {
+  const bgImage = background_image ? wpImageUrl(background_image) : "/images/footer-bg.png";
   return (
     <footer
       className="relative overflow-hidden"
@@ -75,9 +81,10 @@ export default function Footer() {
     >
       {/* Background image */}
       <Image
-        src="/images/footer-bg.png"
+        src={bgImage}
         alt=""
         fill
+        unoptimized={bgImage.startsWith("http")}
         className="object-cover"
         sizes="100vw"
       />

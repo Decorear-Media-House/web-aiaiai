@@ -105,7 +105,7 @@ function SendButton({ href = "#" }: { href?: string }) {
 export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const servicesBtnRef = useRef<HTMLButtonElement>(null);
+  const servicesBtnRef = useRef<HTMLAnchorElement>(null);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -178,15 +178,16 @@ export default function Navbar() {
               onMouseEnter={openServices}
               onMouseLeave={closeServices}
             >
-              <button
+              <a
                 ref={servicesBtnRef}
+                href="/services"
                 className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
                 style={{ fontFamily: font, fontSize: 16, color: "#fff" }}
                 aria-expanded={servicesOpen}
                 aria-haspopup="true"
               >
                 Services <ChevronDown />
-              </button>
+              </a>
             </div>
 
             <a href="/about" className="transition-opacity hover:opacity-80"

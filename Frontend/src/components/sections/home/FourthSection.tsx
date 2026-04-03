@@ -1,10 +1,27 @@
 import Image from "next/image";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-const SERVICES = [
+interface ServiceItem {
+  label: string;
+  heading: string;
+  description: string;
+  cta: string;
+  href: string;
+  card_background_image?: string;
+}
+
+interface FourthSectionContent {
+  label?: string;
+  heading?: string;
+  description?: string;
+  items?: ServiceItem[];
+}
+
+const DEFAULT_SERVICES = [
   {
     image: "/images/service1-security.png",
     href: "/services/security",
@@ -41,7 +58,7 @@ const SERVICES = [
       "AI consulting and hands-on delivery: AI roadmap → PoC → MVP → production deployment, built for real operations.",
     cta: "Explore AI Solution Partner",
   },
-] as const;
+];
 
 function GoalIcon() {
   return (
@@ -61,7 +78,24 @@ function SparklesIcon() {
   );
 }
 
-export default function FourthSection() {
+export default function FourthSection({ content }: { content?: FourthSectionContent }) {
+  const headerLabel = (content?.label as string) ?? "Our Services";
+  const headerHeading = (content?.heading as string) ?? "What We Do";
+  const headerDescription =
+    (content?.description as string) ??
+    "Three specialized AI solution lines designed to deliver measurable outcomes across security, automation, and digital transformation.";
+  const contentItems = content?.items as ServiceItem[] | undefined;
+
+  const SERVICES = DEFAULT_SERVICES.map((svc, i) => ({
+    ...svc,
+    image: contentItems?.[i]?.card_background_image ? wpImageUrl(contentItems[i].card_background_image!) : svc.image,
+    label: contentItems?.[i]?.label ?? svc.label,
+    heading: contentItems?.[i]?.heading ?? svc.heading,
+    description: contentItems?.[i]?.description ?? svc.description,
+    cta: contentItems?.[i]?.cta ?? svc.cta,
+    href: contentItems?.[i]?.href ?? svc.href,
+  }));
+
   return (
     <section style={{ background: "#060D29" }}>
 
@@ -82,7 +116,7 @@ export default function FourthSection() {
           }}
         />
 
-        <Container className="relative py-20">
+        <Container className="relative py-20 max-sm:py-10">
           <FadeUp trigger="scroll" delay={0}>
             <div className="relative flex flex-col items-center gap-4 text-center">
               {/* Label */}
@@ -95,25 +129,24 @@ export default function FourthSection() {
               >
                 <GoalIcon />
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", letterSpacing: "0.04em" }}>
-                  Our Services
+                  {headerLabel}
                 </span>
               </div>
 
               {/* h2 */}
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
-                <span style={{ color: "#fff" }}>What </span>
+                <span style={{ color: "#fff" }}>{headerHeading.split(" ").slice(0, -1).join(" ")}{headerHeading.includes(" ") ? " " : ""}</span>
                 <span style={{
                   backgroundImage: "linear-gradient(135deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                }}>We Do</span>
+                }}>{headerHeading.split(" ").pop()}</span>
               </h2>
 
               {/* Body */}
               <p className="max-w-[560px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.6 }}>
-                Three specialized AI solution lines designed to deliver measurable outcomes across
-                security, automation, and digital transformation.
+                {headerDescription}
               </p>
             </div>
           </FadeUp>
@@ -138,6 +171,7 @@ export default function FourthSection() {
                 src={svc.image}
                 alt={svc.heading}
                 fill
+                unoptimized={svc.image.startsWith("http")}
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 sizes="(max-width: 1024px) 100vw, 33vw"
               />

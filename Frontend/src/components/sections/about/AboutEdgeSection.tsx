@@ -2,6 +2,7 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 function SparkleIcon({ color = "#4A99F5" }: { color?: string }) {
   return (
@@ -13,33 +14,54 @@ function SparkleIcon({ color = "#4A99F5" }: { color?: string }) {
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/about-edge-ai.jpg
-const PHOTO = "https://www.figma.com/api/mcp/asset/50f718c6-e4f3-4dc7-afa4-870244699ec2";
+const PHOTO = "/images/about-edge-photo.png";
+
 
 const EDGES = [
   {
-    icon: "https://www.figma.com/api/mcp/asset/aac2a607-3c97-4dd9-b9b0-974b541297b4",
     title: "Partner-Led Delivery",
     desc: "We operate as your AI Solution Partner, not just advisors.",
   },
   {
-    icon: "https://www.figma.com/api/mcp/asset/3d57078d-0413-42ab-b724-fc3d014384b3",
     title: "Production-Minded Execution",
     desc: "Integration, monitoring, rollout planning, and governance built in.",
   },
   {
-    icon: "https://www.figma.com/api/mcp/asset/e5be080b-58b5-44f9-8e78-50bac112c88d",
     title: "Computer Vision Depth",
     desc: "Security operations design with a strong SELEN ecosystem foundation.",
   },
   {
-    icon: "https://www.figma.com/api/mcp/asset/7ffceb8c-d595-48a6-a372-b52e9aa143b2",
     title: "Lean and Scalable",
     desc: "Structured playbooks and partner ecosystem execution.",
   },
 ] as const;
 
-export default function AboutEdgeSection() {
+interface AboutEdgeContent {
+  label?: string;
+  headingPrefix?: string;
+  headingHighlight?: string;
+  edges?: Array<{ title: string; desc?: string; description?: string; icon_image?: string }>;
+  edge_photo_image?: string;
+}
+
+const DEFAULT_ICONS = [
+  "/images/edge-icon-1.svg",
+  "/images/edge-icon-2.svg",
+  "/images/edge-icon-3.svg",
+  "/images/edge-icon-4.svg",
+];
+
+export default function AboutEdgeSection({ content }: { content?: AboutEdgeContent }) {
+  const label = content?.label ?? "Our Edge";
+  const headingPrefix = content?.headingPrefix ?? "What makes us ";
+  const headingHighlight = content?.headingHighlight ?? "Different";
+  const rawEdges = content?.edges ?? EDGES;
+  const edges = rawEdges.map((e, i) => ({
+    title: e.title,
+    desc: e.desc || (e as Record<string, string>).description || "",
+    iconSrc: wpImageUrl((e as Record<string, string>).icon_image || DEFAULT_ICONS[i] || DEFAULT_ICONS[0]),
+  }));
+  const bgImage = wpImageUrl((content?.edge_photo_image as string) || PHOTO);
   return (
     <section className="relative overflow-hidden" style={{ background: "#070E24" }}>
       {/* Ambient glow blobs */}
@@ -50,11 +72,11 @@ export default function AboutEdgeSection() {
           style={{ background: "rgba(34,52,254,0.1)", filter: "blur(64px)" }} />
       </div>
 
-      <Container className="relative py-20">
-        <div className="flex flex-wrap items-center gap-6">
+      <Container className="relative py-20 max-sm:py-10">
+        <div className="flex flex-wrap items-center gap-6 max-sm:flex-col">
 
           {/* Left — label + heading + 2×2 cards */}
-          <div className="flex flex-1 min-w-[312px] flex-col gap-10">
+          <div className="flex flex-1 min-w-[312px] max-sm:min-w-0 flex-col gap-10">
             <FadeUp trigger="scroll" delay={0}>
               <div className="flex flex-col gap-4">
                 <div
@@ -67,11 +89,11 @@ export default function AboutEdgeSection() {
                   }}
                 >
                   <SparkleIcon color="#4A99F5" />
-                  <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>Our Edge</span>
+                  <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{label}</span>
                 </div>
 
                 <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
-                  What makes us{" "}
+                  {headingPrefix}
                   <span
                     style={{
                       backgroundImage: "linear-gradient(162.8deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
@@ -80,18 +102,18 @@ export default function AboutEdgeSection() {
                       backgroundClip: "text",
                     }}
                   >
-                    Different
+                    {headingHighlight}
                   </span>
                 </h2>
               </div>
             </FadeUp>
 
             <FadeUp trigger="scroll" delay={0.1}>
-              <div className="flex flex-wrap gap-4">
-                {EDGES.map((edge, i) => (
+              <div className="flex flex-wrap gap-4 max-sm:flex-col">
+                {edges.map((edge, i) => (
                   <div
                     key={edge.title}
-                    className="flex flex-1 min-w-[312px] gap-4 items-start rounded-2xl p-[17px]"
+                    className="flex flex-1 min-w-[312px] max-sm:min-w-0 gap-4 items-start rounded-2xl p-[17px]"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
@@ -110,7 +132,7 @@ export default function AboutEdgeSection() {
                       }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={edge.icon} alt="" width={24} height={24} />
+                      <img src={edge.iconSrc} alt="" width={24} height={24} />
                     </div>
 
                     {/* Text */}
@@ -129,9 +151,9 @@ export default function AboutEdgeSection() {
           </div>
 
           {/* Right — photo */}
-          <FadeUp trigger="scroll" delay={0.15} className="shrink-0">
+          <FadeUp trigger="scroll" delay={0.15} className="shrink-0 max-sm:w-full">
             <div
-              className="overflow-hidden rounded-2xl"
+              className="overflow-hidden rounded-2xl max-sm:w-full max-sm:h-auto"
               style={{
                 width: 389,
                 height: 368,
@@ -139,7 +161,7 @@ export default function AboutEdgeSection() {
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={PHOTO} alt="AI technology" className="size-full object-cover" />
+              <img src={bgImage} alt="AI technology" className="size-full object-cover" />
             </div>
           </FadeUp>
 

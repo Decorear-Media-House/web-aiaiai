@@ -6,9 +6,25 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-const INFO_CHIPS = ["Target environment", "Robot model", "Task description"];
+interface CTAContent {
+  heading?: string;
+  heading_highlight?: string;
+  description?: string;
+  chips?: string[];
+  cta_primary?: string;
+  cta_secondary?: string;
+}
 
-export default function RoboticsCTASection() {
+const DEFAULT_CHIPS = ["Target environment", "Robot model", "Task description"];
+
+export default function RoboticsCTASection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as CTAContent;
+  const heading = c.heading ?? "Tell us the environment and ";
+  const headingHighlight = c.heading_highlight ?? "target tasks.";
+  const description = c.description ?? "We\u2019ll propose a pilot approach.";
+  const chips = c.chips ?? DEFAULT_CHIPS;
+  const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaSecondary = c.cta_secondary ?? "All Services";
   return (
     <section className="relative" style={{ background: "#070E24" }}>
       {/* 40px sides → 1360px card at 1440px viewport */}
@@ -38,16 +54,16 @@ export default function RoboticsCTASection() {
               <div className="flex-1 min-w-[300px] max-w-[672px] flex flex-col gap-5">
                 <div>
                   <p style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, color: "#fff" }}>
-                    Tell us the environment and{" "}
-                    <span style={{ color: "#00BAF2" }}>target tasks.</span>
+                    {heading}
+                    <span style={{ color: "#00BAF2" }}>{headingHighlight}</span>
                   </p>
                 </div>
                 <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
-                  We&rsquo;ll propose a pilot approach.
+                  {description}
                 </p>
                 {/* Glass chips */}
                 <div className="flex flex-wrap gap-2">
-                  {INFO_CHIPS.map((chip) => (
+                  {chips.map((chip) => (
                     <div
                       key={chip}
                       className="inline-flex items-center rounded-lg px-4 py-2 shrink-0"
@@ -79,7 +95,7 @@ export default function RoboticsCTASection() {
                     textDecoration: "none",
                   }}
                 >
-                  Contact Us
+                  {ctaPrimary}
                 </a>
                 <a
                   href="/services"
@@ -95,7 +111,7 @@ export default function RoboticsCTASection() {
                     textDecoration: "none",
                   }}
                 >
-                  All Services
+                  {ctaSecondary}
                 </a>
               </div>
 

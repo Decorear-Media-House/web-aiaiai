@@ -6,17 +6,6 @@ import Container from "@/components/layouts/Container";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/security/
-const imgContainer = "https://www.figma.com/api/mcp/asset/64149b23-4dab-4375-b01f-8a0535e426d7";
-const imgContainer1 = "https://www.figma.com/api/mcp/asset/8fdb0c91-51e8-4282-a990-b20416c51483";
-const imgCheckCircle2 = "https://www.figma.com/api/mcp/asset/51338eae-34ac-4a93-943a-8664a3b2bb5e";
-const imgChevronDown = "https://www.figma.com/api/mcp/asset/9c05650b-2605-4e3e-8ebf-86c1d971dc8f";
-const imgChevronRight = "https://www.figma.com/api/mcp/asset/373e3e56-9568-4c06-8270-49616c4a4234";
-const imgOIcon = "https://www.figma.com/api/mcp/asset/f43ab423-7b75-4f9a-a403-a0011d2a3aad";
-const imgOIcon1 = "https://www.figma.com/api/mcp/asset/f48bf6b4-347a-4dba-abd4-bb5303ebce2a";
-const imgOIcon2 = "https://www.figma.com/api/mcp/asset/8afd9017-182b-4406-b94a-73885bea6d68";
-const imgOIcon3 = "https://www.figma.com/api/mcp/asset/a61d92da-3ec4-4f32-b440-c2c91ab16ab9";
-
 function SparkleIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -25,11 +14,79 @@ function SparkleIcon() {
   );
 }
 
+function CheckCircleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" className="shrink-0">
+      <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5"/>
+      <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg width="12" height="7" viewBox="0 0 12 7" fill="none" aria-hidden="true">
+      <path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true">
+      <path d="M1 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function SecurityImprovementIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3l7 4v5c0 4.5-3 8.25-7 9.5-4-1.25-7-5-7-9.5V7l7-4z" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M9 12l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function AssetProtectionIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="6" width="18" height="13" rx="2" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M3 10h18" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M7 14h4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function OperationalIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M12 7v5l3 3" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function CostReductionIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 18L18 6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M4 12l4-4 4 4 4-4 4 4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+const ACCORDION_ICONS = [
+  <SecurityImprovementIcon key="si" />,
+  <AssetProtectionIcon key="ap" />,
+  <OperationalIcon key="oi" />,
+  <CostReductionIcon key="cr" />,
+];
+
 function CheckItem({ text }: { text: string }) {
   return (
     <div className="flex items-center gap-2">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imgCheckCircle2} alt="" width={16} height={16} className="shrink-0" />
+      <CheckCircleIcon />
       <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>{text}</p>
     </div>
   );
@@ -37,7 +94,6 @@ function CheckItem({ text }: { text: string }) {
 
 const ACCORDION = [
   {
-    icon: imgOIcon,
     iconBg: "linear-gradient(135deg, rgb(0, 184, 219) 0%, rgb(21, 93, 252) 100%)",
     title: "Security improvement",
     checks: [
@@ -47,26 +103,37 @@ const ACCORDION = [
     ],
   },
   {
-    icon: imgOIcon1,
     iconBg: "linear-gradient(135deg, rgb(142, 81, 255) 0%, rgb(21, 93, 252) 100%)",
     title: "Asset protection & loss reduction",
     checks: null,
   },
   {
-    icon: imgOIcon2,
     iconBg: "linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(0, 184, 219) 100%)",
     title: "Operational improvement",
     checks: null,
   },
   {
-    icon: imgOIcon3,
     iconBg: "linear-gradient(135deg, rgb(0, 188, 125) 0%, rgb(0, 146, 184) 100%)",
     title: "Cost reduction",
     checks: null,
   },
 ];
 
-export default function SecurityOutcomesSection() {
+interface OutcomesContent {
+  chip?: string;
+  heading?: string;
+  heading_highlight?: string;
+  accordion?: typeof ACCORDION;
+  background_color?: string;
+  wpImageUrl?: string;
+}
+
+export default function SecurityOutcomesSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as OutcomesContent;
+  const chip = c.chip ?? "Outcomes";
+  const sectionHeading = c.heading ?? "What this Platform ";
+  const headingHighlight = c.heading_highlight ?? "Achieves";
+  const accordion = c.accordion ?? ACCORDION;
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
@@ -86,16 +153,18 @@ export default function SecurityOutcomesSection() {
       <Container className="relative py-20">
         <div className="flex flex-wrap gap-10 items-start">
 
-          {/* Left — stacked photos */}
+          {/* Left — photo area */}
           <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[300px]">
             <div
               className="relative rounded-2xl overflow-hidden"
               style={{ height: 596 }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imgContainer} alt="Security platform" className="absolute inset-0 size-full object-cover" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imgContainer1} alt="" className="absolute inset-0 size-full object-cover" aria-hidden="true" />
+              {c.wpImageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={c.wpImageUrl} alt="Security platform" className="absolute inset-0 size-full object-cover" />
+              ) : (
+                <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0A132F 0%, #1A4494 50%, #0A132F 100%)" }} />
+              )}
             </div>
           </FadeUp>
 
@@ -114,11 +183,11 @@ export default function SecurityOutcomesSection() {
                   }}
                 >
                   <SparkleIcon />
-                  <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>Outcomes</span>
+                  <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{chip}</span>
                 </div>
 
                 <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
-                  What this Platform{" "}
+                  {sectionHeading}
                   <span
                     style={{
                       backgroundImage: "linear-gradient(176deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
@@ -127,7 +196,7 @@ export default function SecurityOutcomesSection() {
                       backgroundClip: "text",
                     }}
                   >
-                    Achieves
+                    {headingHighlight}
                   </span>
                 </h2>
               </div>
@@ -135,7 +204,7 @@ export default function SecurityOutcomesSection() {
 
             {/* Accordion */}
             <div className="flex flex-col gap-3">
-              {ACCORDION.map(({ icon, iconBg, title, checks }, i) => {
+              {accordion.map(({ iconBg, title, checks }, i) => {
                 const isOpen = openIndex === i;
                 return (
                   <FadeUp key={i} trigger="scroll" delay={i * 0.07}>
@@ -162,19 +231,17 @@ export default function SecurityOutcomesSection() {
                             opacity: isOpen ? 1 : 0.6,
                           }}
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={icon} alt="" width={18} height={18} />
+                          {ACCORDION_ICONS[i]}
                         </div>
                         <span style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5, flex: 1 }}>
                           {title}
                         </span>
                         {/* Chevron */}
                         <div
-                          className="shrink-0 size-6"
-                          style={{ transform: isOpen ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform 0.25s ease" }}
+                          className="shrink-0 flex items-center justify-center"
+                          style={{ width: 24, height: 24, color: "#8099BE", transform: isOpen ? "rotate(0deg)" : "rotate(-90deg)", transition: "transform 0.25s ease" }}
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={isOpen ? imgChevronDown : imgChevronRight} alt="" width={24} height={24} />
+                          <ChevronDownIcon />
                         </div>
                       </button>
 

@@ -1,21 +1,22 @@
 "use client";
 
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-// TODO: Replace with local assets in /public/images/partner/
-const imgPlaceholderImage  = "https://www.figma.com/api/mcp/asset/dd0fd7a8-93cf-4fb4-8244-f8d9d60d6a5a";
-const imgPlaceholderImage1 = "https://www.figma.com/api/mcp/asset/8db52937-0cab-435a-825b-a835dc086805";
-const imgGroup             = "https://www.figma.com/api/mcp/asset/12e917ff-2ab8-46f3-afe8-ab0482a85151";
-const imgGroup1            = "https://www.figma.com/api/mcp/asset/a1fbba95-34ef-4ac6-8f88-71b021c279c0";
-
-// Goal icon vectors
-const imgVector  = "https://www.figma.com/api/mcp/asset/48a0ea67-a24a-4a99-847a-cde3dd67f511";
-const imgVector1 = "https://www.figma.com/api/mcp/asset/28a38887-bddb-49f1-916d-1dbbb4d305b3";
-const imgVector2 = "https://www.figma.com/api/mcp/asset/69938d4c-f7de-4ae5-a80f-9ec85813c979";
+/** Goal / target icon */
+function GoalIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <circle cx="7" cy="7" r="6" stroke="#4A99F5" strokeWidth="1.2"/>
+      <circle cx="7" cy="7" r="3.5" stroke="#4A99F5" strokeWidth="1.2"/>
+      <circle cx="7" cy="7" r="1.2" fill="#4A99F5"/>
+    </svg>
+  );
+}
 
 const DELIVERABLES = [
   { title: "AI opportunity map",      sub: "candidate use cases grouped by outcomes" },
@@ -24,41 +25,23 @@ const DELIVERABLES = [
   { title: "Architecture blueprint",  sub: "integration points, data flows, system boundaries" },
   { title: "MVP definition",          sub: "scope, acceptance criteria, user journeys" },
   { title: "Governance pack",         sub: "access model, logs, audit trail approach, risk controls" },
-  { title: "Rollout plan",            sub: "pilot → rollout → adoption plan with training" },
+  { title: "Rollout plan",            sub: "pilot \u2192 rollout \u2192 adoption plan with training" },
   { title: "Operations playbook",     sub: "monitoring, incident handling, change control" },
 ];
 
-function GoalIcon() {
-  return (
-    <div style={{ position: "relative", width: 14, height: 14, flexShrink: 0, overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: "8.33%" }}>
-        <div style={{ position: "absolute", inset: "-5%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", inset: "25%" }}>
-        <div style={{ position: "absolute", inset: "-8.33%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector1} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", inset: "41.67%" }}>
-        <div style={{ position: "absolute", inset: "-25%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector2} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function PartnerDeliverablesSection() {
+export default function PartnerDeliverablesSection({ content }: { content?: Record<string, unknown> }) {
+  const chipLabel = (content?.chipLabel as string) ?? "Deliverables";
+  const heading = (content?.heading as string) ?? "Typical ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "Deliverables";
+  const description = (content?.description as string) ??
+    "Concrete, tangible work products \u2014 each designed to carry AI from concept through live operation.";
+  const placeholderImage = wpImageUrl((content?.placeholder_image as string) || "");
+  const bgColor = (content?.background_color as string) ?? "#102050";
   return (
     <section
       style={{
         position: "relative",
-        background: "#102050",
+        background: bgColor,
         paddingTop: 80,
         paddingBottom: 80,
         paddingLeft: 112,
@@ -69,36 +52,16 @@ export default function PartnerDeliverablesSection() {
       {/* Blue glow top-center */}
       <div aria-hidden="true" style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 512, height: 512, borderRadius: 9999, background: "rgba(43,127,255,0.05)", filter: "blur(82px)", pointerEvents: "none" }} />
 
-      {/* Deco bottom-right */}
+      {/* Deco bottom-right — decorative gradient arc */}
       <div
         aria-hidden="true"
-        style={{ position: "absolute", bottom: 0, right: 0, width: 397, height: 413, overflow: "hidden", pointerEvents: "none" }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: "0 -53.15% -55.69% 0",
-            maskImage: `url('${imgGroup}')`,
-            maskSize: "397px 413px",
-            maskPosition: "0px 0px",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url('${imgGroup}')`,
-            WebkitMaskSize: "397px 413px",
-            WebkitMaskPosition: "0px 0px",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" src={imgGroup1} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-        </div>
-      </div>
+        style={{ position: "absolute", bottom: 0, right: 0, width: 397, height: 413, overflow: "hidden", pointerEvents: "none", background: "linear-gradient(320deg, rgba(43,127,255,0.06) 0%, transparent 50%)" }}
+      />
 
       <div style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", gap: 40, alignItems: "flex-start" }}>
 
-        {/* Left — photo card, self-stretch, capped at 389px */}
-        {/* FadeUp className drives flex sizing + max-width — style prop is NOT supported by FadeUp */}
+        {/* Left — photo card placeholder */}
         <FadeUp trigger="scroll" delay={0} className="flex-[1_0_0] max-w-[389px] self-stretch">
-          {/* Shadow lives here — NO overflow:hidden so it isn't clipped */}
           <div
             style={{
               position: "relative",
@@ -107,40 +70,33 @@ export default function PartnerDeliverablesSection() {
               boxShadow: "4px 4px 32px 0px rgba(0,119,255,0.4)",
             }}
           >
-            {/* Images are absolutely positioned inside an aria-hidden wrapper */}
             <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", borderRadius: 16 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imgPlaceholderImage}
-                alt=""
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "block",
-                  width: "100%",
-                  height: "100%",
-                  maxWidth: "none",
-                  objectFit: "cover",
-                  borderRadius: 16,
-                }}
-              />
-              {/* Overlay image — clipped within its own overflow:hidden container */}
-              <div style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: 16 }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+              {placeholderImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={imgPlaceholderImage1}
+                  src={placeholderImage}
                   alt=""
                   style={{
                     position: "absolute",
-                    top: 0,
-                    left: "-133.27%",
-                    width: "256.84%",
+                    inset: 0,
+                    display: "block",
+                    width: "100%",
                     height: "100%",
                     maxWidth: "none",
-                    display: "block",
+                    objectFit: "cover",
+                    borderRadius: 16,
                   }}
                 />
-              </div>
+              ) : (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: 16,
+                    background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
+                  }}
+                />
+              )}
             </div>
           </div>
         </FadeUp>
@@ -161,18 +117,18 @@ export default function PartnerDeliverablesSection() {
                 }}
               >
                 <GoalIcon />
-                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>Deliverables</span>
+                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>{chipLabel}</span>
               </div>
               {/* Heading */}
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
-                {"Typical "}
+                {heading}
                 <span style={{ backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Deliverables
+                  {headingHighlight}
                 </span>
               </h2>
               {/* Body */}
               <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>
-                Concrete, tangible work products — each designed to carry AI from concept through live operation.
+                {description}
               </p>
             </div>
 

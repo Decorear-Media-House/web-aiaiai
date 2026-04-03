@@ -6,7 +6,13 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 
 const CHIPS = ["Target outcome", "Current constraints", "Preferred pace"];
 
-export default function PartnerCTASection() {
+export default function PartnerCTASection({ content }: { content?: Record<string, unknown> }) {
+  const heading = (content?.heading as string) ?? "Tell us your target outcome ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "and constraints.";
+  const description = (content?.description as string) ??
+    "We\u2019ll propose a practical next step: discovery, roadmap, pilot, or MVP scope.";
+  const primaryCta = (content?.primaryCta as string) ?? "Contact Us";
+  const secondaryCta = (content?.secondaryCta as string) ?? "All Services";
   return (
     <section
       style={{
@@ -58,12 +64,12 @@ export default function PartnerCTASection() {
             <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", maxWidth: 672 }}>
               {/* Heading */}
               <h2 style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, margin: 0, color: "#fff" }}>
-                Tell us your target outcome{" "}
-                <span style={{ color: "#00BAF2" }}>and constraints.</span>
+                {heading}
+                <span style={{ color: "#00BAF2" }}>{headingHighlight}</span>
               </h2>
               {/* Body */}
               <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>
-                {"We'll propose a practical next step: discovery, roadmap, pilot, or MVP scope."}
+                {description}
               </p>
               {/* Chips */}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
@@ -99,7 +105,7 @@ export default function PartnerCTASection() {
                   fontFamily: font, fontSize: 16, color: "#fff", textDecoration: "none", whiteSpace: "nowrap",
                 }}
               >
-                Contact Us
+                {primaryCta}
               </a>
               {/* Secondary CTA */}
               <a
@@ -113,7 +119,7 @@ export default function PartnerCTASection() {
                   fontFamily: font, fontSize: 16, color: "#fff", textDecoration: "none", whiteSpace: "nowrap",
                 }}
               >
-                All Services
+                {secondaryCta}
               </a>
             </div>
           </FadeUp>
