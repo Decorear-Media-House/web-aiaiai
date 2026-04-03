@@ -5,32 +5,63 @@ import Container from "@/components/layouts/Container";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/security/
-const imgVector = "https://www.figma.com/api/mcp/asset/cbd51cb1-d693-4856-be2c-02f6fe07f54b";
-const imgPhaseIcon = "https://www.figma.com/api/mcp/asset/8450b78a-a58a-4ebf-9d11-a6d033b27f7a";
-const imgPhaseIcon1 = "https://www.figma.com/api/mcp/asset/c3bd8592-75ad-4af2-957a-3fd439dc89b9";
-const imgPhaseIcon2 = "https://www.figma.com/api/mcp/asset/0dc7b891-6b58-415d-bd8d-e60c08fcb753";
-
 const ROYAL_SHINE = "linear-gradient(135deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 const ROYAL_TEXT = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
+function PilotIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function ExpandIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3v18M3 12h18" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+      <rect x="5" y="5" width="14" height="14" rx="2" stroke="#fff" strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
+function RolloutIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function DevelopmentChipIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2l8 4.5v7L12 18l-8-4.5v-7L12 2z" stroke="#4A99F5" strokeWidth="1.5" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+const PHASE_ICONS = [
+  <PilotIcon key="p1" />,
+  <ExpandIcon key="p2" />,
+  <RolloutIcon key="p3" />,
+];
+
 const PHASES = [
   {
-    icon: imgPhaseIcon,
     phase: "Phase 1",
     title: "Pilot & Validate",
-    subtitle: "1–2 sites",
+    subtitle: "1\u20132 sites",
     description: "Validate detection usefulness, alert quality, and workflow fit.",
   },
   {
-    icon: imgPhaseIcon1,
     phase: "Phase 2",
     title: "Expand Analytics Packs",
     subtitle: null,
     description: "Add analytics packs and improve SOP integration.",
   },
   {
-    icon: imgPhaseIcon2,
     phase: "Phase 3",
     title: "Scale Rollout",
     subtitle: null,
@@ -38,7 +69,20 @@ const PHASES = [
   },
 ];
 
-export default function SecurityPhasesSection() {
+interface PhasesContent {
+  chip?: string;
+  heading?: string;
+  description?: string;
+  phases?: typeof PHASES;
+  background_color?: string;
+}
+
+export default function SecurityPhasesSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as PhasesContent;
+  const chip = c.chip ?? "Development";
+  const sectionHeading = c.heading ?? "How Deployments Usually Run";
+  const sectionDescription = c.description ?? "A structured three-phase approach from initial pilot through full-scale rollout.";
+  const phases = c.phases ?? PHASES;
   return (
     <section className="relative" style={{ background: "#070E24", overflowX: "clip" }}>
       {/* Faint center glow */}
@@ -64,24 +108,23 @@ export default function SecurityPhasesSection() {
                   WebkitBackdropFilter: "blur(16px)",
                 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imgVector} alt="" width={14} height={14} />
-                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>Development</span>
+                <DevelopmentChipIcon />
+                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{chip}</span>
               </div>
 
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", textAlign: "center" }}>
-                How Deployments Usually Run
+                {sectionHeading}
               </h2>
 
               <p style={{ fontFamily: font, fontSize: 16, color: "#90A1B9", lineHeight: 1.5, textAlign: "center" }}>
-                A structured three-phase approach from initial pilot through full-scale rollout.
+                {sectionDescription}
               </p>
             </div>
           </FadeUp>
 
           {/* Phase cards */}
           <div className="flex flex-wrap gap-6 items-start justify-center w-full">
-            {PHASES.map(({ icon, phase, title, subtitle, description }, i) => (
+            {phases.map(({ phase, title, subtitle, description }, i) => (
               <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[240px] flex flex-col gap-8 items-start">
                 {/* Icon row with horizontal lines */}
                 <div className="flex gap-2.5 items-center justify-center w-full">
@@ -97,8 +140,7 @@ export default function SecurityPhasesSection() {
                       boxShadow: "0px 0px 24px 0px rgba(59,130,246,0.4)",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={icon} alt="" width={24} height={24} />
+                    {PHASE_ICONS[i]}
                   </div>
                   {/* Right line */}
                   <div className="flex-1 h-px min-w-0" style={{ background: "rgba(74,153,245,0.3)" }} />

@@ -1,46 +1,67 @@
 "use client";
 
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-// TODO: Replace with local assets in /public/images/partner/
-const imgHeader6    = "https://www.figma.com/api/mcp/asset/71a70910-f64e-442c-a0b8-1771234c26db";
-const imgContainer  = "https://www.figma.com/api/mcp/asset/39c5ad71-5864-4be1-a38e-f6a98a34f163";
-const imgContainer1 = "https://www.figma.com/api/mcp/asset/d0bf82a0-3c77-4e57-bd5a-bbc14c6c89de";
-const imgGroup      = "https://www.figma.com/api/mcp/asset/d0c3bb29-b464-4806-87ca-0bc32f1c22ac";
-const imgGroup1     = "https://www.figma.com/api/mcp/asset/b01c1fe4-bc41-49ce-804b-a386d784c475";
-const imgVector     = "https://www.figma.com/api/mcp/asset/5c1c1e75-878c-4dab-a52f-bed95e83d45c";
-const imgVector2    = "https://www.figma.com/api/mcp/asset/788a2305-dcc2-4bfa-b750-e9e74e2e991a";
-const imgVector3    = "https://www.figma.com/api/mcp/asset/1e0ee616-47e6-455d-be9a-5e8b1e977c89";
-const imgVector4    = "https://www.figma.com/api/mcp/asset/6223df23-b282-487f-9eb0-5ffc742e3316";
+/** Team / people icon */
+function TeamIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <circle cx="5" cy="4" r="2" stroke="#4A99F5" strokeWidth="1.2"/>
+      <circle cx="10" cy="4" r="1.5" stroke="#4A99F5" strokeWidth="1.2"/>
+      <path d="M1 12c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round"/>
+      <path d="M10 8c1.7 0 3 1.3 3 3" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  );
+}
 
 const STATS = [
-  { top: "PoC → MVP",       bottom: "Validated Delivery" },
+  { top: "PoC \u2192 MVP",       bottom: "Validated Delivery" },
   { top: "Governed",        bottom: "From Day One"       },
   { top: "Operationalized", bottom: "Not Just Strategy"  },
 ];
 
-export default function PartnerHeroSection() {
+export default function PartnerHeroSection({ content }: { content?: Record<string, unknown> }) {
+  const chipLabel = (content?.chipLabel as string) ?? "From Roadmap to Production \u2014 Delivered";
+  const heading = (content?.heading as string) ?? "AI Solution Partner";
+  const description = (content?.description as string) ??
+    "Roadmap to MVP to production deployment\u2014delivered with governance, integration, and operational constraints in mind.";
+  const primaryCta = (content?.primaryCta as string) ?? "Contact Us";
+  const secondaryCta = (content?.secondaryCta as string) ?? "All Services";
+  const bgImage = wpImageUrl((content?.hero_background_image as string) || "");
+  const containerImage = wpImageUrl((content?.container_image as string) || "");
+  const bgColor = (content?.background_color as string) ?? "#070E24";
   return (
     <section
       style={{
         position: "relative",
         height: 656,
         overflow: "hidden",
-        background: "#070E24",
+        background: bgColor,
       }}
     >
       {/* Background image + gradient overlay */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }} aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgHeader6}
-          alt=""
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+        {bgImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={bgImage}
+            alt=""
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        ) : (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(135deg, #0A1430 0%, #102050 50%, #1A4494 100%)",
+            }}
+          />
+        )}
         <div
           style={{
             position: "absolute",
@@ -50,7 +71,7 @@ export default function PartnerHeroSection() {
         />
       </div>
 
-      {/* Deco bottom-left corner */}
+      {/* Deco bottom-left corner — decorative gradient arc */}
       <div
         aria-hidden="true"
         style={{
@@ -61,30 +82,9 @@ export default function PartnerHeroSection() {
           height: 511,
           overflow: "hidden",
           pointerEvents: "none",
+          background: "linear-gradient(40deg, rgba(43,127,255,0.08) 0%, transparent 60%)",
         }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: "-12.62% -0.06% -13.18% -52.66%",
-            maskImage: `url('${imgGroup}')`,
-            maskSize: "224px 511px",
-            maskPosition: "117.963px 64.491px",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url('${imgGroup}')`,
-            WebkitMaskSize: "224px 511px",
-            WebkitMaskPosition: "117.963px 64.491px",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt=""
-            src={imgGroup1}
-            style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }}
-          />
-        </div>
-      </div>
+      />
 
       {/* Content — absolute fill, pt-140 pb-80 px-112 */}
       <div
@@ -121,20 +121,25 @@ export default function PartnerHeroSection() {
                   boxShadow: "4px 4px 32px 0px rgba(0,119,255,0.4)",
                 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt=""
-                  src={imgContainer}
-                  aria-hidden="true"
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none", objectFit: "cover", borderRadius: 16, display: "block", pointerEvents: "none" }}
-                />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt=""
-                  src={imgContainer1}
-                  aria-hidden="true"
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none", objectFit: "cover", borderRadius: 16, display: "block", pointerEvents: "none" }}
-                />
+                {containerImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    alt=""
+                    src={containerImage}
+                    aria-hidden="true"
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none", objectFit: "cover", borderRadius: 16, display: "block", pointerEvents: "none" }}
+                  />
+                ) : (
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 16,
+                      background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
+                    }}
+                  />
+                )}
               </div>
             </FadeUp>
           </div>
@@ -168,35 +173,9 @@ export default function PartnerHeroSection() {
                     WebkitBackdropFilter: "blur(16px)",
                   }}
                 >
-                  {/* Team icon */}
-                  <div style={{ position: "relative", width: 14, height: 14, flexShrink: 0, overflow: "hidden" }}>
-                    <div style={{ position: "absolute", top: "62.5%", right: "33.33%", bottom: "12.5%", left: "8.33%" }}>
-                      <div style={{ position: "absolute", inset: "-16.67% -7.14%" }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector} />
-                      </div>
-                    </div>
-                    <div style={{ position: "absolute", top: "12.5%", right: "45.83%", bottom: "54.17%", left: "20.83%" }}>
-                      <div style={{ position: "absolute", inset: "-12.5%" }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector2} />
-                      </div>
-                    </div>
-                    <div style={{ position: "absolute", top: "63.04%", right: "8.33%", bottom: "12.5%", left: "79.17%" }}>
-                      <div style={{ position: "absolute", inset: "-17.04% -33.33% -17.04% -33.34%" }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector3} />
-                      </div>
-                    </div>
-                    <div style={{ position: "absolute", top: "13.04%", right: "20.8%", bottom: "54.67%", left: "66.67%" }}>
-                      <div style={{ position: "absolute", inset: "-12.91% -33.25%" }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector4} />
-                      </div>
-                    </div>
-                  </div>
+                  <TeamIcon />
                   <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "pre" }}>
-                    From Roadmap to Production — Delivered
+                    {chipLabel}
                   </span>
                 </div>
 
@@ -215,12 +194,12 @@ export default function PartnerHeroSection() {
                     textShadow: "none",
                   }}
                 >
-                  AI Solution Partner
+                  {heading}
                 </h1>
 
                 {/* Body */}
                 <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>
-                  Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.
+                  {description}
                 </p>
               </div>
             </FadeUp>
@@ -246,7 +225,7 @@ export default function PartnerHeroSection() {
                     textDecoration: "none",
                   }}
                 >
-                  Contact Us
+                  {primaryCta}
                 </a>
                 <a
                   href="/services"
@@ -267,7 +246,7 @@ export default function PartnerHeroSection() {
                     textDecoration: "none",
                   }}
                 >
-                  All Services
+                  {secondaryCta}
                 </a>
               </div>
             </FadeUp>

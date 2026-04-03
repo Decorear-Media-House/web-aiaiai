@@ -7,24 +7,18 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-// TODO: Replace with local assets in /public/images/robotics/
-const imgThumnail  = "https://www.figma.com/api/mcp/asset/68c22e5a-3db5-4d88-a8eb-1a007cc502cb";
-const imgThumnail1 = "https://www.figma.com/api/mcp/asset/099caa6f-05af-48c6-a345-2d2e432fa16a";
-const imgGroup     = "https://www.figma.com/api/mcp/asset/174d3d98-7381-41fa-8447-16bd6de94159";
-const imgGroup1    = "https://www.figma.com/api/mcp/asset/50cdc245-5a18-4fcc-86ea-770a5b368d4f";
-
-// Sparkle icon vectors
-const imgVector  = "https://www.figma.com/api/mcp/asset/3b148a11-1489-4839-8f09-a48587cb34ce";
-const imgVector1 = "https://www.figma.com/api/mcp/asset/dfe75313-88a5-452a-9682-b4f525cab52b";
-const imgVector2 = "https://www.figma.com/api/mcp/asset/ccf11cae-9e8d-49f0-a993-e377d8f4b4ce";
-const imgVector3 = "https://www.figma.com/api/mcp/asset/935fcdad-a41b-4a6d-99c0-c509facd4b35";
-const imgVector4 = "https://www.figma.com/api/mcp/asset/be71d7b9-cc55-4df5-88cf-51e60929043d";
+function SparkleIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="#4A99F5"/>
+    </svg>
+  );
+}
 
 const TABS = [
   {
     label: "Logistics & Warehousing",
     caseLabel: "Use Case 1",
-    photos: [imgThumnail, imgThumnail1],
     tags: ["Pick & Place", "Inventory", "WMS Integration"],
     heading: "Logistics & Warehousing",
     body: "Humanoid robots handling pick-and-place, sorting, and inventory checks in warehouse environments — integrated with existing WMS and operational SOPs.",
@@ -32,7 +26,6 @@ const TABS = [
   {
     label: "Manufacturing & Assembly",
     caseLabel: "Use Case 2",
-    photos: [imgThumnail, imgThumnail1],
     tags: ["Line Assembly", "QA Inspection", "ERP Integration"],
     heading: "Manufacturing & Assembly",
     body: "Robots operating alongside human workers on assembly lines — performing precision tasks, quality checks, and feeding data directly into ERP systems.",
@@ -40,59 +33,36 @@ const TABS = [
   {
     label: "Facility & Inspection",
     caseLabel: "Use Case 3",
-    photos: [imgThumnail, imgThumnail1],
     tags: ["Patrol & Monitoring", "Anomaly Detection", "CMMS Integration"],
     heading: "Facility & Inspection",
     body: "Autonomous inspection rounds across facilities — detecting anomalies, logging maintenance events, and syncing findings with facility management systems.",
   },
 ];
 
-function SparkleIcon() {
-  return (
-    <div style={{ position: "relative", width: 14, height: 14, flexShrink: 0, overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: "8.33% 8.32% 8.33% 8.34%" }}>
-        <div style={{ position: "absolute", inset: "-5%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "12.5%", right: "83.33%", bottom: "70.83%", left: "16.67%" }}>
-        <div style={{ position: "absolute", inset: "-25% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector1} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "20.83%", left: "75%", right: "8.33%", bottom: "79.17%" }}>
-        <div style={{ position: "absolute", inset: "-0.58px -25%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector2} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "70.83%", left: "16.67%", right: "83.33%", bottom: "20.83%" }}>
-        <div style={{ position: "absolute", inset: "-50% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector3} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "75%", left: "12.5%", right: "79.17%", bottom: "25%" }}>
-        <div style={{ position: "absolute", inset: "-0.58px -50%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector4} />
-        </div>
-      </div>
-    </div>
-  );
+interface UseCasesContent {
+  chip?: string;
+  heading?: string;
+  heading_highlight?: string;
+  description?: string;
+  tabs?: typeof TABS;
+  background_color?: string;
 }
 
-export default function RoboticsUseCasesSection() {
+export default function RoboticsUseCasesSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as UseCasesContent;
+  const chip = c.chip ?? "Use Cases";
+  const sectionHeading = c.heading ?? "Where Robots ";
+  const headingHighlight = c.heading_highlight ?? "Deliver Value";
+  const sectionDescription = c.description ?? "Deployment-ready use cases across industries — each with a structured pilot, SOP, and integration plan.";
+  const tabs = c.tabs ?? TABS;
   const [activeTab, setActiveTab] = useState(0);
-  const tab = TABS[activeTab];
+  const tab = tabs[activeTab];
 
   return (
     <section
       style={{
         position: "relative",
-        background: "#070E24",
+        background: c.background_color ?? "#070E24",
         paddingTop: 40,
         paddingBottom: 80,
         overflow: "hidden",
@@ -114,7 +84,7 @@ export default function RoboticsUseCasesSection() {
         }}
       />
 
-      {/* Deco corner top-right */}
+      {/* Deco corner top-right — decorative gradient arc */}
       <div
         aria-hidden="true"
         style={{
@@ -125,26 +95,9 @@ export default function RoboticsUseCasesSection() {
           height: 511,
           overflow: "hidden",
           pointerEvents: "none",
+          background: "linear-gradient(220deg, rgba(43,127,255,0.08) 0%, transparent 60%)",
         }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: "-13.18% -52.66% -12.62% -0.06%",
-            maskImage: `url('${imgGroup}')`,
-            maskSize: "224px 511px",
-            maskPosition: "0.13px 67.327px",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url('${imgGroup}')`,
-            WebkitMaskSize: "224px 511px",
-            WebkitMaskPosition: "0.13px 67.327px",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" src={imgGroup1} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-        </div>
-      </div>
+      />
 
       {/* Glow bottom-left */}
       <div
@@ -195,7 +148,7 @@ export default function RoboticsUseCasesSection() {
             >
               <SparkleIcon />
               <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                Use Cases
+                {chip}
               </span>
             </div>
 
@@ -211,7 +164,7 @@ export default function RoboticsUseCasesSection() {
                 color: "#fff",
               }}
             >
-              {"Where Robots "}
+              {sectionHeading}
               <span
                 style={{
                   backgroundImage: ROYAL_SHINE,
@@ -220,13 +173,13 @@ export default function RoboticsUseCasesSection() {
                   backgroundClip: "text",
                 }}
               >
-                Deliver Value
+                {headingHighlight}
               </span>
             </h2>
 
             {/* Body */}
             <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center", margin: 0 }}>
-              Deployment-ready use cases across industries — each with a structured pilot, SOP, and integration plan.
+              {sectionDescription}
             </p>
           </div>
         </FadeUp>
@@ -248,7 +201,7 @@ export default function RoboticsUseCasesSection() {
               justifyContent: "center",
             }}
           >
-            {TABS.map((t, i) => (
+            {tabs.map((t, i) => (
               <button
                 key={t.label}
                 onClick={() => setActiveTab(i)}
@@ -283,7 +236,7 @@ export default function RoboticsUseCasesSection() {
               width: "100%",
             }}
           >
-            {/* Left — photo card */}
+            {/* Left — photo card placeholder */}
             <div
               style={{
                 flex: "1 0 0",
@@ -300,26 +253,16 @@ export default function RoboticsUseCasesSection() {
                 alignItems: "center",
               }}
             >
-              {/* Photos */}
+              {/* Dark gradient placeholder for photos */}
               <div aria-hidden="true" style={{ position: "absolute", inset: 0, borderRadius: 16, pointerEvents: "none" }}>
-                {tab.photos.map((src, pi) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={pi}
-                    alt=""
-                    src={src}
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      width: "100%",
-                      height: "100%",
-                      maxWidth: "none",
-                      objectFit: "cover",
-                      borderRadius: 16,
-                      display: "block",
-                    }}
-                  />
-                ))}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: 16,
+                    background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
+                  }}
+                />
               </div>
               {/* Tags */}
               <div style={{ position: "relative", display: "flex", flexWrap: "wrap", gap: 4 }}>
@@ -386,7 +329,7 @@ export default function RoboticsUseCasesSection() {
 
               {/* Dot carousel */}
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                {TABS.map((_, i) => (
+                {tabs.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveTab(i)}

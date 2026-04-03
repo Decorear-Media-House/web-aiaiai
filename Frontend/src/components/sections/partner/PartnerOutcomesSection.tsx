@@ -2,111 +2,103 @@
 
 import { useState } from "react";
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-// TODO: Replace with local assets in /public/images/partner/
-const imgPlaceholderImage = "https://www.figma.com/api/mcp/asset/3b292922-4c02-43d5-91ef-9029fe64ef28";
-const imgGroup            = "https://www.figma.com/api/mcp/asset/2d5cc8fe-f6ba-42b2-b7b5-cbb52dcb87ca";
-const imgGroup1           = "https://www.figma.com/api/mcp/asset/e586ba96-4757-49de-b790-41f1785539a7";
-const imgIcon             = "https://www.figma.com/api/mcp/asset/f71d3b6e-0af3-4cc6-8a66-fc6eb7572883";
-const imgIcon1            = "https://www.figma.com/api/mcp/asset/53625fc0-0587-40f8-ad57-59d9609b405d";
+/** Stat / bar-chart icon for the chip */
+function StatIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <rect x="1" y="7" width="3" height="5" rx="0.5" stroke="#4A99F5" strokeWidth="1.2"/>
+      <rect x="5.5" y="4" width="3" height="8" rx="0.5" stroke="#4A99F5" strokeWidth="1.2"/>
+      <rect x="10" y="2" width="3" height="10" rx="0.5" stroke="#4A99F5" strokeWidth="1.2"/>
+    </svg>
+  );
+}
 
-// Stat icon vectors (chip)
-const imgVector  = "https://www.figma.com/api/mcp/asset/d7000ff3-1f83-4bba-a5f6-e10b8f6fcbd5";
-const imgVector1 = "https://www.figma.com/api/mcp/asset/4162bbe2-fb08-4f46-aef6-cce33f2e990a";
-const imgVector2 = "https://www.figma.com/api/mcp/asset/0167ccd5-304c-47df-8d20-7bad1ce77148";
-const imgVector3 = "https://www.figma.com/api/mcp/asset/2e35921e-743b-488f-bad3-6d6345952518";
+function CheckCircleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 3 }}>
+      <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5"/>
+      <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function SparkleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 3 }}>
+      <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="#4A99F5"/>
+    </svg>
+  );
+}
 
 const TABS = [
   {
     label: "Cost Reduction",
     patterns: [
-      { icon: imgIcon,  text: "KPI dashboards" },
-      { icon: imgIcon1, text: "Standard process flows and SOP alignment" },
-      { icon: imgIcon1, text: "Operational monitoring and improvement cadence" },
+      { text: "KPI dashboards", useSparkle: true },
+      { text: "Standard process flows and SOP alignment", useSparkle: false },
+      { text: "Operational monitoring and improvement cadence", useSparkle: false },
     ],
     success: [
-      { icon: imgIcon1, text: "Predictable operations" },
-      { icon: imgIcon1, text: "Fewer surprises and escalations" },
-      { icon: imgIcon1, text: "Continuous improvement based on real data" },
+      { text: "Predictable operations" },
+      { text: "Fewer surprises and escalations" },
+      { text: "Continuous improvement based on real data" },
     ],
   },
   {
     label: "Revenue Growth",
     patterns: [
-      { icon: imgIcon,  text: "AI-driven lead qualification and scoring" },
-      { icon: imgIcon1, text: "Personalized customer engagement workflows" },
-      { icon: imgIcon1, text: "Revenue forecast modeling and scenario planning" },
+      { text: "AI-driven lead qualification and scoring", useSparkle: true },
+      { text: "Personalized customer engagement workflows", useSparkle: false },
+      { text: "Revenue forecast modeling and scenario planning", useSparkle: false },
     ],
     success: [
-      { icon: imgIcon1, text: "Higher conversion rates" },
-      { icon: imgIcon1, text: "Faster sales cycles" },
-      { icon: imgIcon1, text: "Improved customer lifetime value" },
+      { text: "Higher conversion rates" },
+      { text: "Faster sales cycles" },
+      { text: "Improved customer lifetime value" },
     ],
   },
   {
     label: "Compliance & Governance",
     patterns: [
-      { icon: imgIcon,  text: "Automated audit trails and evidence capture" },
-      { icon: imgIcon1, text: "Policy enforcement and exception workflows" },
-      { icon: imgIcon1, text: "Role-based access and data governance controls" },
+      { text: "Automated audit trails and evidence capture", useSparkle: true },
+      { text: "Policy enforcement and exception workflows", useSparkle: false },
+      { text: "Role-based access and data governance controls", useSparkle: false },
     ],
     success: [
-      { icon: imgIcon1, text: "Reduced compliance risk and audit exposure" },
-      { icon: imgIcon1, text: "Faster audit readiness across sites" },
-      { icon: imgIcon1, text: "Clear accountability structures at every level" },
+      { text: "Reduced compliance risk and audit exposure" },
+      { text: "Faster audit readiness across sites" },
+      { text: "Clear accountability structures at every level" },
     ],
   },
   {
     label: "Operational Excellence",
     patterns: [
-      { icon: imgIcon,  text: "Process automation aligned to existing SOPs" },
-      { icon: imgIcon1, text: "Exception-based workflows to reduce manual load" },
-      { icon: imgIcon1, text: "Real-time operational dashboards" },
+      { text: "Process automation aligned to existing SOPs", useSparkle: true },
+      { text: "Exception-based workflows to reduce manual load", useSparkle: false },
+      { text: "Real-time operational dashboards", useSparkle: false },
     ],
     success: [
-      { icon: imgIcon1, text: "Reduced cycle times across operations" },
-      { icon: imgIcon1, text: "Fewer manual errors and rework" },
-      { icon: imgIcon1, text: "Scalable operations across sites and teams" },
+      { text: "Reduced cycle times across operations" },
+      { text: "Fewer manual errors and rework" },
+      { text: "Scalable operations across sites and teams" },
     ],
   },
 ];
 
-function StatIcon() {
-  return (
-    <div style={{ position: "relative", width: 14, height: 14, flexShrink: 0, overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: "12.5%" }}>
-        <div style={{ position: "absolute", inset: "-5.56%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "37.5%", left: "75%", right: "25%", bottom: "29.17%" }}>
-        <div style={{ position: "absolute", inset: "-12.5% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector1} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "20.83%", right: "45.83%", bottom: "29.17%", left: "54.17%" }}>
-        <div style={{ position: "absolute", inset: "-8.33% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector2} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "58.33%", right: "66.67%", bottom: "29.17%", left: "33.33%" }}>
-        <div style={{ position: "absolute", inset: "-33.33% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector3} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function PartnerOutcomesSection() {
+export default function PartnerOutcomesSection({ content }: { content?: Record<string, unknown> }) {
+  const chipLabel = (content?.chipLabel as string) ?? "Outcomes";
+  const heading = (content?.heading as string) ?? "Business Outcomes We ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "Target";
+  const description = (content?.description as string) ??
+    "Every engagement is anchored to real outcomes \u2014 not just capabilities.";
+  const placeholderImage = wpImageUrl((content?.placeholder_image as string) || "");
+  const bgColor = (content?.background_color as string) ?? "#070E24";
   const [activeTab, setActiveTab] = useState(0);
   const tab = TABS[activeTab];
 
@@ -114,7 +106,7 @@ export default function PartnerOutcomesSection() {
     <section
       style={{
         position: "relative",
-        background: "#070E24",
+        background: bgColor,
         paddingTop: 80,
         paddingBottom: 80,
         paddingLeft: 112,
@@ -122,7 +114,7 @@ export default function PartnerOutcomesSection() {
         overflow: "hidden",
       }}
     >
-      {/* Deco top-right corner */}
+      {/* Deco top-right corner — decorative gradient arc */}
       <div
         aria-hidden="true"
         style={{
@@ -133,26 +125,9 @@ export default function PartnerOutcomesSection() {
           height: 511,
           overflow: "hidden",
           pointerEvents: "none",
+          background: "linear-gradient(220deg, rgba(43,127,255,0.08) 0%, transparent 60%)",
         }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: "-13.18% -52.66% -12.62% -0.06%",
-            maskImage: `url('${imgGroup}')`,
-            maskSize: "224px 511px",
-            maskPosition: "0.13px 67.327px",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url('${imgGroup}')`,
-            WebkitMaskSize: "224px 511px",
-            WebkitMaskPosition: "0.13px 67.327px",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" src={imgGroup1} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-        </div>
-      </div>
+      />
 
       <div
         style={{
@@ -184,7 +159,7 @@ export default function PartnerOutcomesSection() {
             >
               <StatIcon />
               <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                Outcomes
+                {chipLabel}
               </span>
             </div>
 
@@ -200,7 +175,7 @@ export default function PartnerOutcomesSection() {
                 color: "#fff",
               }}
             >
-              {"Business Outcomes We "}
+              {heading}
               <span
                 style={{
                   backgroundImage: ROYAL_SHINE,
@@ -209,13 +184,13 @@ export default function PartnerOutcomesSection() {
                   backgroundClip: "text",
                 }}
               >
-                Target
+                {headingHighlight}
               </span>
             </h2>
 
             {/* Body */}
             <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center", margin: 0 }}>
-              Every engagement is anchored to real outcomes — not just capabilities.
+              {description}
             </p>
           </div>
         </FadeUp>
@@ -260,10 +235,10 @@ export default function PartnerOutcomesSection() {
           </div>
         </FadeUp>
 
-        {/* Content row — columns animate independently so flex-stretch works */}
+        {/* Content row */}
         <div style={{ display: "flex", gap: 40, alignItems: "flex-start", width: "100%" }}>
 
-          {/* Left — photo, self-stretch to match right column height */}
+          {/* Left — photo placeholder */}
           <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-0 self-stretch">
             <div
               style={{
@@ -273,23 +248,35 @@ export default function PartnerOutcomesSection() {
                 overflow: "hidden",
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imgPlaceholderImage}
-                alt=""
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  maxWidth: "none",
-                  objectFit: "cover",
-                  borderRadius: 16,
-                  display: "block",
-                  pointerEvents: "none",
-                }}
-              />
+              {placeholderImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={placeholderImage}
+                  alt=""
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "none",
+                    objectFit: "cover",
+                    borderRadius: 16,
+                    display: "block",
+                    pointerEvents: "none",
+                  }}
+                />
+              ) : (
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: 16,
+                    background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
+                  }}
+                />
+              )}
             </div>
           </FadeUp>
 
@@ -315,12 +302,9 @@ export default function PartnerOutcomesSection() {
                   Patterns that work well
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {tab.patterns.map(({ icon, text }) => (
+                  {tab.patterns.map(({ text, useSparkle }) => (
                     <div key={text} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                      <div style={{ position: "relative", width: 16, height: 16, flexShrink: 0, marginTop: 3 }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt="" src={icon} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-                      </div>
+                      {useSparkle ? <SparkleIcon /> : <CheckCircleIcon />}
                       <p style={{ flex: 1, fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>{text}</p>
                     </div>
                   ))}
@@ -345,12 +329,9 @@ export default function PartnerOutcomesSection() {
                   What success looks like
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {tab.success.map(({ icon, text }) => (
+                  {tab.success.map(({ text }) => (
                     <div key={text} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                      <div style={{ position: "relative", width: 16, height: 16, flexShrink: 0, marginTop: 3 }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt="" src={icon} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-                      </div>
+                      <CheckCircleIcon />
                       <p style={{ flex: 1, fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>{text}</p>
                     </div>
                   ))}

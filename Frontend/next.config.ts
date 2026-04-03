@@ -6,17 +6,23 @@ const nextConfig: NextConfig = {
     silenceDeprecations: ["legacy-js-api"],
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: "http",
         hostname: "localhost",
         port: "8080",
-        pathname: "/wp-content/uploads/**",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "aiaiai-wordpress",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "cms-aiaiai.decorear.com",
-        pathname: "/wp-content/uploads/**",
+        pathname: "/**",
       },
     ],
   },

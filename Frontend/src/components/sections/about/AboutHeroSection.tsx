@@ -2,6 +2,7 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 function SparkleIcon({ color = "#4A99F5" }: { color?: string }) {
   return (
@@ -13,17 +14,21 @@ function SparkleIcon({ color = "#4A99F5" }: { color?: string }) {
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/about-hero-bg.jpg
-const BG_IMAGE = "https://www.figma.com/api/mcp/asset/6de6ae16-801f-42b0-a760-cf16ca72d581";
+const BG_IMAGE = "/images/about-hero-bg.png";
 
-export default function AboutHeroSection() {
+export default function AboutHeroSection({ content }: { content?: Record<string, unknown> }) {
+  const bgImage = wpImageUrl((content as any)?.hero_background_image || BG_IMAGE);
+  const label = (content?.label as string) ?? "About Us";
+  const heading = (content?.heading as string) ?? "About \nAi-Ai-Ai Co., Ltd.";
+  const description = (content?.description as string) ??
+    "Ai-Ai-Ai Co., Ltd. is a Thailand-based AI company delivering AI Solution Partner engagements from roadmap to production deployment, plus AI video analytics security and humanoid robotics solutions.";
   return (
     <section className="relative overflow-hidden" style={{ background: "#070E24" }}>
       {/* Background image + gradient overlay */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={BG_IMAGE}
+          src={bgImage}
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -34,7 +39,7 @@ export default function AboutHeroSection() {
       </div>
 
       <Container className="relative flex items-end" style={{ minHeight: 394 }}>
-        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-lg:flex-col max-lg:items-start">
+        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-sm:pt-[120px] max-sm:pb-10 max-lg:flex-col max-lg:items-start">
 
           {/* Left column — label + title */}
           <div className="flex flex-1 min-w-[300px] flex-col gap-6">
@@ -49,7 +54,7 @@ export default function AboutHeroSection() {
                 }}
               >
                 <SparkleIcon color="#4A99F5" />
-                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>About Us</span>
+                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{label}</span>
               </div>
             </FadeUp>
 
@@ -57,17 +62,18 @@ export default function AboutHeroSection() {
               <h1
                 style={{
                   fontFamily: font,
-                  fontSize: "clamp(36px, 4vw, 48px)",
+                  fontSize: 32,
                   fontWeight: 400,
-                  lineHeight: 1.2,
-                  backgroundImage: "linear-gradient(90deg, #fff 0%, #8B95C5 31.25%, #fff 61.5%, #8B95C5 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
+                  lineHeight: 1.3,
+                  color: "#fff",
                 }}
               >
-                About <br />
-                Ai-Ai-Ai Co., Ltd.
+                {heading.split("\n").map((line, i, arr) => (
+                  <span key={i}>
+                    {line}
+                    {i < arr.length - 1 && <br />}
+                  </span>
+                ))}
               </h1>
             </FadeUp>
           </div>
@@ -76,9 +82,7 @@ export default function AboutHeroSection() {
           <div className="flex flex-1 min-w-[300px] items-end">
             <FadeUp trigger="mount" delay={0.2}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.75 }}>
-                Ai-Ai-Ai Co., Ltd. is a Thailand-based AI company delivering AI Solution Partner
-                engagements from roadmap to production deployment, plus AI video analytics security
-                and humanoid robotics solutions.
+                {description}
               </p>
             </FadeUp>
           </div>

@@ -6,21 +6,48 @@ import Container from "@/components/layouts/Container";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local assets in /public/images/robotics/
-const imgGe  = "https://www.figma.com/api/mcp/asset/21996aff-a9f9-4ea7-bef1-7fd8f0e029e4";
-const imgGe1 = "https://www.figma.com/api/mcp/asset/7c9968fb-0da7-42ee-a891-b6c376fd66c2";
-const imgCheckCircle2 = "https://www.figma.com/api/mcp/asset/df8ab74c-7bb1-4a44-b8b3-363c23171d75";
-const imgOIcon  = "https://www.figma.com/api/mcp/asset/b114c9a0-b13d-4117-820f-7a48d3a4a8a8";
-const imgOIcon1 = "https://www.figma.com/api/mcp/asset/684e3bdb-1540-4f11-a400-35a398df60a0";
-const imgIcon   = "https://www.figma.com/api/mcp/asset/93cde9f6-e363-42c4-a172-e65537bd7630";
-const imgIcon1  = "https://www.figma.com/api/mcp/asset/cbcf785e-b940-42a4-9ab1-119267a1238a";
-const imgChevronRight  = "https://www.figma.com/api/mcp/asset/ca5aeb1a-710d-43ff-a0ce-c5eb427b6c8e";
-const imgChevronRight1 = "https://www.figma.com/api/mcp/asset/e36ecb27-d2ac-4f53-8426-8df535223e89";
+function CheckCircleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }}>
+      <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5"/>
+      <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ display: "block" }}>
+      <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+/** Generic icon for accordion items — simple shape on gradient background */
+function AccordionIcon({ gradient }: { gradient: string }) {
+  return (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: 12,
+        backgroundImage: gradient,
+        flexShrink: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M9 2v14M2 9h14" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    </div>
+  );
+}
 
 const ACCORDION_ITEMS = [
   {
     label: "Labor efficiency & cost reduction",
-    iconImg: imgOIcon,
     iconGradient: "linear-gradient(135deg, #00BC7D 0%, #0092B8 100%)",
     items: [
       "Automate repetitive tasks to improve throughput",
@@ -30,19 +57,16 @@ const ACCORDION_ITEMS = [
   },
   {
     label: "Operational consistency",
-    iconImg: imgIcon,
     iconGradient: "linear-gradient(135deg, #2B7FFF 0%, #00B8DB 100%)",
     items: [],
   },
   {
     label: "Safety & governance",
-    iconImg: imgOIcon1,
     iconGradient: "linear-gradient(135deg, #00B8DB 0%, #155DFC 100%)",
     items: [],
   },
   {
     label: "Scalability",
-    iconImg: imgIcon1,
     iconGradient: "linear-gradient(135deg, #8E51FF 0%, #155DFC 100%)",
     items: [],
   },
@@ -51,21 +75,35 @@ const ACCORDION_ITEMS = [
 function CheckItem({ text }: { text: string }) {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imgCheckCircle2} alt="" width={16} height={16} style={{ flexShrink: 0, marginTop: 2 }} />
+      <CheckCircleIcon />
       <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>{text}</p>
     </div>
   );
 }
 
-export default function RoboticsOutcomesSection() {
+interface OutcomesContent {
+  chip?: string;
+  heading?: string;
+  heading_highlight?: string;
+  description?: string;
+  accordion_items?: typeof ACCORDION_ITEMS;
+  background_color?: string;
+}
+
+export default function RoboticsOutcomesSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as OutcomesContent;
+  const chip = c.chip ?? "Outcomes";
+  const sectionHeading = c.heading ?? "What Robotics ";
+  const headingHighlight = c.heading_highlight ?? "Achieves";
+  const sectionDescription = c.description ?? "Structured deployment unlocks measurable operational improvements — from day one through full-scale rollout.";
+  const accordionItems = c.accordion_items ?? ACCORDION_ITEMS;
   const [open, setOpen] = useState(0);
 
   return (
     <section
       style={{
         position: "relative",
-        background: "#1E2E48",
+        background: c.background_color ?? "#1E2E48",
         overflow: "hidden",
       }}
     >
@@ -146,13 +184,13 @@ export default function RoboticsOutcomesSection() {
                     <path d="M9 5H11V7" stroke="#FFA2A2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span style={{ fontFamily: font, fontSize: 12, color: "#FFA2A2", whiteSpace: "nowrap" }}>
-                    Outcomes
+                    {chip}
                   </span>
                 </div>
 
                 {/* Heading */}
                 <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
-                  {"What Robotics "}
+                  {sectionHeading}
                   <span
                     style={{
                       backgroundImage: "linear-gradient(135deg, #ff8904 0%, #ff6467 100%)",
@@ -161,17 +199,17 @@ export default function RoboticsOutcomesSection() {
                       backgroundClip: "text",
                     }}
                   >
-                    Achieves
+                    {headingHighlight}
                   </span>
                 </h2>
 
                 {/* Body */}
                 <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>
-                  Structured deployment unlocks measurable operational improvements — from day one through full-scale rollout.
+                  {sectionDescription}
                 </p>
               </div>
 
-              {/* Photo */}
+              {/* Photo placeholder */}
               <div
                 style={{
                   position: "relative",
@@ -180,19 +218,15 @@ export default function RoboticsOutcomesSection() {
                   width: "100%",
                   overflow: "hidden",
                   flexShrink: 0,
+                  background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
                 }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt="" src={imgGe}  aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 16, display: "block" }} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt="" src={imgGe1} aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 16, display: "block" }} />
-              </div>
+              />
             </div>
           </FadeUp>
 
           {/* Right column — accordion */}
           <div style={{ flex: "1 0 0", minWidth: 300, display: "flex", flexDirection: "column", gap: 12 }}>
-            {ACCORDION_ITEMS.map(({ label, iconImg, iconGradient, items }, i) => (
+            {accordionItems.map(({ label, iconGradient, items }, i) => (
               <FadeUp key={label} trigger="scroll" delay={i * 0.07}>
                 <div
                   style={{
@@ -218,30 +252,15 @@ export default function RoboticsOutcomesSection() {
                     }}
                   >
                     {/* Icon square */}
-                    <div
-                      style={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: 12,
-                        backgroundImage: iconGradient,
-                        flexShrink: 0,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        opacity: open === i ? 1 : 0.6,
-                        transition: "opacity 0.2s",
-                      }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={iconImg} alt="" width={18} height={18} style={{ display: "block" }} />
+                    <div style={{ opacity: open === i ? 1 : 0.6, transition: "opacity 0.2s" }}>
+                      <AccordionIcon gradient={iconGradient} />
                     </div>
                     <span style={{ flex: 1, fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
                       {label}
                     </span>
                     {/* Chevron */}
-                    <div style={{ width: 24, height: 24, flexShrink: 0, transform: open === i ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform 0.2s" }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={open === i ? imgChevronRight : imgChevronRight1} alt="" style={{ display: "block", width: "100%", height: "100%" }} />
+                    <div style={{ width: 24, height: 24, flexShrink: 0, transform: open === i ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform 0.2s", color: "#fff" }}>
+                      <ChevronRightIcon />
                     </div>
                   </button>
 

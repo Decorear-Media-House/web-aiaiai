@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "label": "AI Solution Partner \u00b7 Thailand",
+    "heading": "Your AI Solution Partner from roadmap to production deployment.",
+    "description": "We help organizations adopt practical AI that reduces cost, increases revenue, strengthens compliance, and improves security\u2014through AI Solution Partner delivery, AI video-analytics security, and humanoid robotics solutions.",
+    "cta_text": "Contact Us",
+    "cta_subtext": "Share your goal and constraints. Our team will reach out.",
+    "stats": [
+      { "value": "3+", "label": "AI Solutions" },
+      { "value": "100%", "label": "Outcome-Driven" },
+      { "value": "PoC\u2192", "label": "Production" },
+      { "value": "24/7", "label": "AI Operations" }
+    ],
+    "hero_background_image": "",
+    "brand_logo_image": "/images/aaa-vector.svg"
+  },
+  "about": {
+    "heading": "Ai-Ai-Ai Co., Ltd.",
+    "paragraphs": [
+      "Ai-Ai-Ai Co., Ltd. helps organizations adopt AI in a practical, outcome-driven way. We operate as an AI Solution Partner (and AI development partner) to take ideas from AI strategy and roadmap through PoC, MVP, and production deployment\u2014with strong focus on integration, governance, and operating reality.",
+      "We also deliver specialized solutions in Computer Vision security / AI video analytics and humanoid robotics deployment (AgiBo) with innovative AI capabilities."
+    ],
+    "section_background_image": "/images/section2-bg.png"
+  },
+  "problems": {
+    "label": "AI is easy to demo. Hard to deploy.",
+    "headingWhite": "The Problem",
+    "headingGradient": " We Solve",
+    "description": "Most organizations face at least one of these realities before they can scale AI.",
+    "cards": [
+      { "title": "Stuck at PoC", "description": "No one owns integration and rollout \u2014 AI pilots never reach production.", "card_image": "/images/card1-bg.png" },
+      { "title": "Too Many Use Cases", "description": "Teams can\u2019t prioritize without certainty on ROI or a clear starting point.", "card_image": "/images/card2-bg.png" },
+      { "title": "No Operational Control", "description": "Missing auditability, approval flows, and human-in-the-loop guardrails.", "card_image": "/images/card3-bg.png" },
+      { "title": "Security Gaps", "description": "Cameras alone aren\u2019t enough \u2014 teams need actionable intelligence and workflows.", "card_image": "/images/card4-bg.png" },
+      { "title": "Data Not Ready", "description": "Data exists but isn\u2019t structured, governed, or production-grade.", "card_image": "/images/card5-bg.png" },
+      { "title": "Physical Automation Risk", "description": "Deploying robots requires safety SOPs, maintenance plans, and escalation paths.", "card_image": "/images/card6-bg.png" }
+    ]
+  },
+  "services": {
+    "label": "Our Services",
+    "heading": "What We Do",
+    "description": "Three specialized AI solution lines designed to deliver measurable outcomes across security, automation, and digital transformation.",
+    "items": [
+      {
+        "label": "Computer Vision \u00b7 Analytics",
+        "heading": "AI Security Guard Solution",
+        "description": "Computer Vision and AI video analytics / AI video surveillance for event detection, alerts, and incident workflows.",
+        "cta": "Explore Security Platform",
+        "href": "/services/security",
+        "card_background_image": "/images/service1-security.png"
+      },
+      {
+        "label": "AgiBot \u00b7 Robotics \u00b7 Automation",
+        "heading": "AI-Enhanced Humanoid Robotics",
+        "description": "AgiBot humanoid robotics deployment and workflow integration with enhanced AI capability designed for operational readiness and scale.",
+        "cta": "Explore Robotics",
+        "href": "/services/humanoid",
+        "card_background_image": "/images/service2-robotics.png"
+      },
+      {
+        "label": "Strategy \u00b7 PoC \u00b7 Production",
+        "heading": "AI Solution Partner",
+        "description": "AI consulting and hands-on delivery: AI roadmap \u2192 PoC \u2192 MVP \u2192 production deployment, built for real operations.",
+        "cta": "Explore AI Solution Partner",
+        "href": "/services/partner",
+        "card_background_image": "/images/service3-ai-partner.png"
+      }
+    ]
+  },
+  "outcomes": {
+    "label": "Impact",
+    "heading": "Outcomes We Deliver",
+    "description": "Every engagement is measured against real business outcomes\u2014not just technical milestones."
+  },
+  "process": {
+    "label": "Our Process",
+    "heading": "How We Work",
+    "description": "A structured, outcome-driven delivery process\u2014from initial discovery through scale.",
+    "side_panel_image": "/images/howwework-side.png"
+  },
+  "cta": {
+    "heading": "Ready to ship AI that produces outcomes?",
+    "description": "Tell us what outcome matters most\u2014cost, revenue, compliance, security, or automation\u2014and we\u2019ll propose a practical first step",
+    "background_video": "/videos/CTA-Loop.mp4"
+  },
+  "contact": {
+    "label": "Get In Touch",
+    "heading": "Contact Us",
+    "description": "Tell us what you want to achieve\u2014cost reduction, revenue growth, compliance improvement, security enhancement, or operational automation. We\u2019ll review your input and reach out with a practical next step.",
+    "email": "info@ai-ai-ai.co",
+    "address": "1104/2 4th floor, Pattanakarn Road,\nSuan Luang, Bangkok, Thailand 10250"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx -y figma-developer-mcp --help)",
+      "mcp__figma__get_figma_data",
+      "Bash(python -c \"import sys,json; data=json.load\\(sys.stdin\\); text=data[0]['text']; parsed=json.loads\\(text\\); print\\(json.dumps\\(list\\(parsed.keys\\(\\)\\), indent=2\\)\\)\")",
+      "Bash(grep -o 'name: [A-Z][^\\\\\\\\]*' \"C:\\\\Users\\\\DECR\\\\.claude\\\\projects\\\\c--Users-DECR-Desktop-Git-DECR-web-aiaiai\\\\413d0eeb-0e41-4170-943f-0981b5e1823f\\\\tool-results\\\\mcp-figma-get_figma_data-1775183967917.txt\")",
+      "Bash(docker exec aiaiai-wordpress bash -c ':*)",
+      "Bash(curl -s \"http://localhost:8080/wp-json/wp/v2/pages?slug=about\")",
+      "Bash(python3 -c ':*)",
+      "mcp__figma__download_figma_images",
+      "Bash(docker cp:*)",
+      "Bash(docker exec:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}

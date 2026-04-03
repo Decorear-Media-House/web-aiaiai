@@ -5,6 +5,32 @@ const WP_BASE_URL =
   process.env.NEXT_PUBLIC_WORDPRESS_URL ||
   "http://localhost:8080";
 
+const WP_PUBLIC_URL =
+  process.env.NEXT_PUBLIC_WORDPRESS_URL || "http://localhost:8080";
+
+/**
+ * Check if an image URL is external (from WordPress uploads).
+ * Used to set `unoptimized` on Next.js Image component.
+ */
+export function isExternalImage(url: string): boolean {
+  return url.startsWith("http");
+}
+
+/**
+ * Convert a WordPress media URL to a public-facing URL.
+ * Inside Docker, WP returns URLs like http://aiaiai-wordpress:80/...
+ * The browser needs http://localhost:8080/... instead.
+ */
+export function wpImageUrl(url: string): string {
+  if (!url) return url;
+  // Already a relative path like /images/foo.png — return as-is
+  if (url.startsWith("/") && !url.startsWith("//")) return url;
+  // Replace internal Docker hostname with public URL
+  return url
+    .replace(/https?:\/\/aiaiai-wordpress(?::\d+)?/i, WP_PUBLIC_URL)
+    .replace(/https?:\/\/localhost:8080/i, WP_PUBLIC_URL);
+}
+
 /* ------------------------------------------------------------------ */
 /*  WordPress REST API types                                           */
 /* ------------------------------------------------------------------ */
@@ -46,6 +72,35 @@ interface WPCategory {
   id: number;
   name: string;
   slug: string;
+}
+
+/* ------------------------------------------------------------------ */
+/*  WordPress Page types                                               */
+/* ------------------------------------------------------------------ */
+
+interface WPPage {
+  id: number;
+  slug: string;
+  title: WPRendered;
+  content: WPRendered;
+  excerpt: WPRendered;
+  featured_media: number;
+  meta: {
+    page_sections?: string;
+    page_hero_image?: string;
+    page_og_image?: string;
+  };
+  _embedded?: {
+    "wp:featuredmedia"?: WPMedia[];
+  };
+}
+
+export interface PageContent {
+  title: string;
+  content: string;
+  excerpt: string;
+  featuredImage: string;
+  sections: Record<string, unknown>;
 }
 
 /* ------------------------------------------------------------------ */
@@ -123,7 +178,7 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
 async function wpFetch<T>(endpoint: string, fallback: T): Promise<T> {
   try {
     const res = await fetch(`${WP_API_URL}${endpoint}`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     });
     if (!res.ok) throw new Error(`WP API error: ${res.status} ${endpoint}`);
     return res.json();
@@ -167,46 +222,76 @@ export async function getCategories(): Promise<string[]> {
   return ["All", ...categories.map((c) => c.name).filter((n) => n !== "Uncategorized")];
 }
 
-export async function getRankMathSEO(slug: string): Promise<RankMathSEO | null> {
+/**
+ * Fetch SEO data from RankMath via WordPress REST API page/post meta.
+ * RankMath stores SEO fields as post meta (rank_math_title, etc.)
+ * which are exposed via REST API through registered meta fields.
+ *
+ * @param slug - WordPress page/post slug
+ * @param type - "page" or "post" (default: "page")
+ */
+export async function getRankMathSEO(
+  slug: string,
+  type: "page" | "post" = "page"
+): Promise<RankMathSEO | null> {
   try {
-    const res = await fetch(`${WP_BASE_URL}/${slug}/`, {
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return null;
-    const html = await res.text();
+    const endpoint = type === "post" ? "/wp/v2/posts" : "/wp/v2/pages";
+    const items = await wpFetch<Array<{ meta?: Record<string, string> }>>(
+      `${endpoint}?slug=${encodeURIComponent(slug)}&_fields=meta`,
+      []
+    );
+    if (items.length === 0) return null;
 
-    const getMeta = (attr: string, value: string): string => {
-      const regex = new RegExp(
-        `<meta[^>]*${attr}=["']${value}["'][^>]*content=["']([^"']*)["']`,
-        "i"
-      );
-      const match = html.match(regex);
-      if (match) return match[1];
-      // Try reversed order (content before name/property)
-      const regex2 = new RegExp(
-        `<meta[^>]*content=["']([^"']*)["'][^>]*${attr}=["']${value}["']`,
-        "i"
-      );
-      const match2 = html.match(regex2);
-      return match2?.[1] ?? "";
-    };
+    const meta = items[0].meta ?? {};
+    const hasData = meta.rank_math_title || meta.rank_math_description;
+    if (!hasData) return null;
 
     return {
-      title: getMeta("property", "og:title") || getMeta("name", "title"),
-      description: getMeta("name", "description"),
-      robots: getMeta("name", "robots"),
-      ogTitle: getMeta("property", "og:title"),
-      ogDescription: getMeta("property", "og:description"),
-      ogImage: getMeta("property", "og:image"),
-      ogType: getMeta("property", "og:type"),
-      twitterCard: getMeta("name", "twitter:card"),
-      twitterTitle: getMeta("name", "twitter:title"),
-      twitterDescription: getMeta("name", "twitter:description"),
-      twitterImage: getMeta("name", "twitter:image"),
+      title: meta.rank_math_title || "",
+      description: meta.rank_math_description || "",
+      robots: meta.rank_math_robots || "",
+      ogTitle: meta.rank_math_facebook_title || meta.rank_math_title || "",
+      ogDescription: meta.rank_math_facebook_description || meta.rank_math_description || "",
+      ogImage: meta.rank_math_facebook_image || "",
+      ogType: "website",
+      twitterCard: meta.rank_math_twitter_card_type || "summary_large_image",
+      twitterTitle: meta.rank_math_twitter_title || meta.rank_math_title || "",
+      twitterDescription: meta.rank_math_twitter_description || meta.rank_math_description || "",
+      twitterImage: "",
     };
   } catch {
     return null;
   }
+}
+
+/**
+ * Generate Next.js Metadata for a WordPress page using RankMath SEO.
+ * Use in generateMetadata() for each page.
+ */
+export async function getPageSEO(
+  wpSlug: string,
+  fallbackTitle: string,
+  fallbackDescription: string
+): Promise<import("next").Metadata> {
+  const seo = await getRankMathSEO(wpSlug === "home" ? "" : wpSlug);
+
+  return {
+    title: seo?.title || fallbackTitle,
+    description: seo?.description || fallbackDescription,
+    robots: seo?.robots || undefined,
+    openGraph: {
+      title: seo?.ogTitle || fallbackTitle,
+      description: seo?.ogDescription || fallbackDescription,
+      type: (seo?.ogType as "website") || "website",
+      images: seo?.ogImage ? [{ url: seo.ogImage }] : [],
+    },
+    twitter: {
+      card: (seo?.twitterCard as "summary_large_image") || "summary_large_image",
+      title: seo?.twitterTitle || fallbackTitle,
+      description: seo?.twitterDescription || fallbackDescription,
+      images: seo?.twitterImage ? [seo.twitterImage] : [],
+    },
+  };
 }
 
 export async function getRelatedPosts(
@@ -228,4 +313,51 @@ export async function getRelatedPosts(
     .map(mapWPPostToBlogPost)
     .filter((p) => p.slug !== excludeSlug)
     .slice(0, limit);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page content (for editable pages via WordPress)                    */
+/* ------------------------------------------------------------------ */
+
+function mapWPPageToContent(page: WPPage): PageContent {
+  const media = page._embedded?.["wp:featuredmedia"]?.[0];
+  let sections: Record<string, unknown> = {};
+
+  try {
+    const raw = page.meta?.page_sections;
+    if (raw) sections = JSON.parse(raw);
+  } catch {
+    // ignore parse errors
+  }
+
+  return {
+    title: stripHTML(page.title.rendered),
+    content: page.content.rendered,
+    excerpt: stripHTML(page.excerpt.rendered),
+    featuredImage: media?.source_url ?? page.meta?.page_hero_image ?? "",
+    sections,
+  };
+}
+
+export async function getPageContent(slug: string): Promise<PageContent | null> {
+  const pages = await wpFetch<WPPage[]>(
+    `/wp/v2/pages?_embed&slug=${encodeURIComponent(slug)}`,
+    []
+  );
+  if (pages.length === 0) return null;
+  return mapWPPageToContent(pages[0]);
+}
+
+/**
+ * Get a specific section from a WordPress page.
+ * Returns the section data or null if not found.
+ */
+export async function getPageSection<T = Record<string, unknown>>(
+  pageSlug: string,
+  sectionKey: string
+): Promise<T | null> {
+  const page = await getPageContent(pageSlug);
+  if (!page) return null;
+  const section = page.sections[sectionKey];
+  return (section as T) ?? null;
 }

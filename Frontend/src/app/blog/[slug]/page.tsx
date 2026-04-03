@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const [post, seo] = await Promise.all([
     getPostBySlug(slug),
-    getRankMathSEO(slug),
+    getRankMathSEO(slug, "post"),
   ]);
 
   if (!post) return { title: "Post Not Found | Ai-Ai-Ai" };

@@ -3,11 +3,9 @@
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
 
-const font = "var(--font-faculty-glyphic), sans-serif";
+import { wpImageUrl } from "@/lib/wordpress";
 
-// TODO: Replace with local asset in /public/images/services/
-const imgContainer = "https://www.figma.com/api/mcp/asset/baf34762-cdce-4268-9617-67e35d243f53";
-const imgCheckCircle = "https://www.figma.com/api/mcp/asset/6d96eedf-e220-4781-aec5-be8e42d6564e";
+const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(170deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
@@ -22,16 +20,48 @@ function ChevronRight() {
 function CheckItem({ text }: { text: string }) {
   return (
     <div className="flex items-start gap-3">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imgCheckCircle} alt="" width={16} height={16} className="shrink-0 mt-0.5" />
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="shrink-0 mt-0.5" aria-hidden="true">
+        <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5" />
+        <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
       <p style={{ fontFamily: font, fontSize: 16, color: "#E8EEF8", lineHeight: 1.5 }}>{text}</p>
     </div>
   );
 }
 
-export default function ServicesSecuritySection() {
+interface SecurityContent {
+  number?: string;
+  label?: string;
+  heading?: string;
+  subtitle?: string;
+  what_it_is?: string;
+  check_items?: string[];
+  cta_text?: string;
+  cta_href?: string;
+  section_image?: string;
+  background_color?: string;
+}
+
+const DEFAULT_CHECK_ITEMS = [
+  "Improved detection and response",
+  "Reduced loss risk and better evidence capture",
+  "Operational visibility across sites",
+  "Reduced monitoring cost through prioritization",
+];
+
+export default function ServicesSecuritySection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as SecurityContent;
+  const number = c.number ?? "02";
+  const label = c.label ?? "Security";
+  const heading = c.heading ?? "AI Security Platform";
+  const subtitle = c.subtitle ?? "AI video analytics for security operations and asset protection.";
+  const whatItIs = c.what_it_is ?? "Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.";
+  const checkItems = c.check_items ?? DEFAULT_CHECK_ITEMS;
+  const ctaText = c.cta_text ?? "Explore Security Platform";
+  const ctaHref = c.cta_href ?? "#";
+  const bgColor = c.background_color ?? "#070E24";
   return (
-    <section className="relative" style={{ background: "#070E24" }}>
+    <section className="relative" style={{ background: bgColor }}>
       {/* Green glow blobs */}
       <div
         className="pointer-events-none absolute left-0 top-0 rounded-full"
@@ -44,20 +74,20 @@ export default function ServicesSecuritySection() {
         aria-hidden="true"
       />
 
-      <Container className="relative py-20">
-        <div className="flex flex-wrap gap-x-[60px] gap-y-10 items-start">
+      <Container className="relative py-20 max-sm:py-10">
+        <div className="flex flex-wrap gap-x-[60px] gap-y-10 items-start max-sm:flex-col">
 
           {/* Left — photo */}
-          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[312px]">
+          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[312px] max-sm:w-full max-sm:min-w-0">
             <div
-              className="rounded-2xl overflow-hidden"
+              className="rounded-2xl overflow-hidden max-sm:h-[200px]"
               style={{
                 height: 540,
                 boxShadow: "4px 4px 32px 0px rgba(21,252,60,0.4)",
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imgContainer} alt="AI security operations center" className="size-full object-cover" />
+              <img src={wpImageUrl((c.section_image as string) || "/images/placeholder.jpg")} alt="AI security operations center" className="size-full object-cover" />
             </div>
           </FadeUp>
 
@@ -79,7 +109,7 @@ export default function ServicesSecuritySection() {
                       backgroundClip: "text",
                     }}
                   >
-                    02
+                    {number}
                   </span>
                   <div
                     className="inline-flex items-center rounded-lg px-4 py-2"
@@ -90,15 +120,15 @@ export default function ServicesSecuritySection() {
                       WebkitBackdropFilter: "blur(16px)",
                     }}
                   >
-                    <span style={{ fontFamily: font, fontSize: 12, color: "#fff" }}>Security</span>
+                    <span style={{ fontFamily: font, fontSize: 12, color: "#fff" }}>{label}</span>
                   </div>
                 </div>
 
-                <h2 style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, color: "#fff" }}>
-                  AI Security Platform
+                <h2 className="max-sm:text-[32px]" style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, color: "#fff" }}>
+                  {heading}
                 </h2>
                 <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
-                  AI video analytics for security operations and asset protection.
+                  {subtitle}
                 </p>
               </div>
             </FadeUp>
@@ -115,21 +145,20 @@ export default function ServicesSecuritySection() {
                 >
                   <p style={{ fontFamily: font, fontSize: 16, color: "#00BC7D", lineHeight: 1.5 }}>What it is</p>
                   <p style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
-                    Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.
+                    {whatItIs}
                   </p>
                 </div>
 
                 {/* Check items */}
                 <div className="flex flex-col gap-2">
-                  <CheckItem text="Improved detection and response" />
-                  <CheckItem text="Reduced loss risk and better evidence capture" />
-                  <CheckItem text="Operational visibility across sites" />
-                  <CheckItem text="Reduced monitoring cost through prioritization" />
+                  {checkItems.map((item, i) => (
+                    <CheckItem key={i} text={item} />
+                  ))}
                 </div>
 
                 {/* CTA */}
                 <a
-                  href="#"
+                  href={ctaHref}
                   className="inline-flex items-center gap-1 rounded-lg px-6 py-3 transition-opacity hover:opacity-90 self-start"
                   style={{
                     fontFamily: font,
@@ -140,7 +169,7 @@ export default function ServicesSecuritySection() {
                     boxShadow: "0px 2px 12px 0px rgba(0,119,255,0.8)",
                   }}
                 >
-                  Explore Security Platform <ChevronRight />
+                  {ctaText} <ChevronRight />
                 </a>
               </div>
             </FadeUp>

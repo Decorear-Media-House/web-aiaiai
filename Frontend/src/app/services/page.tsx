@@ -8,25 +8,28 @@ import ServicesSecuritySection from "@/components/sections/services/ServicesSecu
 import ServicesAISolutionSection from "@/components/sections/services/ServicesAISolutionSection";
 import ServicesInitiativesSection from "@/components/sections/services/ServicesInitiativesSection";
 import ServicesGuidanceSection from "@/components/sections/services/ServicesGuidanceSection";
+import { getPageContent, getPageSEO } from "@/lib/wordpress";
 
-export const metadata: Metadata = {
-  title: "Services | Ai-Ai-Ai",
-  description: "AI services built around measurable outcomes — from roadmap to production deployment.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEO("services", "Services | Ai-Ai-Ai", "AI services built around measurable outcomes — from roadmap to production deployment.");
+}
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const page = await getPageContent("services");
+  const s = page?.sections as Record<string, Record<string, unknown>> | undefined;
+
   return (
     <>
       <Navbar />
       <main>
-        <ServicesHeroSection />
-        <ServicesOutcomesSection />
-        <ServicesOverviewSection />
-        <ServicesRoboticsSection />
-        <ServicesSecuritySection />
-        <ServicesAISolutionSection />
-        <ServicesInitiativesSection />
-        <ServicesGuidanceSection />
+        <ServicesHeroSection content={s?.hero} />
+        <ServicesOutcomesSection content={s?.outcomes} />
+        <ServicesOverviewSection content={s?.overview} />
+        <ServicesRoboticsSection content={s?.robotics} />
+        <ServicesSecuritySection content={s?.security} />
+        <ServicesAISolutionSection content={s?.ai_solution} />
+        <ServicesInitiativesSection content={s?.initiatives} />
+        <ServicesGuidanceSection content={s?.guidance} />
       </main>
     </>
   );

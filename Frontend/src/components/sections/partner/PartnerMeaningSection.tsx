@@ -1,21 +1,28 @@
 "use client";
 
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-// TODO: Replace with local asset in /public/images/partner/
-const imgContainer    = "https://www.figma.com/api/mcp/asset/0f79cad4-b6fb-4e58-978c-8cff1f8da672";
-const imgCheckCircle2 = "https://www.figma.com/api/mcp/asset/f75c8fa9-26a2-423b-83c5-818b5b3d6004";
+function SparkleIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="#4A99F5"/>
+    </svg>
+  );
+}
 
-// Sparkle icon vectors
-const imgVector  = "https://www.figma.com/api/mcp/asset/953157ff-b6ec-4691-a7ff-3497b348bccc";
-const imgVector1 = "https://www.figma.com/api/mcp/asset/4f6d76f9-6eeb-4450-aa44-63867db4aeac";
-const imgVector2 = "https://www.figma.com/api/mcp/asset/ab73b2ca-7301-4b25-9ff6-93a641af4c2d";
-const imgVector3 = "https://www.figma.com/api/mcp/asset/590086a9-c07a-4d7a-b407-0b3f668fd4c4";
-const imgVector4 = "https://www.figma.com/api/mcp/asset/424e0d4d-3ac8-4ecf-96ba-b248ef8ba2b7";
+function CheckCircleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 3 }}>
+      <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5"/>
+      <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
 
 const CHECK_ITEMS = [
   "Choose high-impact use cases",
@@ -25,59 +32,33 @@ const CHECK_ITEMS = [
   "Operationalize monitoring and continuous improvement",
 ];
 
-function SparkleIcon() {
-  return (
-    <div style={{ position: "relative", width: 14, height: 14, flexShrink: 0, overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: "8.33% 8.32% 8.33% 8.34%" }}>
-        <div style={{ position: "absolute", inset: "-5%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "12.5%", right: "83.33%", bottom: "70.83%", left: "16.67%" }}>
-        <div style={{ position: "absolute", inset: "-25% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector1} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "20.83%", left: "75%", right: "8.33%", bottom: "79.17%" }}>
-        <div style={{ position: "absolute", inset: "-0.58px -25%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector2} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "70.83%", left: "16.67%", right: "83.33%", bottom: "20.83%" }}>
-        <div style={{ position: "absolute", inset: "-50% -0.58px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector3} />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: "75%", left: "12.5%", right: "79.17%", bottom: "25%" }}>
-        <div style={{ position: "absolute", inset: "-0.58px -50%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} src={imgVector4} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function CheckItem({ text }: { text: string }) {
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imgCheckCircle2} alt="" width={16} height={16} style={{ flexShrink: 0, marginTop: 3 }} />
+      <CheckCircleIcon />
       <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>{text}</p>
     </div>
   );
 }
 
-export default function PartnerMeaningSection() {
+export default function PartnerMeaningSection({ content }: { content?: Record<string, unknown> }) {
+  const chipLabel = (content?.chipLabel as string) ?? "What this means";
+  const headingPrefix = (content?.headingPrefix as string) ?? "What ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "\u201cAI Solution Partner\u201d";
+  const headingSuffix = (content?.headingSuffix as string) ?? " means";
+  const description = (content?.description as string) ??
+    "AI Solution Partner is designed for organizations that want AI to ship and stick.";
+  const leadIn = (content?.leadIn as string) ?? "We don\u2019t stop at strategy. We help you:";
+  const checkItems = (content?.checkItems as string[]) ?? CHECK_ITEMS;
+  const quote = (content?.quote as string) ??
+    "\u201cThis is how AI becomes part of your operating model \u2014 not a one-time experiment.\u201d";
+  const containerImage = wpImageUrl((content?.container_image as string) || "");
+  const bgColor = (content?.background_color as string) ?? "#102050";
   return (
     <section
       style={{
         position: "relative",
-        background: "#102050",
+        background: bgColor,
         borderTop: "2px solid rgba(0,0,0,0)",
         overflow: "hidden",
         paddingTop: 80,
@@ -125,23 +106,35 @@ export default function PartnerMeaningSection() {
                 position: "relative",
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imgContainer}
-                alt=""
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  maxWidth: "none",
-                  objectFit: "cover",
-                  borderRadius: 16,
-                  display: "block",
-                  pointerEvents: "none",
-                }}
-              />
+              {containerImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={containerImage}
+                  alt=""
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "none",
+                    objectFit: "cover",
+                    borderRadius: 16,
+                    display: "block",
+                    pointerEvents: "none",
+                  }}
+                />
+              ) : (
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: 16,
+                    background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
+                  }}
+                />
+              )}
             </div>
           </FadeUp>
         </div>
@@ -167,13 +160,13 @@ export default function PartnerMeaningSection() {
               >
                 <SparkleIcon />
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                  What this means
+                  {chipLabel}
                 </span>
               </div>
 
               {/* Heading */}
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
-                {"What "}
+                {headingPrefix}
                 <span
                   style={{
                     backgroundImage: ROYAL_SHINE,
@@ -182,14 +175,14 @@ export default function PartnerMeaningSection() {
                     backgroundClip: "text",
                   }}
                 >
-                  &ldquo;AI Solution Partner&rdquo;
+                  {headingHighlight}
                 </span>
-                {" means"}
+                {headingSuffix}
               </h2>
 
               {/* Body */}
               <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>
-                AI Solution Partner is designed for organizations that want AI to ship and stick.
+                {description}
               </p>
             </div>
           </FadeUp>
@@ -198,7 +191,7 @@ export default function PartnerMeaningSection() {
             {/* Divider + lead-in */}
             <div style={{ borderTop: "1px solid #4A6080", paddingTop: 20 }}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#4A99F5", lineHeight: 1.5, margin: 0 }}>
-                We don&rsquo;t stop at strategy. We help you:
+                {leadIn}
               </p>
             </div>
           </FadeUp>
@@ -206,7 +199,7 @@ export default function PartnerMeaningSection() {
           {/* Check items */}
           <FadeUp trigger="scroll" delay={0.14}>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {CHECK_ITEMS.map((text) => (
+              {checkItems.map((text) => (
                 <CheckItem key={text} text={text} />
               ))}
             </div>
@@ -223,7 +216,7 @@ export default function PartnerMeaningSection() {
               }}
             >
               <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>
-                &ldquo;This is how AI becomes part of your operating model — not a one-time experiment.&rdquo;
+                {quote}
               </p>
             </div>
           </FadeUp>

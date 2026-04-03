@@ -4,39 +4,69 @@ import FadeUp from "@/components/animations/FadeUp";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-// TODO: Replace with local asset in /public/images/security/
-const imgHeader6 = "https://www.figma.com/api/mcp/asset/35850507-9c26-41da-9bfa-6d72a03e9f9b";
-const imgContainer = "https://www.figma.com/api/mcp/asset/cca906a7-8b04-4f3a-b1ce-6d0f7813e8b7";
-const imgGroup = "https://www.figma.com/api/mcp/asset/a1aabe88-9684-4da2-9151-24d15b822bce";
-const imgGroup1 = "https://www.figma.com/api/mcp/asset/792a3afd-e96c-4197-af14-b3d3ea709044";
-const imgShieldCheck = "https://www.figma.com/api/mcp/asset/ba8d841a-e333-4001-b8c8-9f6a6ed1f878";
-
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-const STATS = [
+function ShieldCheckIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3l7 4v5c0 4.5-3 8.25-7 9.5-4-1.25-7-5-7-9.5V7l7-4z" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M9 12l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+interface HeroContent {
+  chip?: string;
+  heading?: string;
+  description?: string;
+  stats?: { top: string; bottom: string }[];
+  cta_primary?: string;
+  cta_secondary?: string;
+  detection_title?: string;
+  detection_subtitle?: string;
+  background_color?: string;
+  wpImageUrl?: string;
+  wpContainerImageUrl?: string;
+}
+
+const DEFAULT_STATS = [
   { top: "Real-time",  bottom: "Detection"  },
   { top: "Multi-site", bottom: "Coverage"   },
   { top: "Automated",  bottom: "Workflows"  },
 ];
 
-export default function SecurityHeroSection() {
+export default function SecurityHeroSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as HeroContent;
+  const chip = c.chip ?? "AI Security Solution";
+  const heading = c.heading ?? "AI Security Platform & Solution";
+  const description = c.description ?? "Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.";
+  const stats = c.stats ?? DEFAULT_STATS;
+  const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaSecondary = c.cta_secondary ?? "All Services";
+  const detectionTitle = c.detection_title ?? "AI-Powered Detection";
+  const detectionSubtitle = c.detection_subtitle ?? "Camera \u2192 Alert \u2192 Incident \u2192 Report";
+  const bgColor = c.background_color ?? "#070E24";
+  const wpImageUrl = c.wpImageUrl;
+  const wpContainerImageUrl = c.wpContainerImageUrl;
   return (
     <section
       style={{
         position: "relative",
         height: 656,
         overflow: "hidden",
-        background: "#070E24",
+        background: bgColor,
       }}
     >
       {/* ── Background image + gradient overlay ── */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }} aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgHeader6}
-          alt=""
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+        {wpImageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={wpImageUrl}
+            alt=""
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        )}
         <div
           style={{
             position: "absolute",
@@ -59,23 +89,14 @@ export default function SecurityHeroSection() {
         }}
         aria-hidden="true"
       >
-        <div
-          style={{
-            position: "absolute",
-            inset: "-13.18% -52.66% -12.62% -0.06%",
-            maskImage: `url('${imgGroup}')`,
-            maskSize: "224px 511px",
-            maskPosition: "0.13px 67.33px",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url('${imgGroup}')`,
-            WebkitMaskSize: "224px 511px",
-            WebkitMaskPosition: "0.13px 67.33px",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={imgGroup1} alt="" style={{ display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-        </div>
+        <svg width="224" height="511" viewBox="0 0 224 511" fill="none" style={{ opacity: 0.15 }}>
+          <line x1="0" y1="0" x2="224" y2="511" stroke="#4A99F5" strokeWidth="0.5" />
+          <line x1="56" y1="0" x2="224" y2="383" stroke="#4A99F5" strokeWidth="0.5" />
+          <line x1="112" y1="0" x2="224" y2="255" stroke="#4A99F5" strokeWidth="0.5" />
+          <line x1="168" y1="0" x2="224" y2="128" stroke="#4A99F5" strokeWidth="0.5" />
+          <line x1="0" y1="128" x2="224" y2="511" stroke="#4A99F5" strokeWidth="0.5" />
+          <line x1="0" y1="255" x2="224" y2="511" stroke="#4A99F5" strokeWidth="0.5" />
+        </svg>
       </div>
 
       {/* ── Content — absolute fill, inset padding matches Figma ── */}
@@ -127,7 +148,7 @@ export default function SecurityHeroSection() {
                     <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="#4A99F5" />
                   </svg>
                   <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                    AI Security Solution
+                    {chip}
                   </span>
                 </div>
 
@@ -145,12 +166,12 @@ export default function SecurityHeroSection() {
                     backgroundClip: "text",
                   }}
                 >
-                  AI Security Platform &amp; Solution
+                  {heading}
                 </h1>
 
                 {/* Body */}
                 <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>
-                  Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.
+                  {description}
                 </p>
               </div>
             </FadeUp>
@@ -158,7 +179,7 @@ export default function SecurityHeroSection() {
             {/* Stat chips */}
             <FadeUp trigger="mount" delay={0.08}>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {STATS.map(({ top, bottom }) => (
+                {stats.map(({ top, bottom }) => (
                   <div
                     key={top}
                     style={{
@@ -218,7 +239,7 @@ export default function SecurityHeroSection() {
                     textDecoration: "none",
                   }}
                 >
-                  Contact Us
+                  {ctaPrimary}
                 </a>
                 <a
                   href="/services"
@@ -239,7 +260,7 @@ export default function SecurityHeroSection() {
                     textDecoration: "none",
                   }}
                 >
-                  All Services
+                  {ctaSecondary}
                 </a>
               </div>
             </FadeUp>
@@ -263,20 +284,30 @@ export default function SecurityHeroSection() {
               }}
             >
               {/* Photo */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imgContainer}
-                alt="AI security monitoring center"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  pointerEvents: "none",
-                  display: "block",
-                }}
-              />
+              {wpContainerImageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={wpContainerImageUrl}
+                  alt="AI security monitoring center"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    pointerEvents: "none",
+                    display: "block",
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(135deg, #0A132F 0%, #1A4494 100%)",
+                  }}
+                />
+              )}
               {/* Glassmorphism bottom bar */}
               <div
                 style={{
@@ -313,12 +344,11 @@ export default function SecurityHeroSection() {
                       boxShadow: "0px 0px 16px 0px rgba(59,130,246,0.5)",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={imgShieldCheck} alt="" width={18} height={18} />
+                    <ShieldCheckIcon />
                   </div>
                   <div>
-                    <p style={{ fontFamily: font, fontSize: 14, color: "#fff", lineHeight: 1.5, margin: 0 }}>AI-Powered Detection</p>
-                    <p style={{ fontFamily: font, fontSize: 12, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>Camera → Alert → Incident → Report</p>
+                    <p style={{ fontFamily: font, fontSize: 14, color: "#fff", lineHeight: 1.5, margin: 0 }}>{detectionTitle}</p>
+                    <p style={{ fontFamily: font, fontSize: 12, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>{detectionSubtitle}</p>
                   </div>
                 </div>
                 {/* Live badge */}

@@ -1,7 +1,14 @@
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
+
+interface SeventhSectionContent {
+  heading?: string;
+  description?: string;
+  background_video?: string;
+}
 
 const TAGS = ["Cost Reduction", "Revenue Growth", "Compliance", "Security", "Automation"];
 
@@ -22,7 +29,14 @@ function ChevronRight() {
   );
 }
 
-export default function SeventhSection() {
+export default function SeventhSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as SeventhSectionContent;
+  const heading = c.heading || "Ready to ship AI that produces outcomes?";
+  const description =
+    c.description ||
+    "Tell us what outcome matters most\u2014cost, revenue, compliance, security, or automation\u2014and we\u2019ll propose a practical first step";
+  const backgroundVideo = c.background_video ? wpImageUrl(c.background_video) : "/videos/CTA-Loop.mp4";
+
   return (
     <section className="relative overflow-hidden" style={{ minHeight: 494 }}>
 
@@ -35,7 +49,7 @@ export default function SeventhSection() {
         className="absolute inset-0 size-full object-cover pointer-events-none"
         aria-hidden="true"
       >
-        <source src="/videos/CTA-Loop.mp4" type="video/mp4" />
+        <source src={backgroundVideo} type="video/mp4" />
       </video>
 
       {/* Dark blue tint overlay */}
@@ -55,7 +69,7 @@ export default function SeventhSection() {
         }}
       />
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <FadeUp trigger="scroll" delay={0}>
           <div className="flex flex-col items-center gap-10 text-center">
 
@@ -65,7 +79,7 @@ export default function SeventhSection() {
               <h2
                 style={{
                   fontFamily: font,
-                  fontSize: 48,
+                  fontSize: "clamp(28px, 5vw, 48px)",
                   fontWeight: 400,
                   lineHeight: 1.2,
                   backgroundImage: "linear-gradient(135deg, #fff 0%, #8B95C5 31%, #fff 62%, #8B95C5 100%)",
@@ -74,13 +88,12 @@ export default function SeventhSection() {
                   backgroundClip: "text",
                 }}
               >
-                Ready to ship AI that produces outcomes?
+                {heading}
               </h2>
 
               {/* Subtext */}
               <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEDA", lineHeight: 1.6 }}>
-                Tell us what outcome matters most—cost, revenue, compliance, security, or
-                automation—and we'll propose a practical first step
+                {description}
               </p>
 
               {/* Outcome tags */}
@@ -104,11 +117,11 @@ export default function SeventhSection() {
             </div>
 
             {/* CTA buttons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 max-sm:flex-col max-sm:w-full">
               {/* Primary — Get Started */}
               <a
                 href="#"
-                className="inline-flex items-center gap-2 rounded-lg transition-opacity hover:opacity-90"
+                className="inline-flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90 max-sm:w-full"
                 style={{
                   fontFamily: font, fontSize: 15, color: "#fff",
                   padding: "12px 24px",
@@ -125,7 +138,7 @@ export default function SeventhSection() {
               {/* Secondary — About Us */}
               <a
                 href="#"
-                className="inline-flex items-center gap-2 rounded-lg transition-opacity hover:opacity-80"
+                className="inline-flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-80 max-sm:w-full"
                 style={{
                   fontFamily: font, fontSize: 15, color: "#fff",
                   padding: "12px 24px",

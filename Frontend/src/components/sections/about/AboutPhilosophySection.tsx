@@ -21,14 +21,21 @@ const PRINCIPLES = [
   { num: "04", label: "Monitoring and continuous improvement" },
 ] as const;
 
-export default function AboutPhilosophySection() {
+export default function AboutPhilosophySection({ content }: { content?: Record<string, unknown> }) {
+  const label = (content?.label as string) ?? "Philosophy";
+  const headingPrefix = (content?.headingPrefix as string) ?? "How we ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "Think";
+  const subtitle = (content?.subtitle as string) ?? "AI is not just a model. AI is a system inside operations.";
+  const introText = (content?.introText as string) ??
+    "That's why we focus on delivery patterns that work in real organizations — not just technically impressive prototypes.";
+  const principles = (content?.principles as Array<{ num: string; label: string }>) ?? PRINCIPLES;
   return (
     <section style={{ background: "#102050" }}>
-      <Container className="py-[60px]">
-        <div className="flex flex-wrap gap-6 items-start">
+      <Container className="py-[60px] max-sm:py-10 max-sm:px-6">
+        <div className="flex flex-wrap gap-6 items-start max-sm:flex-col">
 
           {/* Left — label + heading + subtitle */}
-          <div className="flex flex-col gap-4 min-w-[286px]" style={{ maxWidth: 286 }}>
+          <div className="flex flex-col gap-4 min-w-[286px] max-sm:min-w-0 max-sm:max-w-full" style={{ maxWidth: 286 }}>
             <FadeUp trigger="scroll" delay={0}>
               <div
                 className="inline-flex items-center gap-2 rounded-lg px-4 py-2"
@@ -40,38 +47,38 @@ export default function AboutPhilosophySection() {
                 }}
               >
                 <LightbulbIcon />
-                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>Philosophy</span>
+                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{label}</span>
               </div>
             </FadeUp>
 
             <FadeUp trigger="scroll" delay={0.1}>
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
-                How we{" "}
-                <span style={{ color: "#4A99F5" }}>Think</span>
+                {headingPrefix}
+                <span style={{ color: "#4A99F5" }}>{headingHighlight}</span>
               </h2>
             </FadeUp>
 
             <FadeUp trigger="scroll" delay={0.2}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
-                AI is not just a model. AI is a system inside operations.
+                {subtitle}
               </p>
             </FadeUp>
           </div>
 
           {/* Right — intro text + 2×2 cards */}
-          <div className="flex flex-1 min-w-[312px] flex-col gap-6">
+          <div className="flex flex-1 min-w-[312px] max-sm:min-w-0 flex-col gap-6">
             <FadeUp trigger="scroll" delay={0.1}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
-                {`That's why we focus on delivery patterns that work in real organizations — not just technically impressive prototypes.`}
+                {introText}
               </p>
             </FadeUp>
 
             <FadeUp trigger="scroll" delay={0.2}>
-              <div className="flex flex-wrap gap-2">
-                {PRINCIPLES.map((p) => (
+              <div className="flex flex-wrap gap-2 max-sm:flex-col">
+                {principles.map((p) => (
                   <div
                     key={p.num}
-                    className="flex flex-1 min-w-[312px] items-center gap-3 rounded-xl px-[17px] py-[9px]"
+                    className="flex flex-1 min-w-[312px] max-sm:min-w-0 items-center gap-3 rounded-xl px-[17px] py-[9px]"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",

@@ -63,8 +63,36 @@ const labelStyle = {
   display: "block",
 } as const;
 
+/* ── Types ──────────────────────────────────────────────────────── */
+interface ContactContent {
+  label?: string;
+  heading?: string;
+  description?: string;
+  email?: string;
+  address?: string;
+  google_map_url?: string;
+  background_color?: string;
+}
+
 /* ── Component ──────────────────────────────────────────────────── */
-export default function ContactSection() {
+export default function ContactSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as ContactContent;
+  const label = c.label || "Get In Touch";
+  const heading = c.heading || "Contact Us";
+  const description =
+    c.description ||
+    "Tell us what you want to achieve—cost reduction, revenue growth, compliance improvement, security enhancement, or operational automation. We'll review your input and reach out with a practical next step.";
+  const contactEmail = c.email || "info@ai-ai-ai.co";
+  const contactAddress =
+    c.address ||
+    "1104/2 4th floor, Pattanakarn Road,\nSuan Luang, Bangkok, Thailand 10250";
+  const backgroundColor = c.background_color || "#070E24";
+  const mapUrl = c.google_map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.0!2d100.6308!3d13.7230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQzJzIyLjgiTiAxMDDCsDM3JzUwLjkiRQ!5e0!3m2!1sen!2sth!4v1700000000000";
+
+  // Split heading into white part + last word (gradient)
+  const headingWords = heading.split(" ");
+  const headingGradient = headingWords.length > 1 ? headingWords.pop()! : "";
+  const headingWhite = headingWords.join(" ") + (headingGradient ? " " : "");
   const [form, setForm] = useState({
     fullName: "", email: "", phone: "", company: "", role: "", message: "",
     terms: false,
@@ -93,7 +121,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="relative overflow-hidden" style={{ background: "#070E24" }}>
+    <section className="relative overflow-hidden" style={{ background: backgroundColor }}>
 
       {/* Blobs */}
       <div className="pointer-events-none absolute" style={{
@@ -105,7 +133,7 @@ export default function ContactSection() {
         background: "rgba(0,184,219,0.08)", borderRadius: 999, filter: "blur(128px)",
       }} />
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <div className="flex flex-col gap-10">
 
           {/* Header */}
@@ -115,16 +143,18 @@ export default function ContactSection() {
                 style={{ background: "rgba(43,127,255,0.1)", border: "1px solid rgba(43,127,255,0.2)" }}>
                 <SparkleIcon />
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", letterSpacing: "0.04em" }}>
-                  Get In Touch
+                  {label}
                 </span>
               </div>
 
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
-                <span style={{ color: "#fff" }}>Contact </span>
-                <span style={{
-                  backgroundImage: "linear-gradient(90deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                }}>Us</span>
+                <span style={{ color: "#fff" }}>{headingWhite}</span>
+                {headingGradient && (
+                  <span style={{
+                    backgroundImage: "linear-gradient(90deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
+                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                  }}>{headingGradient}</span>
+                )}
               </h2>
             </div>
           </FadeUp>
@@ -133,11 +163,11 @@ export default function ContactSection() {
           <div className="flex gap-6 max-lg:flex-col">
 
             {/* Left — Info + Map */}
-            <div style={{ flex: "0 0 596px" }}>
+            <div className="lg:basis-[596px] lg:shrink-0 lg:grow-0 max-lg:w-full">
             <FadeUp trigger="scroll" delay={0.05} className="flex flex-col gap-8 min-w-0">
 
               <p style={{ fontFamily: font, fontSize: 15, color: "#8099BE", lineHeight: 1.7 }}>
-                Tell us what you want to achieve—cost reduction, revenue growth, compliance improvement, security enhancement, or operational automation. We'll review your input and reach out with a practical next step.
+                {description}
               </p>
 
               {/* Contact details */}
@@ -150,9 +180,9 @@ export default function ContactSection() {
                   </div>
                   <div className="flex flex-col gap-1">
                     <span style={{ fontFamily: font, fontSize: 12, color: "#4A6080" }}>Email</span>
-                    <a href="mailto:info@ai-ai-ai.co" style={{ fontFamily: font, fontSize: 15, color: "#fff" }}
+                    <a href={`mailto:${contactEmail}`} style={{ fontFamily: font, fontSize: 15, color: "#fff" }}
                       className="hover:opacity-80 transition-opacity">
-                      info@ai-ai-ai.co
+                      {contactEmail}
                     </a>
                   </div>
                 </div>
@@ -165,17 +195,17 @@ export default function ContactSection() {
                   </div>
                   <div className="flex flex-col gap-1">
                     <span style={{ fontFamily: font, fontSize: 12, color: "#4A6080" }}>Address</span>
-                    <p style={{ fontFamily: font, fontSize: 15, color: "#fff", lineHeight: 1.6 }}>
-                      1104/2 4th floor, Pattanakarn Road,{"\n"}Suan Luang, Bangkok, Thailand 10250
+                    <p style={{ fontFamily: font, fontSize: 15, color: "#fff", lineHeight: 1.6, whiteSpace: "pre-line" }}>
+                      {contactAddress}
                     </p>
                   </div>
                 </div>
               </div>
 
               {/* Map */}
-              <div className="relative overflow-hidden rounded-2xl" style={{ height: 360 }}>
+              <div className="relative overflow-hidden rounded-2xl h-[360px] max-sm:h-[240px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.0!2d100.6308!3d13.7230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQzJzIyLjgiTiAxMDDCsDM3JzUwLjkiRQ!5e0!3m2!1sen!2sth!4v1700000000000"
+                  src={mapUrl}
                   width="100%"
                   height="100%"
                   style={{ border: 0, borderRadius: 16 }}

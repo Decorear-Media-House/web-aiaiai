@@ -3,6 +3,7 @@
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
 import DarkVeil from "@/components/backgrounds/DarkVeil";
+import { wpImageUrl } from "@/lib/wordpress";
 
 function ChevronRight() {
   return (
@@ -20,19 +21,37 @@ function SparkleIcon() {
   );
 }
 
-const STATS = [
+interface HeroContent {
+  label?: string;
+  heading?: string;
+  description?: string;
+  cta_text?: string;
+  cta_subtext?: string;
+  stats?: { value: string; label: string }[];
+  brand_logo_image?: string;
+}
+
+const DEFAULT_STATS = [
   { value: "3+", label: "AI Solutions" },
   { value: "100%", label: "Outcome-Driven" },
   { value: "PoC→", label: "Production" },
   { value: "24/7", label: "AI Operations" },
-] as const;
+];
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
 const HEADING_GRADIENT = "linear-gradient(90deg, #fff 0%, #8B95C5 31.25%, #fff 61.5%, #8B95C5 100%)";
 const ROYAL_SHINE = "linear-gradient(148deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-export default function HeroSection() {
+export default function HeroSection({ content }: { content?: Record<string, unknown> }) {
+  const c = (content ?? {}) as HeroContent;
+  const label = c.label ?? "AI Solution Partner · Thailand";
+  const heading = c.heading ?? "Your AI Solution Partner from roadmap to production deployment.";
+  const description = c.description ?? "We help organizations adopt practical AI that reduces cost, increases revenue, strengthens compliance, and improves security—through AI Solution Partner delivery, AI video-analytics security, and humanoid robotics solutions.";
+  const ctaText = c.cta_text ?? "Contact Us";
+  const ctaSubtext = c.cta_subtext ?? "Share your goal and constraints. Our team will reach out.";
+  const stats = c.stats ?? DEFAULT_STATS;
+  const brandLogoImage = c.brand_logo_image ? wpImageUrl(c.brand_logo_image) : "/images/aaa-vector.svg";
   return (
     <section
       className="relative overflow-hidden max-sm:min-h-0"
@@ -86,7 +105,7 @@ export default function HeroSection() {
               >
                 <SparkleIcon />
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", letterSpacing: "0.04em" }}>
-                  AI Solution Partner · Thailand
+                  {label}
                 </span>
               </div>
             </FadeUp>
@@ -105,7 +124,7 @@ export default function HeroSection() {
                   backgroundClip: "text",
                 }}
               >
-                Your AI Solution Partner from roadmap to production deployment.
+                {heading}
               </h1>
             </FadeUp>
 
@@ -114,9 +133,7 @@ export default function HeroSection() {
                 className="max-w-[540px] max-sm:max-w-full"
                 style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}
               >
-                We help organizations adopt practical AI that reduces cost, increases revenue,
-                strengthens compliance, and improves security—through AI Solution Partner delivery,
-                AI video-analytics security, and humanoid robotics solutions.
+                {description}
               </p>
             </FadeUp>
 
@@ -136,13 +153,13 @@ export default function HeroSection() {
                     boxShadow: "0 2px 12px rgba(0,119,255,0.8)",
                   }}
                 >
-                  Contact Us
+                  {ctaText}
                   <span className="hidden sm:flex">
                     <ChevronRight />
                   </span>
                 </a>
                 <p style={{ fontFamily: font, fontSize: 12, color: "#8099BE" }}>
-                  Share your goal and constraints. Our team will reach out.
+                  {ctaSubtext}
                 </p>
               </div>
             </FadeUp>
@@ -153,7 +170,7 @@ export default function HeroSection() {
 
               {/* Stats — 2×2 grid on mobile, single row with dividers on desktop */}
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:flex sm:gap-0">
-                {STATS.map((stat, i) => (
+                {stats.map((stat, i) => (
                   <div key={stat.value} className="flex items-start">
                     {/* Vertical divider — desktop only */}
                     {i > 0 && (
@@ -199,7 +216,7 @@ export default function HeroSection() {
         <FadeUp trigger="mount" delay={0.2} className="w-full h-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/aaa-vector.svg"
+            src={brandLogoImage}
             alt=""
             className="w-full h-full"
             style={{ objectFit: "contain", objectPosition: "bottom right" }}

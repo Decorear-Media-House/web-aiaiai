@@ -6,21 +6,37 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 
 const ORANGE_SHINE = "linear-gradient(135deg, #ff8904 0%, #ff6467 100%)";
 
-// TODO: Replace with local assets in /public/images/partner/
-const imgContent    = "https://www.figma.com/api/mcp/asset/b16625e4-0746-4751-a957-ca05077fd74a";
-const imgVertical   = "https://www.figma.com/api/mcp/asset/876374ee-099d-42b6-90b7-0d0f6f45204d";
-const imgHorizontal = "https://www.figma.com/api/mcp/asset/054c73b9-07d2-4b8a-bbbd-f12631846507";
-const imgIcon       = "https://www.figma.com/api/mcp/asset/f238ba6d-adad-4b93-95e6-bc12c282955f";
-const imgIcon1      = "https://www.figma.com/api/mcp/asset/f2a4675c-246c-44cf-9df9-4e79fe0653b1";
-const imgIcon2      = "https://www.figma.com/api/mcp/asset/5c3f2d2a-8b5e-4fc4-816f-e37509e11bf3";
-const imgIcon3      = "https://www.figma.com/api/mcp/asset/562d1a0d-b217-4a0c-9ff6-ee4ecab2bf25";
-const imgIcon4      = "https://www.figma.com/api/mcp/asset/1e5b07c2-11f1-4569-9462-27a25488443e";
-const imgBullet     = "https://www.figma.com/api/mcp/asset/f2a4675c-246c-44cf-9df9-4e79fe0653b1";
+/** Generic phase icon — white shape on gradient background */
+function PhaseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <rect x="3" y="3" width="14" height="14" rx="3" stroke="#fff" strokeWidth="1.3"/>
+      <path d="M7 10l2 2 4-4" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+/** Bullet dot for phase items */
+function BulletDot() {
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        display: "inline-block",
+        width: 6,
+        height: 6,
+        borderRadius: "50%",
+        background: "#FF8904",
+        flexShrink: 0,
+        marginTop: 8,
+      }}
+    />
+  );
+}
 
 const PHASES = [
   {
     num: "01",
-    icon: imgIcon,
     title: "Discovery & Prioritization",
     items: [
       "Process mapping and bottleneck analysis",
@@ -31,10 +47,9 @@ const PHASES = [
   },
   {
     num: "02",
-    icon: imgIcon2,
     title: "AI Roadmap & Architecture",
     items: [
-      "Phased plan: PoC → MVP → production → scale",
+      "Phased plan: PoC \u2192 MVP \u2192 production \u2192 scale",
       "Architecture blueprint: systems, data, workflows",
       "Integration plan (APIs, pipelines, operational handoffs)",
       "Security, access control, and governance design",
@@ -42,7 +57,6 @@ const PHASES = [
   },
   {
     num: "03",
-    icon: imgIcon3,
     title: "Implementation Support",
     items: [
       "PoC design to validate feasibility quickly",
@@ -53,7 +67,6 @@ const PHASES = [
   },
   {
     num: "04",
-    icon: imgIcon4,
     title: "Adoption & Continuous Improvement",
     items: [
       "Training and SOP enablement",
@@ -63,12 +76,18 @@ const PHASES = [
   },
 ];
 
-export default function PartnerPhasesSection() {
+export default function PartnerPhasesSection({ content }: { content?: Record<string, unknown> }) {
+  const chipLabel = (content?.chipLabel as string) ?? "Four Phases, Full Coverage";
+  const heading = (content?.heading as string) ?? "What We ";
+  const headingHighlight = (content?.headingHighlight as string) ?? "Deliver";
+  const description = (content?.description as string) ??
+    "From discovery through adoption \u2014 structured work that takes AI from idea to operating model.";
+  const bgColor = (content?.background_color as string) ?? "#1E2E48";
   return (
     <section
       style={{
         position: "relative",
-        background: "#1E2E48",
+        background: bgColor,
         paddingTop: 80,
         paddingBottom: 80,
         paddingLeft: 112,
@@ -81,32 +100,8 @@ export default function PartnerPhasesSection() {
       {/* Orange glow bottom-right */}
       <div aria-hidden="true" style={{ position: "absolute", bottom: 0, right: 0, width: 400, height: 400, borderRadius: 9999, background: "rgba(252,90,21,0.1)", filter: "blur(64px)", pointerEvents: "none" }} />
 
-      {/* Background grid pattern — 14% opacity */}
-      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 1920, height: 1440, opacity: 0.14, overflow: "hidden", pointerEvents: "none" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 1920,
-            height: 1440,
-            maskImage: `url('${imgContent}')`,
-            maskSize: "1440px 1440px",
-            maskPosition: "240px 0px",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url('${imgContent}')`,
-            WebkitMaskSize: "1440px 1440px",
-            WebkitMaskPosition: "240px 0px",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" src={imgVertical}   style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" src={imgHorizontal} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-        </div>
-      </div>
+      {/* Background grid pattern — CSS-based replacement */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, opacity: 0.06, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
 
       <div style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", flexDirection: "column", gap: 40, alignItems: "center" }}>
 
@@ -126,26 +121,26 @@ export default function PartnerPhasesSection() {
                 <path d="M7 1.5L8.5 5.5H12.5L9.5 8L10.5 12L7 9.5L3.5 12L4.5 8L1.5 5.5H5.5L7 1.5Z" stroke="#FFA2A2" strokeWidth="1.2" strokeLinejoin="round" />
               </svg>
               <span style={{ fontFamily: font, fontSize: 12, color: "#FFA2A2", whiteSpace: "nowrap" }}>
-                Four Phases, Full Coverage
+                {chipLabel}
               </span>
             </div>
             {/* Heading */}
             <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, margin: 0, textAlign: "center", color: "#fff" }}>
-              {"What We "}
+              {heading}
               <span style={{ backgroundImage: ORANGE_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                Deliver
+                {headingHighlight}
               </span>
             </h2>
             {/* Body */}
             <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center", margin: 0 }}>
-              From discovery through adoption — structured work that takes AI from idea to operating model.
+              {description}
             </p>
           </div>
         </FadeUp>
 
         {/* 4 phase cards */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 20, alignItems: "flex-start", width: "100%" }}>
-          {PHASES.map(({ num, icon, title, items }, i) => (
+          {PHASES.map(({ num, title, items }, i) => (
             <FadeUp key={num} trigger="scroll" delay={i * 0.08} className="flex-1 min-w-[400px]">
               <div
                 style={{
@@ -167,8 +162,7 @@ export default function PartnerPhasesSection() {
                       display: "flex", alignItems: "center", justifyContent: "center",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={icon} alt="" width={20} height={20} style={{ display: "block" }} />
+                    <PhaseIcon />
                   </div>
                   {/* Number */}
                   <span
@@ -189,11 +183,8 @@ export default function PartnerPhasesSection() {
                   </h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {items.map((text) => (
-                      <div key={text} style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                        <div style={{ position: "relative", width: 16, height: 16, flexShrink: 0 }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img alt="" src={imgBullet} style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", maxWidth: "none" }} />
-                        </div>
+                      <div key={text} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                        <BulletDot />
                         <p style={{ flex: 1, fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>{text}</p>
                       </div>
                     ))}

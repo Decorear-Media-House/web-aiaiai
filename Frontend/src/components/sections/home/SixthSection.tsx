@@ -1,6 +1,7 @@
 import Image from "next/image";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -149,11 +150,39 @@ const PHASES = [
   },
 ] as const;
 
+/* ── Types ─────────────────────────────────────────────────────────── */
+
+interface SixthSectionContent {
+  label?: string;
+  heading?: string;
+  description?: string;
+  side_panel_image?: string;
+}
+
 /* ── Component ──────────────────────────────────────────────────────── */
 
-export default function SixthSection() {
+export default function SixthSection({ content }: { content?: Record<string, unknown> }) {
+  const c = content as SixthSectionContent | undefined;
+  const label = c?.label ?? "Our Process";
+  const heading = c?.heading ?? "How We Work";
+  const description =
+    c?.description ??
+    "A structured, outcome-driven delivery process—from initial discovery through scale.";
+  const sidePanelImage = c?.side_panel_image ? wpImageUrl(c.side_panel_image) : "/images/howwework-side.png";
+
+  /* Split heading into white part + gradient part (last two words) */
+  const words = heading.split(" ");
+  const gradientText = words.length > 1 ? words.slice(-2).join(" ") : heading;
+  const whiteText = words.length > 1 ? words.slice(0, -2).join(" ") + " " : "";
   return (
-    <section className="relative overflow-hidden" style={{ background: "#070E24" }}>
+    <section
+      className="relative overflow-hidden"
+      style={{
+        background: "#070E24",
+        borderTop: "2px solid transparent",
+        borderImage: "linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(43,127,255,0.5) 50%, rgba(0,0,0,0) 100%) 1",
+      }}
+    >
 
       {/* Decorative blobs */}
       <div className="pointer-events-none absolute" style={{
@@ -165,33 +194,33 @@ export default function SixthSection() {
         background: "rgba(127,34,254,0.1)", borderRadius: 999, filter: "blur(128px)",
       }} />
 
-      <Container className="relative py-20">
-        <div className="flex flex-col gap-10">
+      <Container className="relative py-20 max-sm:py-10">
+        <div className="flex flex-col gap-10 max-sm:gap-8">
 
           {/* ── Header ── */}
           <FadeUp trigger="scroll" delay={0}>
-            <div className="flex flex-col gap-4">
-              <div className="inline-flex items-center gap-2 self-start rounded-lg px-3 py-2"
+            <div className="flex flex-col gap-4 max-sm:items-center max-sm:text-center">
+              <div className="inline-flex items-center gap-2 self-start max-sm:self-center rounded-lg px-3 py-2"
                 style={{ background: "rgba(43,127,255,0.1)", border: "1px solid rgba(43,127,255,0.2)" }}>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                   <path d="M7 1L8.2 5.8L13 7L8.2 8.2L7 13L5.8 8.2L1 7L5.8 5.8L7 1Z"
                     stroke="#00B9F2" strokeWidth="1.1" strokeLinejoin="round" />
                 </svg>
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", letterSpacing: "0.04em" }}>
-                  Our Process
+                  {label}
                 </span>
               </div>
 
               <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
-                <span style={{ color: "#fff" }}>How </span>
+                <span style={{ color: "#fff" }}>{whiteText}</span>
                 <span style={{
                   backgroundImage: "linear-gradient(90deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
                   WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                }}>We Work</span>
+                }}>{gradientText}</span>
               </h2>
 
               <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.6 }}>
-                A structured, outcome-driven delivery process—from initial discovery through scale.
+                {description}
               </p>
             </div>
           </FadeUp>
@@ -200,7 +229,7 @@ export default function SixthSection() {
           <div className="flex gap-6 max-lg:flex-col">
 
             {/* Phase cards grid — 2 columns */}
-            <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1" style={{ flex: "0 0 803px" }}>
+            <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 lg:basis-[803px] lg:shrink-0 lg:grow-0">
               {PHASES.map((phase, i) => (
                 <FadeUp key={phase.title} trigger="scroll" delay={0.05 * i}>
                   <div
@@ -260,13 +289,14 @@ export default function SixthSection() {
               ))}
             </div>
 
-            {/* Right panel — image + CTA */}
-            <FadeUp trigger="scroll" delay={0.2} className="flex-1 min-h-[400px] max-lg:min-h-[320px]">
+            {/* Right panel — image + CTA (below cards on mobile) */}
+            <FadeUp trigger="scroll" delay={0.2} className="flex-1 min-h-[400px] max-lg:min-h-[320px] max-sm:min-h-[250px]">
               <div className="relative flex flex-col justify-end overflow-hidden rounded-2xl h-full" style={{ minHeight: 400 }}>
                 <Image
-                  src="/images/howwework-side.png"
+                  src={sidePanelImage}
                   alt="How we work"
                   fill
+                  unoptimized={sidePanelImage.startsWith("http")}
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 389px"
                 />
