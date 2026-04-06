@@ -3,6 +3,7 @@
 import { useState } from "react";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl as toPublicUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -105,17 +106,29 @@ const ACCORDION = [
   {
     iconBg: "linear-gradient(135deg, rgb(142, 81, 255) 0%, rgb(21, 93, 252) 100%)",
     title: "Asset protection & loss reduction",
-    checks: null,
+    checks: [
+      "Improve coverage and consistency",
+      "Capture evidence snapshots automatically",
+      "Reduce \"missed incidents\" with prioritization",
+    ],
   },
   {
     iconBg: "linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(0, 184, 219) 100%)",
     title: "Operational improvement",
-    checks: null,
+    checks: [
+      "Convert camera events into operational signals",
+      "Create multi-site visibility for management",
+      "Align detection and response to SOPs",
+    ],
   },
   {
     iconBg: "linear-gradient(135deg, rgb(0, 188, 125) 0%, rgb(0, 146, 184) 100%)",
     title: "Cost reduction",
-    checks: null,
+    checks: [
+      "Reduce monitoring workload",
+      "Prioritize incidents so teams focus on what matters",
+      "Improve efficiency across sites with dashboards",
+    ],
   },
 ];
 
@@ -126,6 +139,7 @@ interface OutcomesContent {
   accordion?: typeof ACCORDION;
   background_color?: string;
   wpImageUrl?: string;
+  wpImageMobileUrl?: string;
 }
 
 export default function SecurityOutcomesSection({ content }: { content?: Record<string, unknown> }) {
@@ -134,10 +148,13 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
   const sectionHeading = c.heading ?? "What this Platform ";
   const headingHighlight = c.heading_highlight ?? "Achieves";
   const accordion = c.accordion ?? ACCORDION;
+  const bgColor = c.background_color ?? "#070E24";
+  const imageUrl = c.wpImageUrl ? toPublicUrl(c.wpImageUrl) : "";
+  const mobileImageUrl = c.wpImageMobileUrl ? toPublicUrl(c.wpImageMobileUrl) : "";
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="relative" style={{ background: "#070E24", overflowX: "clip" }}>
+    <section className="relative" style={{ background: bgColor, overflowX: "clip" }}>
       {/* Glow blobs */}
       <div
         className="pointer-events-none absolute left-0 top-0 rounded-full"
@@ -150,18 +167,24 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
         aria-hidden="true"
       />
 
-      <Container className="relative py-20">
-        <div className="flex flex-wrap gap-10 items-start">
+      <Container className="relative py-20 max-sm:py-10">
+        <div className="flex flex-wrap gap-10 items-start max-sm:flex-col">
 
           {/* Left — photo area */}
-          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[300px]">
+          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[300px] max-sm:w-full max-sm:min-w-0">
             <div
-              className="relative rounded-2xl overflow-hidden"
+              className="relative rounded-2xl overflow-hidden max-sm:!h-[200px] max-sm:!w-[100%]"
               style={{ height: 596 }}
             >
-              {c.wpImageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={c.wpImageUrl} alt="Security platform" className="absolute inset-0 size-full object-cover" />
+              {(imageUrl || mobileImageUrl) ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={imageUrl} alt="Security platform" className={`absolute inset-0 size-full object-cover ${mobileImageUrl ? "max-sm:hidden" : ""}`} />
+                  {mobileImageUrl && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={mobileImageUrl} alt="Security platform" className="absolute inset-0 size-full object-cover hidden max-sm:block" />
+                  )}
+                </>
               ) : (
                 <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0A132F 0%, #1A4494 50%, #0A132F 100%)" }} />
               )}
@@ -186,7 +209,7 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
                   <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{chip}</span>
                 </div>
 
-                <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
+                <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
                   {sectionHeading}
                   <span
                     style={{
@@ -252,8 +275,8 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
                           style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
                         >
                           <div className="pt-5 flex flex-col gap-2">
-                            {checks.map((text) => (
-                              <CheckItem key={text} text={text} />
+                            {(Array.isArray(checks) ? checks : Object.values(checks as Record<string, string>)).map((text, idx) => (
+                              <CheckItem key={idx} text={text} />
                             ))}
                           </div>
                         </div>

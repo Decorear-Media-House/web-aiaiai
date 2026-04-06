@@ -2,6 +2,7 @@
 
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -96,7 +97,12 @@ interface IncludedContent {
   description?: string;
   pillars?: typeof PILLARS;
   background_color?: string;
-  wpImageUrl?: string;
+  card1_image?: string;
+  card2_image?: string;
+  card3_image?: string;
+  card1_mobile_image?: string;
+  card2_mobile_image?: string;
+  card3_mobile_image?: string;
 }
 
 export default function SecurityIncludedSection({ content }: { content?: Record<string, unknown> }) {
@@ -106,8 +112,19 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
   const headingHighlight = c.heading_highlight ?? "Includes";
   const sectionDescription = c.description ?? "Three pillars that work together to turn cameras into an operational intelligence system.";
   const pillars = c.pillars ?? PILLARS;
+  const bgColor = c.background_color ?? "#1A4494";
+  const cardImages = [
+    c.card1_image ? wpImageUrl(c.card1_image) : "",
+    c.card2_image ? wpImageUrl(c.card2_image) : "",
+    c.card3_image ? wpImageUrl(c.card3_image) : "",
+  ];
+  const cardMobileImages = [
+    c.card1_mobile_image ? wpImageUrl(c.card1_mobile_image) : "",
+    c.card2_mobile_image ? wpImageUrl(c.card2_mobile_image) : "",
+    c.card3_mobile_image ? wpImageUrl(c.card3_mobile_image) : "",
+  ];
   return (
-    <section className="relative overflow-x-clip" style={{ background: "#1A4494" }}>
+    <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Background grid pattern — 20% opacity */}
       <div
         className="pointer-events-none absolute inset-0 opacity-20 overflow-hidden"
@@ -123,7 +140,7 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
         </svg>
       </div>
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <div className="flex flex-col gap-10 items-center max-w-[1216px] mx-auto">
 
           {/* Header */}
@@ -172,12 +189,23 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
                   className="relative rounded-2xl overflow-hidden flex items-end shrink-0 w-full"
                   style={{ paddingTop: 180, paddingBottom: 16, paddingLeft: 16, paddingRight: 16 }}
                 >
-                  {/* Gradient placeholder for photos */}
-                  <div
-                    className="absolute inset-0 rounded-2xl"
-                    style={{ background: `linear-gradient(135deg, #0A132F ${i * 10}%, #1A4494 50%, #0A132F ${100 - i * 10}%)` }}
-                    aria-hidden="true"
-                  />
+                  {/* Background image or gradient fallback */}
+                  {cardImages[i] ? (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={cardImages[i]} alt="" className={`absolute inset-0 size-full object-cover ${cardMobileImages[i] ? "max-sm:hidden" : ""}`} />
+                      {cardMobileImages[i] && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={cardMobileImages[i]} alt="" className="absolute inset-0 size-full object-cover hidden max-sm:block" />
+                      )}
+                    </>
+                  ) : (
+                    <div
+                      className="absolute inset-0"
+                      style={{ background: `linear-gradient(135deg, #0A132F ${i * 10}%, #1A4494 50%, #0A132F ${100 - i * 10}%)` }}
+                      aria-hidden="true"
+                    />
+                  )}
                   {/* Icon */}
                   <div
                     className="relative flex items-center justify-center rounded-xl shrink-0"
@@ -197,8 +225,8 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
                     {title}
                   </h3>
                   <div className="flex flex-col gap-2">
-                    {items.map((text) => (
-                      <CheckItem key={text} text={text} />
+                    {(Array.isArray(items) ? items : Object.values(items as Record<string, string>)).map((text, idx) => (
+                      <CheckItem key={idx} text={text} />
                     ))}
                   </div>
                 </div>

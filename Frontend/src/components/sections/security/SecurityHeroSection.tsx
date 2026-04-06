@@ -1,6 +1,7 @@
 "use client";
 
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl as toPublicUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -27,6 +28,8 @@ interface HeroContent {
   background_color?: string;
   wpImageUrl?: string;
   wpContainerImageUrl?: string;
+  wpImageMobileUrl?: string;
+  wpContainerImageMobileUrl?: string;
 }
 
 const DEFAULT_STATS = [
@@ -46,10 +49,12 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
   const detectionTitle = c.detection_title ?? "AI-Powered Detection";
   const detectionSubtitle = c.detection_subtitle ?? "Camera \u2192 Alert \u2192 Incident \u2192 Report";
   const bgColor = c.background_color ?? "#070E24";
-  const wpImageUrl = c.wpImageUrl;
-  const wpContainerImageUrl = c.wpContainerImageUrl;
+  const heroBgUrl = c.wpImageUrl ? toPublicUrl(c.wpImageUrl) : "";
+  const heroCardUrl = c.wpContainerImageUrl ? toPublicUrl(c.wpContainerImageUrl) : "";
+  const heroCardMobileUrl = c.wpContainerImageMobileUrl ? toPublicUrl(c.wpContainerImageMobileUrl) : "";
   return (
     <section
+      className="max-sm:!h-auto"
       style={{
         position: "relative",
         height: 656,
@@ -59,10 +64,10 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
     >
       {/* ── Background image + gradient overlay ── */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }} aria-hidden="true">
-        {wpImageUrl && (
+        {heroBgUrl && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={wpImageUrl}
+            src={heroBgUrl}
             alt=""
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
@@ -101,6 +106,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
 
       {/* ── Content — absolute fill, inset padding matches Figma ── */}
       <div
+        className="max-sm:!relative max-sm:!px-6 max-sm:!pb-10"
         style={{
           position: "absolute",
           inset: 0,
@@ -114,6 +120,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
       >
         {/* Inner row */}
         <div
+          className="max-sm:!flex-col max-sm:!gap-10"
           style={{
             display: "flex",
             gap: 60,
@@ -154,6 +161,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
 
                 {/* Heading */}
                 <h1
+                  className="max-sm:!text-[32px]"
                   style={{
                     fontFamily: font,
                     fontSize: 48,
@@ -178,10 +186,11 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
 
             {/* Stat chips */}
             <FadeUp trigger="mount" delay={0.08}>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="max-sm:!gap-2" style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {stats.map(({ top, bottom }) => (
                   <div
                     key={top}
+                    className="max-sm:!px-3 max-sm:!py-3 max-sm:!flex-1 max-sm:!min-w-0"
                     style={{
                       flex: "1 0 100px",
                       display: "flex",
@@ -268,9 +277,10 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
           </div>
 
           {/* ── Right column — stretches full available height ── */}
-          <div style={{ flex: 1, alignSelf: "stretch", minWidth: 0 }}>
-          <FadeUp trigger="mount" delay={0.14} className="h-full">
+          <div className="max-sm:!h-[200px] max-sm:w-full" style={{ flex: 1, alignSelf: "stretch", minWidth: 0 }}>
+          <FadeUp trigger="mount" delay={0.14} className="h-full max-sm:!h-[200px]">
             <div
+              className="max-sm:!p-2"
               style={{
                 position: "relative",
                 borderRadius: 16,
@@ -284,21 +294,40 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
               }}
             >
               {/* Photo */}
-              {wpContainerImageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={wpContainerImageUrl}
-                  alt="AI security monitoring center"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    pointerEvents: "none",
-                    display: "block",
-                  }}
-                />
+              {heroCardUrl ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={heroCardUrl}
+                    alt="AI security monitoring center"
+                    className={heroCardMobileUrl ? "max-sm:!hidden" : ""}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      pointerEvents: "none",
+                      display: "block",
+                    }}
+                  />
+                  {heroCardMobileUrl && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={heroCardMobileUrl}
+                      alt="AI security monitoring center"
+                      className="hidden max-sm:!block"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        pointerEvents: "none",
+                      }}
+                    />
+                  )}
+                </>
               ) : (
                 <div
                   style={{
@@ -351,8 +380,9 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
                     <p style={{ fontFamily: font, fontSize: 12, color: "#8099BE", lineHeight: 1.5, margin: 0 }}>{detectionSubtitle}</p>
                   </div>
                 </div>
-                {/* Live badge */}
+                {/* Live badge — hidden on mobile */}
                 <div
+                  className="max-sm:!hidden"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",

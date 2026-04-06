@@ -98,20 +98,50 @@ add_action('admin_init', function () {
     $page = get_page_by_path($slug);
     if (!$page) return;
 
+    // Load existing data to help detect array fields during clean
+    $existing_raw = get_post_meta($page->ID, 'page_sections', true);
+    $existing = $existing_raw ? (json_decode($existing_raw, true) ?: []) : [];
+
     $raw = $_POST['sections'] ?? [];
     $sections = aiaiai_clean($raw);
 
-    update_post_meta($page->ID, 'page_sections', wp_json_encode($sections, JSON_UNESCAPED_UNICODE));
+    // Merge: preserve existing fields not present in the form submission
+    foreach ($existing as $section_key => $section_data) {
+        if (!isset($sections[$section_key])) continue;
+        if (!is_array($section_data)) continue;
+        foreach ($section_data as $field_key => $field_value) {
+            if (!isset($sections[$section_key][$field_key]) || $sections[$section_key][$field_key] === '') {
+                $sections[$section_key][$field_key] = $field_value;
+            }
+        }
+    }
+
+    $json = wp_slash(wp_json_encode($sections, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    update_post_meta($page->ID, 'page_sections', $json);
     wp_redirect(admin_url('admin.php?page=aiaiai-content&tab=' . $slug . '&saved=1'));
     exit;
 });
+
+// Field names that should always be arrays (one item per line in textarea)
+define('AIAIAI_ARRAY_FIELDS', ['checks', 'items', 'ceoTags']);
 
 function aiaiai_clean($raw) {
     if (is_string($raw)) return wp_kses_post(wp_unslash($raw));
     if (!is_array($raw)) return [];
     $clean = [];
     foreach ($raw as $k => $v) {
-        $clean[sanitize_text_field($k)] = is_array($v) ? aiaiai_clean($v) : wp_kses_post(wp_unslash($v));
+        $key = sanitize_text_field($k);
+        if (is_array($v)) {
+            $clean[$key] = aiaiai_clean($v);
+        } else {
+            $unslashed = wp_kses_post(wp_unslash($v));
+            // Convert newline-separated textarea back to array for known array fields
+            if (in_array($key, AIAIAI_ARRAY_FIELDS, true) && strpos($unslashed, "\n") !== false) {
+                $clean[$key] = array_values(array_filter(array_map('trim', explode("\n", $unslashed)), 'strlen'));
+            } else {
+                $clean[$key] = $unslashed;
+            }
+        }
     }
     return $clean;
 }
@@ -268,7 +298,12 @@ function aiaiai_array_table($label, $items, $prefix) {
             $val = $item[$c] ?? '';
             $n = "{$prefix}[{$i}][{$c}]";
             echo '<td>';
-            if (aiaiai_is_img($c)) {
+            if (is_array($val)) {
+                // Nested array (e.g. checks, items) — render as one textarea per line, joined by newlines
+                $text = implode("\n", $val);
+                echo '<textarea name="' . esc_attr($n) . '" rows="4" class="large-text" placeholder="One item per line">' . esc_textarea($text) . '</textarea>';
+                echo '<p class="description">One item per line</p>';
+            } elseif (aiaiai_is_img($c)) {
                 aiaiai_img_field($n, $val);
             } elseif (strlen((string)$val) > 60 || strpos($c, 'description') !== false) {
                 echo '<textarea name="' . esc_attr($n) . '" rows="3" class="large-text">' . esc_textarea($val) . '</textarea>';

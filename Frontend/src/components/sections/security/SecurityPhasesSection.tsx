@@ -83,8 +83,9 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
   const sectionHeading = c.heading ?? "How Deployments Usually Run";
   const sectionDescription = c.description ?? "A structured three-phase approach from initial pilot through full-scale rollout.";
   const phases = c.phases ?? PHASES;
+  const bgColor = c.background_color ?? "#070E24";
   return (
-    <section className="relative" style={{ background: "#070E24", overflowX: "clip" }}>
+    <section className="relative" style={{ background: bgColor, overflowX: "clip" }}>
       {/* Faint center glow */}
       <div
         className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 rounded-full"
@@ -92,7 +93,7 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
         aria-hidden="true"
       />
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <div className="flex flex-col gap-10 items-center max-w-[1216px] mx-auto">
 
           {/* Header */}
@@ -112,7 +113,7 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{chip}</span>
               </div>
 
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", textAlign: "center" }}>
+              <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", textAlign: "center" }}>
                 {sectionHeading}
               </h2>
 
@@ -149,6 +150,7 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
                 {/* Phase number */}
                 <div className="w-full text-center">
                   <span
+                    className="max-sm:!text-[32px]"
                     style={{
                       fontFamily: font,
                       fontSize: 48,

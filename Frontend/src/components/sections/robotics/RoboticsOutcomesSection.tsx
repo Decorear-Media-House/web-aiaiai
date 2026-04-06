@@ -3,6 +3,7 @@
 import { useState } from "react";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
@@ -88,6 +89,7 @@ interface OutcomesContent {
   description?: string;
   accordion_items?: typeof ACCORDION_ITEMS;
   background_color?: string;
+  outcomes_image?: string;
 }
 
 export default function RoboticsOutcomesSection({ content }: { content?: Record<string, unknown> }) {
@@ -96,7 +98,9 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
   const sectionHeading = c.heading ?? "What Robotics ";
   const headingHighlight = c.heading_highlight ?? "Achieves";
   const sectionDescription = c.description ?? "Structured deployment unlocks measurable operational improvements — from day one through full-scale rollout.";
-  const accordionItems = c.accordion_items ?? ACCORDION_ITEMS;
+  const rawAccordion = c.accordion_items ?? ACCORDION_ITEMS;
+  const accordionItems: typeof ACCORDION_ITEMS = Array.isArray(rawAccordion) ? rawAccordion : Object.values(rawAccordion);
+  const outcomesImage = c.outcomes_image ? wpImageUrl(c.outcomes_image) : "";
   const [open, setOpen] = useState(0);
 
   return (
@@ -138,7 +142,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
         }}
       />
 
-      <Container className="relative py-20">
+      <Container className="relative py-20 max-sm:py-10">
         <div
           style={{
             display: "flex",
@@ -209,7 +213,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                 </p>
               </div>
 
-              {/* Photo placeholder */}
+              {/* Photo */}
               <div
                 style={{
                   position: "relative",
@@ -218,9 +222,14 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                   width: "100%",
                   overflow: "hidden",
                   flexShrink: 0,
-                  background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
+                  background: outcomesImage ? undefined : "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
                 }}
-              />
+              >
+                {outcomesImage && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={outcomesImage} alt="Robotics outcomes" className="absolute inset-0 size-full object-cover" />
+                )}
+              </div>
             </div>
           </FadeUp>
 
@@ -265,7 +274,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                   </button>
 
                   {/* Expanded content */}
-                  {open === i && items.length > 0 && (
+                  {open === i && items && (Array.isArray(items) ? items : Object.values(items)).length > 0 && (
                     <div
                       style={{
                         borderTop: "1px solid rgba(255,255,255,0.08)",
@@ -275,8 +284,8 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                         gap: 8,
                       }}
                     >
-                      {items.map((text) => (
-                        <CheckItem key={text} text={text} />
+                      {(Array.isArray(items) ? items : Object.values(items as Record<string, string>)).map((text, j) => (
+                        <CheckItem key={j} text={text} />
                       ))}
                     </div>
                   )}

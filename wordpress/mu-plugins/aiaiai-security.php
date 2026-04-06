@@ -164,8 +164,19 @@ add_filter('wp_handle_upload_prefilter', function ($file) {
     return $file;
 });
 
-/* Allow SVG uploads */
+/* Allow SVG and WebP uploads */
 add_filter("upload_mimes", function($mimes) {
     $mimes["svg"] = "image/svg+xml";
+    $mimes["webp"] = "image/webp";
     return $mimes;
 });
+
+/* Allow WebP uploads without extra checks */
+add_filter("wp_check_filetype_and_ext", function($data, $file, $filename, $mimes) {
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    if ($ext === "webp") {
+        $data["ext"] = "webp";
+        $data["type"] = "image/webp";
+    }
+    return $data;
+}, 10, 4);

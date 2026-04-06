@@ -2,356 +2,219 @@
 
 import { useState } from "react";
 import FadeUp from "@/components/animations/FadeUp";
+import Container from "@/components/layouts/Container";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
-
 const ROYAL_SHINE = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-function SparkleIcon() {
+function CheckCircleIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="#4A99F5"/>
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" className="shrink-0 mt-0.5">
+      <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5" />
+      <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-const TABS = [
-  {
-    label: "Logistics & Warehousing",
-    caseLabel: "Use Case 1",
-    tags: ["Pick & Place", "Inventory", "WMS Integration"],
-    heading: "Logistics & Warehousing",
-    body: "Humanoid robots handling pick-and-place, sorting, and inventory checks in warehouse environments — integrated with existing WMS and operational SOPs.",
-  },
-  {
-    label: "Manufacturing & Assembly",
-    caseLabel: "Use Case 2",
-    tags: ["Line Assembly", "QA Inspection", "ERP Integration"],
-    heading: "Manufacturing & Assembly",
-    body: "Robots operating alongside human workers on assembly lines — performing precision tasks, quality checks, and feeding data directly into ERP systems.",
-  },
-  {
-    label: "Facility & Inspection",
-    caseLabel: "Use Case 3",
-    tags: ["Patrol & Monitoring", "Anomaly Detection", "CMMS Integration"],
-    heading: "Facility & Inspection",
-    body: "Autonomous inspection rounds across facilities — detecting anomalies, logging maintenance events, and syncing findings with facility management systems.",
-  },
-];
+interface Robot {
+  name: string;
+  header_image?: string;
+  title?: string;
+  description?: string;
+  video_thumb?: string;
+  specs?: { label: string; value: string }[];
+  features?: { title: string; items: string[]; feature_image?: string }[];
+  note?: string;
+}
 
 interface UseCasesContent {
-  chip?: string;
-  heading?: string;
-  heading_highlight?: string;
-  description?: string;
-  tabs?: typeof TABS;
-  background_color?: string;
+  robots?: Robot[];
 }
+
+const DEFAULT_ROBOTS: Robot[] = [
+  { name: "AGIBOT X2 ULTRA", title: "Embodied AI & Humanoid Robotic Solution", description: "An intelligent humanoid robot with advanced capabilities." },
+  { name: "AGIBOT D1 EDU", title: "Embodied AI & Humanoid Robotic Solution", description: "A compact, fast, and highly agile robot." },
+  { name: "A2 ULTRA", title: "Embodied AI & Humanoid Robotic Solution", description: "A large-scale humanoid robot for commercial deployment." },
+  { name: "AGIBOT G2", title: "Embodied AI & Humanoid Robotic Solution", description: "Industrial-grade intelligent humanoid robot." },
+];
 
 export default function RoboticsUseCasesSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as UseCasesContent;
-  const chip = c.chip ?? "Use Cases";
-  const sectionHeading = c.heading ?? "Where Robots ";
-  const headingHighlight = c.heading_highlight ?? "Deliver Value";
-  const sectionDescription = c.description ?? "Deployment-ready use cases across industries — each with a structured pilot, SOP, and integration plan.";
-  const tabs = c.tabs ?? TABS;
+  const rawRobots = c.robots ?? DEFAULT_ROBOTS;
+  const robots: Robot[] = Array.isArray(rawRobots) ? rawRobots : Object.values(rawRobots);
   const [activeTab, setActiveTab] = useState(0);
-  const tab = tabs[activeTab];
+  const robot = robots[activeTab] || robots[0];
+
+  const specs: { label: string; value: string }[] = Array.isArray(robot.specs) ? robot.specs : robot.specs ? Object.values(robot.specs) : [];
+  const features: { title: string; items: string[]; feature_image?: string }[] = Array.isArray(robot.features) ? robot.features : robot.features ? Object.values(robot.features) : [];
 
   return (
-    <section
-      style={{
-        position: "relative",
-        background: c.background_color ?? "#070E24",
-        paddingTop: 40,
-        paddingBottom: 80,
-        overflow: "hidden",
-      }}
-    >
-      {/* Glow top-right */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: 68,
-          right: 0,
-          width: 400,
-          height: 400,
-          borderRadius: 9999,
-          background: "rgba(43,61,255,0.1)",
-          filter: "blur(64px)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Deco corner top-right — decorative gradient arc */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: 224,
-          height: 511,
-          overflow: "hidden",
-          pointerEvents: "none",
-          background: "linear-gradient(220deg, rgba(43,127,255,0.08) 0%, transparent 60%)",
-        }}
-      />
-
-      {/* Glow bottom-left */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          bottom: -2,
-          left: 0,
-          width: 400,
-          height: 400,
-          borderRadius: 9999,
-          background: "rgba(43,127,255,0.1)",
-          filter: "blur(64px)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Content */}
-      <div
-        style={{
-          position: "relative",
-          maxWidth: 1216,
-          margin: "0 auto",
-          paddingLeft: 112,
-          paddingRight: 112,
-          display: "flex",
-          flexDirection: "column",
-          gap: 40,
-          alignItems: "center",
-        }}
-      >
-        {/* Header */}
-        <FadeUp trigger="scroll" delay={0}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", width: "100%" }}>
-            {/* Chip */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                borderRadius: 8,
-                padding: "8px 16px",
-                background: "rgba(43,127,255,0.1)",
-                border: "1px solid rgba(43,127,255,0.2)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-              }}
-            >
-              <SparkleIcon />
-              <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                {chip}
-              </span>
-            </div>
-
-            {/* Heading */}
-            <h2
-              style={{
-                fontFamily: font,
-                fontSize: 32,
-                fontWeight: 400,
-                lineHeight: 1.3,
-                margin: 0,
-                textAlign: "center",
-                color: "#fff",
-              }}
-            >
-              {sectionHeading}
-              <span
-                style={{
-                  backgroundImage: ROYAL_SHINE,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {headingHighlight}
-              </span>
-            </h2>
-
-            {/* Body */}
-            <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center", margin: 0 }}>
-              {sectionDescription}
-            </p>
-          </div>
-        </FadeUp>
-
-        {/* Pill tab switcher */}
-        <FadeUp trigger="scroll" delay={0.08}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: 8,
-              borderRadius: 99,
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              flexWrap: "wrap",
-              gap: 4,
-              justifyContent: "center",
-            }}
-          >
-            {tabs.map((t, i) => (
-              <button
-                key={t.label}
-                onClick={() => setActiveTab(i)}
-                style={{
-                  fontFamily: font,
-                  fontSize: 16,
-                  color: "#fff",
-                  padding: "12px 24px",
-                  borderRadius: 99,
-                  border: "none",
-                  cursor: "pointer",
-                  background: activeTab === i ? "#2D7AE8" : "transparent",
-                  whiteSpace: "nowrap",
-                  transition: "background 0.2s",
-                  ...(activeTab !== i && { color: "#90A1B9" }),
-                }}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-        </FadeUp>
-
-        {/* Content row */}
-        <FadeUp trigger="scroll" delay={0.14}>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "24px 40px",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            {/* Left — photo card placeholder */}
-            <div
-              style={{
-                flex: "1 0 0",
-                minWidth: 300,
-                position: "relative",
-                borderRadius: 16,
-                overflow: "hidden",
-                border: "1px solid rgba(255,255,255,0.08)",
-                paddingTop: 300,
-                paddingBottom: 16,
-                paddingLeft: 16,
-                paddingRight: 16,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {/* Dark gradient placeholder for photos */}
-              <div aria-hidden="true" style={{ position: "absolute", inset: 0, borderRadius: 16, pointerEvents: "none" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: 16,
-                    background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
-                  }}
-                />
-              </div>
-              {/* Tags */}
-              <div style={{ position: "relative", display: "flex", flexWrap: "wrap", gap: 4 }}>
-                {tab.tags.map((tag) => (
-                  <div
-                    key={tag}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 8,
-                      padding: "8px 16px",
-                      borderRadius: 8,
-                      background: "rgba(0,0,0,0.2)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      backdropFilter: "blur(16px)",
-                      WebkitBackdropFilter: "blur(16px)",
-                    }}
-                  >
-                    <span style={{ fontFamily: font, fontSize: 12, color: "#fff", whiteSpace: "nowrap" }}>{tag}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right — content */}
-            <div
-              style={{
-                flex: "1 0 0",
-                minWidth: 300,
-                display: "flex",
-                flexDirection: "column",
-                gap: 24,
-                alignItems: "flex-start",
-              }}
-            >
-              {/* Case chip */}
+    <>
+      {/* Tab Selector */}
+      <section className="relative" style={{ background: "#070E24" }}>
+        <Container className="py-10 max-sm:py-6">
+          <FadeUp trigger="scroll" delay={0}>
+            <div className="flex flex-col gap-10 items-center max-sm:gap-6">
+              {/* Pill tab switcher */}
               <div
+                className="inline-flex items-center p-2 rounded-full flex-wrap gap-1 justify-center"
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "8px 16px",
-                  borderRadius: 8,
-                  background: "rgba(43,127,255,0.1)",
-                  border: "1px solid rgba(43,127,255,0.2)",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
                 }}
               >
-                <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>
-                  {tab.caseLabel}
-                </span>
-              </div>
-
-              {/* h3 */}
-              <h3 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff", margin: 0 }}>
-                {tab.heading}
-              </h3>
-
-              {/* Body */}
-              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, margin: 0 }}>
-                {tab.body}
-              </p>
-
-              {/* Dot carousel */}
-              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                {tabs.map((_, i) => (
+                {robots.map((r, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveTab(i)}
-                    aria-label={`Go to tab ${i + 1}`}
+                    className="transition-colors max-sm:text-sm max-sm:px-4 max-sm:py-2"
                     style={{
-                      width: i === activeTab ? 32 : 6,
-                      height: 6,
-                      borderRadius: 999,
+                      fontFamily: font,
+                      fontSize: 16,
+                      color: activeTab === i ? "#fff" : "#90A1B9",
+                      padding: "12px 24px",
+                      borderRadius: 99,
                       border: "none",
                       cursor: "pointer",
-                      padding: 0,
-                      transition: "width 0.3s, background 0.3s",
-                      backgroundImage: i === activeTab ? ROYAL_SHINE : undefined,
-                      background: i === activeTab ? undefined : "rgba(255,255,255,0.2)",
+                      background: activeTab === i ? "#2D7AE8" : "transparent",
+                      whiteSpace: "nowrap",
                     }}
-                  />
+                  >
+                    {r.name}
+                  </button>
                 ))}
               </div>
             </div>
+          </FadeUp>
+        </Container>
+      </section>
+
+      {/* Header with background image */}
+      <section
+        className="relative overflow-hidden"
+        style={{ minHeight: 300 }}
+      >
+        {robot.header_image && (
+          <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={wpImageUrl(robot.header_image)} alt="" className="absolute inset-0 size-full object-cover" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(270deg, rgba(7,14,36,0) 0%, rgba(7,14,36,1) 100%)" }} />
           </div>
-        </FadeUp>
-      </div>
-    </section>
+        )}
+        <Container className="relative py-20 max-sm:py-10">
+          <div className="max-w-[600px] flex flex-col gap-6">
+            <FadeUp trigger="scroll" delay={0}>
+              <h2 className="max-sm:text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
+                {robot.title}
+              </h2>
+            </FadeUp>
+            <FadeUp trigger="scroll" delay={0.05}>
+              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
+                {robot.description}
+              </p>
+            </FadeUp>
+            {robot.video_thumb && (
+              <FadeUp trigger="scroll" delay={0.1}>
+                <div className="relative rounded-2xl overflow-hidden w-[356px] h-[200px] max-sm:w-full max-sm:h-[180px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={wpImageUrl(robot.video_thumb)} alt="Video preview" className="size-full object-cover" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="size-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7L8 5z" /></svg>
+                    </div>
+                  </div>
+                </div>
+              </FadeUp>
+            )}
+          </div>
+        </Container>
+      </section>
+
+      {/* Specifications */}
+      {specs.length > 0 && (
+        <section style={{ background: "#070E24" }}>
+          <Container className="py-10 max-sm:py-6">
+            <FadeUp trigger="scroll" delay={0}>
+              <div className="flex flex-col gap-6">
+                <h3 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, color: "#fff" }}>Specifications</h3>
+                <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+                  {specs.map((spec, i) => (
+                    <div
+                      key={i}
+                      className="flex flex-col gap-1 p-4 rounded-xl"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                      }}
+                    >
+                      <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{typeof spec === "object" ? spec.label : ""}</span>
+                      <span style={{ fontFamily: font, fontSize: 16, color: "#fff" }}>{typeof spec === "object" ? spec.value : String(spec)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeUp>
+          </Container>
+        </section>
+      )}
+
+      {/* Key Features */}
+      {features.length > 0 && (
+        <section style={{ background: "#070E24", borderTop: "1px solid rgba(43,127,255,0.15)" }}>
+          <Container className="py-10 max-sm:py-6">
+            <div className="flex flex-col gap-8">
+              <FadeUp trigger="scroll" delay={0}>
+                <h3 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, color: "#fff" }}>Key Features</h3>
+              </FadeUp>
+              <div className="flex flex-wrap gap-6">
+                {features.map((feature, i) => {
+                  const featureItems: string[] = Array.isArray(feature.items) ? feature.items : feature.items ? Object.values(feature.items) : [];
+                  return (
+                    <FadeUp key={i} trigger="scroll" delay={i * 0.08} className="flex-1 min-w-[280px]">
+                      <div
+                        className="rounded-2xl overflow-hidden h-full flex flex-col"
+                        style={{
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.08)",
+                        }}
+                      >
+                        {/* Feature image */}
+                        {feature.feature_image && (
+                          <div className="relative h-[200px] max-sm:h-[150px]">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={wpImageUrl(feature.feature_image)} alt="" className="size-full object-cover" />
+                          </div>
+                        )}
+                        <div className="p-6 flex flex-col gap-4">
+                          <h4 style={{ fontFamily: font, fontSize: 20, fontWeight: 400, color: "#fff" }}>{feature.title}</h4>
+                          <div className="flex flex-col gap-2">
+                            {featureItems.map((item, j) => (
+                              <div key={j} className="flex items-start gap-2">
+                                <CheckCircleIcon />
+                                <p style={{ fontFamily: font, fontSize: 14, color: "#C0CEEA", lineHeight: 1.5 }}>{item}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </FadeUp>
+                  );
+                })}
+              </div>
+              {robot.note && (
+                <FadeUp trigger="scroll" delay={0.2}>
+                  <p className="italic" style={{ fontFamily: font, fontSize: 14, color: "#8099BE", lineHeight: 1.5 }}>
+                    Note: {robot.note}
+                  </p>
+                </FadeUp>
+              )}
+            </div>
+          </Container>
+        </section>
+      )}
+    </>
   );
 }
