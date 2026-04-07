@@ -211,7 +211,7 @@ export default function SixthSection({ content }: { content?: Record<string, unk
                 </span>
               </div>
 
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
+              <h2 className="max-sm:!text-[26px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
                 <span style={{ color: "#fff" }}>{whiteText}</span>
                 <span style={{
                   backgroundImage: "linear-gradient(90deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
@@ -276,12 +276,12 @@ export default function SixthSection({ content }: { content?: Record<string, unk
                     </div>
 
                     {/* Title */}
-                    <h3 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, color: "#fff", lineHeight: 1.4 }}>
+                    <h3 className="max-sm:!text-[20px]" style={{ fontFamily: font, fontSize: 24, fontWeight: 400, color: "#fff", lineHeight: 1.4 }}>
                       {phase.title}
                     </h3>
 
                     {/* Description */}
-                    <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
+                    <p className="max-sm:!text-[14px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
                       {phase.description}
                     </p>
                   </div>

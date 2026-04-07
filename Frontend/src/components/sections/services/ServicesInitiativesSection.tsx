@@ -54,7 +54,7 @@ export default function ServicesInitiativesSection({ content }: { content?: Reco
   const initiatives = c.initiatives ?? DEFAULT_INITIATIVES;
   const bgColor = c.background_color ?? "#102050";
   return (
-    <section className="relative" style={{ background: bgColor }}>
+    <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Glow blobs */}
       <div
         className="pointer-events-none absolute rounded-full"
@@ -133,7 +133,7 @@ export default function ServicesInitiativesSection({ content }: { content?: Reco
           </div>
 
           {/* Right — initiative cards */}
-          <div className="flex-1 min-w-[350px] max-sm:min-w-0 flex flex-col gap-4">
+          <div className="flex-1 min-w-[350px] max-sm:!min-w-0 max-sm:w-full flex flex-col gap-4">
             {initiatives.map((text, i) => (
               <FadeUp key={i} trigger="scroll" delay={i * 0.06}>
                 <div className="flex gap-4 items-start">
@@ -160,7 +160,7 @@ export default function ServicesInitiativesSection({ content }: { content?: Reco
 
                   {/* Card */}
                   <div
-                    className="flex-1 rounded-2xl p-6"
+                    className="flex-1 rounded-2xl p-6 max-sm:p-4"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
@@ -168,7 +168,7 @@ export default function ServicesInitiativesSection({ content }: { content?: Reco
                       WebkitBackdropFilter: "blur(16px)",
                     }}
                   >
-                    <p style={{ fontFamily: font, fontSize: 20, color: "#fff", lineHeight: 1.5 }}>{text}</p>
+                    <p className="max-sm:!text-base" style={{ fontFamily: font, fontSize: 20, color: "#fff", lineHeight: 1.5 }}>{text}</p>
                   </div>
                 </div>
               </FadeUp>

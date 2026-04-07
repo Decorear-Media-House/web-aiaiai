@@ -24,7 +24,7 @@ export default function AboutMissionSection({ content }: { content?: Record<stri
   const bgImageMobile = (content?.mission_background_mobile_image as string) ? wpImageUrl(content!.mission_background_mobile_image as string) : "";
 
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: 382 }}>
+    <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 382 }}>
 
       {/* Background image — uses <picture> for desktop/mobile swap */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -42,8 +42,8 @@ export default function AboutMissionSection({ content }: { content?: Record<stri
       />
 
       {/* Content — left aligned */}
-      <div className="relative flex items-center py-10 px-6 sm:py-20 sm:px-[112px] md:mx-auto" style={{ minHeight: 382,maxWidth:1440 }}>
-        <div className="flex flex-col gap-6 max-lg:max-w-full" style={{ maxWidth: 560 }}>
+      <div className="relative flex items-center py-10 px-6 sm:py-20 sm:px-[112px] md:mx-auto max-sm:!min-h-0" style={{ minHeight: 382, maxWidth: 1440 }}>
+        <div className="flex flex-col gap-6 max-lg:max-w-full max-sm:!max-w-full" style={{ maxWidth: 560 }}>
 
           <FadeUp trigger="scroll" delay={0}>
             <div
@@ -61,7 +61,7 @@ export default function AboutMissionSection({ content }: { content?: Record<stri
           </FadeUp>
 
           <FadeUp trigger="scroll" delay={0.1}>
-            <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
+            <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
               <span style={{ color: "#fff" }}>{headingWhite1}</span>
               <span style={{
                 backgroundImage: "linear-gradient(90deg, #FF8904 0%, #FF6467 100%)",
@@ -74,7 +74,7 @@ export default function AboutMissionSection({ content }: { content?: Record<stri
           </FadeUp>
 
           <FadeUp trigger="scroll" delay={0.2}>
-            <p style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
+            <p className="max-sm:!text-[14px]" style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
               {description}
             </p>
           </FadeUp>

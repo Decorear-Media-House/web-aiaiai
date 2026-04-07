@@ -144,6 +144,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
 
       <Container className="relative py-20 max-sm:py-10">
         <div
+          className="max-sm:!flex-col max-sm:!gap-8"
           style={{
             display: "flex",
             flexWrap: "wrap",
@@ -156,6 +157,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
           {/* Left column */}
           <FadeUp trigger="scroll" delay={0}>
             <div
+              className="max-sm:!min-w-0 max-sm:!max-w-full"
               style={{
                 flex: "1 0 0",
                 minWidth: 300,
@@ -193,7 +195,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                 </div>
 
                 {/* Heading */}
-                <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
+                <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
                   {sectionHeading}
                   <span
                     style={{
@@ -220,6 +222,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                   borderRadius: 16,
                   height: 260,
                   width: "100%",
+                  maxHeight: "100%",
                   overflow: "hidden",
                   flexShrink: 0,
                   background: outcomesImage ? undefined : "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
@@ -234,7 +237,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
           </FadeUp>
 
           {/* Right column — accordion */}
-          <div style={{ flex: "1 0 0", minWidth: 300, display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="max-sm:!min-w-0" style={{ flex: "1 0 0", minWidth: 300, display: "flex", flexDirection: "column", gap: 12 }}>
             {accordionItems.map(({ label, iconGradient, items }, i) => (
               <FadeUp key={label} trigger="scroll" delay={i * 0.07}>
                 <div

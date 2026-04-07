@@ -167,7 +167,7 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
               </div>
 
               {/* Heading */}
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", textAlign: "center" }}>
+              <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", textAlign: "center" }}>
                 {sectionHeading}
                 <span style={{ color: "#00BAF2" }}>{headingHighlight}</span>
               </h2>
@@ -180,13 +180,13 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
           </FadeUp>
 
           {/* 3-column pillars */}
-          <div className="flex flex-wrap gap-6 items-start w-full">
+          <div className="flex flex-wrap gap-6 items-start w-full max-sm:flex-col">
             {pillars.map(({ title, items }, i) => (
-              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[260px] flex flex-col gap-6">
+              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[260px] max-sm:!min-w-0 max-sm:w-full max-sm:!flex-none flex flex-col gap-6">
 
                 {/* Photo card */}
                 <div
-                  className="relative rounded-2xl overflow-hidden flex items-end shrink-0 w-full"
+                  className="relative rounded-2xl overflow-hidden flex items-end shrink-0 w-full max-sm:!pt-[140px]"
                   style={{ paddingTop: 180, paddingBottom: 16, paddingLeft: 16, paddingRight: 16 }}
                 >
                   {/* Background image or gradient fallback */}

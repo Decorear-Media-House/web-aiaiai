@@ -53,7 +53,7 @@ export default function BlogHeroSection({ search, onSearchChange, content }: Blo
       </div>
 
       <Container className="relative">
-        <div className="flex flex-col gap-6 pb-20 pt-[140px] max-w-[493px]">
+        <div className="flex flex-col gap-6 pb-20 pt-[140px] max-w-[493px] max-sm:!pt-[100px] max-sm:!pb-10 max-sm:!gap-4">
           {/* Label badge */}
           <div className="flex flex-col gap-4">
             <FadeUp trigger="mount" delay={0}>
@@ -76,6 +76,7 @@ export default function BlogHeroSection({ search, onSearchChange, content }: Blo
             {/* Title */}
             <FadeUp trigger="mount" delay={0.1}>
               <h1
+                className="max-sm:!text-[28px]"
                 style={{
                   fontFamily: font,
                   fontSize: "clamp(36px, 4vw, 48px)",

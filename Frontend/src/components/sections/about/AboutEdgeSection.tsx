@@ -92,7 +92,7 @@ export default function AboutEdgeSection({ content }: { content?: AboutEdgeConte
                   <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{label}</span>
                 </div>
 
-                <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
+                <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
                   {headingPrefix}
                   <span
                     style={{
@@ -140,7 +140,7 @@ export default function AboutEdgeSection({ content }: { content?: AboutEdgeConte
                       <p style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
                         {edge.title}
                       </p>
-                      <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
+                      <p className="max-sm:!text-[14px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
                         {edge.desc}
                       </p>
                     </div>
@@ -153,7 +153,7 @@ export default function AboutEdgeSection({ content }: { content?: AboutEdgeConte
           {/* Right — photo */}
           <FadeUp trigger="scroll" delay={0.15} className="shrink-0 max-sm:w-full">
             <div
-              className="overflow-hidden rounded-2xl max-sm:w-full max-sm:h-auto"
+              className="overflow-hidden rounded-2xl max-sm:!w-full max-sm:!h-[240px]"
               style={{
                 width: 389,
                 height: 368,

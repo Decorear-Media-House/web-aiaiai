@@ -170,14 +170,14 @@ export default function ArticleContentSection({
 }: ArticleContentProps) {
   return (
     <section style={{ background: "#070E24" }}>
-      <Container className="flex flex-col gap-20 pb-20">
+      <Container className="flex flex-col gap-20 pb-20 max-sm:!gap-10 max-sm:!pb-10">
         {/* Main content area */}
         <div className="flex flex-wrap gap-10 items-start">
           {/* Article body */}
-          <div className="flex flex-col gap-6 flex-1 min-w-[300px]">
+          <div className="flex flex-col gap-6 flex-1 min-w-[300px] max-sm:!min-w-0">
             {/* Featured thumbnail */}
             <FadeUp>
-              <div className="relative w-full overflow-hidden min-w-[300px]" style={{ height: 448 }}>
+              <div className="relative w-full overflow-hidden min-w-[300px] max-sm:!h-[220px] max-sm:!min-w-0" style={{ height: 448 }}>
                 <img
                   src={thumbnail}
                   alt=""
@@ -223,7 +223,7 @@ export default function ArticleContentSection({
                     Tags:
                   </span>
                 </div>
-                <div className="flex items-center gap-1 flex-wrap flex-1 min-w-[300px]">
+                <div className="flex items-center gap-1 flex-wrap flex-1 min-w-[300px] max-sm:!min-w-0">
                   {tags.map((tag) => (
                     <Tag key={tag} label={tag} />
                   ))}
@@ -233,7 +233,7 @@ export default function ArticleContentSection({
           </div>
 
           {/* Sidebar - CTA card */}
-          <div className="w-full max-w-[389px] min-w-[300px] max-lg:max-w-full">
+          <div className="w-full max-w-[389px] min-w-[300px] max-lg:max-w-full max-sm:!min-w-0">
             <FadeUp>
               <div
                 className="flex flex-col gap-4 p-6 rounded-2xl"
@@ -277,7 +277,7 @@ export default function ArticleContentSection({
         >
           <FadeUp>
             <div className="flex flex-wrap items-center gap-6">
-              <h3 className="flex-1 min-w-[300px]" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4, fontWeight: 400 }}>
+              <h3 className="flex-1 min-w-[300px] max-sm:!min-w-0 max-sm:!text-[20px]" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4, fontWeight: 400 }}>
                 More articles
               </h3>
               <Link
@@ -300,7 +300,7 @@ export default function ArticleContentSection({
 
           {/* Related blog cards */}
           <div
-            className="grid gap-6"
+            className="grid gap-6 max-sm:!grid-cols-1"
             style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}
           >
             {relatedPosts.map((post, i) => (

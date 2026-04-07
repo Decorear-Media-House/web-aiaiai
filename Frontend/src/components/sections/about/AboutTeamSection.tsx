@@ -49,7 +49,7 @@ function InitialsPlaceholder({ name, height }: { name: string; height: number })
 function CardGlassFooter({ children, centered = false }: { children: React.ReactNode; centered?: boolean }) {
   return (
     <div
-      className="w-full p-8"
+      className="w-full p-8 max-sm:p-4"
       style={{
         background: "rgba(7,14,36,0.4)",
         backdropFilter: "blur(16px)",
@@ -147,7 +147,7 @@ export default function AboutTeamSection({ content }: { content?: AboutTeamConte
                 <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5" }}>{label}</span>
               </div>
 
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
+              <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
                 {headingPrefix}
                 <span style={{ backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                   {headingHighlight}
@@ -184,15 +184,15 @@ export default function AboutTeamSection({ content }: { content?: AboutTeamConte
                 {/* Footer */}
                 <CardGlassFooter>
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-baseline gap-2 whitespace-nowrap">
-                      <span style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                    <div className="flex items-baseline gap-2 whitespace-nowrap max-sm:flex-wrap max-sm:whitespace-normal max-sm:justify-center">
+                      <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                         {ceoRole}
                       </span>
-                      <span style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>
+                      <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>
                         {ceoName}
                       </span>
                     </div>
-                    <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center" }}>
+                    <p className="max-sm:!text-[14px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5, textAlign: "center" }}>
                       {ceoBio}
                     </p>
                     <div className="flex flex-wrap gap-2 justify-center">
@@ -227,11 +227,11 @@ export default function AboutTeamSection({ content }: { content?: AboutTeamConte
                 )}
                 <div className="mt-auto relative">
                   <CardGlassFooter centered>
-                    <div className="flex items-baseline gap-2 justify-center whitespace-nowrap">
-                      <span style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                    <div className="flex items-baseline gap-2 justify-center whitespace-nowrap max-sm:flex-wrap max-sm:whitespace-normal">
+                      <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                         {ctoRole}
                       </span>
-                      <span style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>
+                      <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>
                         {ctoName}
                       </span>
                     </div>
@@ -256,11 +256,11 @@ export default function AboutTeamSection({ content }: { content?: AboutTeamConte
                 )}
                 <div className="mt-auto relative">
                   <CardGlassFooter centered>
-                    <div className="flex items-baseline gap-2 justify-center whitespace-nowrap">
-                      <span style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                    <div className="flex items-baseline gap-2 justify-center whitespace-nowrap max-sm:flex-wrap max-sm:whitespace-normal">
+                      <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                         {cooRole}
                       </span>
-                      <span style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>
+                      <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>
                         {cooName}
                       </span>
                     </div>

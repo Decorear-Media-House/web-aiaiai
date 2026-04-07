@@ -38,11 +38,11 @@ export default function AboutHeroSection({ content }: { content?: Record<string,
         />
       </div>
 
-      <Container className="relative flex items-end" style={{ minHeight: 394 }}>
-        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-sm:pt-[120px] max-sm:pb-10 max-lg:flex-col max-lg:items-start">
+      <Container className="relative flex items-end max-sm:!min-h-0" style={{ minHeight: 394 }}>
+        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-sm:pt-[100px] max-sm:pb-10 max-sm:!flex-col max-sm:!items-start max-sm:gap-4 max-lg:flex-col max-lg:items-start">
 
           {/* Left column — label + title */}
-          <div className="flex flex-1 min-w-[300px] flex-col gap-6">
+          <div className="flex flex-1 min-w-[300px] max-sm:!min-w-0 max-sm:w-full flex-col gap-6 max-sm:gap-4">
             <FadeUp trigger="mount" delay={0}>
               <div
                 className="inline-flex items-center gap-2 rounded-lg px-4 py-2"
@@ -60,6 +60,7 @@ export default function AboutHeroSection({ content }: { content?: Record<string,
 
             <FadeUp trigger="mount" delay={0.1}>
               <h1
+                className="max-sm:!text-[24px]"
                 style={{
                   fontFamily: font,
                   fontSize: 32,
@@ -79,9 +80,9 @@ export default function AboutHeroSection({ content }: { content?: Record<string,
           </div>
 
           {/* Right column — description */}
-          <div className="flex flex-1 min-w-[300px] items-end">
+          <div className="flex flex-1 min-w-[300px] max-sm:!min-w-0 max-sm:w-full items-end">
             <FadeUp trigger="mount" delay={0.2}>
-              <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.75 }}>
+              <p className="max-sm:!text-[14px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.75 }}>
                 {description}
               </p>
             </FadeUp>

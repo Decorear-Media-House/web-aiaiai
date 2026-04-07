@@ -43,6 +43,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
   const deliverables = c.items ?? DELIVERABLES;
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: c.background_color ?? "#070E24",
@@ -70,6 +71,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
       />
 
       <div
+        className="max-sm:!flex-col max-sm:!gap-8"
         style={{
           position: "relative",
           maxWidth: 1216,
@@ -84,6 +86,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
         {/* Left — header */}
         <FadeUp trigger="scroll" delay={0}>
           <div
+            className="max-sm:!min-w-0 max-sm:!max-w-full"
             style={{
               flex: "1 0 0",
               minWidth: 300,
@@ -119,7 +122,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
             </div>
 
             {/* Heading */}
-            <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
+            <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff", margin: 0 }}>
               {sectionHeading}
               <span
                 style={{
@@ -142,6 +145,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
 
         {/* Right — 6 cards */}
         <div
+          className="max-sm:!min-w-0 max-sm:!max-w-full"
           style={{
             flex: "1 0 0",
             minWidth: 300,
@@ -153,8 +157,9 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
           }}
         >
           {deliverables.map(({ num, title }, i) => (
-            <FadeUp key={num} trigger="scroll" delay={i * 0.07}>
+            <FadeUp key={num} trigger="scroll" delay={i * 0.07} className="max-sm:!min-w-full">
               <div
+                className="max-sm:!min-w-full"
                 style={{
                   flex: "1 0 0",
                   minWidth: 200,

@@ -53,10 +53,10 @@ export default function ServicesHeroSection({ content }: { content?: Record<stri
       </div>
 
       <Container className="relative flex items-end" style={{ minHeight: 394 }}>
-        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-sm:pb-10 max-sm:pt-[140px] max-sm:gap-6 max-lg:flex-col max-lg:items-start">
+        <div className="flex w-full flex-wrap items-end gap-6 pb-20 pt-[140px] max-sm:pb-10 max-sm:pt-[120px] max-sm:gap-6 max-lg:flex-col max-lg:items-start">
 
           {/* Left column — label + heading */}
-          <div className="flex flex-1 min-w-[300px] flex-col gap-6">
+          <div className="flex flex-1 min-w-[300px] max-sm:min-w-0 max-sm:w-full flex-col gap-6">
             <FadeUp trigger="mount" delay={0}>
               <div
                 className="inline-flex items-center gap-2 rounded-lg px-4 py-2"
@@ -93,7 +93,7 @@ export default function ServicesHeroSection({ content }: { content?: Record<stri
           </div>
 
           {/* Right column — description + CTAs */}
-          <div className="flex flex-1 min-w-[300px] flex-col gap-8 justify-end">
+          <div className="flex flex-1 min-w-[300px] max-sm:min-w-0 max-sm:w-full flex-col gap-8 max-sm:gap-6 justify-end">
             <FadeUp trigger="mount" delay={0.2}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.75 }}>
                 {description}

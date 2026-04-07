@@ -124,9 +124,9 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
           </FadeUp>
 
           {/* Phase cards */}
-          <div className="flex flex-wrap gap-6 items-start justify-center w-full">
+          <div className="flex flex-wrap gap-6 items-start justify-center w-full max-sm:flex-col">
             {phases.map(({ phase, title, subtitle, description }, i) => (
-              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[240px] flex flex-col gap-8 items-start">
+              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[240px] max-sm:!min-w-0 max-sm:w-full max-sm:!flex-none flex flex-col gap-8 items-start">
                 {/* Icon row with horizontal lines */}
                 <div className="flex gap-2.5 items-center justify-center w-full">
                   {/* Left line */}
@@ -174,7 +174,7 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
                     border: "1px solid rgba(255,255,255,0.08)",
                   }}
                 >
-                  <h3 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff", textAlign: "center" }}>{title}</h3>
+                  <h3 className="max-sm:!text-[20px]" style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff", textAlign: "center" }}>{title}</h3>
                   {subtitle && (
                     <p style={{ fontFamily: font, fontSize: 14, color: "#00BAF2", lineHeight: 1.5, textAlign: "center" }}>{subtitle}</p>
                   )}

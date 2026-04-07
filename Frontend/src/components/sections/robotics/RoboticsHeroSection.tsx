@@ -37,7 +37,7 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
 
       {/* Content — left-aligned like Figma */}
       <div
-        className="relative max-sm:px-6 max-sm:pt-[120px] max-sm:pb-10"
+        className="relative max-sm:!px-6 max-sm:!pt-[120px] max-sm:!pb-10"
         style={{ maxWidth: 1440, margin: "0 auto", paddingTop: 140, paddingBottom: 40, paddingLeft: 112, paddingRight: 112 }}
       >
         <div className="max-w-[600px] flex flex-col gap-6">
@@ -65,7 +65,7 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
           {/* Heading */}
           <FadeUp trigger="mount" delay={0.05}>
             <h1
-              className="max-sm:text-[32px]"
+              className="max-sm:!text-[28px] max-sm:!leading-[1.3]"
               style={{
                 fontFamily: font,
                 fontSize: 48,

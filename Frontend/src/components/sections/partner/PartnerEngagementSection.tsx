@@ -97,6 +97,7 @@ export default function PartnerEngagementSection({ content }: { content?: Record
   const bgColor = (content?.background_color as string) ?? "#070E24";
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: bgColor,
@@ -148,10 +149,11 @@ export default function PartnerEngagementSection({ content }: { content?: Record
         </FadeUp>
 
         {/* 3 model cards */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "center", width: "100%" }}>
+        <div className="max-sm:!flex-col" style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "center", width: "100%" }}>
           {MODELS.map(({ label, labelColor, title, desc, border, glow, bulletColor, items }, i) => (
             <div
               key={label}
+              className="max-sm:!min-w-0"
               style={{
                 flex: "1 1 0%", minWidth: 300,
                 display: "flex", flexDirection: "column",

@@ -211,10 +211,10 @@ export default function BlogArticlesSection({
 
   return (
     <section style={{ background: "#070E24" }}>
-      <Container className="flex flex-col gap-10 pb-20">
+      <Container className="flex flex-col gap-10 pb-20 max-sm:!gap-6 max-sm:!pb-10">
         {/* Category filters */}
         <FadeUp>
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-nowrap overflow-x-auto max-sm:pb-2 sm:flex-wrap">
             {categories.map((cat) => (
               <CategoryPill
                 key={cat}
@@ -226,7 +226,7 @@ export default function BlogArticlesSection({
           </div>
         </FadeUp>
 
-        <div className="flex flex-col gap-[60px]">
+        <div className="flex flex-col gap-[60px] max-sm:!gap-8">
           {/* Featured article */}
           {showFeatured && featured && (
           <FadeUp>
@@ -239,7 +239,7 @@ export default function BlogArticlesSection({
               }}
             >
               {/* Thumbnail */}
-              <div className="relative w-[608px] min-w-[300px] self-stretch overflow-hidden max-lg:w-full max-lg:h-[280px]">
+              <div className="relative w-[608px] min-w-[300px] self-stretch overflow-hidden max-lg:w-full max-lg:h-[280px] max-sm:!h-[200px] max-sm:!min-w-0">
                 <img src={featured.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-4 left-4">
                   <div
@@ -257,7 +257,7 @@ export default function BlogArticlesSection({
               </div>
 
               {/* Content */}
-              <div className="flex flex-col gap-8 flex-1 min-w-[300px] p-10">
+              <div className="flex flex-col gap-8 flex-1 min-w-[300px] p-10 max-sm:!p-5 max-sm:!gap-4 max-sm:!min-w-0">
                 <div className="flex flex-col gap-4">
                   {/* Category label */}
                   <div>
@@ -275,7 +275,7 @@ export default function BlogArticlesSection({
                     </div>
                   </div>
 
-                  <h2 style={{ fontFamily: font, fontSize: 32, color: "#fff", lineHeight: 1.3, fontWeight: 400 }}>
+                  <h2 className="max-sm:!text-[22px]" style={{ fontFamily: font, fontSize: 32, color: "#fff", lineHeight: 1.3, fontWeight: 400 }}>
                     {featured.title}
                   </h2>
 
@@ -322,7 +322,7 @@ export default function BlogArticlesSection({
           {/* Blog cards grid */}
           {filteredPosts.length > 0 ? (
           <div
-            className="grid gap-6"
+            className="grid gap-6 max-sm:!grid-cols-1"
             style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}
           >
             {filteredPosts.map((post, i) => (
@@ -342,7 +342,7 @@ export default function BlogArticlesSection({
           {/* Newsletter CTA */}
           <FadeUp>
             <div
-              className="relative overflow-hidden rounded-3xl p-10"
+              className="relative overflow-hidden rounded-3xl p-10 max-sm:!p-6"
               style={{ border: "1px solid rgba(255,255,255,0.2)" }}
             >
               {/* Video background */}
@@ -357,8 +357,8 @@ export default function BlogArticlesSection({
               </video>
 
               <div className="relative flex flex-wrap items-center justify-between gap-y-10 w-full max-w-[1200px] mx-auto">
-                <div className="flex flex-col gap-5 flex-1 min-w-[300px] max-w-[672px]">
-                  <h2 style={{ fontFamily: font, fontSize: 48, color: "#fff", lineHeight: 1.2, fontWeight: 400 }}>
+                <div className="flex flex-col gap-5 flex-1 min-w-[300px] max-w-[672px] max-sm:!min-w-0">
+                  <h2 className="max-sm:!text-[28px]" style={{ fontFamily: font, fontSize: 48, color: "#fff", lineHeight: 1.2, fontWeight: 400 }}>
                     Stay up to date
                   </h2>
                   <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>

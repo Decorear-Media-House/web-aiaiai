@@ -149,7 +149,7 @@ export default function ServicesGuidanceSection({ content }: { content?: Record<
           {/* Cards */}
           <div className="flex flex-wrap gap-6 items-start justify-center w-full">
             {cards.map(({ icon, title, body }, i) => (
-              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[312px]">
+              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[312px] max-sm:!min-w-0 max-sm:w-full">
                 <div
                   className="flex flex-col gap-4 rounded-2xl p-6 h-full"
                   style={{
@@ -169,7 +169,7 @@ export default function ServicesGuidanceSection({ content }: { content?: Record<
                   >
                     {icon}
                   </div>
-                  <h3 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff" }}>{title}</h3>
+                  <h3 className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff" }}>{title}</h3>
                   <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>{body}</p>
                 </div>
               </FadeUp>

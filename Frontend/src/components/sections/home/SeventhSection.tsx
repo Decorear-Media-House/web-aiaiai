@@ -38,7 +38,7 @@ export default function SeventhSection({ content }: { content?: Record<string, u
   const backgroundVideo = c.background_video ? wpImageUrl(c.background_video) : "/videos/CTA-Loop.mp4";
 
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: 494 }}>
+    <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 494 }}>
 
       {/* Video background */}
       <video

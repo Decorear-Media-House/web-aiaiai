@@ -105,6 +105,7 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
 
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: bgColor,
@@ -225,6 +226,7 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
               <button
                 key={t.label}
                 onClick={() => setActiveTab(i)}
+                className="max-sm:!text-[13px] max-sm:!px-3 max-sm:!py-2"
                 style={{
                   fontFamily: font,
                   fontSize: 16,
@@ -245,10 +247,10 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
         </FadeUp>
 
         {/* Content row */}
-        <div style={{ display: "flex", gap: 40, alignItems: "flex-start", width: "100%" }}>
+        <div className="max-sm:!flex-col max-sm:!gap-6" style={{ display: "flex", gap: 40, alignItems: "flex-start", width: "100%" }}>
 
           {/* Left — photo placeholder */}
-          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-0 self-stretch">
+          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-0 self-stretch max-sm:!min-h-[220px]">
             <div
               style={{
                 position: "relative",

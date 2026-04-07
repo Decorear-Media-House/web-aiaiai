@@ -99,13 +99,13 @@ export default function Footer({ background_image }: FooterProps = {}) {
 
       {/* Content */}
       <div className="relative mx-auto w-full px-[112px] max-lg:px-8 max-sm:px-4" style={{ maxWidth: 1440 }}>
-        <div className="flex flex-col py-20" style={{ gap: 40 }}>
+        <div className="flex flex-col py-20 max-sm:!py-10" style={{ gap: 40 }}>
 
           {/* ── Main row ── */}
-          <div className="flex gap-20 flex-wrap max-lg:flex-col">
+          <div className="flex gap-20 flex-wrap max-lg:flex-col max-sm:!gap-10">
 
             {/* Left: Logo + company name + address */}
-            <div className="flex flex-col shrink-0" style={{ maxWidth: 389, minWidth: 300, flex: "1 0 0", gap: 32 }}>
+            <div className="flex flex-col shrink-0 max-sm:!min-w-0" style={{ maxWidth: 389, minWidth: 300, flex: "1 0 0", gap: 32 }}>
               <div style={{ width: "fit-content" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -113,10 +113,11 @@ export default function Footer({ background_image }: FooterProps = {}) {
                   alt="ai·ai·ai"
                   width={300}
                   height={46}
+                  className="max-sm:!w-[200px] max-sm:!h-auto"
                 />
               </div>
               <div className="flex flex-col" style={{ gap: 24 }}>
-                <p style={{ fontFamily: font, fontSize: 32, fontWeight: 400, color: "#4A99F5", lineHeight: 1.3 }}>
+                <p className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, color: "#4A99F5", lineHeight: 1.3 }}>
                   Ai-Ai-Ai Co., Ltd.
                 </p>
                 <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
@@ -126,7 +127,7 @@ export default function Footer({ background_image }: FooterProps = {}) {
             </div>
 
             {/* Right: 3 nav columns */}
-            <div className="flex flex-1 flex-wrap gap-6 min-w-[327px]">
+            <div className="flex flex-1 flex-wrap gap-6 min-w-[327px] max-sm:!min-w-0 max-sm:!gap-8">
 
               {/* Company */}
               <div className="flex flex-col flex-1 min-w-[140px]" style={{ gap: 20 }}>
@@ -176,7 +177,7 @@ export default function Footer({ background_image }: FooterProps = {}) {
                   <a
                     href="mailto:info@ai-ai-ai.co"
                     style={{ fontFamily: font, fontSize: 24, color: "#4A99F5", textDecoration: "none", lineHeight: 1.4 }}
-                    className="hover:opacity-80 transition-opacity"
+                    className="hover:opacity-80 transition-opacity max-sm:!text-[18px]"
                   >
                     info@ai-ai-ai.co
                   </a>

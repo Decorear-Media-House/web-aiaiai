@@ -172,7 +172,7 @@ export default function ThirdSection({ content }: { content?: Record<string, unk
                 </span>
               </div>
 
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
+              <h2 className="max-sm:!text-[26px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
                 <span style={{ color: "#fff" }}>{headingWhite}</span>
                 <span style={{
                   backgroundImage: "linear-gradient(90deg, #FF8904 0%, #FF6467 100%)",

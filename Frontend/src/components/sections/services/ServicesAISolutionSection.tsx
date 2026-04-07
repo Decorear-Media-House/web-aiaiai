@@ -70,7 +70,7 @@ export default function ServicesAISolutionSection({ content }: { content?: Recor
   const ctaHref = c.cta_href ?? "#";
   const bgColor = c.background_color ?? "#1E2E48";
   return (
-    <section className="relative" style={{ background: bgColor }}>
+    <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Orange glow blobs */}
       <div
         className="pointer-events-none absolute left-0 top-0 rounded-full"
@@ -87,12 +87,13 @@ export default function ServicesAISolutionSection({ content }: { content?: Recor
         <div className="flex flex-wrap gap-x-[60px] gap-y-10 items-center max-sm:flex-col-reverse">
 
           {/* Left — content */}
-          <div className="flex-1 min-w-[312px] flex flex-col gap-6">
+          <div className="flex-1 min-w-[312px] max-sm:min-w-0 max-sm:w-full flex flex-col gap-6">
             <FadeUp trigger="scroll" delay={0}>
               <div className="flex flex-col gap-4">
                 {/* Number + label */}
                 <div className="flex items-center gap-4">
                   <span
+                    className="max-sm:!text-[36px]"
                     style={{
                       fontFamily: font,
                       fontSize: 48,
@@ -189,7 +190,7 @@ export default function ServicesAISolutionSection({ content }: { content?: Recor
           {/* Right — photo */}
           <FadeUp trigger="scroll" delay={0.15} className="flex-1 min-w-[312px] max-sm:w-full max-sm:min-w-0">
             <div
-              className="rounded-2xl overflow-hidden max-sm:h-[200px]"
+              className="rounded-2xl overflow-hidden max-sm:!h-[240px]"
               style={{
                 height: 806,
                 boxShadow: "4px 4px 32px 0px rgba(153,92,77,0.4)",

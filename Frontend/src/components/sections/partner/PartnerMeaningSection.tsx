@@ -57,6 +57,7 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
   const bgColor = (content?.background_color as string) ?? "#102050";
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: bgColor,
@@ -93,6 +94,7 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
       />
 
       <div
+        className="max-sm:!flex-col max-sm:!gap-8"
         style={{
           position: "relative",
           maxWidth: 1216,
@@ -104,9 +106,10 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
         }}
       >
         {/* Left — photo card */}
-        <div style={{ flex: "1 0 0", minWidth: 312, position: "relative" }}>
+        <div className="max-sm:!min-w-0 max-sm:!w-full" style={{ flex: "1 0 0", minWidth: 312, position: "relative" }}>
           <FadeUp trigger="scroll" delay={0}>
             <div
+              className="max-sm:!h-[260px]"
               style={{
                 height: 550,
                 borderRadius: 16,
@@ -149,7 +152,7 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
         </div>
 
         {/* Right — content */}
-        <div style={{ flex: "1 0 0", minWidth: 312, display: "flex", flexDirection: "column", gap: 32 }}>
+        <div className="max-sm:!min-w-0 max-sm:!w-full" style={{ flex: "1 0 0", minWidth: 312, display: "flex", flexDirection: "column", gap: 32 }}>
           <FadeUp trigger="scroll" delay={0.06}>
             {/* Header */}
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>

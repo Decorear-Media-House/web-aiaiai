@@ -40,6 +40,7 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
   const bgColor = (content?.background_color as string) ?? "#102050";
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: bgImage ? "#070E24" : bgColor,
@@ -66,10 +67,10 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
         style={{ position: "absolute", bottom: 0, right: 0, width: 397, height: 413, overflow: "hidden", pointerEvents: "none", background: "linear-gradient(320deg, rgba(43,127,255,0.06) 0%, transparent 50%)" }}
       />
 
-      <div style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", gap: 40, alignItems: "flex-start" }}>
+      <div className="max-sm:!flex-col max-sm:!gap-8" style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", gap: 40, alignItems: "flex-start" }}>
 
         {/* Left — photo card placeholder */}
-        <FadeUp trigger="scroll" delay={0} className="flex-[1_0_0] max-w-[389px] self-stretch">
+        <FadeUp trigger="scroll" delay={0} className="flex-[1_0_0] max-w-[389px] self-stretch max-sm:!max-w-full max-sm:!min-h-[220px]">
           <div
             style={{
               position: "relative",
@@ -143,7 +144,7 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
             {/* Deliverable cards grid */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
               {DELIVERABLES.map(({ title, sub }, i) => (
-                <FadeUp key={title} trigger="scroll" delay={i * 0.05} className="flex-[1_0_0] min-w-[240px]">
+                <FadeUp key={title} trigger="scroll" delay={i * 0.05} className="flex-[1_0_0] min-w-[240px] max-sm:!min-w-full">
                   <div
                     style={{
                       padding: 24, borderRadius: 16,
@@ -159,7 +160,7 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
                 </FadeUp>
               ))}
               {/* Dummy spacer to balance last row */}
-              <div style={{ flex: "1 0 0", minWidth: 240, height: 122, borderRadius: 16 }} />
+              <div className="max-sm:!hidden" style={{ flex: "1 0 0", minWidth: 240, height: 122, borderRadius: 16 }} />
             </div>
 
           </div>

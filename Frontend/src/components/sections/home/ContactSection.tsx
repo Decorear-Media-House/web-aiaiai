@@ -147,7 +147,7 @@ export default function ContactSection({ content }: { content?: Record<string, u
                 </span>
               </div>
 
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
+              <h2 className="max-sm:!text-[26px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
                 <span style={{ color: "#fff" }}>{headingWhite}</span>
                 {headingGradient && (
                   <span style={{
@@ -221,7 +221,7 @@ export default function ContactSection({ content }: { content?: Record<string, u
             {/* Right — Form */}
             <div className="flex-1 min-w-0">
             <FadeUp trigger="scroll" delay={0.1}>
-              <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 rounded-2xl p-8"
+              <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 rounded-2xl p-8 max-sm:p-5"
                 style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
 
                 {/* Full name */}

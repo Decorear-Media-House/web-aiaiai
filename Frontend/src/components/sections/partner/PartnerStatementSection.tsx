@@ -10,6 +10,7 @@ export default function PartnerStatementSection({ content }: { content?: Record<
 
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         background: "#070E24",
         paddingTop: 40,
@@ -22,6 +23,7 @@ export default function PartnerStatementSection({ content }: { content?: Record<
         <FadeUp trigger="scroll" delay={0}>
           <div style={{ maxWidth: 850, width: "100%" }}>
             <p
+              className="max-sm:!text-[24px]"
               style={{
                 fontFamily: font,
                 fontSize: 48,

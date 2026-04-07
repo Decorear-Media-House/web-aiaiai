@@ -54,7 +54,7 @@ export default function HeroSection({ content }: { content?: Record<string, unkn
   const brandLogoImage = c.brand_logo_image ? wpImageUrl(c.brand_logo_image) : "/images/aaa-vector.svg";
   return (
     <section
-      className="relative overflow-hidden max-sm:min-h-0"
+      className="relative overflow-hidden max-sm:!min-h-0 max-sm:!pt-[72px]"
       style={{ minHeight: 800, paddingTop: 72, background: "#070E24" }}
     >
       {/* DarkVeil WebGL background */}
@@ -87,10 +87,10 @@ export default function HeroSection({ content }: { content?: Record<string, unkn
       />
 
       <Container className="relative h-full">
-        <div className="flex h-full w-full items-center py-[60px] max-sm:py-10">
+        <div className="flex h-full w-full items-center py-[60px] max-sm:py-8">
 
           {/* Left column */}
-          <div className="flex flex-col justify-center gap-8 max-w-[600px] w-full">
+          <div className="flex flex-col justify-center gap-8 max-sm:gap-6 max-w-[600px] max-sm:max-w-full w-full">
 
             <FadeUp trigger="mount" delay={0}>
               {/* Label chip */}

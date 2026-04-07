@@ -64,9 +64,9 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
             <div className="relative flex flex-wrap gap-y-10 items-center justify-between px-20 py-10 w-full max-w-[1200px] mx-auto max-sm:px-6 max-sm:py-10 max-sm:flex-col max-sm:items-start">
 
               {/* Left — headline + chips */}
-              <div className="flex-1 min-w-[300px] max-w-[672px] flex flex-col gap-5">
+              <div className="flex-1 min-w-[300px] max-sm:!min-w-0 max-sm:w-full max-w-[672px] flex flex-col gap-5">
                 <div>
-                  <p className="max-sm:!text-[32px]" style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, color: "#fff" }}>
+                  <p className="max-sm:!text-[28px] max-sm:!leading-[1.3]" style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, color: "#fff" }}>
                     {heading}
                     <span style={{ color: "#00BAF2" }}>{headingHighlight}</span>
                   </p>

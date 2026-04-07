@@ -57,6 +57,7 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
 
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: bgImage ? "#070E24" : bgColor,
@@ -83,11 +84,11 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
         }}
       />
 
-      <div style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", flexWrap: "wrap", gap: 40, alignItems: "flex-start" }}>
+      <div className="max-sm:!flex-col max-sm:!gap-8" style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", flexWrap: "wrap", gap: 40, alignItems: "flex-start" }}>
 
         {/* LEFT — label + heading + body + CTA */}
         <FadeUp trigger="scroll" delay={0}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 25, alignItems: "flex-start", width: 389, maxWidth: 389, minWidth: 300 }}>
+          <div className="max-sm:!w-full max-sm:!max-w-full max-sm:!min-w-0" style={{ display: "flex", flexDirection: "column", gap: 25, alignItems: "flex-start", width: 389, maxWidth: 389, minWidth: 300 }}>
 
             {/* Chip */}
             <div
@@ -103,7 +104,7 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
             </div>
 
             {/* Heading — 48px display */}
-            <h2 style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, margin: 0, color: "#fff" }}>
+            <h2 className="max-sm:!text-[28px]" style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, margin: 0, color: "#fff" }}>
               {heading}
               <span style={{ backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 {headingHighlight}

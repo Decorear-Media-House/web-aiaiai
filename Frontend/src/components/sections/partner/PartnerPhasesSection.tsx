@@ -121,6 +121,7 @@ export default function PartnerPhasesSection({ content }: { content?: Record<str
   const bgColor = (content?.background_color as string) ?? "#1E2E48";
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         background: bgColor,
@@ -177,7 +178,7 @@ export default function PartnerPhasesSection({ content }: { content?: Record<str
         {/* 4 phase cards */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 20, alignItems: "flex-start", width: "100%" }}>
           {PHASES.map(({ num, title, items }, i) => (
-            <FadeUp key={num} trigger="scroll" delay={i * 0.08} className="flex-1 min-w-[400px]">
+            <FadeUp key={num} trigger="scroll" delay={i * 0.08} className="flex-1 min-w-[400px] max-sm:!min-w-full">
               <div
                 style={{
                   display: "flex", flexDirection: "column", gap: 8,

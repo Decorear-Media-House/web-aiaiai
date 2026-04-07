@@ -37,6 +37,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
   const bgColor = (content?.background_color as string) ?? "#070E24";
   return (
     <section
+      className="max-sm:!h-auto"
       style={{
         position: "relative",
         height: 656,
@@ -88,6 +89,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
 
       {/* Content — absolute fill, pt-140 pb-80 px-112 */}
       <div
+        className="max-sm:!static max-sm:!px-6 max-sm:!pt-24 max-sm:!pb-10"
         style={{
           position: "absolute",
           inset: 0,
@@ -101,6 +103,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
         }}
       >
         <div
+          className="max-sm:!flex-col max-sm:!gap-8"
           style={{
             width: "100%",
             maxWidth: 1216,
@@ -110,7 +113,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
           }}
         >
           {/* Left — photo card */}
-          <div style={{ flex: "1 0 0", minWidth: 0, position: "relative", alignSelf: "stretch" }}>
+          <div className="max-sm:!min-h-[220px]" style={{ flex: "1 0 0", minWidth: 0, position: "relative", alignSelf: "stretch" }}>
             <FadeUp trigger="mount" delay={0} className="h-full">
               <div
                 style={{
@@ -181,6 +184,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
 
                 {/* Heading */}
                 <h1
+                  className="max-sm:!text-[28px]"
                   style={{
                     fontFamily: font,
                     fontSize: 48,
@@ -253,10 +257,11 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
 
             {/* Stat chips */}
             <FadeUp trigger="mount" delay={0.15}>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, width: "100%" }}>
+              <div className="max-sm:!flex-col" style={{ display: "flex", flexWrap: "wrap", gap: 8, width: "100%" }}>
                 {STATS.map(({ top, bottom }) => (
                   <div
                     key={top}
+                    className="max-sm:!px-4 max-sm:!py-3"
                     style={{
                       flex: "1 0 0",
                       minWidth: 100,

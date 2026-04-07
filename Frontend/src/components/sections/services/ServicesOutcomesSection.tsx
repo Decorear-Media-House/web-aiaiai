@@ -230,19 +230,19 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                   </OutcomeIcon>
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#4A99F5", lineHeight: 1.5 }}>Outcome 1</p>
-                    <p style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Cost Reduction</p>
+                    <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Cost Reduction</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-4 items-start">
+                <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[620px] max-sm:h-[300px] max-sm:max-w-full max-sm:min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#1A4494] to-[#4A99F5]">
+                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[620px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#1A4494] to-[#4A99F5]">
                     {c.outcome1_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome1_image)} alt="" className="size-full object-cover" />
                     )}
                   </div>
                   {/* Cards */}
-                  <div className="flex-1 min-w-[270px] flex flex-col gap-4 justify-end">
+                  <div className="flex-1 min-w-[270px] max-sm:min-w-0 flex flex-col gap-4 justify-end">
                     <InfoCard title="What it usually means" color="#4A99F5">
                       <CheckItem color="#4A99F5" text="Removing repetitive manual steps" />
                       <CheckItem color="#4A99F5" text="Reducing time on review, triage, and routing" />
@@ -275,12 +275,12 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                   </OutcomeIcon>
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#00BC7D", lineHeight: 1.5 }}>Outcome 2</p>
-                    <p style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Revenue Growth</p>
+                    <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Revenue Growth</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-4 items-start">
+                <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Cards */}
-                  <div className="flex-1 min-w-[270px] flex flex-col gap-4">
+                  <div className="flex-1 min-w-[270px] max-sm:min-w-0 flex flex-col gap-4">
                     <InfoCard title="What it usually means" color="#00BC7D">
                       <CheckItem color="#00BC7D" text="Converting signals into actions faster" />
                       <CheckItem color="#00BC7D" text="Improving conversion by better decision timing and targeting" />
@@ -296,7 +296,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                     </InfoCard>
                   </div>
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[528px] max-sm:h-[300px] max-sm:max-w-full max-sm:min-w-0 rounded-2xl overflow-hidden shrink-0 relative bg-gradient-to-br from-[#00bc7d] to-[#00bba7]">
+                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[528px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 relative bg-gradient-to-br from-[#00bc7d] to-[#00bba7]">
                     {c.outcome2_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome2_image)} alt="" className="absolute inset-0 size-full object-cover" />
@@ -318,19 +318,19 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                   </OutcomeIcon>
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#9962FF", lineHeight: 1.5 }}>Outcome 3</p>
-                    <p style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Compliance &amp; Governance</p>
+                    <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Compliance &amp; Governance</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-4 items-start">
+                <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[562px] max-sm:h-[300px] max-sm:max-w-full max-sm:min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#8e51ff] to-[#ad46ff]">
+                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[562px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#8e51ff] to-[#ad46ff]">
                     {c.outcome3_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome3_image)} alt="" className="size-full object-cover" />
                     )}
                   </div>
                   {/* Cards */}
-                  <div className="flex-1 min-w-[270px] flex flex-col gap-4">
+                  <div className="flex-1 min-w-[270px] max-sm:min-w-0 flex flex-col gap-4">
                     <InfoCard title="What it usually means" color="#9962FF">
                       <CheckItem color="#9962FF" text="Traceability and audit logs" />
                       <CheckItem color="#9962FF" text="Role-based access control and approvals" />
@@ -362,12 +362,12 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                   </OutcomeIcon>
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#FF8904", lineHeight: 1.5 }}>Outcome 4</p>
-                    <p style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Security &amp; Asset Protection</p>
+                    <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Security &amp; Asset Protection</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-4 items-start">
+                <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Cards */}
-                  <div className="flex-1 min-w-[270px] flex flex-col gap-4">
+                  <div className="flex-1 min-w-[270px] max-sm:min-w-0 flex flex-col gap-4">
                     <InfoCard title="What it usually means" color="#FF8904">
                       <CheckItem color="#FF8904" text="Faster detection and response" />
                       <CheckItem color="#FF8904" text="Fewer incidents and less loss risk" />
@@ -384,7 +384,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                     </InfoCard>
                   </div>
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[538px] max-sm:h-[300px] max-sm:max-w-full max-sm:min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#ff8904] to-[#ff6467]">
+                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[538px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#ff8904] to-[#ff6467]">
                     {c.outcome4_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome4_image)} alt="" className="size-full object-cover" />
@@ -406,19 +406,19 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                   </OutcomeIcon>
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#00B8DB", lineHeight: 1.5 }}>Outcome 5</p>
-                    <p style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Operational Automation</p>
+                    <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Operational Automation</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-4 items-start">
+                <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[504px] max-sm:h-[300px] max-sm:max-w-full max-sm:min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#00b8db] to-[#2b7fff]">
+                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[504px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#00b8db] to-[#2b7fff]">
                     {c.outcome5_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome5_image)} alt="" className="size-full object-cover" />
                     )}
                   </div>
                   {/* Cards */}
-                  <div className="flex-1 min-w-[270px] flex flex-col gap-4">
+                  <div className="flex-1 min-w-[270px] max-sm:min-w-0 flex flex-col gap-4">
                     <InfoCard title="What it usually means" color="#00B8DB">
                       <CheckItem color="#00B8DB" text="Deploying robotics with readiness, safety, training, and SOPs" />
                       <CheckItem color="#00B8DB" text="Ensuring maintenance and escalation flows exist" />

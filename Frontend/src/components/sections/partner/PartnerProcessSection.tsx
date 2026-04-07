@@ -85,6 +85,7 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
   const bgColor = (content?.background_color as string) ?? "#081028";
   return (
     <section
+      className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
         paddingTop: 80,
@@ -149,6 +150,7 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
           {STEPS.map(({ title, body, dashed }, i) => (
             <div
               key={title}
+              className="max-sm:!min-w-full"
               style={{ flex: "1 1 0%", minWidth: 300, display: "flex", flexDirection: "column", gap: 24, alignItems: "flex-start" }}
             >
               {/* Icon square only — no connector lines */}

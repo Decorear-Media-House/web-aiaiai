@@ -106,7 +106,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
 
       {/* ── Content — absolute fill, inset padding matches Figma ── */}
       <div
-        className="max-sm:!relative max-sm:!px-6 max-sm:!pb-10"
+        className="max-sm:!relative max-sm:!px-6 max-sm:!pt-24 max-sm:!pb-10"
         style={{
           position: "absolute",
           inset: 0,
@@ -132,7 +132,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
         >
 
           {/* ── Left column ── */}
-          <div style={{ flex: 1, maxWidth: 493, display: "flex", flexDirection: "column", gap: 32 }}>
+          <div className="max-sm:!max-w-full" style={{ flex: 1, maxWidth: 493, display: "flex", flexDirection: "column", gap: 32 }}>
 
             <FadeUp trigger="mount" delay={0}>
               <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -229,9 +229,10 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
 
             {/* CTAs */}
             <FadeUp trigger="mount" delay={0.14}>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+              <div className="max-sm:!flex-col max-sm:!w-full" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
                 <a
                   href="#contact"
+                  className="max-sm:!w-full max-sm:!text-center"
                   style={{
                     fontFamily: font,
                     fontSize: 16,
@@ -252,6 +253,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
                 </a>
                 <a
                   href="/services"
+                  className="max-sm:!w-full max-sm:!text-center"
                   style={{
                     fontFamily: font,
                     fontSize: 16,
@@ -359,7 +361,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
                 }}
               >
                 {/* ShieldCheck + text */}
-                <div style={{ flex: "1 0 160px", display: "flex", alignItems: "center", gap: 16 }}>
+                <div className="max-sm:!flex-[1_0_auto]" style={{ flex: "1 0 160px", display: "flex", alignItems: "center", gap: 16 }}>
                   <div
                     style={{
                       width: 40,

@@ -84,6 +84,7 @@ export default function AboutLeadershipSection({ content }: { content?: AboutLea
           <div className="flex flex-1 min-w-[312px] max-sm:min-w-0 flex-col gap-6">
             <FadeUp trigger="scroll" delay={0}>
               <h2
+                className="max-sm:!text-[28px]"
                 style={{
                   fontFamily: font,
                   fontSize: "clamp(36px, 4vw, 48px)",
@@ -109,7 +110,7 @@ export default function AboutLeadershipSection({ content }: { content?: AboutLea
 
           {/* Right — AIEAT logo (white) */}
           <FadeUp trigger="scroll" delay={0.15} className="shrink-0 max-sm:w-full">
-            <div style={{ width: 389, height: 98 }} className="relative max-sm:w-full">
+            <div style={{ width: 389, height: 98 }} className="relative max-sm:!w-full max-sm:!h-auto">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={logoSrc}

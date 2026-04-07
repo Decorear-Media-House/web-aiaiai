@@ -26,7 +26,7 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
     "We also deliver specialized solutions in Computer Vision security\u00a0/ AI video analytics and humanoid robotics deployment (AgiBo) with innovative AI capabilities.",
   ];
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: 498 }}>
+    <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 498 }}>
 
       {/* Full background image */}
       <Image
@@ -48,11 +48,11 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
       />
 
       {/* Content — left aligned */}
-      <div className="relative flex items-center py-20 px-[112px] max-lg:px-8 max-sm:px-6" style={{ minHeight: 498 }}>
-        <div className="flex flex-col gap-6" style={{ maxWidth: 560 }}>
+      <div className="relative flex items-center py-20 max-sm:py-10 px-[112px] max-lg:px-8 max-sm:px-4" style={{ minHeight: 498 }}>
+        <div className="flex flex-col gap-6 max-sm:gap-5" style={{ maxWidth: 560 }}>
 
           <FadeUp trigger="scroll" delay={0}>
-            <h2 style={{ fontFamily: font, fontSize: 32, color: "#fff", fontWeight: 400, lineHeight: 1.3 }}>
+            <h2 className="max-sm:!text-[26px]" style={{ fontFamily: font, fontSize: 32, color: "#fff", fontWeight: 400, lineHeight: 1.3 }}>
               {heading}
             </h2>
           </FadeUp>
@@ -60,7 +60,7 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
           <FadeUp trigger="scroll" delay={0.1}>
             <div className="flex flex-col gap-4">
               {paragraphs.map((text, i) => (
-                <p key={i} style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
+                <p key={i} className="max-sm:!text-[14px]" style={{ fontFamily: font, fontSize: 16, color: "#C0CED8", lineHeight: 1.75 }}>
                   {text}
                 </p>
               ))}

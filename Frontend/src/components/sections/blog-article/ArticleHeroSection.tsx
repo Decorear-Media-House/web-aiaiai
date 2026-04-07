@@ -50,7 +50,7 @@ export default function ArticleHeroSection({
       </div>
 
       <Container className="relative">
-        <div className="flex flex-col gap-4 pb-20 pt-[140px] max-w-[906px]">
+        <div className="flex flex-col gap-4 pb-20 pt-[140px] max-w-[906px] max-sm:!pt-[100px] max-sm:!pb-10">
           {/* Category label */}
           <FadeUp trigger="mount" delay={0}>
             <div
@@ -71,6 +71,7 @@ export default function ArticleHeroSection({
           {/* Title */}
           <FadeUp trigger="mount" delay={0.1}>
             <h1
+              className="max-sm:!text-[24px]"
               style={{
                 fontFamily: font,
                 fontSize: "clamp(32px, 4vw, 48px)",

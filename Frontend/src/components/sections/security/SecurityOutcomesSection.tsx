@@ -171,7 +171,7 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
         <div className="flex flex-wrap gap-10 items-start max-sm:flex-col">
 
           {/* Left — photo area */}
-          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[300px] max-sm:w-full max-sm:min-w-0">
+          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-[300px] max-sm:w-full max-sm:!min-w-0 max-sm:!flex-none">
             <div
               className="relative rounded-2xl overflow-hidden max-sm:!h-[200px] max-sm:!w-[100%]"
               style={{ height: 596 }}
@@ -192,7 +192,7 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
           </FadeUp>
 
           {/* Right — content */}
-          <div className="flex-1 min-w-[300px] flex flex-col gap-8">
+          <div className="flex-1 min-w-[300px] max-sm:!min-w-0 max-sm:!flex-none max-sm:w-full flex flex-col gap-8">
             <FadeUp trigger="scroll" delay={0}>
               <div className="flex flex-col gap-4">
                 {/* Label chip */}

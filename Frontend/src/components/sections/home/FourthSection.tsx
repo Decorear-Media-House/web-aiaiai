@@ -134,7 +134,7 @@ export default function FourthSection({ content }: { content?: FourthSectionCont
               </div>
 
               {/* h2 */}
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
+              <h2 className="max-sm:!text-[26px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3 }}>
                 <span style={{ color: "#fff" }}>{headerHeading.split(" ").slice(0, -1).join(" ")}{headerHeading.includes(" ") ? " " : ""}</span>
                 <span style={{
                   backgroundImage: "linear-gradient(135deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
@@ -160,7 +160,7 @@ export default function FourthSection({ content }: { content?: FourthSectionCont
             {/* Whole card is a link */}
             <a
               href={svc.href}
-              className="group relative flex flex-col justify-end overflow-hidden max-lg:min-h-[500px] block"
+              className="group relative flex flex-col justify-end overflow-hidden max-lg:min-h-[500px] max-sm:!min-h-[420px] block"
               style={{
                 minHeight: 616,
                 borderLeft: i > 0 ? "1px solid rgba(74,96,128,0.4)" : undefined,
@@ -184,7 +184,7 @@ export default function FourthSection({ content }: { content?: FourthSectionCont
 
               {/* Content panel — darkens on hover */}
               <div
-                className="relative flex flex-col items-center gap-6 p-10 text-center transition-colors duration-500"
+                className="relative flex flex-col items-center gap-6 p-10 max-sm:p-6 text-center transition-colors duration-500"
                 style={{
                   background: svc.overlayColor,
                   backdropFilter: "blur(16px)",

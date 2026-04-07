@@ -67,7 +67,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
         <Container className="pb-6 pt-0">
           <div className="flex justify-center">
             <div
-              className="inline-flex items-center p-2 rounded-full flex-wrap gap-1 justify-center"
+              className="inline-flex items-center p-2 rounded-full flex-wrap gap-1 justify-center max-sm:!rounded-2xl max-sm:!gap-2"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
@@ -79,7 +79,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                 <button
                   key={i}
                   onClick={() => setActiveTab(i)}
-                  className="max-sm:text-sm max-sm:px-4 max-sm:py-2"
+                  className="max-sm:!text-xs max-sm:!px-3 max-sm:!py-2"
                   style={{
                     fontFamily: font,
                     fontSize: 16,
@@ -110,12 +110,12 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
             <div className="absolute inset-0" style={{ background: "linear-gradient(270deg, rgba(7,14,36,0) 0%, rgba(7,14,36,1) 100%)" }} />
           </div>
         )}
-        <div className="relative" style={{ maxWidth: 1440, margin: "0 auto", padding: "80px 112px" }}>
-          <div className="flex gap-20 items-start max-lg:flex-col max-sm:gap-8" style={{ maxWidth: 1216 }}>
+        <div className="relative max-sm:!px-6 max-sm:!py-10" style={{ maxWidth: 1440, margin: "0 auto", padding: "80px 112px" }}>
+          <div className="flex gap-20 items-start max-lg:flex-col max-sm:!gap-8" style={{ maxWidth: 1216 }}>
             {/* Left — text */}
             <div className="flex-1 min-w-[300px] flex flex-col gap-6 max-sm:min-w-0">
               <FadeUp trigger="scroll" delay={0}>
-                <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
+                <h2 className="max-sm:!text-[22px] max-sm:!leading-[1.3]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
                   {robot.title}
                 </h2>
               </FadeUp>
@@ -161,10 +161,10 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                         className="flex max-sm:flex-col"
                         style={{ borderBottom: i < specs.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}
                       >
-                        <div className="w-[300px] max-sm:w-full shrink-0 px-6 py-4" style={{ background: "rgba(255,255,255,0.02)" }}>
+                        <div className="w-[300px] max-sm:!w-full shrink-0 px-6 py-4 max-sm:!py-2 max-sm:!pb-0" style={{ background: "rgba(255,255,255,0.02)" }}>
                           <span style={{ fontFamily: font, fontSize: 14, color: "#4A99F5", lineHeight: 1.5 }}>{s.label}</span>
                         </div>
-                        <div className="flex-1 px-6 py-4">
+                        <div className="flex-1 px-6 py-4 max-sm:!py-2">
                           <span style={{ fontFamily: font, fontSize: 14, color: "#fff", lineHeight: 1.5 }}>{s.value}</span>
                         </div>
                       </div>

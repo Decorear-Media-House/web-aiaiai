@@ -15,6 +15,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
   const secondaryCta = (content?.secondaryCta as string) ?? "All Services";
   return (
     <section
+      className="max-sm:!px-4 max-sm:!pb-4"
       style={{
         background: "#070E24",
         paddingBottom: 40,
@@ -24,6 +25,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
     >
       {/* Rounded card with video background */}
       <div
+        className="max-sm:!px-6 max-sm:!py-8"
         style={{
           position: "relative",
           borderRadius: 24,
@@ -63,7 +65,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
           <FadeUp trigger="scroll" delay={0} className="flex-[1_0_0] min-w-[300px]">
             <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", maxWidth: 672 }}>
               {/* Heading */}
-              <h2 style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, margin: 0, color: "#fff" }}>
+              <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, margin: 0, color: "#fff" }}>
                 {heading}
                 <span style={{ color: "#00BAF2" }}>{headingHighlight}</span>
               </h2>
@@ -92,7 +94,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
 
           {/* RIGHT — two buttons */}
           <FadeUp trigger="scroll" delay={0.08}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end", justifyContent: "center" }}>
+            <div className="max-sm:!items-stretch max-sm:!w-full" style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end", justifyContent: "center" }}>
               {/* Primary CTA */}
               <a
                 href="#contact"

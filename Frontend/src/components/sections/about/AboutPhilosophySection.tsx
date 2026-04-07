@@ -35,7 +35,7 @@ export default function AboutPhilosophySection({ content }: { content?: Record<s
         <div className="flex flex-wrap gap-6 items-start max-sm:flex-col">
 
           {/* Left — label + heading + subtitle */}
-          <div className="flex flex-col gap-4 min-w-[286px] max-sm:min-w-0 max-sm:max-w-full" style={{ maxWidth: 286 }}>
+          <div className="flex flex-col gap-4 min-w-[286px] max-sm:!min-w-0 max-sm:!max-w-full max-sm:w-full" style={{ maxWidth: 286 }}>
             <FadeUp trigger="scroll" delay={0}>
               <div
                 className="inline-flex items-center gap-2 rounded-lg px-4 py-2"
@@ -52,7 +52,7 @@ export default function AboutPhilosophySection({ content }: { content?: Record<s
             </FadeUp>
 
             <FadeUp trigger="scroll" delay={0.1}>
-              <h2 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
+              <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>
                 {headingPrefix}
                 <span style={{ color: "#4A99F5" }}>{headingHighlight}</span>
               </h2>
@@ -66,7 +66,7 @@ export default function AboutPhilosophySection({ content }: { content?: Record<s
           </div>
 
           {/* Right — intro text + 2×2 cards */}
-          <div className="flex flex-1 min-w-[312px] max-sm:min-w-0 flex-col gap-6">
+          <div className="flex flex-1 min-w-[312px] max-sm:!min-w-0 max-sm:w-full flex-col gap-6">
             <FadeUp trigger="scroll" delay={0.1}>
               <p style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
                 {introText}
@@ -78,7 +78,7 @@ export default function AboutPhilosophySection({ content }: { content?: Record<s
                 {principles.map((p) => (
                   <div
                     key={p.num}
-                    className="flex flex-1 min-w-[312px] max-sm:min-w-0 items-center gap-3 rounded-xl px-[17px] py-[9px]"
+                    className="flex flex-1 min-w-[312px] max-sm:!min-w-0 max-sm:w-full items-center gap-3 rounded-xl px-[17px] py-[9px]"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
