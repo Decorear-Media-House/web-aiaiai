@@ -7,14 +7,50 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 const ORANGE_SHINE = "linear-gradient(135deg, #ff8904 0%, #ff6467 100%)";
 
 /** Generic phase icon — white shape on gradient background */
-function PhaseIcon() {
+// Phase 1: Target/Discovery icon
+function DiscoveryIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect x="3" y="3" width="14" height="14" rx="3" stroke="#fff" strokeWidth="1.3"/>
-      <path d="M7 10l2 2 4-4" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M10 18.33C14.6 18.33 18.33 14.6 18.33 10S14.6 1.67 10 1.67 1.67 5.4 1.67 10 5.4 18.33 10 18.33Z" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="10" cy="10" r="5" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="10" cy="10" r="1.67" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
+
+// Phase 2: Map/Roadmap icon
+function RoadmapIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M11.76 4.63A3.17 3.17 0 0012.5 4.8c.26 0 .51-.06.75-.17l3.04-1.53a.83.83 0 01.75.04c.12.07.22.18.29.3.07.12.1.27.1.41v10.64a.83.83 0 01-.46.74l-3.79 1.9a3.17 3.17 0 01-1.49 0L8.25 15.37a3.17 3.17 0 00-1.49 0l-3.05 1.53a.83.83 0 01-1.21-.74V5.52c0-.15.04-.31.12-.44a.83.83 0 01.34-.27l3.79-1.9a3.17 3.17 0 011.49 0l3.51 1.76z" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12.5 4.8v12.5M7.5 2.7v12.5" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+// Phase 3: Code/Implementation icon
+function ImplementIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M15 13.33L18.33 10 15 6.67" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M5 6.67L1.67 10 5 13.33" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12.08 3.33L7.92 16.67" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+// Phase 4: People/Adoption icon
+function AdoptionIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M13.33 17.5v-1.67a3.33 3.33 0 00-3.33-3.33H5a3.33 3.33 0 00-3.33 3.33V17.5" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="7.5" cy="5.83" r="3.33" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M18.33 17.5v-1.67a3.33 3.33 0 00-2.5-3.22M13.33 2.61a3.33 3.33 0 010 6.46" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+const PHASE_ICONS = [<DiscoveryIcon key="d" />, <RoadmapIcon key="r" />, <ImplementIcon key="i" />, <AdoptionIcon key="a" />];
 
 /** Bullet dot for phase items */
 function BulletDot() {
@@ -162,7 +198,7 @@ export default function PartnerPhasesSection({ content }: { content?: Record<str
                       display: "flex", alignItems: "center", justifyContent: "center",
                     }}
                   >
-                    <PhaseIcon />
+                    {PHASE_ICONS[i] || PHASE_ICONS[0]}
                   </div>
                   {/* Number */}
                   <span

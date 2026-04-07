@@ -53,6 +53,7 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
   const quote = (content?.quote as string) ??
     "\u201cThis is how AI becomes part of your operating model \u2014 not a one-time experiment.\u201d";
   const containerImage = wpImageUrl((content?.container_image as string) || "");
+  const bgImage = wpImageUrl((content?.background_image as string) || "");
   const bgColor = (content?.background_color as string) ?? "#102050";
   return (
     <section
@@ -67,6 +68,14 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
         paddingRight: 112,
       }}
     >
+      {bgImage && (
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={bgImage} alt="" className="absolute inset-0 size-full object-cover" />
+          <div className="absolute inset-0" style={{ background: "rgba(7,14,36,0.85)" }} />
+        </div>
+      )}
+
       {/* Blue glow bottom-right */}
       <div
         aria-hidden="true"

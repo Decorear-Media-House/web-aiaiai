@@ -6,11 +6,13 @@ import { wpImageUrl } from "@/lib/wordpress";
 const font = "var(--font-faculty-glyphic), sans-serif";
 const ROYAL_SHINE = "linear-gradient(135deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
-/** 3-bar list icon used in the chip */
-function ListIcon() {
+/** Layers/stack icon used in the chip (matches Figma) */
+function LayersIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2 3h10M2 7h10M2 11h10" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round"/>
+      <path d="M7 1L13 4.5L7 8L1 4.5L7 1Z" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M1 7L7 10.5L13 7" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M1 9.5L7 13L13 9.5" stroke="#4A99F5" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
@@ -25,25 +27,21 @@ function StepIcon() {
   );
 }
 
-/** Horizontal connector line flanking the icon */
-function ConnectorLine({ dashed }: { dashed?: boolean }) {
-  return (
-    <div style={{ flex: "1 0 0", height: 0, minWidth: 1, position: "relative" }}>
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          left: 0,
-          height: 1,
-          borderTop: dashed
-            ? "2px dashed rgba(43,127,255,0.3)"
-            : "2px solid rgba(43,127,255,0.4)",
-        }}
-      />
-    </div>
-  );
-}
+// 6 unique step icons matching Figma
+const STEP_ICONS = [
+  // 1. Assess — target/crosshair
+  <svg key="1" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.33" stroke="#fff" strokeWidth="1.67"/><circle cx="10" cy="10" r="5" stroke="#fff" strokeWidth="1.67"/><circle cx="10" cy="10" r="1.67" stroke="#fff" strokeWidth="1.67"/></svg>,
+  // 2. Roadmap — map
+  <svg key="2" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 2.7v12.5M12.5 4.8v12.5" stroke="#fff" strokeWidth="1.67" strokeLinecap="round"/><path d="M2.96 4.77l3.79-1.9a3.17 3.17 0 011.49 0l3.51 1.76a3.17 3.17 0 001.49 0l3.04-1.53a.83.83 0 011.22.74v10.64a.83.83 0 01-.46.74l-3.79 1.9a3.17 3.17 0 01-1.49 0l-3.51-1.76a3.17 3.17 0 00-1.49 0l-3.05 1.53a.83.83 0 01-1.21-.74V5.52c0-.15.04-.31.12-.44a.83.83 0 01.34-.27z" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  // 3. PoC — lightning bolt
+  <svg key="3" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M6.67 12l-3.34-2 10-8.33-2.5 7.5h5.83L6.67 18.33l2.5-6.33H6.67z" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  // 4. MVP — code brackets
+  <svg key="4" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M15 13.33L18.33 10 15 6.67M5 6.67L1.67 10 5 13.33M12.08 3.33L7.92 16.67" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  // 5. Production — layers/stack
+  <svg key="5" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.83 5.91l5.84 3.91a3.17 3.17 0 001.66 0l5.84-3.91a.83.83 0 000-1.42L11.33.58a3.17 3.17 0 00-1.66 0L3.83 4.49a.83.83 0 000 1.42z" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/><path d="M3.83 10l5.84 3.91a3.17 3.17 0 001.66 0L17.17 10M3.83 15l5.84 3.91a3.17 3.17 0 001.66 0L17.17 15" stroke="#fff" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  // 6. Scale — globe
+  <svg key="6" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" stroke="#fff" strokeWidth="1.67"/><path d="M10 0C7.43 2.7 6 6.28 6 10s1.43 7.3 4 10c2.57-2.7 4-6.28 4-10S12.57 2.7 10 0z" stroke="#fff" strokeWidth="1.67"/><path d="M0 10h20" stroke="#fff" strokeWidth="1.67"/></svg>,
+];
 
 const STEPS = [
   {
@@ -83,7 +81,7 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
   const heading = (content?.heading as string) ?? "How We Work";
   const description = (content?.description as string) ??
     "Six structured phases from discovery to scale \u2014 with delivery and governance built in from the start.";
-  const bgImage = wpImageUrl((content?.section_background_image as string) || "");
+  const bgImage = wpImageUrl((content?.background_image as string) || (content?.section_background_image as string) || "");
   const bgColor = (content?.background_color as string) ?? "#081028";
   return (
     <section
@@ -115,7 +113,7 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
             }}
           />
         )}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(8,16,40,0.3) 0%, #081028 100%)" }} />
+        {/* No overlay — show background image clearly */}
       </div>
 
       <div style={{ position: "relative", maxWidth: 1216, margin: "0 auto", display: "flex", flexDirection: "column", gap: 40, alignItems: "center", width: "100%" }}>
@@ -132,7 +130,7 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
                 backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
               }}
             >
-              <ListIcon />
+              <LayersIcon />
               <span style={{ fontFamily: font, fontSize: 12, color: "#4A99F5", whiteSpace: "nowrap" }}>{chipLabel}</span>
             </div>
             {/* Heading */}
@@ -153,10 +151,8 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
               key={title}
               style={{ flex: "1 1 0%", minWidth: 300, display: "flex", flexDirection: "column", gap: 24, alignItems: "flex-start" }}
             >
-              {/* Icon row: line — icon square — line */}
-              <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "center", width: "100%", flexShrink: 0 }}>
-                <ConnectorLine dashed={dashed} />
-                {/* Royal Shine icon square */}
+              {/* Icon square only — no connector lines */}
+              <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                 <div
                   style={{
                     width: 52, height: 52, borderRadius: 16, flexShrink: 0,
@@ -165,9 +161,8 @@ export default function PartnerProcessSection({ content }: { content?: Record<st
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}
                 >
-                  <StepIcon />
+                  {STEP_ICONS[i] || <StepIcon />}
                 </div>
-                <ConnectorLine dashed={dashed} />
               </div>
 
               {/* Glass card — plain div so backdropFilter works */}

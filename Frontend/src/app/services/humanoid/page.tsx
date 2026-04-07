@@ -40,13 +40,19 @@ export default async function RoboticsPage() {
     stats: ensureArray(m.hum_hero_stats),
     cta_primary: m.hum_hero_cta_primary,
     cta_secondary: m.hum_hero_cta_secondary,
-    hero_background_image: m.hum_hero_background_image,
-    background_color: m.hum_hero_background_color,
+    hero_background_image: m.hum_hero_bg_image,
+    background_color: m.hum_hero_bg_color,
   };
 
-  const useCases: any = {
-    robots: ensureArray(m.hum_robots),
-  };
+  // Robots stored as JSON string (nested specs/features too complex for repeater)
+  let robots: any[] = [];
+  try {
+    const json = m.hum_robots_json as string;
+    if (json) robots = JSON.parse(json);
+  } catch { /* ignore */ }
+  if (!robots.length) robots = ensureArray(m.hum_robots);
+
+  const useCases: any = { robots };
 
   const outcomes: any = {
     chip: m.hum_outcomes_chip,

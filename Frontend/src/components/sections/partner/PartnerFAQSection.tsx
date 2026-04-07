@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import FadeUp from "@/components/animations/FadeUp";
+import { wpImageUrl } from "@/lib/wordpress";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 const ROYAL_SHINE = "linear-gradient(163deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
@@ -51,13 +52,14 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
     "We have compiled frequently asked questions about how AI solutions are implemented in real operations to help you better understand the process and how to work effectively with our team.";
   const ctaText = (content?.ctaText as string) ?? "Still have questions? Contact us";
   const bgColor = (content?.background_color as string) ?? "#070E24";
+  const bgImage = wpImageUrl((content?.background_image as string) || "");
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section
       style={{
         position: "relative",
-        background: bgColor,
+        background: bgImage ? "#070E24" : bgColor,
         paddingTop: 80,
         paddingBottom: 80,
         paddingLeft: 112,
@@ -65,6 +67,12 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
         overflow: "hidden",
       }}
     >
+      {bgImage && (
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={bgImage} alt="" className="absolute inset-0 size-full object-cover" />
+        </div>
+      )}
       {/* Blue glow top-left */}
       <div
         aria-hidden="true"
@@ -159,7 +167,7 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
                       style={{
                         width: 24, height: 24, flexShrink: 0,
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        transform: isOpen ? "rotate(90deg)" : "rotate(-90deg)",
+                        transform: isOpen ? "rotate(-90deg)" : "rotate(90deg)",
                         transition: "transform 0.25s ease",
                         color: "#fff",
                       }}

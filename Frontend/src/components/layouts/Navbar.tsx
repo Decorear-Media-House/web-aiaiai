@@ -142,9 +142,7 @@ export default function Navbar() {
       <nav
         className="fixed top-0 left-0 right-0 z-50 w-full"
         style={{
-          background: "rgba(7,14,36,0.5)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+        
           height: 72,
         }}
       >

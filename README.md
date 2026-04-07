@@ -127,19 +127,31 @@ NEXT_OUTPUT=export npm run build
 # Output: Frontend/out/
 ```
 
-### Deploy to Production (first time)
+### Deploy to Production
+
+ไม่ว่าจะแก้ code, content, หรือทั้ง 2 — รันคำสั่งเดียว:
 
 ```bash
 bash deploy.sh
 ```
 
-### Manual Rebuild on Server
+สิ่งที่ script ทำ:
+1. Push code → GitHub
+2. อัพเดท mu-plugins → WordPress CMS
+3. Build static site (ดึง content ล่าสุดจาก WordPress)
+4. Upload → aiaiai.decorear.com
+
+### SSH Access
 
 ```bash
-ssh decr@ssh.decorear.com
-cd /home/decorear-aiai/apps/aiaiai
-bash rebuild.sh
+# Frontend server
+ssh aiaiai-deploy
+
+# WordPress server
+ssh aiaiai-cms
 ```
+
+SSH config อยู่ที่ `~/.ssh/config` (key: `~/.ssh/id_aiaiai`)
 
 ### Project Structure
 

@@ -35,13 +35,14 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
   const headingHighlight = (content?.headingHighlight as string) ?? "Deliverables";
   const description = (content?.description as string) ??
     "Concrete, tangible work products \u2014 each designed to carry AI from concept through live operation.";
-  const placeholderImage = wpImageUrl((content?.placeholder_image as string) || "");
+  const placeholderImage = wpImageUrl((content?.container_image as string) || (content?.placeholder_image as string) || "");
+  const bgImage = wpImageUrl((content?.background_image as string) || "");
   const bgColor = (content?.background_color as string) ?? "#102050";
   return (
     <section
       style={{
         position: "relative",
-        background: bgColor,
+        background: bgImage ? "#070E24" : bgColor,
         paddingTop: 80,
         paddingBottom: 80,
         paddingLeft: 112,
@@ -49,6 +50,13 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
         overflow: "hidden",
       }}
     >
+      {bgImage && (
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={bgImage} alt="" className="absolute inset-0 size-full object-cover" />
+        </div>
+      )}
+
       {/* Blue glow top-center */}
       <div aria-hidden="true" style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 512, height: 512, borderRadius: 9999, background: "rgba(43,127,255,0.05)", filter: "blur(82px)", pointerEvents: "none" }} />
 

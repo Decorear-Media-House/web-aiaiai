@@ -44,94 +44,91 @@ export default async function PartnerPage() {
   /* ── JetEngine meta fields → component props ── */
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const hero: any = {
-    chip: m.ptr_hero_chip,
+    chipLabel: m.ptr_hero_chipLabel,
     heading: m.ptr_hero_heading,
     description: m.ptr_hero_description,
-    stats: ensureArray(m.ptr_hero_stats),
-    cta_primary: m.ptr_hero_cta_primary,
-    cta_secondary: m.ptr_hero_cta_secondary,
-    hero_background_image: m.ptr_hero_background_image,
+    primaryCta: m.ptr_hero_primaryCta,
+    secondaryCta: m.ptr_hero_secondaryCta,
+    hero_background_image: m.ptr_hero_hero_background_image,
+    container_image: m.ptr_hero_container_image,
     background_color: m.ptr_hero_background_color,
   };
 
   const statement: any = {
-    heading: m.ptr_statement_heading,
-    description: m.ptr_statement_description,
-    paragraphs: textareaToArray(m.ptr_statement_paragraphs),
-    background_color: m.ptr_statement_background_color,
+    textWhite: m.ptr_statement_textWhite,
+    textHighlight: m.ptr_statement_textHighlight,
   };
 
   const meaning: any = {
-    label: m.ptr_meaning_label,
-    heading: m.ptr_meaning_heading,
-    heading_highlight: m.ptr_meaning_heading_highlight,
+    chipLabel: m.ptr_meaning_chipLabel,
+    headingPrefix: m.ptr_meaning_headingPrefix,
+    headingHighlight: m.ptr_meaning_headingHighlight,
+    headingSuffix: m.ptr_meaning_headingSuffix,
     description: m.ptr_meaning_description,
-    items: ensureArray(m.ptr_meaning_items),
+    leadIn: m.ptr_meaning_leadIn,
+    checkItems: textareaToArray(m.ptr_meaning_checkItems),
+    quote: m.ptr_meaning_quote,
+    container_image: m.ptr_meaning_container_image,
     background_color: m.ptr_meaning_background_color,
   };
 
   const outcomes: any = {
-    label: m.ptr_outcomes_label,
+    chipLabel: m.ptr_outcomes_chipLabel,
     heading: m.ptr_outcomes_heading,
-    heading_highlight: m.ptr_outcomes_heading_highlight,
+    headingHighlight: m.ptr_outcomes_headingHighlight,
     description: m.ptr_outcomes_description,
-    cards: ensureArray(m.ptr_outcomes_cards),
+    section_image: m.ptr_outcomes_section_image,
     background_color: m.ptr_outcomes_background_color,
   };
 
   const phases: any = {
-    label: m.ptr_phases_label,
+    chipLabel: m.ptr_phases_chipLabel,
     heading: m.ptr_phases_heading,
-    heading_highlight: m.ptr_phases_heading_highlight,
+    headingHighlight: m.ptr_phases_headingHighlight,
     description: m.ptr_phases_description,
-    phases: ensureArray(m.ptr_phases_phases),
-    background_color: m.ptr_phases_background_color,
   };
 
   const deliverables: any = {
-    label: m.ptr_deliverables_label,
+    chipLabel: m.ptr_deliverables_chipLabel,
     heading: m.ptr_deliverables_heading,
-    heading_highlight: m.ptr_deliverables_heading_highlight,
+    headingHighlight: m.ptr_deliverables_headingHighlight,
     description: m.ptr_deliverables_description,
-    items: ensureArray(m.ptr_deliverables_items),
-    background_color: m.ptr_deliverables_background_color,
+    container_image: m.ptr_deliverables_container_image,
+    background_image: m.ptr_deliverables_background_image,
   };
 
   const engagement: any = {
-    label: m.ptr_engagement_label,
+    chipLabel: m.ptr_engagement_chipLabel,
     heading: m.ptr_engagement_heading,
-    heading_highlight: m.ptr_engagement_heading_highlight,
+    headingHighlight: m.ptr_engagement_headingHighlight,
     description: m.ptr_engagement_description,
-    models: ensureArray(m.ptr_engagement_models),
-    background_color: m.ptr_engagement_background_color,
   };
 
   const process: any = {
-    label: m.ptr_process_label,
+    chipLabel: m.ptr_process_chipLabel,
     heading: m.ptr_process_heading,
-    heading_highlight: m.ptr_process_heading_highlight,
+    headingHighlight: m.ptr_process_headingHighlight,
     description: m.ptr_process_description,
-    steps: ensureArray(m.ptr_process_steps),
-    background_color: m.ptr_process_background_color,
+    background_image: m.ptr_process_background_image,
   };
 
   const faq: any = {
-    label: m.ptr_faq_label,
+    chipLabel: m.ptr_faq_chipLabel,
     heading: m.ptr_faq_heading,
-    heading_highlight: m.ptr_faq_heading_highlight,
+    headingHighlight: m.ptr_faq_headingHighlight,
     description: m.ptr_faq_description,
-    items: ensureArray(m.ptr_faq_items),
+    ctaText: m.ptr_faq_ctaText,
+    background_image: m.ptr_faq_background_image,
     background_color: m.ptr_faq_background_color,
   };
 
   const cta: any = {
     heading: m.ptr_cta_heading,
-    heading_highlight: m.ptr_cta_heading_highlight,
+    headingHighlight: m.ptr_cta_headingHighlight,
     description: m.ptr_cta_description,
-    cta_primary: m.ptr_cta_cta_primary,
-    cta_secondary: m.ptr_cta_cta_secondary,
+    primaryCta: m.ptr_cta_primaryCta,
+    secondaryCta: m.ptr_cta_secondaryCta,
     background_image: m.ptr_cta_background_image,
-    background_color: m.ptr_cta_background_color,
   };
 
   return (

@@ -97,7 +97,8 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
   const headingHighlight = (content?.headingHighlight as string) ?? "Target";
   const description = (content?.description as string) ??
     "Every engagement is anchored to real outcomes \u2014 not just capabilities.";
-  const placeholderImage = wpImageUrl((content?.placeholder_image as string) || "");
+  const sectionImage = wpImageUrl((content?.section_image as string) || (content?.placeholder_image as string) || "");
+  const bgImage = wpImageUrl((content?.background_image as string) || "");
   const bgColor = (content?.background_color as string) ?? "#070E24";
   const [activeTab, setActiveTab] = useState(0);
   const tab = TABS[activeTab];
@@ -114,6 +115,14 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
         overflow: "hidden",
       }}
     >
+      {bgImage && (
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={bgImage} alt="" className="absolute inset-0 size-full object-cover" />
+          <div className="absolute inset-0" style={{ background: "rgba(7,14,36,0.85)" }} />
+        </div>
+      )}
+
       {/* Deco top-right corner — decorative gradient arc */}
       <div
         aria-hidden="true"
@@ -248,10 +257,10 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
                 overflow: "hidden",
               }}
             >
-              {placeholderImage ? (
+              {sectionImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={placeholderImage}
+                  src={sectionImage}
                   alt=""
                   aria-hidden="true"
                   style={{

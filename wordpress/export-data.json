@@ -1,0 +1,437 @@
+{
+  "home": {
+    "page_sections": "{\"hero\":{\"label\":\"AI Solution Partner · Thailand\",\"heading\":\"Your AI Solution Partner from roadmap to production deployment.\",\"description\":\"We help organizations adopt practical AI that reduces cost, increases revenue, strengthens compliance, and improves security—through AI Solution Partnership, Computer Vision security, and humanoid robotics deployment.\",\"cta_text\":\"Contact Us\",\"cta_subtext\":\"Share your goal and constraints. Our team will reach out.\",\"stats\":[{\"value\":\"3+\",\"label\":\"AI Solutions\"},{\"value\":\"100%\",\"label\":\"Outcome-Driven\"},{\"value\":\"PoC→\",\"label\":\"Production\"},{\"value\":\"24/7\",\"label\":\"AI Operations\"}],\"hero_background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/about-hero-bg.jpg\",\"brand_logo_image\":\"http://localhost:8080/wp-content/uploads/2026/04/aaa-vector.svg\"},\"about\":{\"heading\":\"AI-AI-AI Co., Ltd.\",\"paragraphs\":[\"AI-AI-AI Co., Ltd. helps organizations adopt AI in a practical, outcome-driven way. We operate as an AI Solution Partner (and AI development partner) — guiding you from strategy and use-case discovery through PoC, MVP, and full production deployment.\",\"We also deliver specialized solutions in Computer Vision security / AI video analytics and humanoid robotics deployment (AgiBot with enhanced AI capability) — each designed for real operational adoption, not just proof of concept.\"],\"section_background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/about-hero-bg.jpg\"},\"problems\":{\"label\":\"The Problem We Solve\",\"headingWhite\":\"AI is easy to demo. \",\"headingGradient\":\"Hard to deploy.\",\"description\":\"Most organizations face at least one of these realities before they can scale AI.\",\"cards\":[{\"title\":\"Stuck at PoC\",\"description\":\"No one owns integration and rollout — AI pilots never reach production.\"},{\"title\":\"Too Many Use Cases\",\"description\":\"Teams can't prioritize without certainty on ROI or a clear starting point.\"},{\"title\":\"No Operational Control\",\"description\":\"Missing auditability, approval flows, and human-in-the-loop guardrails.\"},{\"title\":\"Security Gaps\",\"description\":\"Cameras alone aren't enough — teams need actionable intelligence and workflows.\"},{\"title\":\"Data Not Ready\",\"description\":\"Data exists but isn't structured, governed, or production-grade.\"},{\"title\":\"Physical Automation Risk\",\"description\":\"Deploying robots requires safety SOPs, maintenance plans, and escalation paths.\"}],\"footer_text\":\"Ai-Ai-Ai exists to turn AI ambition into deployed solutions that teams can operate and scale — from day one to full production.\"},\"services\":{\"label\":\"Our Services\",\"heading\":\"What We Do\",\"description\":\"Three specialized AI solution lines designed to deliver measurable outcomes across security, automation, and digital transformation.\",\"items\":[{\"label\":\"Computer Vision · Analytics\",\"heading\":\"AI Security Guard Solution\",\"description\":\"Computer Vision and AI video analytics / AI video surveillance for event detection, alerts, and incident workflows.\",\"cta\":\"Explore Security Platform\",\"href\":\"/services/security\"},{\"label\":\"AgiBot · Robotics · Automation\",\"heading\":\"Embodied AI & Humanoid Robotic Solution\",\"description\":\"AgiBot humanoid robotics deployment and workflow integration with enhanced AI capability designed for operational readiness and scale.\",\"cta\":\"Explore Robotics\",\"href\":\"/services/humanoid\"},{\"label\":\"Strategy · PoC · Production\",\"heading\":\"AI Solution Partner\",\"description\":\"AI consulting and hands-on delivery: AI roadmap → PoC → MVP → production deployment, built for real operations.\",\"cta\":\"Explore AI Solution Partner\",\"href\":\"/services/partner\"}]},\"outcomes\":{\"label\":\"Impact\",\"heading\":\"Outcomes We Deliver\",\"description\":\"Every engagement is measured against real business outcomes—not just technical milestones.\",\"decorative_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcomes-robot.png\"},\"process\":{\"label\":\"Our Process\",\"heading\":\"How We Work\",\"description\":\"A structured, outcome-driven delivery process—from initial discovery through scale.\",\"side_panel_image\":\"http://localhost:8080/wp-content/uploads/2026/04/robot-1775204772.webp\"},\"cta\":{\"heading\":\"Ready to ship AI that produces outcomes?\",\"description\":\"Tell us what outcome matters most—cost, revenue, compliance, security, or automation—and we will propose a practical first step.\",\"background_video\":\"http://localhost:8080/wp-content/uploads/2026/04/CTA-Loop.mp4\"},\"contact\":{\"label\":\"Get In Touch\",\"heading\":\"Contact Us\",\"description\":\"Tell us what you want to achieve—cost reduction, revenue growth, compliance improvement, security enhancement, or operational automation.\",\"email\":\"info@ai-ai-ai.co\",\"address\":\"1104/2 4th floor, Pattanakarn Road, Suan Luang, Bangkok, Thailand 10250\",\"google_map_url\":\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.0!2d100.6308!3d13.7230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQzJzIyLjgiTiAxMDDCsDM3JzUwLjkiRQ!5e0!3m2!1sen!2sth!4v1700000000000\"}}",
+    "jet_fields": {
+      "home_hero_label": "AI Solution Partner · Thailand",
+      "home_hero_heading": "Your AI Solution Partner from roadmap to production deployment.",
+      "home_hero_description": "We help organizations adopt practical AI that reduces cost, increases revenue, strengthens compliance, and improves security—through AI Solution Partnership, Computer Vision security, and humanoid robotics deployment.",
+      "home_hero_cta_text": "Contact Us",
+      "home_hero_cta_subtext": "Share your goal and constraints. Our team will reach out.",
+      "home_hero_stats": [
+        {
+          "value": "3+",
+          "label": "AI Solutions"
+        },
+        {
+          "value": "100%",
+          "label": "Outcome-Driven"
+        },
+        {
+          "value": "PoC→",
+          "label": "Production"
+        },
+        {
+          "value": "24/7",
+          "label": "AI Operations"
+        }
+      ],
+      "home_about_heading": "AI-AI-AI Co., Ltd.",
+      "home_about_paragraphs": "AI-AI-AI Co., Ltd. helps organizations adopt AI in a practical, outcome-driven way. We operate as an AI Solution Partner (and AI development partner) — guiding you from strategy and use-case discovery through PoC, MVP, and full production deployment.\r\nWe also deliver specialized solutions in Computer Vision security / AI video analytics and humanoid robotics deployment (AgiBot with enhanced AI capability) — each designed for real operational adoption, not just proof of concept.",
+      "home_about_section_background_image": "http://localhost:8080/wp-content/uploads/2026/04/about-hero-bg.jpg",
+      "home_problems_label": "The Problem We Solve",
+      "home_problems_headingWhite": "AI is easy to demo. ",
+      "home_problems_headingGradient": "Hard to deploy.",
+      "home_problems_description": "Most organizations face at least one of these realities before they can scale AI.",
+      "home_problems_footer_text": "Ai-Ai-Ai exists to turn AI ambition into deployed solutions that teams can operate and scale — from day one to full production.",
+      "home_problems_cards": [
+        {
+          "title": "Stuck at PoC",
+          "description": "No one owns integration and rollout — AI pilots never reach production.",
+          "card_image": ""
+        },
+        {
+          "title": "Too Many Use Cases",
+          "description": "Teams can't prioritize without certainty on ROI or a clear starting point.",
+          "card_image": ""
+        },
+        {
+          "title": "No Operational Control",
+          "description": "Missing auditability, approval flows, and human-in-the-loop guardrails.",
+          "card_image": ""
+        },
+        {
+          "title": "Security Gaps",
+          "description": "Cameras alone aren't enough — teams need actionable intelligence and workflows.",
+          "card_image": ""
+        },
+        {
+          "title": "Data Not Ready",
+          "description": "Data exists but isn't structured, governed, or production-grade.",
+          "card_image": ""
+        },
+        {
+          "title": "Physical Automation Risk",
+          "description": "Deploying robots requires safety SOPs, maintenance plans, and escalation paths.",
+          "card_image": ""
+        }
+      ],
+      "home_services_label": "Our Services",
+      "home_services_heading": "What We Do",
+      "home_services_description": "Three specialized AI solution lines designed to deliver measurable outcomes across security, automation, and digital transformation.",
+      "home_services_items": [
+        {
+          "label": "Computer Vision · Analytics",
+          "heading": "AI Security Guard Solution",
+          "description": "Computer Vision and AI video analytics / AI video surveillance for event detection, alerts, and incident workflows.",
+          "cta": "Explore Security Platform",
+          "href": "/services/security",
+          "card_background_image": ""
+        },
+        {
+          "label": "AgiBot · Robotics · Automation",
+          "heading": "Embodied AI &amp; Humanoid Robotic Solution",
+          "description": "AgiBot humanoid robotics deployment and workflow integration with enhanced AI capability designed for operational readiness and scale.",
+          "cta": "Explore Robotics",
+          "href": "/services/humanoid",
+          "card_background_image": ""
+        },
+        {
+          "label": "Strategy · PoC · Production",
+          "heading": "AI Solution Partner",
+          "description": "AI consulting and hands-on delivery: AI roadmap → PoC → MVP → production deployment, built for real operations.",
+          "cta": "Explore AI Solution Partner",
+          "href": "/services/partner",
+          "card_background_image": ""
+        }
+      ],
+      "home_outcomes_label": "Impact",
+      "home_outcomes_heading": "Outcomes We Deliver",
+      "home_outcomes_description": "Every engagement is measured against real business outcomes—not just technical milestones.",
+      "home_process_label": "Our Process",
+      "home_process_heading": "How We Work",
+      "home_process_description": "A structured, outcome-driven delivery process—from initial discovery through scale.",
+      "home_cta_heading": "Ready to ship AI that produces outcomes?",
+      "home_cta_description": "Tell us what outcome matters most—cost, revenue, compliance, security, or automation—and we will propose a practical first step.",
+      "home_contact_label": "Get In Touch",
+      "home_contact_heading": "Contact Us",
+      "home_contact_description": "Tell us what you want to achieve—cost reduction, revenue growth, compliance improvement, security enhancement, or operational automation.",
+      "home_contact_email": "info@ai-ai-ai.co",
+      "home_contact_address": "1104/2 4th floor, Pattanakarn Road, Suan Luang, Bangkok, Thailand 10250"
+    }
+  },
+  "about": {
+    "page_sections": "{\"hero\":{\"label\":\"About Us\",\"heading\":\"About\\nAI-AI-AI Co., Ltd.\",\"description\":\"We are Ai-Ai-Ai Co., Ltd. — a team of AI practitioners, architects, and operators who help organizations move from AI ambition to AI in production.\",\"hero_background_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/about-hero-bg.jpg\"},\"mission\":{\"label\":\"Our Mission\",\"headingWhite1\":\"We exist to \",\"headingHighlight\":\"close the gap\",\"headingWhite2\":\" between AI ambition and AI in production.\",\"description\":\"Most organizations already see the potential of AI. What they lack is a structured path from idea to operating system—built around their constraints, not a vendor's roadmap.\",\"mission_background_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/about-mission-bg-3ce2d2.png\",\"mission_background_mobile_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/robot_m-1775207068.webp\"},\"philosophy\":{\"label\":\"Philosophy\",\"headingPrefix\":\"How we \",\"headingHighlight\":\"Think\",\"subtitle\":\"AI is not just a model. AI is a system inside operations.\",\"introText\":\"That's why we focus on delivery patterns that work in real organizations — not just technically impressive prototypes.\",\"principles\":[{\"num\":\"01\",\"label\":\"People and processes\"},{\"num\":\"02\",\"label\":\"Governance and controls\"},{\"num\":\"03\",\"label\":\"Data and integration\"},{\"num\":\"04\",\"label\":\"Monitoring and continuous improvement\"}]},\"edge\":{\"label\":\"Our Edge\",\"headingPrefix\":\"What makes us \",\"headingHighlight\":\"Different\",\"edges\":[{\"title\":\"Partner-Led Delivery\",\"description\":\"We operate as your AI Solution Partner, not just advisors.\",\"icon_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/edge-icon-1.svg\"},{\"title\":\"Production-Minded Execution\",\"description\":\"Integration, monitoring, rollout planning, and governance built in.\",\"icon_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/edge-icon-2.svg\"},{\"title\":\"Computer Vision Depth\",\"description\":\"Security operations design with a strong SELEN ecosystem foundation.\",\"icon_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/edge-icon-3.svg\"},{\"title\":\"Lean and Scalable\",\"description\":\"Structured playbooks and partner ecosystem execution.\",\"icon_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/edge-icon-4.svg\"}],\"edge_photo_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/about-edge-photo.jpg\"},\"leadership\":{\"heading\":\"Leadership\",\"description\":\"AI-AI-AI is led by Dr. Chanwit Boonchuay, President of the AI Entrepreneur Association of Thailand (AIEAT), in partnership with Synapes, with strong Computer Vision ecosystem experience through SELEN.\",\"logo_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/about-aieat-logo.png\",\"background_color\":\"\",\"background_image\":\"\"},\"team\":{\"label\":\"Our People\",\"headingPrefix\":\"Management \",\"headingHighlight\":\"Team\",\"sectionDescription\":\"Experienced leaders bringing together AI strategy, engineering depth, and operational excellence.\",\"ceo_photo_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/about-ceo.jpg\",\"cto_photo_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/ctos-1775205923.webp\",\"coo_photo_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/ceo-1775205915.webp\",\"ceoName\":\"Dr. Chanwit Boonchuay\",\"ceoRole\":\"CEO\",\"ceoBio\":\"President of the AI Entrepreneur Association of Thailand (AIEAT). With decades of experience in AI strategy and implementation, Dr. Chanwit leads AI-AI-AI's vision of making AI adoption practical and production-ready across Southeast Asia.\",\"ceoTags\":[\"AI Strategy\",\"AIEAT President\",\"Robotics\"],\"ctoName\":\"Sivarat Malapet\",\"ctoRole\":\"CTO\",\"cooName\":\"Keerati Luengwattanakit\",\"cooRole\":\"COO\",\"ceo_photo_mobile_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/about-ceo.jpg\",\"cto_photo_mobile_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/cto_m-1775206877.webp\",\"coo_photo_mobile_image\":\"http:\\/\\/localhost:8080\\/wp-content\\/uploads\\/2026\\/04\\/coo_m-1775206886.webp\"}}",
+    "jet_fields": {
+      "about_hero_label": "About Us",
+      "about_hero_heading": "About\nAI-AI-AI Co., Ltd.",
+      "about_hero_description": "We are Ai-Ai-Ai Co., Ltd. — a team of AI practitioners, architects, and operators who help organizations move from AI ambition to AI in production.",
+      "about_hero_background_image": "http://localhost:8080/wp-content/uploads/2026/04/about-hero-bg.jpg",
+      "about_mission_label": "Our Mission",
+      "about_mission_headingWhite1": "We exist to ",
+      "about_mission_headingHighlight": "close the gap",
+      "about_mission_headingWhite2": " between AI ambition and AI in production.",
+      "about_mission_description": "Most organizations already see the potential of AI. What they lack is a structured path from idea to operating system—built around their constraints, not a vendor's roadmap.",
+      "about_mission_background_image": "http://localhost:8080/wp-content/uploads/2026/04/about-mission-bg-3ce2d2.png",
+      "about_mission_background_mobile_image": "http://localhost:8080/wp-content/uploads/2026/04/robot_m-1775207068.webp",
+      "about_philosophy_label": "Philosophy",
+      "about_philosophy_headingPrefix": "How we ",
+      "about_philosophy_headingHighlight": "Think",
+      "about_philosophy_subtitle": "AI is not just a model. AI is a system inside operations.",
+      "about_philosophy_introText": "That's why we focus on delivery patterns that work in real organizations — not just technically impressive prototypes.",
+      "about_philosophy_principles": [
+        {
+          "num": "01",
+          "label": "People and processes"
+        },
+        {
+          "num": "02",
+          "label": "Governance and controls"
+        },
+        {
+          "num": "03",
+          "label": "Data and integration"
+        },
+        {
+          "num": "04",
+          "label": "Monitoring and continuous improvement"
+        }
+      ],
+      "about_edge_label": "Our Edge",
+      "about_edge_headingPrefix": "What makes us ",
+      "about_edge_headingHighlight": "Different",
+      "about_edge_photo_image": "http://localhost:8080/wp-content/uploads/2026/04/about-edge-photo.jpg",
+      "about_edge_edges": [
+        {
+          "title": "Partner-Led Delivery",
+          "description": "We operate as your AI Solution Partner, not just advisors.",
+          "icon_image": "http://localhost:8080/wp-content/uploads/2026/04/edge-icon-1.svg"
+        },
+        {
+          "title": "Production-Minded Execution",
+          "description": "Integration, monitoring, rollout planning, and governance built in.",
+          "icon_image": "http://localhost:8080/wp-content/uploads/2026/04/edge-icon-2.svg"
+        },
+        {
+          "title": "Computer Vision Depth",
+          "description": "Security operations design with a strong SELEN ecosystem foundation.",
+          "icon_image": "http://localhost:8080/wp-content/uploads/2026/04/edge-icon-3.svg"
+        },
+        {
+          "title": "Lean and Scalable",
+          "description": "Structured playbooks and partner ecosystem execution.",
+          "icon_image": "http://localhost:8080/wp-content/uploads/2026/04/edge-icon-4.svg"
+        }
+      ],
+      "about_leadership_heading": "Leadership",
+      "about_leadership_description": "AI-AI-AI is led by Dr. Chanwit Boonchuay, President of the AI Entrepreneur Association of Thailand (AIEAT), in partnership with Synapes, with strong Computer Vision ecosystem experience through SELEN.",
+      "about_leadership_logo_image": "http://localhost:8080/wp-content/uploads/2026/04/about-aieat-logo.png",
+      "about_team_label": "Our People",
+      "about_team_headingPrefix": "Management ",
+      "about_team_headingHighlight": "Team",
+      "about_team_sectionDescription": "Experienced leaders bringing together AI strategy, engineering depth, and operational excellence.",
+      "about_team_ceoName": "Dr. Chanwit Boonchuay",
+      "about_team_ceoRole": "CEO",
+      "about_team_ceoBio": "President of the AI Entrepreneur Association of Thailand (AIEAT). With decades of experience in AI strategy and implementation, Dr. Chanwit leads AI-AI-AI's vision of making AI adoption practical and production-ready across Southeast Asia.",
+      "about_team_ceoTags": "AI Strategy\nAIEAT President\nRobotics",
+      "about_team_ceo_photo_image": "http://localhost:8080/wp-content/uploads/2026/04/about-ceo.jpg",
+      "about_team_ceo_photo_mobile_image": "http://localhost:8080/wp-content/uploads/2026/04/about-ceo.jpg",
+      "about_team_ctoName": "Sivarat Malapet",
+      "about_team_ctoRole": "CTO",
+      "about_team_cto_photo_image": "http://localhost:8080/wp-content/uploads/2026/04/ctos-1775205923.webp",
+      "about_team_cto_photo_mobile_image": "http://localhost:8080/wp-content/uploads/2026/04/cto_m-1775206877.webp",
+      "about_team_cooName": "Keerati Luengwattanakit",
+      "about_team_cooRole": "COO",
+      "about_team_coo_photo_image": "http://localhost:8080/wp-content/uploads/2026/04/ceo-1775205915.webp",
+      "about_team_coo_photo_mobile_image": "http://localhost:8080/wp-content/uploads/2026/04/coo_m-1775206886.webp"
+    }
+  },
+  "services": {
+    "page_sections": "{\"hero\":{\"label\":\"AI Solutions\",\"heading\":\"AI Services Built Around Measurable Outcomes\",\"description\":\"From strategy to production deployment—every service is designed to reduce cost, grow revenue, strengthen compliance, improve security, or automate operations.\",\"background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/hero-bg.jpg\",\"background_color\":\"\"},\"outcomes\":{\"label\":\"Impact\",\"heading_line1\":\"Outcomes\",\"heading_line2\":\"We Deliver\",\"description\":\"Every engagement is anchored to one or more of these five outcome areas—so progress is measurable and business-relevant.\",\"outcome1_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcome-1.png\",\"outcome2_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcome-2.png\",\"outcome3_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcome-3.png\",\"outcome4_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcome-4.png\",\"outcome5_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcome-5.png\"},\"overview\":{\"heading\":\"Service Overview\",\"subtitle\":\"Three focused service lines — each designed to deploy, govern, and scale AI in your real operations.\",\"description\":\"\",\"background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/overview-bg.png\"},\"robotics\":{\"number\":\"01\",\"label\":\"AgiBot · Robotics · Automation\",\"heading\":\"AI-Enhanced Humanoid Robotics\",\"subtitle\":\"AgiBot humanoid robotics deployment with enhanced AI capability—designed for operational readiness and scale.\",\"what_it_is\":\"A complete deployment service for embodied AI and humanoid robotics—including robot selection, workflow integration, AI model customization, safety SOPs, and pilot-to-production rollout. We work with AgiBot platforms and enhance their capabilities with custom AI features tailored to your environment.\",\"section_image\":\"http://localhost:8080/wp-content/uploads/2026/04/robotics-bg.png\"},\"security\":{\"number\":\"02\",\"label\":\"Computer Vision · Analytics\",\"heading\":\"AI Security Guard Solution\",\"subtitle\":\"Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.\",\"what_it_is\":\"An AI-powered video analytics platform that turns existing CCTV infrastructure into an intelligent detection, alerting, and response system—with analytics dashboards, alert routing, and audit-ready logs.\",\"section_image\":\"http://localhost:8080/wp-content/uploads/2026/04/security-bg.png\"},\"ai_solution\":{\"number\":\"03\",\"label\":\"Strategy · PoC · Production\",\"heading\":\"AI Solution Partner\",\"subtitle\":\"AI roadmap → PoC → MVP → production deployment—built for real operations.\",\"what_it_is\":\"We act as your AI Solution Partner—helping you move from AI strategy and use-case identification through proof of concept, MVP development, and production deployment. Every step is grounded in integration, governance, and operating constraints.\",\"section_image\":\"http://localhost:8080/wp-content/uploads/2026/04/ai-solution-bg.png\"},\"initiatives\":{\"label\":\"Cross-Cutting Capabilities\",\"heading_line1\":\"Additional\",\"heading_line2\":\"Initiatives\",\"description\":\"Beyond our three core solution lines, we offer cross-cutting capabilities that strengthen any AI initiative.\"},\"guidance\":{\"label\":\"Next Steps\",\"heading\":\"Not Sure Where to\",\"heading_highlight\":\"Start?\",\"description\":\"We help you identify the right starting point based on your constraints, goals, and readiness—so your first AI initiative delivers real outcomes.\",\"background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/guidance-bg.jpg\"}}",
+    "jet_fields": {
+      "svc_hero_label": "AI Solutions",
+      "svc_hero_heading": "AI Services Built Around Measurable Outcomes",
+      "svc_hero_description": "From strategy to production deployment—every service is designed to reduce cost, grow revenue, strengthen compliance, improve security, or automate operations.",
+      "svc_hero_background_image": "http://localhost:8080/wp-content/uploads/2026/04/hero-bg.jpg",
+      "svc_outcomes_label": "Impact",
+      "svc_outcomes_heading_line1": "Outcomes",
+      "svc_outcomes_heading_line2": "We Deliver",
+      "svc_outcomes_description": "Every engagement is anchored to one or more of these five outcome areas—so progress is measurable and business-relevant.",
+      "svc_outcomes_outcome1_image": "http://localhost:8080/wp-content/uploads/2026/04/outcome-1.png",
+      "svc_outcomes_outcome2_image": "http://localhost:8080/wp-content/uploads/2026/04/outcome-2.png",
+      "svc_outcomes_outcome3_image": "http://localhost:8080/wp-content/uploads/2026/04/outcome-3.png",
+      "svc_outcomes_outcome4_image": "http://localhost:8080/wp-content/uploads/2026/04/outcome-4.png",
+      "svc_outcomes_outcome5_image": "http://localhost:8080/wp-content/uploads/2026/04/outcome-5.png",
+      "svc_overview_heading": "Service Overview",
+      "svc_overview_subtitle": "Three focused service lines — each designed to deploy, govern, and scale AI in your real operations.",
+      "svc_overview_background_image": "http://localhost:8080/wp-content/uploads/2026/04/overview-bg.png",
+      "svc_robotics_number": "01",
+      "svc_robotics_label": "AgiBot · Robotics · Automation",
+      "svc_robotics_heading": "AI-Enhanced Humanoid Robotics",
+      "svc_robotics_subtitle": "AgiBot humanoid robotics deployment with enhanced AI capability—designed for operational readiness and scale.",
+      "svc_robotics_what_it_is": "A complete deployment service for embodied AI and humanoid robotics—including robot selection, workflow integration, AI model customization, safety SOPs, and pilot-to-production rollout. We work with AgiBot platforms and enhance their capabilities with custom AI features tailored to your environment.",
+      "svc_robotics_section_image": "http://localhost:8080/wp-content/uploads/2026/04/robotics-bg.png",
+      "svc_security_number": "02",
+      "svc_security_label": "Computer Vision · Analytics",
+      "svc_security_heading": "AI Security Guard Solution",
+      "svc_security_subtitle": "Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.",
+      "svc_security_what_it_is": "An AI-powered video analytics platform that turns existing CCTV infrastructure into an intelligent detection, alerting, and response system—with analytics dashboards, alert routing, and audit-ready logs.",
+      "svc_security_section_image": "http://localhost:8080/wp-content/uploads/2026/04/security-bg.png",
+      "svc_ai_solution_number": "03",
+      "svc_ai_solution_label": "Strategy · PoC · Production",
+      "svc_ai_solution_heading": "AI Solution Partner",
+      "svc_ai_solution_subtitle": "AI roadmap → PoC → MVP → production deployment—built for real operations.",
+      "svc_ai_solution_what_it_is": "We act as your AI Solution Partner—helping you move from AI strategy and use-case identification through proof of concept, MVP development, and production deployment. Every step is grounded in integration, governance, and operating constraints.",
+      "svc_ai_solution_section_image": "http://localhost:8080/wp-content/uploads/2026/04/ai-solution-bg.png",
+      "svc_initiatives_label": "Cross-Cutting Capabilities",
+      "svc_initiatives_heading_line1": "Additional",
+      "svc_initiatives_heading_line2": "Initiatives",
+      "svc_initiatives_description": "Beyond our three core solution lines, we offer cross-cutting capabilities that strengthen any AI initiative.",
+      "svc_guidance_label": "Next Steps",
+      "svc_guidance_heading": "Not Sure Where to",
+      "svc_guidance_heading_highlight": "Start?",
+      "svc_guidance_description": "We help you identify the right starting point based on your constraints, goals, and readiness—so your first AI initiative delivers real outcomes.",
+      "svc_guidance_background_image": "http://localhost:8080/wp-content/uploads/2026/04/guidance-bg.jpg"
+    }
+  },
+  "partner": {
+    "page_sections": "{\"hero\":{\"chipLabel\":\"Strategy · PoC · Production\",\"heading\":\"AI Solution Partner\",\"description\":\"Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.\",\"primaryCta\":\"Get Started\",\"secondaryCta\":\"Contact Us\",\"hero_background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/partner-hero-bg.jpg\",\"background_color\":\"\"},\"statement\":{\"textWhite\":\"A PoC that doesn't reach production isn't just a failed experiment—\",\"textHighlight\":\"it's a failure of delivery design.\"},\"meaning\":{\"chipLabel\":\"What It Means\",\"headingPrefix\":\"What \",\"headingHighlight\":\"AI Solution Partner\",\"headingSuffix\":\" Actually Means\",\"description\":\"We act as your end-to-end AI delivery partner—owning the path from idea to production system, not just a prototype.\"},\"outcomes\":{\"chipLabel\":\"Impact\",\"heading\":\"Outcomes\",\"headingHighlight\":\"We Deliver\",\"description\":\"Every engagement is measured against real business outcomes—not just technical milestones.\"},\"phases\":{\"chipLabel\":\"Delivery Phases\",\"heading\":\"How We\",\"headingHighlight\":\"Deliver\",\"description\":\"A structured six-phase process from discovery through scale.\"},\"deliverables\":{\"chipLabel\":\"Deliverables\",\"heading\":\"What You\",\"headingHighlight\":\"Get\",\"description\":\"Concrete artifacts and systems at every stage—not just reports.\"},\"engagement\":{\"chipLabel\":\"Engagement\",\"heading\":\"How We\",\"headingHighlight\":\"Engage\",\"description\":\"Flexible engagement models designed around your constraints.\"},\"process\":{\"chipLabel\":\"Process\",\"heading\":\"A Practical Pre-Production Checklist\",\"description\":\"A successful proof of concept is not a green light for production. This is what separates a demo from a system.\"},\"faq\":{\"chipLabel\":\"FAQ\",\"heading\":\"Frequently\",\"headingHighlight\":\"Asked Questions\",\"description\":\"Common questions about working with us as your AI Solution Partner.\",\"ctaText\":\"Still have questions? Contact Us\"},\"cta\":{\"heading\":\"Ready to move from\",\"headingHighlight\":\"AI ambition to AI in production?\",\"description\":\"Tell us your constraints and goals. We'll propose a practical first step.\",\"primaryCta\":\"Get Started\",\"secondaryCta\":\"Contact Us\"}}",
+    "jet_fields": {
+      "ptr_hero_chipLabel": "Strategy · PoC · Production",
+      "ptr_hero_heading": "AI Solution Partner",
+      "ptr_hero_description": "Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.",
+      "ptr_hero_primaryCta": "Get Started",
+      "ptr_hero_secondaryCta": "Contact Us",
+      "ptr_hero_hero_background_image": "http://localhost:8080/wp-content/uploads/2026/04/partner-hero-bg.jpg",
+      "ptr_statement_textWhite": "A PoC that doesn't reach production isn't just a failed experiment—",
+      "ptr_statement_textHighlight": "it's a failure of delivery design.",
+      "ptr_meaning_chipLabel": "What It Means",
+      "ptr_meaning_headingPrefix": "What ",
+      "ptr_meaning_headingHighlight": "AI Solution Partner",
+      "ptr_meaning_headingSuffix": " Actually Means",
+      "ptr_meaning_description": "We act as your end-to-end AI delivery partner—owning the path from idea to production system, not just a prototype.",
+      "ptr_outcomes_chipLabel": "Impact",
+      "ptr_outcomes_heading": "Outcomes",
+      "ptr_outcomes_headingHighlight": "We Deliver",
+      "ptr_outcomes_description": "Every engagement is measured against real business outcomes—not just technical milestones.",
+      "ptr_phases_chipLabel": "Delivery Phases",
+      "ptr_phases_heading": "How We",
+      "ptr_phases_headingHighlight": "Deliver",
+      "ptr_phases_description": "A structured six-phase process from discovery through scale.",
+      "ptr_deliverables_chipLabel": "Deliverables",
+      "ptr_deliverables_heading": "What You",
+      "ptr_deliverables_headingHighlight": "Get",
+      "ptr_deliverables_description": "Concrete artifacts and systems at every stage—not just reports.",
+      "ptr_engagement_chipLabel": "Engagement",
+      "ptr_engagement_heading": "How We",
+      "ptr_engagement_headingHighlight": "Engage",
+      "ptr_engagement_description": "Flexible engagement models designed around your constraints.",
+      "ptr_process_chipLabel": "Process",
+      "ptr_process_heading": "A Practical Pre-Production Checklist",
+      "ptr_process_description": "A successful proof of concept is not a green light for production. This is what separates a demo from a system.",
+      "ptr_faq_chipLabel": "FAQ",
+      "ptr_faq_heading": "Frequently",
+      "ptr_faq_headingHighlight": "Asked Questions",
+      "ptr_faq_description": "Common questions about working with us as your AI Solution Partner.",
+      "ptr_faq_ctaText": "Still have questions? Contact Us",
+      "ptr_cta_heading": "Ready to move from",
+      "ptr_cta_headingHighlight": "AI ambition to AI in production?",
+      "ptr_cta_description": "Tell us your constraints and goals. We'll propose a practical first step.",
+      "ptr_cta_primaryCta": "Get Started",
+      "ptr_cta_secondaryCta": "Contact Us"
+    }
+  },
+  "humanoid": {
+    "page_sections": "{\"hero\":{\"chip\":\"AI-Enhanced Humanoid Robotics\",\"heading\":\"Embodied AI & Humanoid Robotic Solution\",\"description\":\"Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, scalable planning, and rollout.\",\"cta_primary\":\"Contact Us\",\"cta_secondary\":\"All Services\",\"hero_background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/hero-bg.png\",\"background_color\":\"#070E24\",\"stats\":[{\"top\":\"Pilot-Ready\",\"bottom\":\"Planning\"},{\"top\":\"SOP-Driven\",\"bottom\":\"Operations\"},{\"top\":\"Multi-Site\",\"bottom\":\"Scalability\"}]},\"useCases\":{\"robots\":[{\"name\":\"AGIBOT X2 ULTRA\",\"header_image\":\"http://localhost:8080/wp-content/uploads/2026/04/x2-ultra-bg.png\",\"title\":\"Embodied AI & Humanoid Robotic Solution\",\"description\":\"An intelligent humanoid robot with advanced capabilities in movement, interaction, and environmental awareness. Designed for versatile applications across multiple industries.\",\"video_thumb\":\"http://localhost:8080/wp-content/uploads/2026/04/x2-video-thumb.png\",\"specs\":[{\"label\":\"Height / Weight / Arm Payload\",\"value\":\"131 cm / 37 kg / 3 kg\"},{\"label\":\"Battery\",\"value\":\"1 hour charging / up to 2 hours usage per cycle\"},{\"label\":\"Intelligent Perception\",\"value\":\"RGBD Camera + RGB Camera + Interaction Camera + LiDAR\"},{\"label\":\"Processing Unit\",\"value\":\"High-performance NVIDIA Orin NX 16GB\"},{\"label\":\"Interaction Capability\",\"value\":\"Supports interactive responses\"},{\"label\":\"Degrees of Freedom (DOF)\",\"value\":\"Full body: 31 / Arms: 7\"}],\"features\":[{\"title\":\"Entertainment & Commercial Performance\",\"items\":[\"Supports various activities such as TikTok dancing, drumming, and electric guitar playing\",\"Enables synchronized group performances with multiple robots\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/x2-feature1.png\"},{\"title\":\"Automatic Presentation & Interaction\",\"items\":[\"Welcomes guests, guides visitors, and provides intelligent responses\",\"Recognizes faces and initiates conversations automatically\",\"Demonstrates over 30 pre-programmed actions\",\"Adjustable voice system, facial expressions, and flexible motion control\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/x2-feature2.png\"}],\"note\":\"Recommended operation time: 7-8 minutes per session, with a rest period of 20 minutes.\"},{\"name\":\"AGIBOT D1 EDU\",\"header_image\":\"http://localhost:8080/wp-content/uploads/2026/04/d1-edu-bg.png\",\"title\":\"Embodied AI & Humanoid Robotic Solution\",\"description\":\"A compact, fast, and highly agile robot designed for dynamic environments. It features a self-learning motion system, allowing it to adapt to various terrains.\",\"video_thumb\":\"http://localhost:8080/wp-content/uploads/2026/04/d1-video-thumb.png\",\"specs\":[{\"label\":\"Weight\",\"value\":\"15 kg\"},{\"label\":\"Maximum Payload\",\"value\":\"8 kg\"},{\"label\":\"Battery\",\"value\":\"1 hour charging / up to 2 hours usage\"},{\"label\":\"Step Climbing Ability\",\"value\":\"> 16 cm\"},{\"label\":\"Maximum Speed\",\"value\":\"3.7 m/s\"},{\"label\":\"Maximum Jump Height\",\"value\":\"35 cm\"}],\"features\":[{\"title\":\"AI-Enhanced Learning\",\"items\":[\"Capable of navigating complex environments such as uneven terrain and stairs, with strong balance and anti-tipping capabilities.\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/d1-feature1.png\"},{\"title\":\"High-Performance Power System\",\"items\":[\"Advanced joint system with industry-leading performance, delivering up to 2 kW/kg power density.\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/d1-feature2.png\"},{\"title\":\"Dynamic Mobility\",\"items\":[\"Lightweight design combined with high agility, enabling flexible movement in constrained environments.\"]},{\"title\":\"Expandable & Customizable\",\"items\":[\"Equipped with standard expansion interfaces to support secondary development and personalized customization.\"]}],\"note\":\"It is recommended to allow the robot to rest after extended operation (approximately 30 minutes).\"},{\"name\":\"A2 ULTRA\",\"header_image\":\"http://localhost:8080/wp-content/uploads/2026/04/a2-ultra-bg.png\",\"title\":\"Embodied AI & Humanoid Robotic Solution\",\"description\":\"A large-scale humanoid robot designed for full commercial deployment in industrial environments. Certified CR, CE-MD, CE-RED, and FCC. Deployed in more than 20 leading companies worldwide.\",\"specs\":[{\"label\":\"Height / Weight\",\"value\":\"169 cm / 69 kg\"},{\"label\":\"Walking Speed\",\"value\":\"0.8 m/s\"},{\"label\":\"Battery\",\"value\":\"1 hour charging / up to 3 hours usage per cycle\"},{\"label\":\"Perception System\",\"value\":\"LiDAR + Fisheye Camera + RGBD Camera + RGB Camera\"},{\"label\":\"Processing Unit\",\"value\":\"High-performance NVIDIA Jetson Orin\"},{\"label\":\"Intelligent System\",\"value\":\"Intelligent interaction with built-in skill package\"},{\"label\":\"Degrees of Freedom\",\"value\":\"40 (Arms: 7 / Legs: 6 / Hands: 6)\"}],\"features\":[{\"title\":\"Professional Reception & Service Assistant\",\"items\":[\"Provides intelligent greetings, VIP services, and guided assistance\",\"Recognizes faces, delivers personalized greetings, and can serve drinks\",\"Supports over 10 facial expressions and more than 100 motion combinations\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/a2-feature.png\"},{\"title\":\"Brand Promotion & Event Hosting\",\"items\":[\"Customizable appearance, personality, and voice interaction\",\"Supports brand promotion and social media content creation\",\"Capable of remembering faces and engaging in interactive communication\"]}]},{\"name\":\"AGIBOT G2\",\"header_image\":\"http://localhost:8080/wp-content/uploads/2026/04/g2-bg.png\",\"title\":\"Embodied AI & Humanoid Robotic Solution\",\"description\":\"Industrial-grade intelligent humanoid robot with fully modular structure and 100% humanoid form. Powered by the intelligent Genie RL system for rapid deployment.\",\"specs\":[{\"label\":\"Height / Weight\",\"value\":\"185 cm\"},{\"label\":\"Power System\",\"value\":\"Single charge usage over 2 hours\"},{\"label\":\"Performance\",\"value\":\"Each arm can handle up to 5 kg\"},{\"label\":\"Battery Life\",\"value\":\"Up to 4 hours (dual batteries, 1652 Wh)\"},{\"label\":\"Degrees of Freedom\",\"value\":\"Total 26 (7 per arm, 5 per leg, 4 waist, 3 head)\"},{\"label\":\"Processing Unit\",\"value\":\"NVIDIA Jetson T5000, AI up to 2070 TFLOPS\"},{\"label\":\"Sensor System\",\"value\":\"2x 3D LiDAR, 3x Fisheye, 3x RGB-D, 1x Stereo\"},{\"label\":\"Durability\",\"value\":\"Dust and water resistance IP42\"}],\"features\":[{\"title\":\"Industrial-Grade Durability\",\"items\":[\"Full 100% humanoid structure with IP42 protection, suitable for real industrial environments.\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/g2-feature1.png\"},{\"title\":\"High Precision\",\"items\":[\"Advanced force control enabling assembly precision at millimeter-level.\"],\"feature_image\":\"http://localhost:8080/wp-content/uploads/2026/04/g2-feature2.png\"},{\"title\":\"Ready-to-Deploy System\",\"items\":[\"Pre-trained AI model with Genie RL for quick adaptation to production lines.\"]},{\"title\":\"Human-Like Intelligent Interaction\",\"items\":[\"Natural conversation and real-time interaction, including eye-gaze tracking and facial expressions.\"]}]}]},\"outcomes\":{\"chip\":\"Outcomes\",\"heading\":\"What Robotics \",\"heading_highlight\":\"Achieves\",\"description\":\"Structured deployment unlocks measurable operational improvements - from day one through full-scale rollout.\",\"background_color\":\"#1E2E48\",\"outcomes_image\":\"http://localhost:8080/wp-content/uploads/2026/04/outcomes-photo-1.png\",\"accordion_items\":[{\"label\":\"Labor efficiency & cost reduction\",\"iconGradient\":\"linear-gradient(135deg, rgb(0, 188, 125) 0%, rgb(0, 146, 184) 100%)\",\"items\":[\"Automate repetitive tasks to improve throughput\",\"Reduce operational load for routine work\",\"Focus people on exceptions and higher-value tasks\"]},{\"label\":\"Operational consistency\",\"iconGradient\":\"linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(0, 184, 219) 100%)\",\"items\":[\"SOP-driven routines improve repeatability\",\"Reduce variance across shifts/sites\"]},{\"label\":\"Safety & governance\",\"iconGradient\":\"linear-gradient(135deg, rgb(0, 184, 219) 0%, rgb(21, 93, 252) 100%)\",\"items\":[\"Training and readiness planning\",\"Escalation paths and service readiness\",\"Boundaries and fallback procedures\"]},{\"label\":\"Scalability\",\"iconGradient\":\"linear-gradient(135deg, rgb(142, 81, 255) 0%, rgb(21, 93, 252) 100%)\",\"items\":[\"Rollout checklists and readiness criteria\",\"Monitoring and operational management approach\",\"Scale playbooks for multi-site expansion\"]}]},\"deliverables\":{\"chip\":\"Deliverables\",\"heading\":\"What We \",\"heading_highlight\":\"Deliver\",\"description\":\"Six structured work products that take you from concept to operating robotics at scale.\",\"background_color\":\"#070E24\",\"items\":[{\"num\":\"01\",\"title\":\"Task definition and environment constraints\"},{\"num\":\"02\",\"title\":\"Pilot readiness plan with KPIs\"},{\"num\":\"03\",\"title\":\"SOPs and training approach\"},{\"num\":\"04\",\"title\":\"Maintenance/service readiness and escalation\"},{\"num\":\"05\",\"title\":\"Workflow integration into reporting and operations\"},{\"num\":\"06\",\"title\":\"Rollout governance and scale planning\"}]},\"cta\":{\"heading\":\"Tell us the environment and \",\"heading_highlight\":\"target tasks.\",\"description\":\"We will propose a pilot approach.\",\"chips\":[\"Target environment\",\"Robot model\",\"Task description\"],\"cta_primary\":\"Contact Us\",\"cta_secondary\":\"All Services\",\"background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/cta-bg-1.png\",\"background_color\":\"#070E24\"}}",
+    "jet_fields": {
+      "hum_hero_chip": "AI-Enhanced Humanoid Robotics",
+      "hum_hero_heading": "Embodied AI &amp; Humanoid Robotic Solution",
+      "hum_hero_description": "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, scalable planning, and rollout.",
+      "hum_hero_bg_image": "http://localhost:8080/wp-content/uploads/2026/04/hero-bg.png",
+      "hum_hero_bg_color": "#070E24",
+      "hum_hero_cta_primary": "Contact Us",
+      "hum_hero_cta_secondary": "All Services",
+      "hum_outcomes_chip": "Outcomes",
+      "hum_outcomes_heading": "What Robotics ",
+      "hum_outcomes_heading_hl": "Achieves",
+      "hum_outcomes_description": "Structured deployment unlocks measurable operational improvements - from day one through full-scale rollout.",
+      "hum_outcomes_image": "http://localhost:8080/wp-content/uploads/2026/04/outcomes-photo-1.png",
+      "hum_outcomes_bg_color": "#1E2E48",
+      "hum_deliverables_chip": "Deliverables",
+      "hum_deliverables_heading": "What We ",
+      "hum_deliverables_heading_hl": "Deliver",
+      "hum_deliverables_description": "Six structured work products that take you from concept to operating robotics at scale.",
+      "hum_cta_heading": "Tell us the environment and ",
+      "hum_cta_heading_hl": "target tasks.",
+      "hum_cta_description": "We will propose a pilot approach.",
+      "hum_cta_chips": "Target environment\r\nRobot model\r\nTask description",
+      "hum_cta_primary": "Contact Us",
+      "hum_cta_secondary": "All Services",
+      "hum_cta_bg_image": "http://localhost:8080/wp-content/uploads/2026/04/cta-bg-1.png"
+    }
+  },
+  "security": {
+    "page_sections": "{\"hero\":{\"chip\":\"AI Security Solution\",\"heading\":\"AI Security Platform &amp; Solution\",\"description\":\"Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.\",\"cta_primary\":\"Contact Us\",\"cta_secondary\":\"All Services\",\"detection_title\":\"AI-Powered Detection\",\"detection_subtitle\":\"Camera → Alert → Incident → Report\",\"background_color\":\"#070E24\",\"wpImageUrl\":\"http://localhost:8080/wp-content/uploads/2026/04/hero-bg-1.jpg\",\"wpContainerImageUrl\":\"http://localhost:8080/wp-content/uploads/2026/04/hero-card.png\",\"stats\":[{\"top\":\"Real-time\",\"bottom\":\"Detection\"},{\"top\":\"Multi-site\",\"bottom\":\"Coverage\"},{\"top\":\"Automated\",\"bottom\":\"Workflows\"}],\"wpContainerImageMobileUrl\":\"http://localhost:8080/wp-content/uploads/2026/04/2222-1775445255.jpg\"},\"outcomes\":{\"chip\":\"Outcomes\",\"heading\":\"What this Platform \",\"heading_highlight\":\"Achieves\",\"background_color\":\"#070E24\",\"wpImageUrl\":\"http://localhost:8080/wp-content/uploads/2026/04/outcomes-photo.png\",\"accordion\":[{\"iconBg\":\"linear-gradient(135deg, rgb(0, 184, 219) 0%, rgb(21, 93, 252) 100%)\",\"title\":\"Security improvement\",\"checks\":[\"Detect events consistently based on site rules and zones\",\"Reduce time-to-response through alert workflows\",\"Standardize incident handling across shifts\"]},{\"iconBg\":\"linear-gradient(135deg, rgb(142, 81, 255) 0%, rgb(21, 93, 252) 100%)\",\"title\":\"Asset protection &amp; loss reduction\",\"checks\":[\"Improve coverage and consistency\",\"Capture evidence snapshots automatically\",\"Reduce missed incidents with prioritization\"]},{\"iconBg\":\"linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(0, 184, 219) 100%)\",\"title\":\"Operational improvement\",\"checks\":[\"Convert camera events into operational signals\",\"Create multi-site visibility for management\",\"Align detection and response to SOPs\"]},{\"iconBg\":\"linear-gradient(135deg, rgb(0, 188, 125) 0%, rgb(0, 146, 184) 100%)\",\"title\":\"Cost reduction\",\"checks\":[\"Reduce monitoring workload\",\"Prioritize incidents so teams focus on what matters\",\"Improve efficiency across sites with dashboards\"]}],\"wpImageMobileUrl\":\"http://localhost:8080/wp-content/uploads/2026/04/3333-1775445621.jpg\"},\"included\":{\"chip\":\"What's Included\",\"heading\":\"What the Solution \",\"heading_highlight\":\"Includes\",\"description\":\"Three pillars that work together to turn cameras into an operational intelligence system.\",\"background_color\":\"#1A4494\",\"card1_image\":\"http://localhost:8080/wp-content/uploads/2026/04/included-card1.png\",\"card2_image\":\"http://localhost:8080/wp-content/uploads/2026/04/included-card2.png\",\"card3_image\":\"http://localhost:8080/wp-content/uploads/2026/04/included-card3.png\",\"pillars\":[{\"title\":\"Analytics packs\",\"items\":[\"Restricted area / zone monitoring\",\"Anomaly detection (site-defined patterns)\",\"Event triggers (rules-based)\",\"Identity/track-based workflows (as permitted by requirements)\"]},{\"title\":\"Workflows and operations\",\"items\":[\"Alert routing and escalation\",\"Incident reporting and evidence capture\",\"Dashboards and performance reporting\",\"SOP alignment and operational playbooks\"]},{\"title\":\"Deployment readiness\",\"items\":[\"Site assessment and camera mapping\",\"Pilot design and success criteria\",\"Rollout strategy across sites and camera groups\",\"Governance (roles, access, retention practices)\"]}],\"card1_mobile_image\":\"http://localhost:8080/wp-content/uploads/2026/04/included-card1-mobile.png\",\"card2_mobile_image\":\"http://localhost:8080/wp-content/uploads/2026/04/included-card2-mobile.png\",\"card3_mobile_image\":\"http://localhost:8080/wp-content/uploads/2026/04/included-card3-mobile.png\"},\"phases\":{\"chip\":\"Development\",\"heading\":\"How Deployments Usually Run\",\"description\":\"A structured three-phase approach from initial pilot through full-scale rollout.\",\"background_color\":\"#070E24\",\"phases\":[{\"phase\":\"Phase 1\",\"title\":\"Pilot &amp; Validate\",\"subtitle\":\"1-2 sites\",\"description\":\"Validate detection usefulness, alert quality, and workflow fit.\"},{\"phase\":\"Phase 2\",\"title\":\"Expand Analytics Packs\",\"subtitle\":\"\",\"description\":\"Add analytics packs and improve SOP integration.\"},{\"phase\":\"Phase 3\",\"title\":\"Scale Rollout\",\"subtitle\":\"\",\"description\":\"Roll out to more sites with standard playbooks and dashboards.\"}]},\"cta\":{\"heading\":\"Share site count, camera count, \",\"heading_highlight\":\"and objectives.\",\"description\":\"We'll propose a pilot plan.\",\"chips\":[\"# of sites\",\"Camera count\",\"Primary objective\"],\"cta_primary\":\"Contact Us\",\"cta_secondary\":\"All Services\",\"background_image\":\"http://localhost:8080/wp-content/uploads/2026/04/cta-bg.png\",\"background_color\":\"#070E24\"}}",
+    "jet_fields": {
+      "sec_hero_chip": "AI Security Solution",
+      "sec_hero_heading": "AI Security Platform &amp; Solution",
+      "sec_hero_description": "Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.",
+      "sec_hero_cta_primary": "Contact Us",
+      "sec_hero_cta_secondary": "All Services",
+      "sec_hero_detection_title": "AI-Powered Detection",
+      "sec_hero_detection_subtitle": "Camera → Alert → Incident → Report",
+      "sec_hero_bg_image": "http://localhost:8080/wp-content/uploads/2026/04/hero-bg-1.jpg",
+      "sec_hero_card_image": "http://localhost:8080/wp-content/uploads/2026/04/hero-card.png",
+      "sec_hero_card_mobile_image": "http://localhost:8080/wp-content/uploads/2026/04/2222-1775445255.jpg",
+      "sec_hero_bg_color": "#070E24",
+      "sec_hero_stats": [
+        {
+          "top": "Real-time",
+          "bottom": "Detection"
+        },
+        {
+          "top": "Multi-site",
+          "bottom": "Coverage"
+        },
+        {
+          "top": "Automated",
+          "bottom": "Workflows"
+        }
+      ],
+      "sec_outcomes_chip": "Outcomes",
+      "sec_outcomes_heading": "What this Platform ",
+      "sec_outcomes_heading_hl": "Achieves",
+      "sec_outcomes_image": "http://localhost:8080/wp-content/uploads/2026/04/outcomes-photo.png",
+      "sec_outcomes_mobile_image": "http://localhost:8080/wp-content/uploads/2026/04/3333-1775445621.jpg",
+      "sec_outcomes_bg_color": "#070E24",
+      "sec_outcomes_accordion": [
+        {
+          "icon_gradient": "linear-gradient(135deg, rgb(0, 184, 219) 0%, rgb(21, 93, 252) 100%)",
+          "title": "Security improvement",
+          "checks": "Detect events consistently based on site rules and zones\nReduce time-to-response through alert workflows\nStandardize incident handling across shifts"
+        },
+        {
+          "icon_gradient": "linear-gradient(135deg, rgb(142, 81, 255) 0%, rgb(21, 93, 252) 100%)",
+          "title": "Asset protection &amp; loss reduction",
+          "checks": "Improve coverage and consistency\nCapture evidence snapshots automatically\nReduce missed incidents with prioritization"
+        },
+        {
+          "icon_gradient": "linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(0, 184, 219) 100%)",
+          "title": "Operational improvement",
+          "checks": "Convert camera events into operational signals\nCreate multi-site visibility for management\nAlign detection and response to SOPs"
+        },
+        {
+          "icon_gradient": "linear-gradient(135deg, rgb(0, 188, 125) 0%, rgb(0, 146, 184) 100%)",
+          "title": "Cost reduction",
+          "checks": "Reduce monitoring workload\nPrioritize incidents so teams focus on what matters\nImprove efficiency across sites with dashboards"
+        }
+      ],
+      "sec_included_chip": "What's Included",
+      "sec_included_heading": "What the Solution ",
+      "sec_included_heading_hl": "Includes",
+      "sec_included_description": "Three pillars that work together to turn cameras into an operational intelligence system.",
+      "sec_included_bg_color": "#1A4494",
+      "sec_included_pillars": [
+        {
+          "title": "Analytics packs",
+          "items": "Restricted area / zone monitoring\nAnomaly detection (site-defined patterns)\nEvent triggers (rules-based)\nIdentity/track-based workflows (as permitted by requirements)",
+          "card_image": "http://localhost:8080/wp-content/uploads/2026/04/included-card1.png",
+          "card_mobile_image": ""
+        },
+        {
+          "title": "Workflows and operations",
+          "items": "Alert routing and escalation\nIncident reporting and evidence capture\nDashboards and performance reporting\nSOP alignment and operational playbooks",
+          "card_image": "http://localhost:8080/wp-content/uploads/2026/04/included-card1.png",
+          "card_mobile_image": ""
+        },
+        {
+          "title": "Deployment readiness",
+          "items": "Site assessment and camera mapping\nPilot design and success criteria\nRollout strategy across sites and camera groups\nGovernance (roles, access, retention practices)",
+          "card_image": "http://localhost:8080/wp-content/uploads/2026/04/included-card1.png",
+          "card_mobile_image": ""
+        }
+      ],
+      "sec_phases_chip": "Development",
+      "sec_phases_heading": "How Deployments Usually Run",
+      "sec_phases_description": "A structured three-phase approach from initial pilot through full-scale rollout.",
+      "sec_phases_bg_color": "#070E24",
+      "sec_phases_items": [
+        {
+          "phase": "Phase 1",
+          "title": "Pilot &amp; Validate",
+          "subtitle": "1-2 sites",
+          "description": "Validate detection usefulness, alert quality, and workflow fit."
+        },
+        {
+          "phase": "Phase 2",
+          "title": "Expand Analytics Packs",
+          "subtitle": "",
+          "description": "Add analytics packs and improve SOP integration."
+        },
+        {
+          "phase": "Phase 3",
+          "title": "Scale Rollout",
+          "subtitle": "",
+          "description": "Roll out to more sites with standard playbooks and dashboards."
+        }
+      ],
+      "sec_cta_heading": "Share site count, camera count, ",
+      "sec_cta_heading_hl": "and objectives.",
+      "sec_cta_description": "We'll propose a pilot plan.",
+      "sec_cta_chips": "# of sites\nCamera count\nPrimary objective",
+      "sec_cta_primary": "Contact Us",
+      "sec_cta_secondary": "All Services",
+      "sec_cta_bg_image": "http://localhost:8080/wp-content/uploads/2026/04/cta-bg.png",
+      "sec_cta_bg_color": "#070E24"
+    }
+  }
+}
