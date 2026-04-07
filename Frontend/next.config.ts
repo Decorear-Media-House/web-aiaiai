@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: process.env.NEXT_OUTPUT === "export" ? "export" : undefined,
+  trailingSlash: true,
   sassOptions: {
     silenceDeprecations: ["legacy-js-api"],
   },
   images: {
+    unoptimized: true,
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
@@ -21,7 +23,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cms-aiaiai.decorear.com",
+        hostname: "aiaiai-cms.decorear.com",
         pathname: "/**",
       },
     ],

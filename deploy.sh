@@ -1,64 +1,58 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MAC_MINI="decr@ssh.decorear.com"
-REMOTE_DIR="/Users/decr/apps/aiaiai"
-IMAGE_NAME="aiaiai-frontend:latest"
-TARBALL="/tmp/aiaiai-frontend.tar.gz"
+REMOTE_HOST="decr@ssh.decorear.com"
+REMOTE_PATH="/home/decorear-aiai/apps/aiaiai"
+GIT_SSH_KEY="~/.ssh/id_aiaiai"
+REPO_URL="github-aiaiai:Decorear-Media-House/web-aiaiai.git"
 
-echo "==> Building Docker image..."
-docker build -t "$IMAGE_NAME" ./Frontend
+echo "==> Pushing latest code to GitHub..."
+git push
 
-echo "==> Saving image to tarball..."
-docker save "$IMAGE_NAME" | gzip > "$TARBALL"
-
-echo "==> Transferring tarball to Mac Mini..."
-scp "$TARBALL" "$MAC_MINI:/tmp/aiaiai-frontend.tar.gz"
-
-echo "==> Transferring docker-compose.yml..."
-ssh "$MAC_MINI" "mkdir -p $REMOTE_DIR"
-scp docker-compose.yml "$MAC_MINI:$REMOTE_DIR/docker-compose.yml"
-
-echo "==> Loading image and starting containers on Mac Mini..."
-ssh "$MAC_MINI" bash -s <<'REMOTE'
+echo "==> Deploying to server ($REMOTE_HOST)..."
+ssh "$REMOTE_HOST" bash -s <<REMOTE
 set -euo pipefail
-export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+export PATH="/usr/local/bin:/opt/homebrew/bin:\$PATH"
 
-echo "Loading image..."
-docker load < /tmp/aiaiai-frontend.tar.gz
-
-echo "Pulling WordPress and MySQL images..."
-cd /Users/decr/apps/aiaiai
-docker compose pull aiaiai-wordpress aiaiai-mysql
-
-echo "Starting containers..."
-docker compose up -d
-
-echo "Waiting for containers to start..."
-sleep 5
-
-echo "Health check (frontend)..."
-if curl -sf http://localhost:3050 > /dev/null 2>&1; then
-  echo "✓ Frontend health check passed"
+# Clone or pull repo
+if [ ! -d "$REMOTE_PATH" ]; then
+  echo "Cloning repository..."
+  mkdir -p "$REMOTE_PATH"
+  GIT_SSH_COMMAND="ssh -i $GIT_SSH_KEY" git clone "$REPO_URL" "$REMOTE_PATH"
 else
-  echo "⚠ Frontend health check failed — container logs:"
-  docker logs aiaiai-frontend --tail 20
-  exit 1
+  echo "Pulling latest code..."
+  cd "$REMOTE_PATH"
+  GIT_SSH_COMMAND="ssh -i $GIT_SSH_KEY" git pull --ff-only
 fi
 
-echo "Health check (WordPress)..."
-if curl -sf http://localhost:8080 > /dev/null 2>&1; then
-  echo "✓ WordPress health check passed"
+cd "$REMOTE_PATH"
+
+# Install mu-plugins to WordPress
+echo "Copying mu-plugins to WordPress..."
+WP_MUPLUGINS="/home/decorear-aiaiai-cms/htdocs/aiaiai-cms.decorear.com/wp-content/mu-plugins"
+mkdir -p "\$WP_MUPLUGINS"
+cp -f wordpress/mu-plugins/*.php "\$WP_MUPLUGINS/"
+
+# Setup webhook listener
+echo "Setting up webhook listener..."
+cd "$REMOTE_PATH"
+if command -v pm2 &>/dev/null; then
+  pm2 delete aiaiai-webhook 2>/dev/null || true
+  pm2 start webhook.js --name aiaiai-webhook
+  pm2 save
 else
-  echo "⚠ WordPress not ready yet — may need initial setup at http://<server>:8080"
+  echo "PM2 not found. Install with: npm install -g pm2"
+  echo "Then run: pm2 start webhook.js --name aiaiai-webhook && pm2 save"
 fi
 
-echo "Cleaning up..."
-rm -f /tmp/aiaiai-frontend.tar.gz
+# Run initial build
+echo "Running initial build..."
+chmod +x rebuild.sh
+bash rebuild.sh
+
+echo "Done!"
 REMOTE
 
-echo "==> Cleaning up local tarball..."
-rm -f "$TARBALL"
-
 echo "==> Deploy complete!"
-echo "    Note: If this is the first deploy, complete WordPress setup at http://<server>:8080"
+echo "    CMS: https://aiaiai-cms.decorear.com/wp-admin/"
+echo "    Site: https://aiaiai.decorear.com"

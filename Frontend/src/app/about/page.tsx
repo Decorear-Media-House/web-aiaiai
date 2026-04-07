@@ -6,26 +6,102 @@ import AboutPhilosophySection from "@/components/sections/about/AboutPhilosophyS
 import AboutEdgeSection from "@/components/sections/about/AboutEdgeSection";
 import AboutLeadershipSection from "@/components/sections/about/AboutLeadershipSection";
 import AboutTeamSection from "@/components/sections/about/AboutTeamSection";
-import { getPageContent, getPageSEO } from "@/lib/wordpress";
+import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSEO("about", "About Us | Ai-Ai-Ai", "Learn about Ai-Ai-Ai Co., Ltd. — Thailand's AI Solution Partner from roadmap to production deployment.");
 }
 
 export default async function AboutPage() {
-  const page = await getPageContent("about");
-  const s = page?.sections as Record<string, Record<string, unknown>> | undefined;
+  const m = await getPageMeta("about");
+
+  /* ── Legacy fallback: page_sections JSON ── */
+  if (m._legacy) {
+    const s = m as Record<string, Record<string, unknown>>;
+    return (
+      <>
+        <Navbar />
+        <main>
+          <AboutHeroSection content={s?.hero} />
+          <AboutMissionSection content={s?.mission} />
+          <AboutPhilosophySection content={s?.philosophy} />
+          <AboutEdgeSection content={s?.edge} />
+          <AboutLeadershipSection content={s?.leadership} />
+          <AboutTeamSection content={s?.team} />
+        </main>
+      </>
+    );
+  }
+
+  /* ── JetEngine meta fields → component props ── */
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const hero: any = {
+    label: m.about_hero_label,
+    heading: m.about_hero_heading,
+    description: m.about_hero_description,
+    hero_background_image: m.about_hero_background_image,
+  };
+
+  const mission: any = {
+    label: m.about_mission_label,
+    heading: m.about_mission_heading,
+    description: m.about_mission_description,
+    paragraphs: textareaToArray(m.about_mission_paragraphs),
+    background_image: m.about_mission_background_image,
+  };
+
+  const philosophy: any = {
+    label: m.about_philosophy_label,
+    heading: m.about_philosophy_heading,
+    description: m.about_philosophy_description,
+    items: ensureArray(m.about_philosophy_items),
+    background_color: m.about_philosophy_background_color,
+  };
+
+  const edge: any = {
+    label: m.about_edge_label,
+    headingPrefix: m.about_edge_headingPrefix,
+    headingHighlight: m.about_edge_headingHighlight,
+    edges: ensureArray(m.about_edge_edges),
+    edge_photo_image: m.about_edge_photo_image,
+  };
+
+  const leadership: any = {
+    heading: m.about_leadership_heading,
+    description: m.about_leadership_description,
+    logo_image: m.about_leadership_logo_image,
+    background_color: m.about_leadership_background_color,
+    background_image: m.about_leadership_background_image,
+  };
+
+  const team: any = {
+    label: m.about_team_label,
+    headingPrefix: m.about_team_headingPrefix,
+    headingHighlight: m.about_team_headingHighlight,
+    description: m.about_team_description,
+    ceoName: m.about_team_ceoName,
+    ceoRole: m.about_team_ceoRole,
+    ceoBio: m.about_team_ceoBio,
+    ceoTags: textareaToArray(m.about_team_ceoTags),
+    ctoName: m.about_team_ctoName,
+    ctoRole: m.about_team_ctoRole,
+    cooName: m.about_team_cooName,
+    cooRole: m.about_team_cooRole,
+    ceo_photo_image: m.about_team_ceo_photo_image,
+    cto_photo_image: m.about_team_cto_photo_image,
+    coo_photo_image: m.about_team_coo_photo_image,
+  };
 
   return (
     <>
       <Navbar />
       <main>
-        <AboutHeroSection content={s?.hero} />
-        <AboutMissionSection content={s?.mission} />
-        <AboutPhilosophySection content={s?.philosophy} />
-        <AboutEdgeSection content={s?.edge} />
-        <AboutLeadershipSection content={s?.leadership} />
-        <AboutTeamSection content={s?.team} />
+        <AboutHeroSection content={hero} />
+        <AboutMissionSection content={mission} />
+        <AboutPhilosophySection content={philosophy} />
+        <AboutEdgeSection content={edge} />
+        <AboutLeadershipSection content={leadership} />
+        <AboutTeamSection content={team} />
       </main>
     </>
   );

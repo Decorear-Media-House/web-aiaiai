@@ -1,12 +1,13 @@
+// URLs come from .env (local) or .env.production (server build)
 const WP_API_URL =
-  process.env.WORDPRESS_API_URL || "http://localhost:8080/wp-json";
+  process.env.WORDPRESS_API_URL || "https://aiaiai-cms.decorear.com/wp-json";
 const WP_BASE_URL =
   process.env.WORDPRESS_BASE_URL ||
   process.env.NEXT_PUBLIC_WORDPRESS_URL ||
-  "http://localhost:8080";
+  "https://aiaiai-cms.decorear.com";
 
 const WP_PUBLIC_URL =
-  process.env.NEXT_PUBLIC_WORDPRESS_URL || "http://localhost:8080";
+  process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://aiaiai-cms.decorear.com";
 
 /**
  * Check if an image URL is external (from WordPress uploads).
@@ -346,6 +347,57 @@ export async function getPageContent(slug: string): Promise<PageContent | null> 
   );
   if (pages.length === 0) return null;
   return mapWPPageToContent(pages[0]);
+}
+
+/**
+ * Get page meta fields directly (JetEngine format).
+ * Returns all meta as a flat Record — used for pages managed by JetEngine.
+ * Falls back to page_sections JSON if JetEngine fields are empty.
+ */
+export async function getPageMeta(slug: string): Promise<Record<string, unknown>> {
+  const pages = await wpFetch<WPPage[]>(
+    `/wp/v2/pages?slug=${encodeURIComponent(slug)}&_fields=meta`,
+    []
+  );
+  if (pages.length === 0) return {};
+  const meta = pages[0].meta ?? {};
+
+  // If JetEngine fields are present (any non-page_sections field has a value), use them directly
+  const jetEngineFields = Object.entries(meta).filter(
+    ([k, v]) => !k.startsWith("page_") && !k.startsWith("rank_math") && v !== "" && v !== null
+  );
+
+  if (jetEngineFields.length > 0) {
+    return meta as Record<string, unknown>;
+  }
+
+  // Fallback: parse page_sections JSON (backward compatibility)
+  try {
+    const raw = (meta as Record<string, string>).page_sections;
+    if (raw) return { _legacy: true, ...JSON.parse(raw) };
+  } catch { /* ignore */ }
+
+  return meta as Record<string, unknown>;
+}
+
+/**
+ * Helper: Convert newline-separated textarea value to string array.
+ */
+export function textareaToArray(val: unknown): string[] {
+  if (Array.isArray(val)) return val;
+  if (typeof val === "string" && val.trim()) {
+    return val.split("\n").map((s) => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+/**
+ * Helper: Ensure value is an array (handle JetEngine repeater or object from REST API).
+ */
+export function ensureArray<T = Record<string, unknown>>(val: unknown): T[] {
+  if (Array.isArray(val)) return val;
+  if (val && typeof val === "object") return Object.values(val) as T[];
+  return [];
 }
 
 /**

@@ -41,3 +41,6 @@ pnpm-debug.log*
 
 # MCP config (contains API keys)
 .mcp.json
+Frontend/.env
+Frontend/.env.*
+ssh-setup/

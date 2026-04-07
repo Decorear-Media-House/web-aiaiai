@@ -46,6 +46,8 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
   const [activeTab, setActiveTab] = useState(0);
   const robot = robots[activeTab] || robots[0];
 
+  if (!robot) return null;
+
   const specs: { label: string; value: string }[] = Array.isArray(robot.specs) ? robot.specs : robot.specs ? Object.values(robot.specs) : [];
   const features: { title: string; items: string[]; feature_image?: string }[] = Array.isArray(robot.features) ? robot.features : robot.features ? Object.values(robot.features) : [];
 
@@ -53,7 +55,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
     <>
       {/* Tab Selector */}
       <section className="relative" style={{ background: "#070E24" }}>
-        <Container className="py-10 max-sm:py-6">
+        <Container className="pb-10 pt-0 max-sm:pb-6">
           <FadeUp trigger="scroll" delay={0}>
             <div className="flex flex-col gap-10 items-center max-sm:gap-6">
               {/* Pill tab switcher */}

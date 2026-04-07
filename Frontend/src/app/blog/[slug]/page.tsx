@@ -3,9 +3,12 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/layouts/Navbar";
 import ArticleHeroSection from "@/components/sections/blog-article/ArticleHeroSection";
 import ArticleContentSection from "@/components/sections/blog-article/ArticleContentSection";
-import { getPostBySlug, getRelatedPosts, getRankMathSEO } from "@/lib/wordpress";
+import { getPostBySlug, getRelatedPosts, getRankMathSEO, getPosts } from "@/lib/wordpress";
 
-export const dynamic = "force-dynamic";
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
