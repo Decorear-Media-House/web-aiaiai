@@ -44,3 +44,4 @@ pnpm-debug.log*
 Frontend/.env
 Frontend/.env.*
 ssh-setup/
+.claude/settings.local.json
