@@ -97,7 +97,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
             <div className="max-sm:!items-stretch max-sm:!w-full" style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end", justifyContent: "center" }}>
               {/* Primary CTA */}
               <a
-                href="#contact"
+                href="/#contact"
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "12px 24px", borderRadius: 8,

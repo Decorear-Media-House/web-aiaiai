@@ -197,7 +197,7 @@ export default function FifthSection({ content }: { content?: Record<string, unk
   const description =
     cms?.description ??
     "Every engagement is measured against real business outcomes—not just technical milestones.";
-  const decorativeImage = cms?.decorative_image ? wpImageUrl(cms.decorative_image as string) : "";
+  const decorativeImage = wpImageUrl((cms?.decorative_image as string) || "") || "/images/outcomes-robot-4f223f.png";
 
   // Split heading into white part + gradient part at last two words
   const headingWords = heading.split(" ");

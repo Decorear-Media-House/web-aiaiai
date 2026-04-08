@@ -118,7 +118,7 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
 
             {/* CTA button */}
             <a
-              href="#contact"
+              href="/#contact"
               style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
                 padding: "12px 24px", borderRadius: 8,

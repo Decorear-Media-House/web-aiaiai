@@ -140,7 +140,7 @@ export default function HeroSection({ content }: { content?: Record<string, unkn
             <FadeUp trigger="mount" delay={0.3}>
               <div className="flex flex-col gap-3">
                 <a
-                  href="#"
+                  href="#contact"
                   className="inline-flex items-center justify-center gap-2 transition-opacity hover:opacity-90 sm:w-fit w-full"
                   style={{
                     fontFamily: font,

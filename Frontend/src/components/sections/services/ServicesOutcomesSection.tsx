@@ -129,6 +129,16 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
         aria-hidden="true"
       />
 
+      {/* Decorative triangle — bottom left */}
+      <div
+        className="pointer-events-none absolute max-lg:hidden"
+        style={{ bottom: 0, left: 0, width: 397, height: 413, zIndex: 0 }}
+        aria-hidden="true"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/deco-triangle.svg" alt="" className="w-full h-full" />
+      </div>
+
       <Container className="relative py-20 max-sm:py-10">
         <div className="flex flex-wrap gap-10 items-start max-w-[1216px] w-full max-sm:flex-col">
 
@@ -222,12 +232,8 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
             <FadeUp trigger="scroll" delay={0}>
               <div id="outcome-cost-reduction" className="flex flex-col gap-6 scroll-mt-[88px]">
                 <div className="flex items-center gap-4">
-                  <OutcomeIcon
-                    gradient="linear-gradient(135deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)"
-                    shadow="rgba(0,119,255,0.8)"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </OutcomeIcon>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/outcome-icon-1.svg" alt="" className="shrink-0" width={72} height={72} />
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#4A99F5", lineHeight: 1.5 }}>Outcome 1</p>
                     <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Cost Reduction</p>
@@ -267,12 +273,8 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
             <FadeUp trigger="scroll" delay={0}>
               <div id="outcome-revenue-growth" className="flex flex-col gap-6 scroll-mt-[88px]">
                 <div className="flex items-center gap-4">
-                  <OutcomeIcon
-                    gradient="linear-gradient(to right, #00bc7d, #00bba7)"
-                    shadow="rgba(0,255,178,0.8)"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M17 6h6v6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </OutcomeIcon>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/outcome-icon-2.svg" alt="" className="shrink-0" width={72} height={72} />
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#00BC7D", lineHeight: 1.5 }}>Outcome 2</p>
                     <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Revenue Growth</p>
@@ -310,12 +312,8 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
             <FadeUp trigger="scroll" delay={0}>
               <div id="outcome-compliance" className="flex flex-col gap-6 scroll-mt-[88px]">
                 <div className="flex items-center gap-4">
-                  <OutcomeIcon
-                    gradient="linear-gradient(to right, #8e51ff, #ad46ff)"
-                    shadow="rgba(123,0,255,0.8)"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </OutcomeIcon>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/outcome-icon-3.svg" alt="" className="shrink-0" width={72} height={72} />
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#9962FF", lineHeight: 1.5 }}>Outcome 3</p>
                     <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Compliance &amp; Governance</p>
@@ -354,12 +352,8 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
             <FadeUp trigger="scroll" delay={0}>
               <div id="outcome-security" className="flex flex-col gap-6 scroll-mt-[88px]">
                 <div className="flex items-center gap-4">
-                  <OutcomeIcon
-                    gradient="linear-gradient(to right, #ff8904, #ff6467)"
-                    shadow="rgba(255,94,0,0.8)"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" stroke="#fff" strokeWidth="1.5"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                  </OutcomeIcon>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/outcome-icon-4.svg" alt="" className="shrink-0" width={72} height={72} />
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#FF8904", lineHeight: 1.5 }}>Outcome 4</p>
                     <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Security &amp; Asset Protection</p>
@@ -398,12 +392,8 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
             <FadeUp trigger="scroll" delay={0}>
               <div id="outcome-automation" className="flex flex-col gap-6 scroll-mt-[88px]">
                 <div className="flex items-center gap-4">
-                  <OutcomeIcon
-                    gradient="linear-gradient(to right, #00b8db, #2b7fff)"
-                    shadow="rgba(0,136,255,0.8)"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="#fff" strokeWidth="1.5"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="#fff" strokeWidth="1.5"/></svg>
-                  </OutcomeIcon>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/outcome-icon-5.svg" alt="" className="shrink-0" width={72} height={72} />
                   <div className="flex flex-col gap-1">
                     <p style={{ fontFamily: font, fontSize: 14, color: "#00B8DB", lineHeight: 1.5 }}>Outcome 5</p>
                     <p className="max-sm:!text-xl" style={{ fontFamily: font, fontSize: 24, color: "#fff", lineHeight: 1.4 }}>Operational Automation</p>

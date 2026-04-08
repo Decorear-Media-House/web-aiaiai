@@ -29,7 +29,7 @@ function ChevronRight() {
 function CostIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 14C3.81 14 3.63 13.95 3.46 13.85C3.3 13.75 3.18 13.6 3.09 13.43C3.01 13.26 2.98 13.07 3 12.88C3.03 12.7 3.1 12.52 3.22 12.37L8.12 7.17C8.19 7.08 8.3 7.03 8.41 7.01C8.52 6.99 8.63 7 8.73 7.06C8.83 7.11 8.91 7.2 8.96 7.3C9 7.4 9.01 7.52 8.98 7.63L8.06 10.65C8 10.8 7.98 10.96 8 11.13C8.02 11.29 8.08 11.44 8.18 11.57C8.27 11.7 8.39 11.81 8.54 11.89C8.68 11.96 8.84 12 9 12H13C13.19 12 13.37 12.05 13.54 12.15C13.7 12.25 13.82 12.4 13.91 12.57C13.99 12.74 14.02 12.93 14 13.12C13.97 13.31 13.9 13.48 13.78 13.63L8.88 18.83C8.81 18.92 8.7 18.97 8.59 18.99C8.48 19.02 8.37 19 8.27 18.94C8.17 18.89 8.09 18.8 8.04 18.7C8 18.6 7.99 18.48 8.02 18.37L8.94 15.35C9 15.2 9.02 15.04 9 14.88C8.98 14.71 8.92 14.56 8.82 14.43C8.73 14.3 8.61 14.19 8.46 14.11C8.32 14.04 8.16 14 8 14H4Z" stroke="#00BAF2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -88,11 +88,11 @@ export default function ServicesGuidanceSection({ content }: { content?: Record<
   const heading = c.heading ?? "\u201cWhere to start\u201d";
   const headingHighlight = c.heading_highlight ?? "Guidance";
   const description = c.description ?? "If you\u2019re unsure where to begin, pick the path that matches your most urgent goal.";
-  const cards = c.cards ?? DEFAULT_CARDS;
+  const cards = (Array.isArray(c.cards) && c.cards.length > 0) ? c.cards : DEFAULT_CARDS;
   const ctaPrompt = c.cta_prompt ?? "Ready to discuss your specific challenge?";
   const ctaText = c.cta_text ?? "Contact Us Today";
-  const ctaHref = c.cta_href ?? "#contact";
-  const bgImage = c.background_image ? wpImageUrl(c.background_image) : "";
+  const ctaHref = c.cta_href ?? "/#contact";
+  const bgImage = wpImageUrl((c.background_image as string) || "") || "/images/services-guidance-bg.png";
   const bgColor = c.background_color ?? "#102050";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>

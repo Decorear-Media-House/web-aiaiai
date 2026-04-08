@@ -36,7 +36,7 @@ export default function ServicesHeroSection({ content }: { content?: Record<stri
   const ctaPrimaryText = c.cta_primary_text ?? "About Us";
   const ctaPrimaryHref = c.cta_primary_href ?? "/about";
   const ctaSecondaryText = c.cta_secondary_text ?? "Contact Us";
-  const ctaSecondaryHref = c.cta_secondary_href ?? "#contact";
+  const ctaSecondaryHref = c.cta_secondary_href ?? "/#contact";
   const bgImage = wpImageUrl((c.background_image as string) || "/images/services-security-hero-bg.png");
   const bgColor = c.background_color ?? "#070E24";
 

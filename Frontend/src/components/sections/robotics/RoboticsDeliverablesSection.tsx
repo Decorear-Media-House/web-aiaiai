@@ -90,7 +90,6 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
             style={{
               flex: "1 0 0",
               minWidth: 300,
-              maxWidth: 389,
               display: "flex",
               flexDirection: "column",
               gap: 16,
@@ -149,7 +148,6 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
           style={{
             flex: "1 0 0",
             minWidth: 300,
-            maxWidth: 787,
             display: "flex",
             flexWrap: "wrap",
             gap: 16,

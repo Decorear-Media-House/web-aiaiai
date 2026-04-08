@@ -367,7 +367,7 @@ export default function BlogArticlesSection({
                 </div>
                 <div className="flex items-center justify-end">
                   <a
-                    href="#"
+                    href="/#contact"
                     className="inline-flex items-center gap-1 rounded-lg px-6 py-3"
                     style={{
                       fontFamily: font,

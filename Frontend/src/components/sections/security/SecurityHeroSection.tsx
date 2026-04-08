@@ -231,7 +231,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
             <FadeUp trigger="mount" delay={0.14}>
               <div className="max-sm:!flex-col max-sm:!w-full" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
                 <a
-                  href="#contact"
+                  href="/#contact"
                   className="max-sm:!w-full max-sm:!text-center"
                   style={{
                     fontFamily: font,

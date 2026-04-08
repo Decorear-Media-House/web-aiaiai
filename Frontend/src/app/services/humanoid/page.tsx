@@ -34,14 +34,13 @@ export default async function RoboticsPage() {
   /* ── JetEngine meta fields → component props ── */
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const hero: any = {
-    chip: m.hum_hero_chip,
-    heading: m.hum_hero_heading,
-    description: m.hum_hero_description,
-    stats: ensureArray(m.hum_hero_stats),
-    cta_primary: m.hum_hero_cta_primary,
-    cta_secondary: m.hum_hero_cta_secondary,
-    hero_background_image: m.hum_hero_bg_image,
-    background_color: m.hum_hero_bg_color,
+    chip: m.hum_hero_chip || undefined,
+    heading: m.hum_hero_heading || undefined,
+    description: m.hum_hero_description || undefined,
+    cta_primary: m.hum_hero_cta_primary || undefined,
+    cta_secondary: m.hum_hero_cta_secondary || undefined,
+    hero_background_image: m.hum_hero_bg_image || undefined,
+    background_color: m.hum_hero_bg_color || undefined,
   };
 
   // Robots stored as JSON string (nested specs/features too complex for repeater)
@@ -50,38 +49,44 @@ export default async function RoboticsPage() {
     const json = m.hum_robots_json as string;
     if (json) robots = JSON.parse(json);
   } catch { /* ignore */ }
-  if (!robots.length) robots = ensureArray(m.hum_robots);
+  if (!robots.length) {
+    const arr = ensureArray(m.hum_robots);
+    if (arr.length > 0) robots = arr;
+  }
 
-  const useCases: any = { robots };
+  const useCases: any = robots.length > 0 ? { robots } : {};
 
+  const rawAccordion = ensureArray(m.hum_outcomes_accordion);
   const outcomes: any = {
-    chip: m.hum_outcomes_chip,
-    heading: m.hum_outcomes_heading,
-    heading_highlight: m.hum_outcomes_heading_highlight,
-    description: m.hum_outcomes_description,
-    accordion_items: ensureArray(m.hum_outcomes_accordion_items),
-    background_color: m.hum_outcomes_background_color,
-    outcomes_image: m.hum_outcomes_image,
+    chip: m.hum_outcomes_chip || undefined,
+    heading: m.hum_outcomes_heading || undefined,
+    heading_highlight: m.hum_outcomes_heading_hl || undefined,
+    description: m.hum_outcomes_description || undefined,
+    accordion_items: rawAccordion.length > 0 ? rawAccordion : undefined,
+    background_color: m.hum_outcomes_bg_color || undefined,
+    outcomes_image: m.hum_outcomes_image || undefined,
   };
 
+  const rawDeliverables = ensureArray(m.hum_deliverables_items);
   const deliverables: any = {
-    chip: m.hum_deliverables_chip,
-    heading: m.hum_deliverables_heading,
-    heading_highlight: m.hum_deliverables_heading_highlight,
-    description: m.hum_deliverables_description,
-    items: ensureArray(m.hum_deliverables_items),
-    background_color: m.hum_deliverables_background_color,
+    chip: m.hum_deliverables_chip || undefined,
+    heading: m.hum_deliverables_heading || undefined,
+    heading_highlight: m.hum_deliverables_heading_hl || undefined,
+    description: m.hum_deliverables_description || undefined,
+    items: rawDeliverables.length > 0 ? rawDeliverables : undefined,
+    background_color: m.hum_deliverables_bg_color || undefined,
   };
 
+  const rawChips = textareaToArray(m.hum_cta_chips);
   const cta: any = {
-    heading: m.hum_cta_heading,
-    heading_highlight: m.hum_cta_heading_highlight,
-    description: m.hum_cta_description,
-    chips: textareaToArray(m.hum_cta_chips),
-    cta_primary: m.hum_cta_cta_primary,
-    cta_secondary: m.hum_cta_cta_secondary,
-    background_image: m.hum_cta_background_image,
-    background_color: m.hum_cta_background_color,
+    heading: m.hum_cta_heading || undefined,
+    heading_highlight: m.hum_cta_heading_hl || undefined,
+    description: m.hum_cta_description || undefined,
+    chips: rawChips.length > 0 ? rawChips : undefined,
+    cta_primary: m.hum_cta_primary || undefined,
+    cta_secondary: m.hum_cta_secondary || undefined,
+    background_image: m.hum_cta_bg_image || undefined,
+    background_color: m.hum_cta_bg_color || undefined,
   };
 
   return (

@@ -59,17 +59,28 @@ const ACCORDION_ITEMS = [
   {
     label: "Operational consistency",
     iconGradient: "linear-gradient(135deg, #2B7FFF 0%, #00B8DB 100%)",
-    items: [],
+    items: [
+      "SOP-driven routines improve repeatability",
+      "Reduce variance across shifts/sites",
+    ],
   },
   {
     label: "Safety & governance",
     iconGradient: "linear-gradient(135deg, #00B8DB 0%, #155DFC 100%)",
-    items: [],
+    items: [
+      "Training and readiness planning",
+      "Escalation paths and service readiness",
+      "Boundaries and fallback procedures",
+    ],
   },
   {
     label: "Scalability",
     iconGradient: "linear-gradient(135deg, #8E51FF 0%, #155DFC 100%)",
-    items: [],
+    items: [
+      "Rollout checklists and readiness criteria",
+      "Monitoring and operational management approach",
+      "Scale playbooks for multi-site expansion",
+    ],
   },
 ];
 
@@ -161,7 +172,6 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
               style={{
                 flex: "1 0 0",
                 minWidth: 300,
-                maxWidth: 389,
                 display: "flex",
                 flexDirection: "column",
                 gap: 32,

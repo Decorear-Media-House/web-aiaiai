@@ -121,7 +121,7 @@ export default function ContactSection({ content }: { content?: Record<string, u
   };
 
   return (
-    <section className="relative overflow-hidden" style={{ background: backgroundColor }}>
+    <section id="contact" className="relative overflow-hidden scroll-mt-20" style={{ background: backgroundColor }}>
 
       {/* Blobs */}
       <div className="pointer-events-none absolute" style={{

@@ -251,7 +251,7 @@ export default function ArticleContentSection({
                   </p>
                 </div>
                 <a
-                  href="#"
+                  href="/#contact"
                   className="flex items-center justify-center gap-1 rounded-lg px-4 py-2 w-full"
                   style={{
                     fontFamily: font,

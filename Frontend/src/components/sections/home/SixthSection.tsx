@@ -310,7 +310,7 @@ export default function SixthSection({ content }: { content?: Record<string, unk
                     More Information, please contact us.
                   </p>
                   <a
-                    href="#"
+                    href="#contact"
                     className="flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90"
                     style={{
                       fontFamily: font, fontSize: 15, color: "#fff",

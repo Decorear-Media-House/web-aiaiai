@@ -75,6 +75,13 @@ deploy.sh                         # Initial deployment script
 - Desktop/mobile image switching via CSS `hidden`/`max-sm:block`
 - WordPress supports SVG and WebP uploads
 
+### Figma → Code Workflow
+- เมื่อ user ส่ง Figma URL มา → ใช้ Figma MCP tool ดึง data
+- เมื่อ user ส่ง Figma Dev Mode CSS → ใช้ค่าตรงๆ แปลงเป็น Tailwind/inline styles
+- **ห้ามเดา layout** ถ้าไม่มีข้อมูลเพียงพอ → ถาม user ให้ copy CSS จาก Figma Dev Mode
+- **ทำทีละ section** → ให้ user ตรวจ → แก้ → section ถัดไป (อย่าทำทั้งหน้าในรอบเดียว)
+- ใช้ screenshot เทียบเสมอ — ถ้าไม่มี screenshot ให้ถามก่อนทำ
+
 ### Responsive Design
 - Desktop: 1440px, Mobile: 375px (match Figma exactly)
 - Tailwind breakpoints: `max-sm:` for mobile overrides

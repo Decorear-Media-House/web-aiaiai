@@ -53,7 +53,7 @@ export default function ServicesRoboticsSection({ content }: { content?: Record<
   const c = (content ?? {}) as RoboticsContent;
   const number = c.number ?? "01";
   const label = c.label ?? "Robotics";
-  const heading = c.heading ?? "Embodied & Humanoid Robotic Solution";
+  const heading = c.heading ?? "Embodied AI & Humanoid Robotic Solution";
   const subtitle = c.subtitle ?? "Humanoid robotics deployment with workflow integration.";
   const whatItIs = c.what_it_is ?? "End-to-end enablement for humanoid robotics pilots and deployments: readiness planning, SOPs, training, integration, and scale playbooks.";
   const checkItems = c.check_items ?? DEFAULT_CHECK_ITEMS;

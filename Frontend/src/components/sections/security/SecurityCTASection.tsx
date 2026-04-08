@@ -96,7 +96,7 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
               {/* Right — CTAs */}
               <div className="flex flex-col gap-4 items-end justify-center shrink-0 max-sm:flex-row max-sm:w-full max-sm:justify-center">
                 <a
-                  href="#contact"
+                  href="/#contact"
                   className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-90 whitespace-nowrap"
                   style={{
                     fontFamily: font,

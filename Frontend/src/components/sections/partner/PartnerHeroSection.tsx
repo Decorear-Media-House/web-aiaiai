@@ -212,7 +212,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
             <FadeUp trigger="mount" delay={0.1}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
                 <a
-                  href="#contact"
+                  href="/#contact"
                   style={{
                     fontFamily: font,
                     fontSize: 16,

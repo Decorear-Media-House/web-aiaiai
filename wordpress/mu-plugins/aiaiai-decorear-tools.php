@@ -8,7 +8,14 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 define( 'AIAIAI_TAGS_OPTION', 'aiaiai_tracking_tags' );
-define( 'AIAIAI_BACKUP_DIR', '/home/decorear-aiaiai-cms/backups' );
+
+// Auto-detect backup directory: Docker uses wp-content/backups, production uses home dir
+if ( file_exists( '/.dockerenv' ) || getenv( 'WORDPRESS_DB_HOST' ) ) {
+    define( 'AIAIAI_BACKUP_DIR', ABSPATH . 'wp-content/backups' );
+} else {
+    define( 'AIAIAI_BACKUP_DIR', '/home/decorear-aiaiai-cms/backups' );
+}
+
 define( 'AIAIAI_BACKUP_MAX', 5 );
 define( 'AIAIAI_BACKUP_PROGRESS_FILE', '/tmp/aiaiai-backup-progress.json' );
 
@@ -369,22 +376,53 @@ function aiaiai_backup_create() {
         mkdir( $backup_dir, 0755, true );
     }
 
-    // Step 1: Dump database
+    // Step 1: Dump database (try mysqldump → wp db export → PHP fallback)
     aiaiai_backup_update_progress( 5, 'กำลังสำรองฐานข้อมูล... (Dumping database)' );
 
-    $dump_cmd = sprintf(
-        'mysqldump --single-transaction -h %s -u %s -p%s %s > %s 2>&1',
-        escapeshellarg( DB_HOST ),
-        escapeshellarg( DB_USER ),
-        escapeshellarg( DB_PASSWORD ),
-        escapeshellarg( DB_NAME ),
-        escapeshellarg( $sql_file )
-    );
-    exec( $dump_cmd, $dump_output, $dump_exit );
+    $dump_ok = false;
 
-    if ( $dump_exit !== 0 ) {
-        aiaiai_backup_update_progress( 0, 'mysqldump failed', 'error' );
-        return [ 'success' => false, 'message' => 'mysqldump failed: ' . implode( "\n", $dump_output ) ];
+    // Try mysqldump first
+    exec( 'which mysqldump 2>/dev/null', $which_out, $which_ret );
+    if ( $which_ret === 0 ) {
+        $db_host = defined('DB_HOST') ? DB_HOST : 'localhost';
+        // Strip port from host if present (e.g., "mysql:3306" → "mysql" + "-P 3306")
+        $port_flag = '';
+        if ( strpos($db_host, ':') !== false ) {
+            list($db_host_clean, $db_port) = explode(':', $db_host, 2);
+            $port_flag = ' -P ' . escapeshellarg($db_port);
+            $db_host = $db_host_clean;
+        }
+        $dump_cmd = sprintf(
+            'mysqldump --single-transaction -h %s%s -u %s -p%s %s > %s 2>&1',
+            escapeshellarg( $db_host ),
+            $port_flag,
+            escapeshellarg( DB_USER ),
+            escapeshellarg( DB_PASSWORD ),
+            escapeshellarg( DB_NAME ),
+            escapeshellarg( $sql_file )
+        );
+        exec( $dump_cmd, $dump_output, $dump_exit );
+        $dump_ok = ( $dump_exit === 0 );
+    }
+
+    // Fallback: try WP-CLI
+    if ( ! $dump_ok ) {
+        exec( 'which wp 2>/dev/null', $wp_out, $wp_ret );
+        if ( $wp_ret === 0 ) {
+            $wp_cmd = sprintf( 'wp --allow-root db export %s 2>&1', escapeshellarg( $sql_file ) );
+            exec( $wp_cmd, $wp_output, $wp_exit );
+            $dump_ok = ( $wp_exit === 0 );
+        }
+    }
+
+    // Fallback: PHP-based database dump
+    if ( ! $dump_ok ) {
+        $dump_ok = aiaiai_php_db_dump( $sql_file );
+    }
+
+    if ( ! $dump_ok ) {
+        aiaiai_backup_update_progress( 0, 'Database dump failed', 'error' );
+        return [ 'success' => false, 'message' => 'Database dump failed — mysqldump, wp-cli, and PHP fallback all failed' ];
     }
 
     aiaiai_backup_update_progress( 30, 'สำรองฐานข้อมูลเสร็จ (Database dumped)' );
@@ -458,19 +496,48 @@ function aiaiai_backup_restore( $filename ) {
     }
 
     $sql_file = $sql_files[0];
-    $import_cmd = sprintf(
-        'mysql -h %s -u %s -p%s %s < %s 2>&1',
-        escapeshellarg( DB_HOST ),
-        escapeshellarg( DB_USER ),
-        escapeshellarg( DB_PASSWORD ),
-        escapeshellarg( DB_NAME ),
-        escapeshellarg( $sql_file )
-    );
-    exec( $import_cmd, $import_out, $import_exit );
-    if ( $import_exit !== 0 ) {
+    $import_ok = false;
+
+    // Try mysql client first
+    exec( 'which mysql 2>/dev/null', $which_mysql, $which_ret );
+    if ( $which_ret === 0 ) {
+        $db_host = defined('DB_HOST') ? DB_HOST : 'localhost';
+        $port_flag = '';
+        if ( strpos($db_host, ':') !== false ) {
+            list($db_host, $db_port) = explode(':', $db_host, 2);
+            $port_flag = ' -P ' . escapeshellarg($db_port);
+        }
+        $import_cmd = sprintf(
+            'mysql -h %s%s -u %s -p%s %s < %s 2>&1',
+            escapeshellarg( $db_host ),
+            $port_flag,
+            escapeshellarg( DB_USER ),
+            escapeshellarg( DB_PASSWORD ),
+            escapeshellarg( DB_NAME ),
+            escapeshellarg( $sql_file )
+        );
+        exec( $import_cmd, $import_out, $import_exit );
+        $import_ok = ( $import_exit === 0 );
+    }
+
+    // Fallback: WP-CLI
+    if ( ! $import_ok ) {
+        exec( 'which wp 2>/dev/null', $wp_out2, $wp_ret2 );
+        if ( $wp_ret2 === 0 ) {
+            exec( sprintf( 'wp --allow-root db import %s 2>&1', escapeshellarg( $sql_file ) ), $wp_imp_out, $wp_imp_exit );
+            $import_ok = ( $wp_imp_exit === 0 );
+        }
+    }
+
+    // Fallback: PHP mysqli
+    if ( ! $import_ok ) {
+        $import_ok = aiaiai_php_db_import( $sql_file );
+    }
+
+    if ( ! $import_ok ) {
         exec( 'rm -rf ' . escapeshellarg( $tmp_dir ) );
         aiaiai_backup_update_progress( 0, 'SQL import failed', 'error' );
-        return [ 'success' => false, 'message' => 'Database import failed: ' . implode( "\n", $import_out ) ];
+        return [ 'success' => false, 'message' => 'Database import failed — mysql, wp-cli, and PHP fallback all failed' ];
     }
 
     aiaiai_backup_update_progress( 60, 'นำเข้าฐานข้อมูลเสร็จ (Database imported)' );
@@ -503,6 +570,79 @@ function aiaiai_backup_restore( $filename ) {
         'message'  => 'กู้คืนสำเร็จ — ฐานข้อมูลและไฟล์อัพโหลดถูกกู้คืนแล้ว (Restored successfully)',
         'filename' => $filename,
     ];
+}
+
+/* PHP-based database dump (fallback when mysqldump is not available) */
+function aiaiai_php_db_dump( $output_file ) {
+    $db_host = defined('DB_HOST') ? DB_HOST : 'localhost';
+    $db_port = 3306;
+    if ( strpos($db_host, ':') !== false ) {
+        list($db_host, $db_port) = explode(':', $db_host, 2);
+        $db_port = (int) $db_port;
+    }
+
+    $mysqli = new mysqli( $db_host, DB_USER, DB_PASSWORD, DB_NAME, $db_port );
+    if ( $mysqli->connect_error ) return false;
+
+    $mysqli->set_charset('utf8mb4');
+    $fp = fopen( $output_file, 'w' );
+    if ( ! $fp ) { $mysqli->close(); return false; }
+
+    fwrite( $fp, "-- AIAIAI PHP Database Dump\n-- Date: " . date('Y-m-d H:i:s') . "\n\nSET NAMES utf8mb4;\nSET FOREIGN_KEY_CHECKS = 0;\n\n" );
+
+    $tables = $mysqli->query( 'SHOW TABLES' );
+    while ( $row = $tables->fetch_row() ) {
+        $table = $row[0];
+
+        // CREATE TABLE
+        $create = $mysqli->query( "SHOW CREATE TABLE `{$table}`" );
+        $create_row = $create->fetch_row();
+        fwrite( $fp, "DROP TABLE IF EXISTS `{$table}`;\n{$create_row[1]};\n\n" );
+
+        // INSERT rows
+        $data = $mysqli->query( "SELECT * FROM `{$table}`" );
+        if ( $data->num_rows > 0 ) {
+            while ( $r = $data->fetch_assoc() ) {
+                $values = array_map( function($v) use ($mysqli) {
+                    return $v === null ? 'NULL' : "'" . $mysqli->real_escape_string($v) . "'";
+                }, array_values($r) );
+                fwrite( $fp, "INSERT INTO `{$table}` VALUES (" . implode(',', $values) . ");\n" );
+            }
+            fwrite( $fp, "\n" );
+        }
+    }
+
+    fwrite( $fp, "SET FOREIGN_KEY_CHECKS = 1;\n" );
+    fclose( $fp );
+    $mysqli->close();
+    return true;
+}
+
+/* PHP-based database import (fallback when mysql client is not available) */
+function aiaiai_php_db_import( $sql_file ) {
+    $db_host = defined('DB_HOST') ? DB_HOST : 'localhost';
+    $db_port = 3306;
+    if ( strpos($db_host, ':') !== false ) {
+        list($db_host, $db_port) = explode(':', $db_host, 2);
+        $db_port = (int) $db_port;
+    }
+
+    $mysqli = new mysqli( $db_host, DB_USER, DB_PASSWORD, DB_NAME, $db_port );
+    if ( $mysqli->connect_error ) return false;
+
+    $mysqli->set_charset('utf8mb4');
+    $sql = file_get_contents( $sql_file );
+    if ( ! $sql ) { $mysqli->close(); return false; }
+
+    $mysqli->multi_query( $sql );
+    // Drain all result sets
+    do {
+        if ( $result = $mysqli->store_result() ) $result->free();
+    } while ( $mysqli->next_result() );
+
+    $ok = ( $mysqli->errno === 0 );
+    $mysqli->close();
+    return $ok;
 }
 
 /* Auto-cleanup */

@@ -80,7 +80,7 @@ export default function AboutEdgeSection({ content }: { content?: AboutEdgeConte
             <FadeUp trigger="scroll" delay={0}>
               <div className="flex flex-col gap-4">
                 <div
-                  className="inline-flex items-center gap-2 rounded-lg px-4 py-2"
+                  className="inline-flex items-center gap-2 rounded-lg px-4 py-2 self-start"
                   style={{
                     background: "rgba(43,127,255,0.1)",
                     border: "1px solid rgba(43,127,255,0.2)",

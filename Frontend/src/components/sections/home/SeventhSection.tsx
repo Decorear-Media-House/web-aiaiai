@@ -120,7 +120,7 @@ export default function SeventhSection({ content }: { content?: Record<string, u
             <div className="flex items-center gap-4 max-sm:flex-col max-sm:w-full">
               {/* Primary — Get Started */}
               <a
-                href="#"
+                href="#contact"
                 className="inline-flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90 max-sm:w-full"
                 style={{
                   fontFamily: font, fontSize: 15, color: "#fff",
@@ -137,7 +137,7 @@ export default function SeventhSection({ content }: { content?: Record<string, u
 
               {/* Secondary — About Us */}
               <a
-                href="#"
+                href="#contact"
                 className="inline-flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-80 max-sm:w-full"
                 style={{
                   fontFamily: font, fontSize: 15, color: "#fff",

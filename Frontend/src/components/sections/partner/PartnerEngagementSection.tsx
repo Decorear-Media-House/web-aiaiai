@@ -199,7 +199,7 @@ export default function PartnerEngagementSection({ content }: { content?: Record
 
                   {/* CTA */}
                   <a
-                    href="#contact"
+                    href="/#contact"
                     style={{
                       fontFamily: font, fontSize: 16, color: "#fff", textDecoration: "none",
                       display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,

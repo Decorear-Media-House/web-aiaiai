@@ -32,6 +32,7 @@ services:
     volumes:
       - wp-content:/var/www/html/wp-content
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./wordpress/backups:/var/www/html/wp-content/backups
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
       interval: 10s

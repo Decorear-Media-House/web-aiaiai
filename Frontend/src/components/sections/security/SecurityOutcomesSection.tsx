@@ -155,6 +155,15 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
 
   return (
     <section className="relative" style={{ background: bgColor, overflowX: "clip" }}>
+      {/* Decorative triangle — bottom left */}
+      <div
+        className="pointer-events-none absolute max-lg:hidden"
+        style={{ bottom: 0, left: 0, width: 397, height: 413, zIndex: 0 }}
+        aria-hidden="true"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/deco-triangle.svg" alt="" className="w-full h-full" />
+      </div>
       {/* Glow blobs */}
       <div
         className="pointer-events-none absolute left-0 top-0 rounded-full"

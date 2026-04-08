@@ -59,7 +59,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 }
 
 /* ─── CTA Button (desktop) ─────────────────────────────────── */
-function GetInTouchButton({ href = "#", className = "" }: { href?: string; className?: string }) {
+function GetInTouchButton({ href = "/#contact", className = "" }: { href?: string; className?: string }) {
   return (
     <a
       href={href}
@@ -82,7 +82,7 @@ function GetInTouchButton({ href = "#", className = "" }: { href?: string; class
 }
 
 /* ─── Send Button (mobile CTA icon) ───────────────────────── */
-function SendButton({ href = "#" }: { href?: string }) {
+function SendButton({ href = "/#contact" }: { href?: string }) {
   return (
     <a
       href={href}
@@ -319,7 +319,7 @@ export default function Navbar() {
               Blog
             </a>
             <a
-              href="/contact"
+              href="/#contact"
               onClick={() => setMobileOpen(false)}
               className="flex items-center justify-center h-6 transition-opacity hover:opacity-80"
               style={{ fontFamily: font, fontSize: 16, color: "#fff" }}

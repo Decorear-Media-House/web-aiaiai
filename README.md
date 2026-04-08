@@ -136,17 +136,41 @@ NEXT_OUTPUT=export npm run build
 | แก้ code + content + เพิ่มรูปใหม่ | `bash deploy-full.sh` | ~3-5 นาที |
 
 #### `deploy.sh` — Quick Deploy (ใช้บ่อยสุด)
+
+**macOS / Linux:**
 ```bash
 bash deploy.sh
 ```
+
+**Windows (PowerShell):**
+```powershell
+& "C:\Program Files\Git\bin\bash.exe" -c "cd 'C:/Users/DECR/Desktop/Git/DECR/web-aiaiai' && bash deploy.sh"
+```
+
+**Windows (Git Bash):** เปิด Git Bash จาก Start Menu แล้วรัน:
+```bash
+cd /c/Users/DECR/Desktop/Git/DECR/web-aiaiai
+bash deploy.sh
+```
+
+> **หมายเหตุ Windows**: ห้ามใช้ `wsl` เพราะจะเข้า Docker Desktop WSL ซึ่งไม่มี bash — ต้องใช้ Git Bash เท่านั้น
+
+สิ่งที่ script ทำ:
 1. Push code → GitHub
 2. อัพเดท mu-plugins → WordPress CMS
-3. Build static site (ดึง content ล่าสุดจาก WordPress)
+3. Build static site (ดึง content + tracking tags ล่าสุดจาก WordPress)
 4. Upload → aiaiai.decorear.com
 
 #### `deploy-full.sh` — Full Deploy (ครั้งแรก / เพิ่มรูป)
+
+**macOS / Linux:**
 ```bash
 bash deploy-full.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+& "C:\Program Files\Git\bin\bash.exe" -c "cd 'C:/Users/DECR/Desktop/Git/DECR/web-aiaiai' && bash deploy-full.sh"
 ```
 1. Push code → GitHub
 2. อัพเดท mu-plugins → WordPress CMS
