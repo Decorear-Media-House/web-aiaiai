@@ -293,7 +293,15 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                   </button>
 
                   {/* Expanded content */}
-                  {isOpen && items && (Array.isArray(items) ? items : Object.values(items)).length > 0 && (
+                  {isOpen && items && (() => {
+                    const list: string[] = Array.isArray(items)
+                      ? items
+                      : typeof items === "string"
+                        ? items.split("\n").map((s: string) => s.trim()).filter(Boolean)
+                        : typeof items === "object"
+                          ? Object.values(items as Record<string, string>)
+                          : [];
+                    return list.length > 0 ? (
                     <div
                       style={{
                         borderTop: "1px solid rgba(255,255,255,0.08)",
@@ -303,11 +311,12 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                         gap: 8,
                       }}
                     >
-                      {(Array.isArray(items) ? items : Object.values(items as Record<string, string>)).map((text, j) => (
+                      {list.map((text, j) => (
                         <CheckItem key={j} text={decode(text)} />
                       ))}
                     </div>
-                  )}
+                    ) : null;
+                  })()}
                 </div>
               </FadeUp>
               );
