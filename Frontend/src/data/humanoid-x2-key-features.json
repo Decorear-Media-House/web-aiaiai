@@ -1,0 +1,27 @@
+{
+  "robotName": "AGIBOT X2 ULTRA",
+  "heading": "Key Features:",
+  "leftImage": "/images/video-thumb-ai1.png",
+  "rightImage": "/images/humanoid/x2-key-features-right.svg",
+  "note": "Recommended operation time: 7-8 minutes per session, with a rest period of 20 minutes.",
+  "entries": [
+    {
+      "icon": "/images/feature-icon-1.svg",
+      "title": "Entertainment & Commercial Performance",
+      "lines": [
+        "Supports various activities such as TikTok dancing, drumming, and electric guitar playing",
+        "Enables synchronized group performances with multiple robots"
+      ]
+    },
+    {
+      "icon": "/images/feature-icon-2.svg",
+      "title": "Automatic Presentation & Interaction",
+      "lines": [
+        "Welcomes guests, guides visitors, and provides intelligent responses",
+        "Recognizes faces and initiates conversations automatically",
+        "Demonstrates over 30 pre-programmed actions",
+        "Adjustable voice system, facial expressions, and flexible motion control"
+      ]
+    }
+  ]
+}
