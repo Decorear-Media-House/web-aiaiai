@@ -68,6 +68,7 @@ add_filter('rest_authentication_errors', function ($result) {
         '/wp/v2/tags',
         '/wp/v2/media',
         '/rankmath/v1/',
+        '/aiaiai/v1/',
     ];
 
     foreach ($allowed as $endpoint) {

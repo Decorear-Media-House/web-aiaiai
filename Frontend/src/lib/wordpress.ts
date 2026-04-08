@@ -179,7 +179,7 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
 async function wpFetch<T>(endpoint: string, fallback: T): Promise<T> {
   try {
     const res = await fetch(`${WP_API_URL}${endpoint}`, {
-      cache: "no-store",
+      cache: "force-cache",
     });
     if (!res.ok) throw new Error(`WP API error: ${res.status} ${endpoint}`);
     return res.json();
@@ -412,4 +412,22 @@ export async function getPageSection<T = Record<string, unknown>>(
   if (!page) return null;
   const section = page.sections[sectionKey];
   return (section as T) ?? null;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tracking Tags                                                      */
+/* ------------------------------------------------------------------ */
+
+export interface TrackingTags {
+  head_scripts: string;
+  body_open_scripts: string;
+  body_close_scripts: string;
+}
+
+export async function getTrackingTags(): Promise<TrackingTags> {
+  return wpFetch<TrackingTags>("/aiaiai/v1/tracking-tags", {
+    head_scripts: "",
+    body_open_scripts: "",
+    body_close_scripts: "",
+  });
 }

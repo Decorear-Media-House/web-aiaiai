@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai, Libre_Baskerville, Faculty_Glyphic } from "next/font/google";
 import "@/styles/globals.css";
 import Footer from "@/components/layouts/Footer";
+import { getTrackingTags } from "@/lib/wordpress";
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   variable: "--font-ibm-plex-sans-thai",
@@ -29,19 +30,32 @@ export const metadata: Metadata = {
   description: "Your AI Solution Partner from roadmap to production deployment.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const tags = await getTrackingTags();
+
   return (
     <html
       lang="en"
       className={`${ibmPlexSansThai.variable} ${libreBaskerville.variable} ${facultyGlyphic.variable} scroll-smooth`}
     >
+      {tags.head_scripts && (
+        <head>
+          <div dangerouslySetInnerHTML={{ __html: tags.head_scripts }} />
+        </head>
+      )}
       <body>
+        {tags.body_open_scripts && (
+          <div dangerouslySetInnerHTML={{ __html: tags.body_open_scripts }} />
+        )}
         {children}
         <Footer />
+        {tags.body_close_scripts && (
+          <div dangerouslySetInnerHTML={{ __html: tags.body_close_scripts }} />
+        )}
       </body>
     </html>
   );
