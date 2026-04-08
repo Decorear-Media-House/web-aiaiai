@@ -24,32 +24,22 @@ function ChevronRightIcon() {
   );
 }
 
-/** Generic icon for accordion items — simple shape on gradient background */
-function AccordionIcon({ gradient }: { gradient: string }) {
-  return (
-    <div
-      style={{
-        width: 40,
-        height: 40,
-        borderRadius: 12,
-        backgroundImage: gradient,
-        flexShrink: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M9 2v14M2 9h14" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    </div>
-  );
+/** Decode common HTML entities from WordPress */
+function decode(s: string) {
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&#8217;/g, "\u2019")
+    .replace(/&#8216;/g, "\u2018")
+    .replace(/&#8220;/g, "\u201C")
+    .replace(/&#8221;/g, "\u201D")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
 }
 
 const ACCORDION_ITEMS = [
   {
     label: "Labor efficiency & cost reduction",
-    iconGradient: "linear-gradient(135deg, #00BC7D 0%, #0092B8 100%)",
+    icon: "/images/ac-ico-02.svg",
     items: [
       "Automate repetitive tasks to improve throughput",
       "Reduce operational load for routine work",
@@ -58,7 +48,7 @@ const ACCORDION_ITEMS = [
   },
   {
     label: "Operational consistency",
-    iconGradient: "linear-gradient(135deg, #2B7FFF 0%, #00B8DB 100%)",
+    icon: "/images/ac-ico-05.svg",
     items: [
       "SOP-driven routines improve repeatability",
       "Reduce variance across shifts/sites",
@@ -66,7 +56,7 @@ const ACCORDION_ITEMS = [
   },
   {
     label: "Safety & governance",
-    iconGradient: "linear-gradient(135deg, #00B8DB 0%, #155DFC 100%)",
+    icon: "/images/ac-ico-01.svg",
     items: [
       "Training and readiness planning",
       "Escalation paths and service readiness",
@@ -75,7 +65,7 @@ const ACCORDION_ITEMS = [
   },
   {
     label: "Scalability",
-    iconGradient: "linear-gradient(135deg, #8E51FF 0%, #155DFC 100%)",
+    icon: "/images/ac-ico-06.svg",
     items: [
       "Rollout checklists and readiness criteria",
       "Monitoring and operational management approach",
@@ -93,12 +83,15 @@ function CheckItem({ text }: { text: string }) {
   );
 }
 
+const DEFAULT_ICONS = ["/images/ac-ico-02.svg", "/images/ac-ico-05.svg", "/images/ac-ico-01.svg", "/images/ac-ico-06.svg"];
+
 interface OutcomesContent {
   chip?: string;
   heading?: string;
   heading_highlight?: string;
   description?: string;
-  accordion_items?: typeof ACCORDION_ITEMS;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  accordion_items?: any[];
   background_color?: string;
   outcomes_image?: string;
 }
@@ -110,9 +103,14 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
   const headingHighlight = c.heading_highlight ?? "Achieves";
   const sectionDescription = c.description ?? "Structured deployment unlocks measurable operational improvements — from day one through full-scale rollout.";
   const rawAccordion = c.accordion_items ?? ACCORDION_ITEMS;
-  const accordionItems: typeof ACCORDION_ITEMS = Array.isArray(rawAccordion) ? rawAccordion : Object.values(rawAccordion);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const accordionItems: any[] = (Array.isArray(rawAccordion) ? rawAccordion : Object.values(rawAccordion)).map((item: any, i: number) => ({
+    ...ACCORDION_ITEMS[i],
+    ...item,
+    icon: item.icon || DEFAULT_ICONS[i] || DEFAULT_ICONS[0],
+  }));
   const outcomesImage = c.outcomes_image ? wpImageUrl(c.outcomes_image) : "";
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState<Set<number>>(new Set([0, 1, 2, 3]));
 
   return (
     <section
@@ -158,20 +156,19 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
           className="max-sm:!flex-col max-sm:!gap-8"
           style={{
             display: "flex",
-            flexWrap: "wrap",
             gap: 40,
             alignItems: "flex-start",
             maxWidth: 1216,
             margin: "0 auto",
           }}
         >
-          {/* Left column */}
+          {/* Left column — fixed narrow width */}
           <FadeUp trigger="scroll" delay={0}>
             <div
-              className="max-sm:!min-w-0 max-sm:!max-w-full"
+              className="max-sm:!w-full max-sm:!max-w-full"
               style={{
-                flex: "1 0 0",
-                minWidth: 300,
+                width: 374,
+                flexShrink: 0,
                 display: "flex",
                 flexDirection: "column",
                 gap: 32,
@@ -185,6 +182,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
+                    alignSelf: "flex-start",
                     gap: 8,
                     padding: "8px 16px",
                     borderRadius: 8,
@@ -194,10 +192,12 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                     WebkitBackdropFilter: "blur(16px)",
                   }}
                 >
-                  {/* Stat icon */}
+                  {/* Bar-chart icon */}
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M2 10L5 7L7.5 9.5L11 5" stroke="#FFA2A2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M9 5H11V7" stroke="#FFA2A2" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M1.75 1.75V11.0833C1.75 11.3928 1.87292 11.6895 2.09171 11.9083C2.3105 12.1271 2.60725 12.25 2.91667 12.25H12.25" stroke="#FFA2A2" strokeWidth="1.16667" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M10.5 9.91667V5.25" stroke="#FFA2A2" strokeWidth="1.16667" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7.583 9.917V2.917" stroke="#FFA2A2" strokeWidth="1.16667" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M4.667 9.917V8.167" stroke="#FFA2A2" strokeWidth="1.16667" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   <span style={{ fontFamily: font, fontSize: 12, color: "#FFA2A2", whiteSpace: "nowrap" }}>
                     {chip}
@@ -247,8 +247,15 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
           </FadeUp>
 
           {/* Right column — accordion */}
-          <div className="max-sm:!min-w-0" style={{ flex: "1 0 0", minWidth: 300, display: "flex", flexDirection: "column", gap: 12 }}>
-            {accordionItems.map(({ label, iconGradient, items }, i) => (
+          <div className="max-sm:!min-w-0 max-sm:!w-full" style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            {accordionItems.map(({ label, icon, items }, i) => {
+              const isOpen = open.has(i);
+              const toggle = () => setOpen(prev => {
+                const next = new Set(prev);
+                if (next.has(i)) next.delete(i); else next.add(i);
+                return next;
+              });
+              return (
               <FadeUp key={label} trigger="scroll" delay={i * 0.07}>
                 <div
                   style={{
@@ -260,7 +267,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                 >
                   {/* Header row */}
                   <button
-                    onClick={() => setOpen(open === i ? -1 : i)}
+                    onClick={toggle}
                     style={{
                       display: "flex",
                       gap: 16,
@@ -273,21 +280,20 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                       textAlign: "left",
                     }}
                   >
-                    {/* Icon square */}
-                    <div style={{ opacity: open === i ? 1 : 0.6, transition: "opacity 0.2s" }}>
-                      <AccordionIcon gradient={iconGradient} />
-                    </div>
+                    {/* Icon */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={icon} alt="" width={40} height={40} style={{ flexShrink: 0, borderRadius: 12, opacity: isOpen ? 1 : 0.6, transition: "opacity 0.2s" }} />
                     <span style={{ flex: 1, fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
-                      {label}
+                      {decode(label)}
                     </span>
                     {/* Chevron */}
-                    <div style={{ width: 24, height: 24, flexShrink: 0, transform: open === i ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform 0.2s", color: "#fff" }}>
+                    <div style={{ width: 24, height: 24, flexShrink: 0, transform: isOpen ? "rotate(90deg)" : "rotate(-90deg)", transition: "transform 0.2s", color: "#fff" }}>
                       <ChevronRightIcon />
                     </div>
                   </button>
 
                   {/* Expanded content */}
-                  {open === i && items && (Array.isArray(items) ? items : Object.values(items)).length > 0 && (
+                  {isOpen && items && (Array.isArray(items) ? items : Object.values(items)).length > 0 && (
                     <div
                       style={{
                         borderTop: "1px solid rgba(255,255,255,0.08)",
@@ -298,13 +304,14 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
                       }}
                     >
                       {(Array.isArray(items) ? items : Object.values(items as Record<string, string>)).map((text, j) => (
-                        <CheckItem key={j} text={text} />
+                        <CheckItem key={j} text={decode(text)} />
                       ))}
                     </div>
                   )}
                 </div>
               </FadeUp>
-            ))}
+              );
+            })}
           </div>
         </div>
       </Container>

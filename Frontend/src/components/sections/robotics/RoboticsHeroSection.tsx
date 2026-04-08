@@ -113,7 +113,7 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
 
             {/* CTA buttons */}
             <FadeUp trigger="mount" delay={0.15}>
-              <div className="flex flex-wrap gap-4">
+              <div className="hidden md:flex flex-wrap gap-4  ">
                 <a
                   href={ctaPrimaryUrl}
                   className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-90"

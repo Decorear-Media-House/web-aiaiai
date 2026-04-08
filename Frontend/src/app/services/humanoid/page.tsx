@@ -73,6 +73,29 @@ export default async function RoboticsPage() {
       video_url_2: robots[0].video_url_2 || "/videos/ai2.mp4",
     };
   }
+  // Inject video URL for second robot (D1 EDU) if missing
+  if (robots.length > 1) {
+    robots[1] = {
+      ...robots[1],
+      video_url: robots[1].video_url || "/videos/d1-edu.mp4",
+    };
+  }
+  // Inject video data for third robot (A2 ULTRA) if missing
+  if (robots.length > 2) {
+    robots[2] = {
+      ...robots[2],
+      video_thumb: robots[2].video_thumb || "/images/video-thumb-a2.png",
+      video_url: robots[2].video_url || "/videos/a2-ultra-demo.mp4",
+    };
+  }
+  // Inject video data for fourth robot (AGIBOT G2) if missing
+  if (robots.length > 3) {
+    robots[3] = {
+      ...robots[3],
+      video_thumb: robots[3].video_thumb || "/images/video-thumb-g2.png",
+      video_url: robots[3].video_url || "/videos/agibot-g2.mp4",
+    };
+  }
 
   const useCases: any = robots.length > 0 ? { robots } : {};
 

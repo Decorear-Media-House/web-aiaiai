@@ -201,7 +201,7 @@ const DEFAULT_ROBOTS: Robot[] = [
   {
     name: "AGIBOT G2",
     title: "Embodied AI & Humanoid Robotic Solution",
-    description: "Industrial-grade intelligent humanoid robot with fully modular structure and 100% humanoid form. Powered by the intelligent Genie RL system for rapid deployment.",
+    description: "Upgrade your operations with Agibot G2, an industrial-grade intelligent humanoid robot (Industrial-Grade Interactive Embodied Operation Robot). Designed with a fully modular structure and 100% humanoid form, it supports flexible component assembly and is powered by the intelligent Genie RL system for rapid deployment. It offers advanced communication capabilities, facial expression display, assisted operations, and natural human-like interaction.",
     feature_icons: ["/images/feature-icon-g2-1.svg", "/images/feature-icon-g2-2.svg", "/images/feature-icon-g2-3.svg", "/images/feature-icon-g2-4.svg"],
     specs: [
       { label: "Height / Weight", value: "185 cm" },
@@ -268,10 +268,10 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
       {/* ── Tab Selector (anchor links) ── */}
       <section style={{ background: "#070E24" }}>
         <div
-          className="mx-auto max-sm:!px-4"
-          style={{ maxWidth: 1440, padding: "40px 112px 0" }}
+          className="mx-auto max-sm:!px-4 lg:pt-10 lg:px-28 lg:pb-0"
+          style={{ maxWidth: 1440 }}
         >
-          <div className="flex flex-col items-center gap-10">
+          <div className="hidden md:flex flex-col items-center gap-10 ">
             <div className="flex justify-center">
               <div
                 className="inline-flex items-center p-2 rounded-full flex-wrap gap-1 justify-center max-sm:!rounded-2xl max-sm:!gap-2"
@@ -316,6 +316,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
         const featureImages = features.filter((f) => f.feature_image).map((f) => f.feature_image!);
         const leftImage = featureImages[0] || "";
         const rightImage = featureImages[1] || "";
+        const isFirstRobot = robotIdx === 0;
 
         return (
           <div key={robotIdx} id={`robot-${robotIdx}`}>
@@ -326,7 +327,10 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={wpImageUrl(robot.header_image)} alt="" className="absolute inset-0 size-full object-cover" />
-            <div className="absolute inset-0" style={{ background: "linear-gradient(270deg, rgba(7,14,36,0) 0%, rgba(7,14,36,1) 100%)" }} />
+            {/* Dark gradient for dark-bg robots, no gradient for light-bg (G2) */}
+            {robotIdx !== 3 && (
+              <div className="absolute inset-0" style={{ background: "linear-gradient(270deg, rgba(7,14,36,0) 0%, rgba(7,14,36,1) 100%)" }} />
+            )}
           </div>
         )}
         <div
@@ -334,9 +338,8 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
           style={{ maxWidth: 1440, margin: "0 auto", padding: "80px 112px" }}
         >
           <div className="flex flex-wrap items-end gap-6 max-sm:!flex-col max-sm:!items-start max-sm:!gap-8">
-            {/* Content — left column max ~500px, right side is bg image showing through */}
             <div className="flex flex-col gap-6 max-sm:w-full" style={{ maxWidth: 500 }}>
-              {/* Logo pill — white rounded pill with AIAIAI logo SVG (matches Figma: padding 12px 24px, borderRadius 24px, white bg) */}
+              {/* Logo pill */}
               <FadeUp trigger="scroll" delay={0}>
                 <div
                   className="inline-flex items-center self-start"
@@ -355,15 +358,15 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                     fontSize: 48,
                     fontWeight: 400,
                     lineHeight: 1.2,
-                    color: "#fff",
-                    textShadow: "0px 2px 12px rgba(0,0,0,0.5)",
+                    color: robotIdx === 3 ? "#1E2E48" : "#fff",
+                    textShadow: robotIdx === 3 ? "none" : "0px 2px 12px rgba(0,0,0,0.5)",
                   }}
                 >
-                  {decode(robot.title || "")}
+                  {robotIdx === 3 ? decode(robot.name || "") : decode(robot.title || "")}
                 </h2>
               </FadeUp>
               <FadeUp trigger="scroll" delay={0.06}>
-                <p style={{ fontFamily: font, fontSize: 16, color: "#E8EEF8", lineHeight: 1.5 }}>
+                <p style={{ fontFamily: font, fontSize: 16, color: robotIdx === 3 ? "#4A6080" : "#E8EEF8", lineHeight: 1.5 }}>
                   {decode(robot.description || "")}
                 </p>
               </FadeUp>
@@ -374,7 +377,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                   <div className="flex gap-2.5 max-sm:flex-col max-sm:w-full">
                     <button
                       onClick={() => robot.video_url && setLightboxSrc(robot.video_url)}
-                      className="relative rounded-3xl overflow-hidden max-sm:w-full max-sm:!h-[180px] shrink-0"
+                      className="relative rounded-3xl overflow-hidden max-sm:!w-full max-sm:!h-[180px] max-sm:!shrink shrink-0"
                       style={{ width: 356, height: 200, boxShadow: "0px 4px 12px rgba(0,119,255,0.5)", border: "none", padding: 0, cursor: "pointer" }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -450,9 +453,9 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
             className="mx-auto max-sm:!px-4 max-sm:!py-6"
             style={{ maxWidth: 1440, padding: "40px 112px 80px" }}
           >
-            <div className="flex flex-wrap gap-6 items-center max-sm:!flex-col max-sm:!items-stretch">
+            <div className="flex flex-wrap gap-6 items-start max-sm:!flex-col max-sm:!items-stretch">
               {/* Left column — heading + feature list + feature image */}
-              <div className="flex-1 min-w-[300px] flex flex-col gap-10 max-sm:min-w-0 max-sm:w-full">
+              <div className="flex-1 min-w-[300px] flex flex-col gap-10 max-sm:!min-w-0 max-sm:!w-full">
                 <FadeUp trigger="scroll" delay={0}>
                   <div className="flex flex-col gap-4">
                     <h3 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>Key Features:</h3>
@@ -466,12 +469,16 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                     return (
                       <FadeUp key={i} trigger="scroll" delay={i * 0.06}>
                         <div className="flex gap-6 items-start">
-                          <FeatureIcon src={robot.feature_icons?.[i] || "/images/feature-icon-1.svg"} />
+                          <FeatureIcon src={robot.feature_icons?.[i] || DEFAULT_ROBOTS[robotIdx]?.feature_icons?.[i] || "/images/feature-icon-1.svg"} />
                           <div className="flex flex-col gap-2">
-                            <h4 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff" }}>{feature.title}</h4>
-                            <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5, whiteSpace: "pre-line" }}>
-                              {featureItems.join("\n")}
-                            </p>
+                            <h4 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff" }}>{decode(feature.title)}</h4>
+                            <div className="flex flex-col gap-1">
+                              {featureItems.map((item, j) => (
+                                <p key={j} style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
+                                  {decode(item)}
+                                </p>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </FadeUp>
@@ -479,44 +486,94 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                   })}
                 </div>
 
-                {/* Feature image — below features on the left, full width, 200px height */}
-                {leftImage && (
-                  <FadeUp trigger="scroll" delay={0.15}>
-                    <div className="relative rounded-3xl overflow-hidden w-full" style={{ height: 200 }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={wpImageUrl(leftImage)} alt="" className="size-full object-cover" />
-                    </div>
-                  </FadeUp>
-                )}
-              </div>
-
-              {/* Right column — large image (596×470) + note box */}
-              <div className="flex flex-col items-center gap-6 max-sm:w-full" style={{ width: 596, flexShrink: 0 }}>
-                {rightImage && (
-                  <FadeUp trigger="scroll" delay={0.1}>
-                    <div className="relative overflow-hidden" style={{ width: 596, height: 470 }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={wpImageUrl(rightImage)} alt="" className="size-full object-cover" />
-                    </div>
-                  </FadeUp>
-                )}
-
-                {/* Note — below image on the right */}
-                {robot.note && (
+                {/* Note — below features (D1 EDU / G2 style: features left, images right) */}
+                {!isFirstRobot && robotIdx !== 2 && robot.note && (
                   <FadeUp trigger="scroll" delay={0.2}>
                     <div
-                      className="w-full rounded-2xl"
+                      className="rounded-2xl"
                       style={{
                         padding: "12px 24px",
                         background: "rgba(255,255,255,0.04)",
                         border: "1px solid rgba(255,255,255,0.08)",
                       }}
                     >
-                      <p style={{ fontFamily: font, fontSize: 16, color: "#4A99F5", lineHeight: 1.5, textAlign: "center" }}>
-                        Note: {robot.note}
+                      <p style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>
+                        <span style={{ color: "#4A99F5" }}>Note:</span> {robot.note}
                       </p>
                     </div>
                   </FadeUp>
+                )}
+
+                {/* Feature images below features (X2 ULTRA + A2 ULTRA) */}
+                {isFirstRobot && (
+                  <FadeUp trigger="scroll" delay={0.15}>
+                    <div className="relative rounded-3xl overflow-hidden w-full" style={{ height: 200 }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={leftImage ? wpImageUrl(leftImage) : "/images/feature-image-left.png"} alt="" className="size-full object-cover" />
+                    </div>
+                  </FadeUp>
+                )}
+                {robotIdx === 2 && (
+                  <FadeUp trigger="scroll" delay={0.15}>
+                    <div className="flex gap-6 w-full max-sm:!flex-col">
+                      <div className="relative rounded-3xl overflow-hidden flex-1 max-sm:!h-[160px]" style={{ height: 200 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src="/images/a2-feature-1.gif" alt="" className="size-full object-cover" />
+                      </div>
+                      <div className="relative rounded-3xl overflow-hidden flex-1 max-sm:!h-[160px]" style={{ height: 200 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src="/images/a2-feature-2.gif" alt="" className="size-full object-cover" />
+                      </div>
+                    </div>
+                  </FadeUp>
+                )}
+              </div>
+
+              {/* Right column */}
+              <div className="flex flex-col items-center gap-6 max-sm:!w-full max-sm:!flex-shrink" style={{ width: 596, flexShrink: 0 }}>
+                {(isFirstRobot || robotIdx === 2) ? (
+                  <>
+                    {/* X2 ULTRA / A2 ULTRA: robot image right */}
+                    <FadeUp trigger="scroll" delay={0.1}>
+                      <div className="relative overflow-hidden max-sm:!w-full max-sm:!h-[300px]" style={{ width: 596, height: 470 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={isFirstRobot ? "/images/feature-robot-right.png" : (featureImages[0] ? wpImageUrl(featureImages[0]) : "/images/feature-robot-right.png")}
+                          alt=""
+                          className="size-full object-contain object-bottom"
+                        />
+                      </div>
+                    </FadeUp>
+                    {/* Note — below image */}
+                    {robot.note && (
+                      <FadeUp trigger="scroll" delay={0.2}>
+                        <div
+                          className="w-full rounded-2xl"
+                          style={{
+                            padding: "12px 24px",
+                            background: "rgba(255,255,255,0.04)",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                          }}
+                        >
+                          <p style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5, textAlign: "center" }}>
+                            <span style={{ color: "#4A99F5" }}>Note:</span> {robot.note}
+                          </p>
+                        </div>
+                      </FadeUp>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {/* D1 EDU / G2: 2 feature images stacked right */}
+                    {featureImages.map((img, i) => (
+                      <FadeUp key={i} trigger="scroll" delay={0.1 + i * 0.05}>
+                        <div className="relative rounded-3xl overflow-hidden max-sm:!w-full max-sm:!h-[200px]" style={{ width: 493, height: 330 }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={wpImageUrl(img)} alt="" className="size-full object-cover" />
+                        </div>
+                      </FadeUp>
+                    ))}
+                  </>
                 )}
               </div>
             </div>
