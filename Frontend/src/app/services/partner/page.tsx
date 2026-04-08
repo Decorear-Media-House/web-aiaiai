@@ -66,7 +66,7 @@ export default async function PartnerPage() {
     headingSuffix: m.ptr_meaning_headingSuffix,
     description: m.ptr_meaning_description,
     leadIn: m.ptr_meaning_leadIn,
-    checkItems: textareaToArray(m.ptr_meaning_checkItems),
+    checkItems: textareaToArray(m.ptr_meaning_checkItems).length > 0 ? textareaToArray(m.ptr_meaning_checkItems) : undefined,
     quote: m.ptr_meaning_quote,
     container_image: m.ptr_meaning_container_image,
     background_color: m.ptr_meaning_background_color,

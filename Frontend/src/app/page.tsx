@@ -45,13 +45,13 @@ export default async function Home() {
     description: m.home_hero_description,
     cta_text: m.home_hero_cta_text,
     cta_subtext: m.home_hero_cta_subtext,
-    stats: ensureArray(m.home_hero_stats),
+    stats: ensureArray(m.home_hero_stats).length > 0 ? ensureArray(m.home_hero_stats) : undefined,
     brand_logo_image: m.home_hero_brand_logo_image,
   };
 
   const about: any = {
     heading: m.home_about_heading,
-    paragraphs: textareaToArray(m.home_about_paragraphs),
+    paragraphs: textareaToArray(m.home_about_paragraphs).length > 0 ? textareaToArray(m.home_about_paragraphs) : undefined,
     section_background_image: m.home_about_section_background_image,
   };
 
@@ -60,14 +60,14 @@ export default async function Home() {
     headingWhite: m.home_problems_headingWhite,
     headingGradient: m.home_problems_headingGradient,
     description: m.home_problems_description,
-    cards: ensureArray(m.home_problems_cards),
+    cards: ensureArray(m.home_problems_cards).length > 0 ? ensureArray(m.home_problems_cards) : undefined,
   };
 
   const services: any = {
     label: m.home_services_label,
     heading: m.home_services_heading,
     description: m.home_services_description,
-    items: ensureArray(m.home_services_items),
+    items: ensureArray(m.home_services_items).length > 0 ? ensureArray(m.home_services_items) : undefined,
   };
 
   const outcomes: any = {

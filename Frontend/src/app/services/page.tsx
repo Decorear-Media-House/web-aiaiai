@@ -118,7 +118,7 @@ export default async function ServicesPage() {
     description: m.svc_initiatives_description,
     cta_text: m.svc_initiatives_cta_text,
     cta_href: m.svc_initiatives_cta_href,
-    initiatives: textareaToArray(m.svc_initiatives_initiatives),
+    initiatives: textareaToArray(m.svc_initiatives_initiatives).length > 0 ? textareaToArray(m.svc_initiatives_initiatives) : undefined,
     background_color: m.svc_initiatives_background_color,
   };
 
@@ -127,7 +127,7 @@ export default async function ServicesPage() {
     heading: m.svc_guidance_heading,
     heading_highlight: m.svc_guidance_heading_highlight,
     description: m.svc_guidance_description,
-    cards: ensureArray(m.svc_guidance_cards),
+    cards: ensureArray(m.svc_guidance_cards).length > 0 ? ensureArray(m.svc_guidance_cards) : undefined,
     cta_prompt: m.svc_guidance_cta_prompt,
     cta_text: m.svc_guidance_cta_text,
     cta_href: m.svc_guidance_cta_href,

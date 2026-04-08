@@ -384,19 +384,24 @@ export async function getPageMeta(slug: string): Promise<Record<string, unknown>
  * Helper: Convert newline-separated textarea value to string array.
  */
 export function textareaToArray(val: unknown): string[] {
-  if (Array.isArray(val)) return val;
+  if (Array.isArray(val) && val.length > 0) return val;
   if (typeof val === "string" && val.trim()) {
-    return val.split("\n").map((s) => s.trim()).filter(Boolean);
+    const result = val.split("\n").map((s) => s.trim()).filter(Boolean);
+    return result.length > 0 ? result : [];
   }
   return [];
 }
 
 /**
  * Helper: Ensure value is an array (handle JetEngine repeater or object from REST API).
+ * Returns empty array only if input has actual data; returns [] for null/undefined/empty.
  */
 export function ensureArray<T = Record<string, unknown>>(val: unknown): T[] {
-  if (Array.isArray(val)) return val;
-  if (val && typeof val === "object") return Object.values(val) as T[];
+  if (Array.isArray(val) && val.length > 0) return val;
+  if (val && typeof val === "object") {
+    const arr = Object.values(val) as T[];
+    return arr.length > 0 ? arr : [];
+  }
   return [];
 }
 

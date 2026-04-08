@@ -44,7 +44,7 @@ export default async function SecurityPage() {
     wpContainerImageUrl: m.sec_hero_card_image,
     wpContainerImageMobileUrl: m.sec_hero_card_mobile_image,
     background_color: m.sec_hero_bg_color,
-    stats: ensureArray(m.sec_hero_stats),
+    stats: ensureArray(m.sec_hero_stats).length > 0 ? ensureArray(m.sec_hero_stats) : undefined,
   };
 
   const outcomes: any = {
@@ -91,7 +91,7 @@ export default async function SecurityPage() {
     heading: m.sec_cta_heading,
     heading_highlight: m.sec_cta_heading_hl,
     description: m.sec_cta_description,
-    chips: textareaToArray(m.sec_cta_chips),
+    chips: textareaToArray(m.sec_cta_chips).length > 0 ? textareaToArray(m.sec_cta_chips) : undefined,
     cta_primary: m.sec_cta_primary,
     cta_secondary: m.sec_cta_secondary,
     background_image: m.sec_cta_bg_image,

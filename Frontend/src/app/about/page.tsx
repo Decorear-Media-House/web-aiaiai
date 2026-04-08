@@ -46,7 +46,7 @@ export default async function AboutPage() {
     label: m.about_mission_label,
     heading: m.about_mission_heading,
     description: m.about_mission_description,
-    paragraphs: textareaToArray(m.about_mission_paragraphs),
+    paragraphs: textareaToArray(m.about_mission_paragraphs).length > 0 ? textareaToArray(m.about_mission_paragraphs) : undefined,
     background_image: m.about_mission_background_image,
   };
 
@@ -54,7 +54,7 @@ export default async function AboutPage() {
     label: m.about_philosophy_label,
     heading: m.about_philosophy_heading,
     description: m.about_philosophy_description,
-    items: ensureArray(m.about_philosophy_items),
+    items: ensureArray(m.about_philosophy_items).length > 0 ? ensureArray(m.about_philosophy_items) : undefined,
     background_color: m.about_philosophy_background_color,
   };
 
@@ -62,7 +62,7 @@ export default async function AboutPage() {
     label: m.about_edge_label,
     headingPrefix: m.about_edge_headingPrefix,
     headingHighlight: m.about_edge_headingHighlight,
-    edges: ensureArray(m.about_edge_edges),
+    edges: ensureArray(m.about_edge_edges).length > 0 ? ensureArray(m.about_edge_edges) : undefined,
     edge_photo_image: m.about_edge_photo_image,
   };
 
@@ -82,7 +82,7 @@ export default async function AboutPage() {
     ceoName: m.about_team_ceoName,
     ceoRole: m.about_team_ceoRole,
     ceoBio: m.about_team_ceoBio,
-    ceoTags: textareaToArray(m.about_team_ceoTags),
+    ceoTags: textareaToArray(m.about_team_ceoTags).length > 0 ? textareaToArray(m.about_team_ceoTags) : undefined,
     ctoName: m.about_team_ctoName,
     ctoRole: m.about_team_ctoRole,
     cooName: m.about_team_cooName,
