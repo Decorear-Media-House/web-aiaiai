@@ -296,14 +296,15 @@ export default function SixthSection({ content }: { content?: Record<string, unk
             {/* Right panel — image + CTA (below cards on mobile) */}
             <FadeUp trigger="scroll" delay={0.2} className="flex-1 min-h-[400px] max-lg:min-h-[320px] max-sm:min-h-[250px]">
               <div className="relative flex flex-col justify-end overflow-hidden rounded-2xl h-full" style={{ minHeight: 400 }}>
-                <Image
-                  src={sidePanelImage}
-                  alt="How we work"
-                  fill
-                  unoptimized={sidePanelImage.startsWith("http")}
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 389px"
-                />
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 size-full object-cover"
+                >
+                  <source src="/videos/a2-ultra.mp4" type="video/mp4" />
+                </video>
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 pointer-events-none"
                   style={{ background: "linear-gradient(to bottom, rgba(15,16,49,0) 0%, rgba(15,16,49,0.8) 100%)" }} />

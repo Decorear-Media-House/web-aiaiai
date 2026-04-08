@@ -155,7 +155,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
           }}
         >
           {deliverables.map(({ num, title }, i) => (
-            <FadeUp key={num} trigger="scroll" delay={i * 0.07} className="max-sm:!min-w-full">
+            <FadeUp key={num || i} trigger="scroll" delay={i * 0.07} className="max-sm:!min-w-full">
               <div
                 className="max-sm:!min-w-full"
                 style={{

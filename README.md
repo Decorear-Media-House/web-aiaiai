@@ -131,9 +131,20 @@ NEXT_OUTPUT=export npm run build
 
 | แก้อะไร | สั่งอะไร | ใช้เวลา |
 |---------|---------|---------|
-| แก้ code frontend อย่างเดียว | `bash deploy.sh` | ~1 นาที |
-| แก้ content ใน WP Admin อย่างเดียว | `bash deploy.sh` หรือกด Deploy ใน WP Admin (ถ้ามี webhook) | ~1 นาที |
-| แก้ code + content + เพิ่มรูปใหม่ | `bash deploy-full.sh` | ~3-5 นาที |
+| แก้ content ใน WP Admin (production) | กด **Deploy Site** ใน WP Admin | ~1 นาที |
+| แก้ code frontend | `bash deploy.sh` จากเครื่อง dev | ~1 นาที |
+| แก้ code + content + เพิ่มรูปใหม่ | `bash deploy-full.sh` จากเครื่อง dev | ~3-5 นาที |
+
+#### กด Deploy Site ใน WP Admin (แนะนำสำหรับแก้ content)
+
+1. เข้า https://aiaiai-cms.decorear.com/wp-admin
+2. แก้ content ใน Pages / Posts
+3. กด **Deploy Site** (ปุ่มสีน้ำเงินในแถบบนสุด) หรือไปที่เมนู Deploy Site
+4. รอ ~1 นาที → เว็บอัพเดทอัตโนมัติ
+
+**ระบบเบื้องหลัง:** WP ส่ง webhook → server ทำ `git pull` + `npm run build` (ดึง content ล่าสุดจาก WP) + `rsync` ไป nginx
+
+> **หมายเหตุ:** ปุ่ม Deploy Site ใช้ได้เฉพาะ production WP เท่านั้น (localhost กดแล้วไม่มีผล)
 
 #### `deploy.sh` — Quick Deploy (ใช้บ่อยสุด)
 

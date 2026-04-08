@@ -115,7 +115,7 @@ export default function SeventhSection({ content }: { content?: Record<string, u
                       border: "1px solid rgba(255,255,255,0.1)",
                     }}
                   >
-                    <SparkleIcon />
+                    {/* SparkleIcon removed per Figma */}
                     <span style={{ fontFamily: font, fontSize: 13, color: "#fff" }}>
                       {tag}
                     </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Container from "./Container";
 
@@ -103,6 +104,7 @@ function SendButton({ href = "/#contact" }: { href?: string }) {
 }
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const servicesBtnRef = useRef<HTMLAnchorElement>(null);
@@ -162,11 +164,11 @@ export default function Navbar() {
           {/* ── Desktop nav + CTA grouped right ── */}
           <div className="hidden md:flex items-center gap-8">
 
-            {/* Home (active) */}
+            {/* Home */}
             <a
               href="/"
               className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
-              style={{ fontFamily: font, fontSize: 16, color: "#4A99F5" }}
+              style={{ fontFamily: font, fontSize: 16, color: pathname === "/" ? "#4A99F5" : "#fff" }}
             >
               Home
             </a>
@@ -180,7 +182,7 @@ export default function Navbar() {
                 ref={servicesBtnRef}
                 href="/services"
                 className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
-                style={{ fontFamily: font, fontSize: 16, color: "#fff" }}
+                style={{ fontFamily: font, fontSize: 16, color: pathname?.startsWith("/services") ? "#4A99F5" : "#fff" }}
                 aria-expanded={servicesOpen}
                 aria-haspopup="true"
               >
@@ -189,12 +191,12 @@ export default function Navbar() {
             </div>
 
             <a href="/about" className="transition-opacity hover:opacity-80"
-              style={{ fontFamily: font, fontSize: 16, color: "#fff" }}>
+              style={{ fontFamily: font, fontSize: 16, color: pathname === "/about" ? "#4A99F5" : "#fff" }}>
               About Us
             </a>
 
             <a href="/blog" className="transition-opacity hover:opacity-80"
-              style={{ fontFamily: font, fontSize: 16, color: "#fff" }}>
+              style={{ fontFamily: font, fontSize: 16, color: pathname?.startsWith("/blog") ? "#4A99F5" : "#fff" }}>
               Blog
             </a>
 

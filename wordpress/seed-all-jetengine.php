@@ -374,7 +374,7 @@ seed($pid, "hum_hero_cta_secondary", $h['cta_secondary'] ?? '');
 seed_repeater($pid, "hum_hero_stats", $h['stats'] ?? []);
 
 add_meta_box_je("hum-usecases", "Humanoid — Use Cases", $pid, [
-    rf("hum_robots","Robot Models",[tf("name","Name"),mf("header_image","Header Image"),tf("title","Title"),ta("description","Description"),mf("video_thumb","Video Thumb"),tf("note","Note")]),
+    rf("hum_robots","Robot Models",[tf("name","Name"),mf("header_image","Header Image"),tf("title","Title"),ta("description","Description"),mf("video_thumb","Video Thumb 1"),mf("video_thumb_2","Video Thumb 2"),tf("note","Note")]),
 ]);
 
 $uc = $s['useCases'] ?? [];
@@ -389,6 +389,7 @@ if (is_array($robots)) {
             'title' => $r['title'] ?? '',
             'description' => $r['description'] ?? '',
             'video_thumb' => $r['video_thumb'] ?? '',
+            'video_thumb_2' => $r['video_thumb_2'] ?? '',
             'note' => $r['note'] ?? '',
         ];
     }

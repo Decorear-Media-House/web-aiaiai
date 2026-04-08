@@ -101,33 +101,27 @@ export default function ThirdSection({ content }: { content?: Record<string, unk
   const [active, setActive] = useState(0);
   const translateX = Math.min(active, MAX_OFFSET) * (CARD_W + CARD_GAP);
 
-  // Swipe support
-  const touchStartX = useRef<number | null>(null);
-  const SWIPE_THRESHOLD = 50;
+  // Swipe / drag support
+  const startX = useRef<number | null>(null);
+  const isDragging = useRef(false);
+  const SWIPE_THRESHOLD = 40;
 
-  function handleTouchStart(e: React.TouchEvent) {
-    touchStartX.current = e.touches[0].clientX;
+  function handlePointerDown(e: React.PointerEvent) {
+    startX.current = e.clientX;
+    isDragging.current = true;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }
-  function handleTouchEnd(e: React.TouchEvent) {
-    if (touchStartX.current === null) return;
-    const delta = touchStartX.current - e.changedTouches[0].clientX;
+  function handlePointerUp(e: React.PointerEvent) {
+    if (!isDragging.current || startX.current === null) return;
+    isDragging.current = false;
+    const delta = startX.current - e.clientX;
     if (delta > SWIPE_THRESHOLD) setActive((p) => Math.min(p + 1, MAX_OFFSET));
     else if (delta < -SWIPE_THRESHOLD) setActive((p) => Math.max(p - 1, 0));
-    touchStartX.current = null;
+    startX.current = null;
   }
 
-  // Mouse drag support
-  const mouseStartX = useRef<number | null>(null);
-  function handleMouseDown(e: React.MouseEvent) {
-    mouseStartX.current = e.clientX;
-  }
-  function handleMouseUp(e: React.MouseEvent) {
-    if (mouseStartX.current === null) return;
-    const delta = mouseStartX.current - e.clientX;
-    if (delta > SWIPE_THRESHOLD) setActive((p) => Math.min(p + 1, MAX_OFFSET));
-    else if (delta < -SWIPE_THRESHOLD) setActive((p) => Math.max(p - 1, 0));
-    mouseStartX.current = null;
-  }
+  const prev = () => setActive((p) => Math.max(p - 1, 0));
+  const next = () => setActive((p) => Math.min(p + 1, MAX_OFFSET));
 
   return (
     <section className="relative overflow-hidden" style={{ background: "#102050" }}>
@@ -191,13 +185,11 @@ export default function ThirdSection({ content }: { content?: Record<string, unk
           {/* ── Carousel ── */}
           <FadeUp trigger="scroll" delay={0.1} className="w-full">
             <div className="flex flex-col gap-6">
-              {/* Track */}
               <div
                 className="overflow-hidden cursor-grab active:cursor-grabbing select-none"
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+                style={{ touchAction: "pan-y" }}
               >
                 <div
                   className="flex transition-transform duration-500 ease-in-out"
@@ -247,7 +239,7 @@ export default function ThirdSection({ content }: { content?: Record<string, unk
                 </div>
               </div>
 
-              {/* Dot indicators — 3 dots for 3 scroll positions */}
+              {/* Dot indicators */}
               <div className="flex items-center justify-center gap-2">
                 {Array.from({ length: NUM_DOTS }).map((_, i) => (
                   <button

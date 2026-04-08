@@ -45,15 +45,33 @@ export default async function RoboticsPage() {
     background_color: m.hum_hero_bg_color || undefined,
   };
 
-  // Robots stored as JSON string (nested specs/features too complex for repeater)
+  // Robots: merge JetEngine repeater (simple editable fields) with JSON (complex nested specs/features)
   let robots: any[] = [];
+  let jsonRobots: any[] = [];
   try {
     const json = m.hum_robots_json as string;
-    if (json) robots = JSON.parse(json);
+    if (json) jsonRobots = JSON.parse(json);
   } catch { /* ignore */ }
-  if (!robots.length) {
-    const arr = ensureArray(m.hum_robots);
-    if (arr.length > 0) robots = arr;
+  const repeaterArr = ensureArray(m.hum_robots);
+  if (repeaterArr.length > 0) {
+    // Merge: repeater overrides simple fields, JSON provides specs/features
+    robots = repeaterArr.map((rep: any, i: number) => {
+      const base = jsonRobots[i] || {};
+      return { ...base, ...rep };
+    });
+  } else if (jsonRobots.length > 0) {
+    robots = jsonRobots;
+  }
+
+  // Inject video defaults for first robot if WP doesn't provide video URLs
+  if (robots.length > 0) {
+    robots[0] = {
+      ...robots[0],
+      video_thumb: robots[0].video_thumb || "/images/video-thumb-ai1.png",
+      video_url: robots[0].video_url || "/videos/ai1.mp4",
+      video_thumb_2: robots[0].video_thumb_2 || "/images/video-thumb-ai2.png",
+      video_url_2: robots[0].video_url_2 || "/videos/ai2.mp4",
+    };
   }
 
   const useCases: any = robots.length > 0 ? { robots } : {};
