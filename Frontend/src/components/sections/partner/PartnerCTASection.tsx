@@ -12,7 +12,9 @@ export default function PartnerCTASection({ content }: { content?: Record<string
   const description = (content?.description as string) ??
     "We\u2019ll propose a practical next step: discovery, roadmap, pilot, or MVP scope.";
   const primaryCta = (content?.primaryCta as string) ?? "Contact Us";
+  const primaryCtaUrl = (content?.primaryCtaUrl as string) || "/#contact";
   const secondaryCta = (content?.secondaryCta as string) ?? "All Services";
+  const secondaryCtaUrl = (content?.secondaryCtaUrl as string) || "/services";
   return (
     <section
       className="max-sm:!px-4 max-sm:!pb-4"
@@ -97,7 +99,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
             <div className="max-sm:!items-stretch max-sm:!w-full" style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end", justifyContent: "center" }}>
               {/* Primary CTA */}
               <a
-                href="/#contact"
+                href={primaryCtaUrl}
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "12px 24px", borderRadius: 8,
@@ -111,7 +113,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
               </a>
               {/* Secondary CTA */}
               <a
-                href="/services"
+                href={secondaryCtaUrl}
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "12px 24px", borderRadius: 8,

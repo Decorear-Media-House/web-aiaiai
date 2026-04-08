@@ -38,7 +38,9 @@ export default async function RoboticsPage() {
     heading: m.hum_hero_heading || undefined,
     description: m.hum_hero_description || undefined,
     cta_primary: m.hum_hero_cta_primary || undefined,
+    cta_primary_url: m.hum_hero_cta_primary_url || undefined,
     cta_secondary: m.hum_hero_cta_secondary || undefined,
+    cta_secondary_url: m.hum_hero_cta_secondary_url || undefined,
     hero_background_image: m.hum_hero_bg_image || undefined,
     background_color: m.hum_hero_bg_color || undefined,
   };
@@ -84,7 +86,9 @@ export default async function RoboticsPage() {
     description: m.hum_cta_description || undefined,
     chips: rawChips.length > 0 ? rawChips : undefined,
     cta_primary: m.hum_cta_primary || undefined,
+    cta_primary_url: m.hum_cta_primary_url || undefined,
     cta_secondary: m.hum_cta_secondary || undefined,
+    cta_secondary_url: m.hum_cta_secondary_url || undefined,
     background_image: m.hum_cta_bg_image || undefined,
     background_color: m.hum_cta_bg_color || undefined,
   };

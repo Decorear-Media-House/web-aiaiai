@@ -8,6 +8,10 @@ interface SeventhSectionContent {
   heading?: string;
   description?: string;
   background_video?: string;
+  cta_primary_text?: string;
+  cta_primary_url?: string;
+  cta_secondary_text?: string;
+  cta_secondary_url?: string;
 }
 
 const TAGS = ["Cost Reduction", "Revenue Growth", "Compliance", "Security", "Automation"];
@@ -36,6 +40,10 @@ export default function SeventhSection({ content }: { content?: Record<string, u
     c.description ||
     "Tell us what outcome matters most\u2014cost, revenue, compliance, security, or automation\u2014and we\u2019ll propose a practical first step";
   const backgroundVideo = c.background_video ? wpImageUrl(c.background_video) : "/videos/CTA-Loop.mp4";
+  const ctaPrimaryText = c.cta_primary_text || "Get Started";
+  const ctaPrimaryUrl = c.cta_primary_url || "#contact";
+  const ctaSecondaryText = c.cta_secondary_text || "About Us";
+  const ctaSecondaryUrl = c.cta_secondary_url || "/about";
 
   return (
     <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 494 }}>
@@ -118,9 +126,9 @@ export default function SeventhSection({ content }: { content?: Record<string, u
 
             {/* CTA buttons */}
             <div className="flex items-center gap-4 max-sm:flex-col max-sm:w-full">
-              {/* Primary — Get Started */}
+              {/* Primary CTA */}
               <a
-                href="#contact"
+                href={ctaPrimaryUrl}
                 className="inline-flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90 max-sm:w-full"
                 style={{
                   fontFamily: font, fontSize: 15, color: "#fff",
@@ -131,13 +139,13 @@ export default function SeventhSection({ content }: { content?: Record<string, u
                   whiteSpace: "nowrap",
                 }}
               >
-                Get Started
+                {ctaPrimaryText}
                 <ChevronRight />
               </a>
 
-              {/* Secondary — About Us */}
+              {/* Secondary CTA */}
               <a
-                href="#contact"
+                href={ctaSecondaryUrl}
                 className="inline-flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-80 max-sm:w-full"
                 style={{
                   fontFamily: font, fontSize: 15, color: "#fff",
@@ -148,7 +156,7 @@ export default function SeventhSection({ content }: { content?: Record<string, u
                   whiteSpace: "nowrap",
                 }}
               >
-                About Us
+                {ctaSecondaryText}
                 <ChevronRight />
               </a>
             </div>

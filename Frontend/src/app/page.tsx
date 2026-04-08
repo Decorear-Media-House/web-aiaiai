@@ -44,6 +44,7 @@ export default async function Home() {
     heading: m.home_hero_heading,
     description: m.home_hero_description,
     cta_text: m.home_hero_cta_text,
+    cta_url: m.home_hero_cta_url,
     cta_subtext: m.home_hero_cta_subtext,
     stats: ensureArray(m.home_hero_stats).length > 0 ? ensureArray(m.home_hero_stats) : undefined,
     brand_logo_image: m.home_hero_brand_logo_image,
@@ -53,6 +54,10 @@ export default async function Home() {
     heading: m.home_about_heading,
     paragraphs: textareaToArray(m.home_about_paragraphs).length > 0 ? textareaToArray(m.home_about_paragraphs) : undefined,
     section_background_image: m.home_about_section_background_image,
+    cta_primary_text: m.home_about_cta_primary_text,
+    cta_primary_url: m.home_about_cta_primary_url,
+    cta_secondary_text: m.home_about_cta_secondary_text,
+    cta_secondary_url: m.home_about_cta_secondary_url,
   };
 
   const problems: any = {
@@ -82,12 +87,18 @@ export default async function Home() {
     heading: m.home_process_heading,
     description: m.home_process_description,
     side_panel_image: m.home_process_side_panel_image,
+    cta_text: m.home_process_cta_text,
+    cta_url: m.home_process_cta_url,
   };
 
   const cta: any = {
     heading: m.home_cta_heading,
     description: m.home_cta_description,
     background_video: m.home_cta_background_video,
+    cta_primary_text: m.home_cta_primary_text,
+    cta_primary_url: m.home_cta_primary_url,
+    cta_secondary_text: m.home_cta_secondary_text,
+    cta_secondary_url: m.home_cta_secondary_url,
   };
 
   const contact: any = {

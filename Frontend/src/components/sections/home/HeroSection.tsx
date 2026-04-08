@@ -26,6 +26,7 @@ interface HeroContent {
   heading?: string;
   description?: string;
   cta_text?: string;
+  cta_url?: string;
   cta_subtext?: string;
   stats?: { value: string; label: string }[];
   brand_logo_image?: string;
@@ -49,6 +50,7 @@ export default function HeroSection({ content }: { content?: Record<string, unkn
   const heading = c.heading ?? "Your AI Solution Partner from roadmap to production deployment.";
   const description = c.description ?? "We help organizations adopt practical AI that reduces cost, increases revenue, strengthens compliance, and improves security—through AI Solution Partner delivery, AI video-analytics security, and humanoid robotics solutions.";
   const ctaText = c.cta_text ?? "Contact Us";
+  const ctaUrl = c.cta_url || "#contact";
   const ctaSubtext = c.cta_subtext ?? "Share your goal and constraints. Our team will reach out.";
   const stats = c.stats ?? DEFAULT_STATS;
   const brandLogoImage = c.brand_logo_image ? wpImageUrl(c.brand_logo_image) : "/images/aaa-vector.svg";
@@ -140,7 +142,7 @@ export default function HeroSection({ content }: { content?: Record<string, unkn
             <FadeUp trigger="mount" delay={0.3}>
               <div className="flex flex-col gap-3">
                 <a
-                  href="#contact"
+                  href={ctaUrl}
                   className="inline-flex items-center justify-center gap-2 transition-opacity hover:opacity-90 sm:w-fit w-full"
                   style={{
                     fontFamily: font,

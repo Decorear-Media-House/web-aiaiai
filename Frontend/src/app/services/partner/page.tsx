@@ -48,7 +48,9 @@ export default async function PartnerPage() {
     heading: m.ptr_hero_heading,
     description: m.ptr_hero_description,
     primaryCta: m.ptr_hero_primaryCta,
+    primaryCtaUrl: m.ptr_hero_primaryCtaUrl,
     secondaryCta: m.ptr_hero_secondaryCta,
+    secondaryCtaUrl: m.ptr_hero_secondaryCtaUrl,
     hero_background_image: m.ptr_hero_hero_background_image,
     container_image: m.ptr_hero_container_image,
     background_color: m.ptr_hero_background_color,
@@ -102,6 +104,8 @@ export default async function PartnerPage() {
     heading: m.ptr_engagement_heading,
     headingHighlight: m.ptr_engagement_headingHighlight,
     description: m.ptr_engagement_description,
+    cta_text: m.ptr_engagement_cta_text,
+    cta_url: m.ptr_engagement_cta_url,
   };
 
   const process: any = {
@@ -118,6 +122,7 @@ export default async function PartnerPage() {
     headingHighlight: m.ptr_faq_headingHighlight,
     description: m.ptr_faq_description,
     ctaText: m.ptr_faq_ctaText,
+    ctaUrl: m.ptr_faq_ctaUrl,
     background_image: m.ptr_faq_background_image,
     background_color: m.ptr_faq_background_color,
   };
@@ -127,7 +132,9 @@ export default async function PartnerPage() {
     headingHighlight: m.ptr_cta_headingHighlight,
     description: m.ptr_cta_description,
     primaryCta: m.ptr_cta_primaryCta,
+    primaryCtaUrl: m.ptr_cta_primaryCtaUrl,
     secondaryCta: m.ptr_cta_secondaryCta,
+    secondaryCtaUrl: m.ptr_cta_secondaryCtaUrl,
     background_image: m.ptr_cta_background_image,
   };
 

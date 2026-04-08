@@ -29,6 +29,10 @@ interface HeroContent {
   chip?: string;
   heading?: string;
   description?: string;
+  cta_primary?: string;
+  cta_primary_url?: string;
+  cta_secondary?: string;
+  cta_secondary_url?: string;
   hero_background_image?: string;
   background_color?: string;
 }
@@ -40,6 +44,10 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
   const chip = decode(c.chip ?? "AI-Enhanced Humanoid Robotics");
   const heading = decode(c.heading ?? "Embodied AI & Humanoid Robotic Solution");
   const description = decode(c.description ?? "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, scalable planning, and rollout.");
+  const ctaPrimary = c.cta_primary || "Contact Us";
+  const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
+  const ctaSecondary = c.cta_secondary || "All Services";
+  const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const bgImage = wpImageUrl((c.hero_background_image as string) || "");
   const bgColor = c.background_color ?? "#070E24";
 
@@ -125,7 +133,7 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
         <FadeUp trigger="mount" delay={0.15}>
           <div className="flex flex-wrap gap-4 mt-8 max-sm:mt-4">
             <a
-              href="/#contact"
+              href={ctaPrimaryUrl}
               className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-90"
               style={{
                 fontFamily: font,
@@ -136,10 +144,10 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
                 boxShadow: "0px 2px 12px rgba(0,119,255,0.8)",
               }}
             >
-              Contact Us
+              {ctaPrimary}
             </a>
             <a
-              href="/services"
+              href={ctaSecondaryUrl}
               className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-80"
               style={{
                 fontFamily: font,
@@ -151,7 +159,7 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
                 WebkitBackdropFilter: "blur(8px)",
               }}
             >
-              All Services
+              {ctaSecondary}
             </a>
           </div>
         </FadeUp>

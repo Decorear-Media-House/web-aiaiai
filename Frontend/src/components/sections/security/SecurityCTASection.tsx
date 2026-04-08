@@ -13,7 +13,9 @@ interface CTAContent {
   description?: string;
   chips?: string[];
   cta_primary?: string;
+  cta_primary_url?: string;
   cta_secondary?: string;
+  cta_secondary_url?: string;
   background_image?: string;
   background_color?: string;
 }
@@ -27,7 +29,9 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
   const description = c.description ?? "We\u2019ll propose a pilot plan.";
   const chips = c.chips ?? DEFAULT_CHIPS;
   const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
   const ctaSecondary = c.cta_secondary ?? "All Services";
+  const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const bgImage = c.background_image ? wpImageUrl(c.background_image) : "";
   const bgColor = c.background_color ?? "#070E24";
   return (
@@ -96,7 +100,7 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
               {/* Right — CTAs */}
               <div className="flex flex-col gap-4 items-end justify-center shrink-0 max-sm:flex-row max-sm:w-full max-sm:justify-center">
                 <a
-                  href="/#contact"
+                  href={ctaPrimaryUrl}
                   className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-90 whitespace-nowrap"
                   style={{
                     fontFamily: font,
@@ -110,7 +114,7 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
                   {ctaPrimary}
                 </a>
                 <a
-                  href="/services"
+                  href={ctaSecondaryUrl}
                   className="inline-flex items-center justify-center rounded-lg px-6 py-3 transition-opacity hover:opacity-80 whitespace-nowrap"
                   style={{
                     fontFamily: font,

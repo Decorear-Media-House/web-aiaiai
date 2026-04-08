@@ -51,6 +51,7 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
   const description = (content?.description as string) ??
     "We have compiled frequently asked questions about how AI solutions are implemented in real operations to help you better understand the process and how to work effectively with our team.";
   const ctaText = (content?.ctaText as string) ?? "Still have questions? Contact us";
+  const ctaUrl = (content?.ctaUrl as string) || "/#contact";
   const bgColor = (content?.background_color as string) ?? "#070E24";
   const bgImage = wpImageUrl((content?.background_image as string) || "");
   const [openIndex, setOpenIndex] = useState(0);
@@ -118,7 +119,7 @@ export default function PartnerFAQSection({ content }: { content?: Record<string
 
             {/* CTA button */}
             <a
-              href="/#contact"
+              href={ctaUrl}
               style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
                 padding: "12px 24px", borderRadius: 8,

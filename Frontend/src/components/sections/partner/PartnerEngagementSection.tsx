@@ -94,6 +94,8 @@ export default function PartnerEngagementSection({ content }: { content?: Record
   const headingHighlight = (content?.headingHighlight as string) ?? "Engage";
   const description = (content?.description as string) ??
     "Three flexible models to match how your organisation prefers to work.";
+  const ctaText = (content?.cta_text as string) || "Contact Us";
+  const ctaUrl = (content?.cta_url as string) || "/#contact";
   const bgColor = (content?.background_color as string) ?? "#070E24";
   return (
     <section
@@ -199,7 +201,7 @@ export default function PartnerEngagementSection({ content }: { content?: Record
 
                   {/* CTA */}
                   <a
-                    href="/#contact"
+                    href={ctaUrl}
                     style={{
                       fontFamily: font, fontSize: 16, color: "#fff", textDecoration: "none",
                       display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
@@ -207,7 +209,7 @@ export default function PartnerEngagementSection({ content }: { content?: Record
                       border: "1px solid rgba(255,255,255,0.08)",
                     }}
                   >
-                    Contact Us
+                    {ctaText}
                     <ChevronRightIcon />
                   </a>
 

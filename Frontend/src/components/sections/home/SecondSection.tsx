@@ -16,6 +16,10 @@ interface SecondSectionContent {
   heading?: string;
   paragraphs?: string[];
   section_background_image?: string;
+  cta_primary_text?: string;
+  cta_primary_url?: string;
+  cta_secondary_text?: string;
+  cta_secondary_url?: string;
 }
 
 export default function SecondSection({ content }: { content?: SecondSectionContent }) {
@@ -25,6 +29,10 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
     "Ai-Ai-Ai Co., Ltd. helps organizations adopt AI in a practical, outcome-driven way. We operate as an AI Solution Partner (and AI development partner) to take ideas from AI strategy and roadmap through PoC, MVP, and production deployment—with strong focus on integration, governance, and operating reality.",
     "We also deliver specialized solutions in Computer Vision security\u00a0/ AI video analytics and humanoid robotics deployment (AgiBo) with innovative AI capabilities.",
   ];
+  const ctaPrimaryText = content?.cta_primary_text || "About Us";
+  const ctaPrimaryUrl = content?.cta_primary_url || "/about";
+  const ctaSecondaryText = content?.cta_secondary_text || "Contact Us";
+  const ctaSecondaryUrl = content?.cta_secondary_url || "#contact";
   return (
     <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 498 }}>
 
@@ -69,7 +77,7 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
 
           <FadeUp trigger="scroll" delay={0.2}>
             <div className="flex items-center gap-4 pt-2 max-sm:flex-col max-sm:items-start">
-              <a href="/about"
+              <a href={ctaPrimaryUrl}
                 className="inline-flex items-center gap-2 transition-opacity hover:opacity-90"
                 style={{
                   fontFamily: font,
@@ -81,9 +89,9 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
                   padding: "10px 20px",
                   boxShadow: "0 4px 16px rgba(74,153,245,0.25)",
                 }}>
-                About Us <ChevronRight />
+                {ctaPrimaryText} <ChevronRight />
               </a>
-              <a href="#contact"
+              <a href={ctaSecondaryUrl}
                 className="inline-flex items-center gap-2 transition-colors hover:bg-white/10"
                 style={{
                   fontFamily: font,
@@ -94,7 +102,7 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
                   borderRadius: 8,
                   padding: "10px 20px",
                 }}>
-                Contact Us <ChevronRight />
+                {ctaSecondaryText} <ChevronRight />
               </a>
             </div>
           </FadeUp>

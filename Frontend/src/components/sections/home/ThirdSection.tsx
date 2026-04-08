@@ -56,12 +56,12 @@ const DEFAULT_CARDS: ThirdSectionCard[] = [
 ];
 
 const CARD_IMAGES = [
-  "/images/card1-bg.png",
-  "/images/card2-bg.png",
-  "/images/card3-bg.png",
-  "/images/card4-bg.png",
-  "/images/card5-bg.png",
-  "/images/card6-bg.png",
+  "/images/problem-card-1.png",
+  "/images/problem-card-2.png",
+  "/images/problem-card-3.png",
+  "/images/problem-card-4.png",
+  "/images/problem-card-5.png",
+  "/images/problem-card-6.png",
 ];
 
 const CARD_W = 286;

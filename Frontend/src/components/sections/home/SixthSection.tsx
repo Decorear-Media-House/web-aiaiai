@@ -157,6 +157,8 @@ interface SixthSectionContent {
   heading?: string;
   description?: string;
   side_panel_image?: string;
+  cta_text?: string;
+  cta_url?: string;
 }
 
 /* ── Component ──────────────────────────────────────────────────────── */
@@ -169,6 +171,8 @@ export default function SixthSection({ content }: { content?: Record<string, unk
     c?.description ??
     "A structured, outcome-driven delivery process—from initial discovery through scale.";
   const sidePanelImage = c?.side_panel_image ? wpImageUrl(c.side_panel_image) : "/images/howwework-side.png";
+  const ctaText = c?.cta_text || "Contact Us";
+  const ctaUrl = c?.cta_url || "#contact";
 
   /* Split heading into white part + gradient part (last two words) */
   const words = heading.split(" ");
@@ -310,7 +314,7 @@ export default function SixthSection({ content }: { content?: Record<string, unk
                     More Information, please contact us.
                   </p>
                   <a
-                    href="#contact"
+                    href={ctaUrl}
                     className="flex items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90"
                     style={{
                       fontFamily: font, fontSize: 15, color: "#fff",
@@ -320,7 +324,7 @@ export default function SixthSection({ content }: { content?: Record<string, unk
                       borderRadius: 8,
                     }}
                   >
-                    Contact Us
+                    {ctaText}
                   </a>
                 </div>
               </div>

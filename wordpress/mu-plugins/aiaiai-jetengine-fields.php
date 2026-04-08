@@ -27,15 +27,22 @@ add_action('init', function () {
         $is_array = is_serialized($sample) && is_array(maybe_unserialize($sample));
 
         if ($is_array) {
+            $meta_key = $key; // capture for closure
             register_post_meta('page', $key, [
                 'show_in_rest' => [
                     'schema' => [
                         'type'  => 'array',
                         'items' => ['type' => 'object', 'additionalProperties' => true],
                     ],
+                    'prepare_callback' => function ($value) {
+                        // Convert associative keys (item-0, item-1) to numeric array
+                        if (is_array($value)) return array_values($value);
+                        return $value;
+                    },
                 ],
                 'single' => true,
                 'type'   => 'array',
+                'auth_callback' => '__return_true',
             ]);
         } else {
             register_post_meta('page', $key, [

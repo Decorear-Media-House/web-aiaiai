@@ -22,7 +22,9 @@ interface HeroContent {
   description?: string;
   stats?: { top: string; bottom: string }[];
   cta_primary?: string;
+  cta_primary_url?: string;
   cta_secondary?: string;
+  cta_secondary_url?: string;
   detection_title?: string;
   detection_subtitle?: string;
   background_color?: string;
@@ -45,7 +47,9 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
   const description = c.description ?? "Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.";
   const stats = c.stats ?? DEFAULT_STATS;
   const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
   const ctaSecondary = c.cta_secondary ?? "All Services";
+  const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const detectionTitle = c.detection_title ?? "AI-Powered Detection";
   const detectionSubtitle = c.detection_subtitle ?? "Camera \u2192 Alert \u2192 Incident \u2192 Report";
   const bgColor = c.background_color ?? "#070E24";
@@ -231,7 +235,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
             <FadeUp trigger="mount" delay={0.14}>
               <div className="max-sm:!flex-col max-sm:!w-full" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
                 <a
-                  href="/#contact"
+                  href={ctaPrimaryUrl}
                   className="max-sm:!w-full max-sm:!text-center"
                   style={{
                     fontFamily: font,
@@ -252,7 +256,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
                   {ctaPrimary}
                 </a>
                 <a
-                  href="/services"
+                  href={ctaSecondaryUrl}
                   className="max-sm:!w-full max-sm:!text-center"
                   style={{
                     fontFamily: font,

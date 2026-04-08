@@ -7,6 +7,11 @@
 
 defined('ABSPATH') || exit;
 
+/* Disable Gutenberg starter patterns modal */
+add_action('enqueue_block_editor_assets', function () {
+    wp_add_inline_script('wp-block-editor', "wp.data && wp.data.dispatch('core/preferences')?.set('core/edit-post','isPatternModalDismissed',true);", 'after');
+});
+
 /* ================================================================== */
 /*  1. Register meta fields for REST API                               */
 /* ================================================================== */

@@ -31,7 +31,9 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
   const description = (content?.description as string) ??
     "Roadmap to MVP to production deployment\u2014delivered with governance, integration, and operational constraints in mind.";
   const primaryCta = (content?.primaryCta as string) ?? "Contact Us";
+  const primaryCtaUrl = (content?.primaryCtaUrl as string) || "/#contact";
   const secondaryCta = (content?.secondaryCta as string) ?? "All Services";
+  const secondaryCtaUrl = (content?.secondaryCtaUrl as string) || "/services";
   const bgImage = wpImageUrl((content?.hero_background_image as string) || "");
   const containerImage = wpImageUrl((content?.container_image as string) || "");
   const bgColor = (content?.background_color as string) ?? "#070E24";
@@ -212,7 +214,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
             <FadeUp trigger="mount" delay={0.1}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
                 <a
-                  href="/#contact"
+                  href={primaryCtaUrl}
                   style={{
                     fontFamily: font,
                     fontSize: 16,
@@ -232,7 +234,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
                   {primaryCta}
                 </a>
                 <a
-                  href="/services"
+                  href={secondaryCtaUrl}
                   style={{
                     fontFamily: font,
                     fontSize: 16,

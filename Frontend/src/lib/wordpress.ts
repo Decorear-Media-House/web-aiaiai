@@ -179,7 +179,7 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
 async function wpFetch<T>(endpoint: string, fallback: T): Promise<T> {
   try {
     const res = await fetch(`${WP_API_URL}${endpoint}`, {
-      cache: "force-cache",
+      cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
     });
     if (!res.ok) throw new Error(`WP API error: ${res.status} ${endpoint}`);
     return res.json();
