@@ -27,16 +27,9 @@ export default function RoboticsCTASection({ content }: { content?: Record<strin
   const heading = c.heading ?? "Tell us the environment and ";
   const headingHighlight = c.heading_highlight ?? "target tasks.";
   const description = c.description ?? "We\u2019ll propose a pilot approach.";
-  // chips may come as array or newline-separated string from WP
-  // If array has only 1 item that's too long, it was likely concatenated — use defaults
+  // If WP provides only 1 chip (concatenated string), fall back to defaults
   const rawChips = c.chips;
-  let chips: string[] = DEFAULT_CHIPS;
-  if (Array.isArray(rawChips) && rawChips.length > 1) {
-    chips = rawChips;
-  } else if (typeof rawChips === "string" && rawChips.trim()) {
-    const split = rawChips.split(/\n|,/).map((s: string) => s.trim()).filter(Boolean);
-    if (split.length > 1) chips = split;
-  }
+  const chips: string[] = (Array.isArray(rawChips) && rawChips.length > 1) ? rawChips : DEFAULT_CHIPS;
   const ctaPrimary = c.cta_primary ?? "Contact Us";
   const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
   const ctaSecondary = c.cta_secondary ?? "All Services";
