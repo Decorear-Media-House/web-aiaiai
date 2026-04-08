@@ -18,8 +18,14 @@ echo "==> Installing dependencies..."
 cd "$FRONTEND_DIR"
 npm ci --prefer-offline 2>/dev/null || npm install
 
-# 3. Build static site (fetches WP content at build time)
+# 3. Build static site (clear cache first to fetch fresh WP content)
+echo "==> Clearing build cache..."
+rm -rf .next out
+
 echo "==> Building static site..."
+NEXT_OUTPUT=export \
+WORDPRESS_API_URL=https://aiaiai-cms.decorear.com/wp-json \
+NEXT_PUBLIC_WORDPRESS_URL=https://aiaiai-cms.decorear.com \
 NODE_ENV=production npm run build
 
 # 4. Deploy to nginx htdocs
