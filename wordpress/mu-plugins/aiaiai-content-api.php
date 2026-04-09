@@ -95,7 +95,7 @@ add_action('admin_head', function () {
 });
 
 function aiaiai_render_deploy() {
-    $webhook_url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9000/rebuild';
+    $webhook_url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9001/rebuild';
     $result = '';
 
     if (isset($_POST['aiaiai_deploy']) && wp_verify_nonce($_POST['_aiaiai_deploy_nonce'] ?? '', 'aiaiai_deploy')) {
