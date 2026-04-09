@@ -88,7 +88,7 @@ export default function ContactSection({ content }: { content?: Record<string, u
     c.address ||
     "1104/2 4th floor, Pattanakarn Road,\nSuan Luang, Bangkok, Thailand 10250";
   const isDev = process.env.NODE_ENV === "development";
-  const recaptchaSiteKey = isDev ? "" : (c.recaptcha_site_key || "6Le9YK4sAAAAAACYfwldjc-sSuico5etsWAj8YRqJ");
+  const recaptchaSiteKey = isDev ? "" : (c.recaptcha_site_key || "");
   const backgroundColor = c.background_color || "#070E24";
   const mapUrl = c.google_map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.0!2d100.6308!3d13.7230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQzJzIyLjgiTiAxMDDCsDM3JzUwLjkiRQ!5e0!3m2!1sen!2sth!4v1700000000000";
 

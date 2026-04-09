@@ -8,7 +8,7 @@ import FifthSection from "@/components/sections/home/FifthSection";
 import SixthSection from "@/components/sections/home/SixthSection";
 import SeventhSection from "@/components/sections/home/SeventhSection";
 import ContactSection from "@/components/sections/home/ContactSection";
-import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
+import { getPageMeta, getPageSEO, ensureArray, textareaToArray, getRecaptchaKey } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSEO("home", "Ai-Ai-Ai | AI Solution Partner", "Thailand's AI Solution Partner — from roadmap to production deployment.");
@@ -109,7 +109,7 @@ export default async function Home() {
     address: m.home_contact_address,
     google_map_url: m.home_contact_google_map_url,
     background_color: m.home_contact_background_color,
-    recaptcha_site_key: m.home_recaptcha_site_key,
+    recaptcha_site_key: await getRecaptchaKey(),
   };
 
   return (

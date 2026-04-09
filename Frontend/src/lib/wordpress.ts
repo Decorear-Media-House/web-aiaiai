@@ -436,3 +436,8 @@ export async function getTrackingTags(): Promise<TrackingTags> {
     body_close_scripts: "",
   });
 }
+
+export async function getRecaptchaKey(): Promise<string> {
+  const data = await wpFetch<{ site_key?: string }>("/aiaiai/v1/recaptcha-key", {});
+  return data.site_key || "";
+}

@@ -62,7 +62,10 @@ export default async function AboutPage() {
     label: m.about_edge_label,
     headingPrefix: m.about_edge_headingPrefix,
     headingHighlight: m.about_edge_headingHighlight,
-    edges: ensureArray(m.about_edge_edges).length > 0 ? ensureArray(m.about_edge_edges) : undefined,
+    edges: (() => {
+      const raw = ensureArray(m.about_edge_edges).filter((e: any) => e.title || e.label);
+      return raw.length > 0 ? raw : undefined;
+    })(),
     edge_photo_image: m.about_edge_photo_image,
   };
 

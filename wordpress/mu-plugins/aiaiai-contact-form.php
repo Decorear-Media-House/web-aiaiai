@@ -1,14 +1,48 @@
 <?php
 /**
  * Plugin Name: AIAIAI Contact Form
- * Description: REST API endpoint for contact form + SMTP config from Home page meta.
- * Version: 1.0.0
+ * Description: REST API endpoint for contact form. Reads SMTP/reCAPTCHA from Decorear Tools → Email Settings.
+ * Version: 2.0.0
  */
 
 defined('ABSPATH') || exit;
 
 /* ================================================================== */
-/*  1. REST API endpoint: POST /aiaiai/v1/contact                      */
+/*  Auto-migrate: move email settings from Home page meta → options    */
+/* ================================================================== */
+add_action('admin_init', function () {
+    if (get_option('aiaiai_email_migrated')) return;
+    $home = get_page_by_path('home');
+    if (!$home) return;
+    $pid = $home->ID;
+    $map = [
+        'home_contact_recipient_email' => 'recipient_email',
+        'home_contact_subject'         => 'email_subject',
+        'home_recaptcha_site_key'      => 'recaptcha_site_key',
+        'home_recaptcha_secret_key'    => 'recaptcha_secret',
+        'home_smtp_host'               => 'smtp_host',
+        'home_smtp_port'               => 'smtp_port',
+        'home_smtp_username'           => 'smtp_username',
+        'home_smtp_password'           => 'smtp_password',
+        'home_smtp_encryption'         => 'smtp_encryption',
+        'home_smtp_from_email'         => 'smtp_from_email',
+        'home_smtp_from_name'          => 'smtp_from_name',
+    ];
+    $existing = get_option('aiaiai_email_settings', []);
+    if (!empty($existing)) { update_option('aiaiai_email_migrated', 1); return; }
+    $settings = [];
+    foreach ($map as $old => $new) {
+        $v = get_post_meta($pid, $old, true);
+        if ($v) $settings[$new] = $v;
+    }
+    if ($settings) {
+        update_option('aiaiai_email_settings', $settings);
+    }
+    update_option('aiaiai_email_migrated', 1);
+}, 5);
+
+/* ================================================================== */
+/*  REST API endpoint: POST /aiaiai/v1/contact                         */
 /* ================================================================== */
 
 add_action('rest_api_init', function () {
@@ -44,16 +78,12 @@ function aiaiai_handle_contact_form(WP_REST_Request $request) {
         ], 400);
     }
 
-    // Get Home page for settings
-    $home_page = get_page_by_path('home');
-    if (!$home_page) {
-        $home_page = get_page_by_title('Home');
-    }
-    $page_id = $home_page ? $home_page->ID : 0;
+    // Get settings from Decorear Tools → Email Settings
+    $s = get_option('aiaiai_email_settings', []);
 
     // Verify reCAPTCHA
     $recaptcha_token  = sanitize_text_field($body['recaptchaToken'] ?? '');
-    $recaptcha_secret = get_post_meta($page_id, 'home_recaptcha_secret_key', true);
+    $recaptcha_secret = $s['recaptcha_secret'] ?? '';
     if ($recaptcha_secret && $recaptcha_token) {
         $verify = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
             'body' => [
@@ -69,7 +99,7 @@ function aiaiai_handle_contact_form(WP_REST_Request $request) {
             ], 403);
         }
     } elseif ($recaptcha_secret && !$recaptcha_token) {
-        // Skip reCAPTCHA requirement for localhost (dev)
+        // Skip reCAPTCHA for localhost (dev)
         $is_local = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'])
                  || strpos($_SERVER['HTTP_ORIGIN'] ?? '', 'localhost') !== false;
         if (!$is_local) {
@@ -80,16 +110,11 @@ function aiaiai_handle_contact_form(WP_REST_Request $request) {
         }
     }
 
-    // Get email settings from meta
-    $recipient = get_post_meta($page_id, 'home_contact_recipient_email', true);
-    $subject   = get_post_meta($page_id, 'home_contact_subject', true);
-
-    if (empty($recipient)) {
-        $recipient = get_option('admin_email', 'info@ai-ai-ai.co');
-    }
-    if (empty($subject)) {
-        $subject = 'New Contact — AI-AI-AI Website';
-    }
+    // Email settings
+    $recipient = $s['recipient_email'] ?? '';
+    $subject   = $s['email_subject'] ?? '';
+    if (empty($recipient)) $recipient = get_option('admin_email', 'info@ai-ai-ai.co');
+    if (empty($subject))   $subject = 'New Contact — AI-AI-AI Website';
 
     // Build email body
     $email_body  = "New contact form submission from AI-AI-AI website:\n\n";
@@ -107,8 +132,8 @@ function aiaiai_handle_contact_form(WP_REST_Request $request) {
         "Content-Type: text/plain; charset=UTF-8",
     ];
 
-    // Configure SMTP if settings exist
-    aiaiai_configure_smtp($page_id);
+    // Configure SMTP
+    aiaiai_configure_smtp_from_option();
 
     $sent = wp_mail($recipient, $subject, $email_body, $headers);
 
@@ -126,106 +151,18 @@ function aiaiai_handle_contact_form(WP_REST_Request $request) {
 }
 
 /* ================================================================== */
-/*  2. SMTP configuration from Home page meta                          */
+/*  REST endpoint to expose reCAPTCHA site key to frontend             */
 /* ================================================================== */
 
-/* ================================================================== */
-/*  3. Meta box UI on Home page for Contact & SMTP settings            */
-/* ================================================================== */
-
-$aiaiai_contact_fields = [
-    ['key' => 'home_contact_recipient_email', 'label' => 'Recipient Email',        'type' => 'email',    'placeholder' => 'info@ai-ai-ai.co'],
-    ['key' => 'home_contact_subject',         'label' => 'Email Subject',           'type' => 'text',     'placeholder' => 'New Contact — AI-AI-AI Website'],
-    ['key' => 'home_recaptcha_site_key',      'label' => 'reCAPTCHA Site Key',      'type' => 'text',     'placeholder' => '6Le9YK4s...'],
-    ['key' => 'home_recaptcha_secret_key',    'label' => 'reCAPTCHA Secret Key',    'type' => 'text',     'placeholder' => '6Le9YK4s...'],
-    ['key' => 'home_smtp_host',               'label' => 'SMTP Host',               'type' => 'text',     'placeholder' => 'smtp.gmail.com'],
-    ['key' => 'home_smtp_port',               'label' => 'SMTP Port',               'type' => 'number',   'placeholder' => '587'],
-    ['key' => 'home_smtp_username',           'label' => 'SMTP Username',           'type' => 'text',     'placeholder' => 'email@gmail.com'],
-    ['key' => 'home_smtp_password',           'label' => 'SMTP Password (App Password)', 'type' => 'password', 'placeholder' => ''],
-    ['key' => 'home_smtp_encryption',         'label' => 'SMTP Encryption',         'type' => 'text',     'placeholder' => 'tls'],
-    ['key' => 'home_smtp_from_email',         'label' => 'From Email',              'type' => 'email',    'placeholder' => 'info@ai-ai-ai.co'],
-    ['key' => 'home_smtp_from_name',          'label' => 'From Name',               'type' => 'text',     'placeholder' => 'AI-AI-AI'],
-];
-
-add_action('add_meta_boxes', function () {
-    // Only show on Home page
-    $home_page = get_page_by_path('home');
-    $home_id = $home_page ? $home_page->ID : 0;
-    add_meta_box(
-        'aiaiai-contact-settings',
-        '📧 Contact Form & SMTP Settings',
-        'aiaiai_render_contact_meta_box',
-        'page',
-        'normal',
-        'high',
-        ['home_id' => $home_id]
-    );
+add_action('rest_api_init', function () {
+    register_rest_route('aiaiai/v1', '/recaptcha-key', [
+        'methods'             => 'GET',
+        'callback'            => function () {
+            $s = get_option('aiaiai_email_settings', []);
+            return new WP_REST_Response([
+                'site_key' => $s['recaptcha_site_key'] ?? '',
+            ], 200);
+        },
+        'permission_callback' => '__return_true',
+    ]);
 });
-
-function aiaiai_render_contact_meta_box($post) {
-    global $aiaiai_contact_fields;
-    $home_page = get_page_by_path('home');
-    $home_id = $home_page ? $home_page->ID : 0;
-
-    // Only render on Home page
-    if ($post->ID !== $home_id && $post->post_name !== 'home') {
-        echo '<p style="color:#999;">This meta box only applies to the Home page.</p>';
-        return;
-    }
-
-    wp_nonce_field('aiaiai_contact_meta', '_aiaiai_contact_nonce');
-
-    echo '<table class="form-table"><tbody>';
-    foreach ($aiaiai_contact_fields as $field) {
-        $value = get_post_meta($post->ID, $field['key'], true);
-        $type = $field['type'];
-        echo '<tr>';
-        echo '<th><label for="' . esc_attr($field['key']) . '">' . esc_html($field['label']) . '</label></th>';
-        echo '<td>';
-        echo '<input type="' . esc_attr($type) . '" id="' . esc_attr($field['key']) . '" name="' . esc_attr($field['key']) . '" value="' . esc_attr($value) . '" placeholder="' . esc_attr($field['placeholder']) . '" class="regular-text" style="width:100%;max-width:400px;" />';
-        echo '</td></tr>';
-    }
-    echo '</tbody></table>';
-}
-
-add_action('save_post_page', function ($post_id) {
-    global $aiaiai_contact_fields;
-    if (!isset($_POST['_aiaiai_contact_nonce']) || !wp_verify_nonce($_POST['_aiaiai_contact_nonce'], 'aiaiai_contact_meta')) return;
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    if (!current_user_can('edit_post', $post_id)) return;
-
-    foreach ($aiaiai_contact_fields as $field) {
-        if (isset($_POST[$field['key']])) {
-            update_post_meta($post_id, $field['key'], sanitize_text_field(wp_unslash($_POST[$field['key']])));
-        }
-    }
-});
-
-function aiaiai_configure_smtp($page_id) {
-    $host       = get_post_meta($page_id, 'home_smtp_host', true);
-    $port       = get_post_meta($page_id, 'home_smtp_port', true);
-    $username   = get_post_meta($page_id, 'home_smtp_username', true);
-    $password   = get_post_meta($page_id, 'home_smtp_password', true);
-    $encryption = get_post_meta($page_id, 'home_smtp_encryption', true);
-    $from_email = get_post_meta($page_id, 'home_smtp_from_email', true);
-    $from_name  = get_post_meta($page_id, 'home_smtp_from_name', true);
-
-    if (empty($host) || empty($username) || empty($password)) {
-        return; // No SMTP configured, use default wp_mail
-    }
-
-    // Override PHPMailer settings
-    add_action('phpmailer_init', function ($phpmailer) use ($host, $port, $username, $password, $encryption, $from_email, $from_name) {
-        $phpmailer->isSMTP();
-        $phpmailer->Host       = $host;
-        $phpmailer->Port       = intval($port) ?: 587;
-        $phpmailer->SMTPAuth   = true;
-        $phpmailer->Username   = $username;
-        $phpmailer->Password   = $password;
-        $phpmailer->SMTPSecure = $encryption ?: 'tls';
-
-        if ($from_email) {
-            $phpmailer->setFrom($from_email, $from_name ?: 'AI-AI-AI');
-        }
-    });
-}

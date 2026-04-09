@@ -58,11 +58,20 @@ add_action( 'admin_menu', function () {
         'aiaiai-backup',
         'aiaiai_backup_render_page'
     );
+
+    add_submenu_page(
+        'aiaiai-tags',
+        'Email Settings',
+        'Email Settings',
+        'manage_options',
+        'aiaiai-email',
+        'aiaiai_email_render_page'
+    );
 });
 
 /* Enqueue assets on our pages only */
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
-    $our_pages = [ 'toplevel_page_aiaiai-tags', 'decorear-tools_page_aiaiai-backup' ];
+    $our_pages = [ 'toplevel_page_aiaiai-tags', 'decorear-tools_page_aiaiai-backup', 'decorear-tools_page_aiaiai-email' ];
     if ( ! in_array( $hook, $our_pages, true ) ) return;
     wp_enqueue_media();
 });
@@ -858,4 +867,108 @@ function aiaiai_backup_render_table( $backups ) {
         </tbody>
     </table>
     <?php
+}
+
+/* ──────────────────────────────────────────────
+   Email Settings page
+   ────────────────────────────────────────────── */
+
+define( 'AIAIAI_EMAIL_OPTION', 'aiaiai_email_settings' );
+
+function aiaiai_email_get_fields() {
+    return [
+        ['key' => 'recipient_email',    'label' => 'Recipient Email',               'type' => 'email',    'placeholder' => 'info@ai-ai-ai.co'],
+        ['key' => 'email_subject',      'label' => 'Email Subject',                 'type' => 'text',     'placeholder' => 'New Contact — AI-AI-AI Website'],
+        ['key' => 'recaptcha_site_key', 'label' => 'reCAPTCHA Site Key',            'type' => 'text',     'placeholder' => '6Le9YK4s...'],
+        ['key' => 'recaptcha_secret',   'label' => 'reCAPTCHA Secret Key',          'type' => 'text',     'placeholder' => '6Le9YK4s...'],
+        ['key' => 'smtp_host',          'label' => 'SMTP Host',                     'type' => 'text',     'placeholder' => 'smtp.gmail.com'],
+        ['key' => 'smtp_port',          'label' => 'SMTP Port',                     'type' => 'number',   'placeholder' => '587'],
+        ['key' => 'smtp_username',      'label' => 'SMTP Username',                 'type' => 'text',     'placeholder' => 'email@gmail.com'],
+        ['key' => 'smtp_password',      'label' => 'SMTP Password (App Password)',  'type' => 'password', 'placeholder' => ''],
+        ['key' => 'smtp_encryption',    'label' => 'SMTP Encryption',               'type' => 'text',     'placeholder' => 'tls'],
+        ['key' => 'smtp_from_email',    'label' => 'From Email',                    'type' => 'email',    'placeholder' => 'info@ai-ai-ai.co'],
+        ['key' => 'smtp_from_name',     'label' => 'From Name',                     'type' => 'text',     'placeholder' => 'AI-AI-AI'],
+    ];
+}
+
+function aiaiai_email_render_page() {
+    if ( ! current_user_can( 'manage_options' ) ) return;
+
+    $saved = get_option( AIAIAI_EMAIL_OPTION, [] );
+    $fields = aiaiai_email_get_fields();
+
+    // Handle save
+    if ( isset( $_POST['aiaiai_email_save'] ) && check_admin_referer( 'aiaiai_email_nonce' ) ) {
+        $new = [];
+        foreach ( $fields as $f ) {
+            $new[ $f['key'] ] = sanitize_text_field( wp_unslash( $_POST[ $f['key'] ] ?? '' ) );
+        }
+        update_option( AIAIAI_EMAIL_OPTION, $new );
+        $saved = $new;
+        echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
+    }
+
+    // Send test email
+    if ( isset( $_POST['aiaiai_email_test'] ) && check_admin_referer( 'aiaiai_email_nonce' ) ) {
+        aiaiai_configure_smtp_from_option();
+        $to = $saved['recipient_email'] ?: get_option( 'admin_email' );
+        $result = wp_mail( $to, 'Test Email — AI-AI-AI', 'This is a test email from AI-AI-AI website.' );
+        if ( $result ) {
+            echo '<div class="notice notice-success is-dismissible"><p>Test email sent to <strong>' . esc_html( $to ) . '</strong></p></div>';
+        } else {
+            echo '<div class="notice notice-error is-dismissible"><p>Failed to send test email. Check SMTP settings.</p></div>';
+        }
+    }
+    ?>
+    <div class="wrap">
+        <h1>Email Settings</h1>
+        <p>Contact form SMTP and reCAPTCHA settings.</p>
+        <form method="post">
+            <?php wp_nonce_field( 'aiaiai_email_nonce' ); ?>
+            <table class="form-table">
+                <tbody>
+                <?php foreach ( $fields as $f ) :
+                    $val = $saved[ $f['key'] ] ?? '';
+                ?>
+                    <tr>
+                        <th><label for="<?php echo esc_attr( $f['key'] ); ?>"><?php echo esc_html( $f['label'] ); ?></label></th>
+                        <td><input type="<?php echo esc_attr( $f['type'] ); ?>"
+                                   id="<?php echo esc_attr( $f['key'] ); ?>"
+                                   name="<?php echo esc_attr( $f['key'] ); ?>"
+                                   value="<?php echo esc_attr( $val ); ?>"
+                                   placeholder="<?php echo esc_attr( $f['placeholder'] ); ?>"
+                                   class="regular-text" style="width:100%;max-width:500px;" /></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <p class="submit">
+                <button type="submit" name="aiaiai_email_save" class="button button-primary">Save Settings</button>
+                <button type="submit" name="aiaiai_email_test" class="button" style="margin-left:10px;">Send Test Email</button>
+            </p>
+        </form>
+    </div>
+    <?php
+}
+
+/** Configure SMTP from the options table */
+function aiaiai_configure_smtp_from_option() {
+    $s = get_option( AIAIAI_EMAIL_OPTION, [] );
+    $host     = $s['smtp_host'] ?? '';
+    $username = $s['smtp_username'] ?? '';
+    $password = $s['smtp_password'] ?? '';
+    if ( empty( $host ) || empty( $username ) || empty( $password ) ) return;
+
+    add_action( 'phpmailer_init', function ( $phpmailer ) use ( $s ) {
+        $phpmailer->isSMTP();
+        $phpmailer->Host       = $s['smtp_host'];
+        $phpmailer->Port       = intval( $s['smtp_port'] ) ?: 587;
+        $phpmailer->SMTPAuth   = true;
+        $phpmailer->Username   = $s['smtp_username'];
+        $phpmailer->Password   = $s['smtp_password'];
+        $phpmailer->SMTPSecure = $s['smtp_encryption'] ?: 'tls';
+        if ( ! empty( $s['smtp_from_email'] ) ) {
+            $phpmailer->setFrom( $s['smtp_from_email'], $s['smtp_from_name'] ?: 'AI-AI-AI' );
+        }
+    });
 }
