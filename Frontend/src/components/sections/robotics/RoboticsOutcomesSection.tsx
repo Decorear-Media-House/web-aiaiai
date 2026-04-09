@@ -98,10 +98,10 @@ interface OutcomesContent {
 
 export default function RoboticsOutcomesSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as OutcomesContent;
-  const chip = c.chip ?? "Outcomes";
-  const sectionHeading = c.heading ?? "What Robotics ";
-  const headingHighlight = c.heading_highlight ?? "Achieves";
-  const sectionDescription = c.description ?? "Structured deployment unlocks measurable operational improvements — from day one through full-scale rollout.";
+  const chip = c.chip || "Outcomes";
+  const sectionHeading = c.heading || "What Robotics ";
+  const headingHighlight = c.heading_highlight || "Achieves";
+  const sectionDescription = c.description || "Structured deployment unlocks measurable operational improvements — from day one through full-scale rollout.";
   const rawAccordion = c.accordion_items ?? ACCORDION_ITEMS;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const accordionItems: any[] = (Array.isArray(rawAccordion) ? rawAccordion : Object.values(rawAccordion)).map((item: any, i: number) => ({

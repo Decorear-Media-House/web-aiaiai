@@ -27,10 +27,10 @@ interface DeliverablesContent {
 
 export default function RoboticsDeliverablesSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as DeliverablesContent;
-  const chip = c.chip ?? "Deliverables";
-  const sectionHeading = c.heading ?? "What We ";
-  const headingHighlight = c.heading_highlight ?? "Deliver";
-  const sectionDescription = c.description ?? "Six structured work products that take you from concept to operating robotics at scale.";
+  const chip = c.chip || "Deliverables";
+  const sectionHeading = c.heading || "What We ";
+  const headingHighlight = c.heading_highlight || "Deliver";
+  const sectionDescription = c.description || "Six structured work products that take you from concept to operating robotics at scale.";
   // Merge WP items with defaults so num/title/icon always exist
   const rawItems = c.items ?? DELIVERABLES;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

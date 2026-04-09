@@ -79,9 +79,9 @@ interface PhasesContent {
 
 export default function SecurityPhasesSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as PhasesContent;
-  const chip = c.chip ?? "Development";
-  const sectionHeading = c.heading ?? "How Deployments Usually Run";
-  const sectionDescription = c.description ?? "A structured three-phase approach from initial pilot through full-scale rollout.";
+  const chip = c.chip || "Development";
+  const sectionHeading = c.heading || "How Deployments Usually Run";
+  const sectionDescription = c.description || "A structured three-phase approach from initial pilot through full-scale rollout.";
   const phases = c.phases ?? PHASES;
   const bgColor = c.background_color || "#070E24";
   return (

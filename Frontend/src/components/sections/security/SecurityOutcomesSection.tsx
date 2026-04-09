@@ -144,9 +144,9 @@ interface OutcomesContent {
 
 export default function SecurityOutcomesSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as OutcomesContent;
-  const chip = c.chip ?? "Outcomes";
-  const sectionHeading = c.heading ?? "What this Platform ";
-  const headingHighlight = c.heading_highlight ?? "Achieves";
+  const chip = c.chip || "Outcomes";
+  const sectionHeading = c.heading || "What this Platform ";
+  const headingHighlight = c.heading_highlight || "Achieves";
   const accordion = c.accordion ?? ACCORDION;
   const bgColor = c.background_color || "#070E24";
   const imageUrl = c.wpImageUrl ? toPublicUrl(c.wpImageUrl) : "";

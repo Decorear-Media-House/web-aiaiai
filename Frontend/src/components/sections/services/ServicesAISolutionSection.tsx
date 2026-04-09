@@ -59,15 +59,15 @@ const DEFAULT_USE_CASES = [
 
 export default function ServicesAISolutionSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as AISolutionContent;
-  const number = c.number ?? "03";
-  const label = c.label ?? "AI Solution Partner";
-  const heading = c.heading ?? "AI Solution Partner";
-  const subtitle = c.subtitle ?? "Your AI development partner — from roadmap to production.";
-  const whatItIs = c.what_it_is ?? "A partner-led engagement that combines AI consulting and implementation support to deliver PoC/MVP and deploy AI into real operations.";
+  const number = c.number || "03";
+  const label = c.label || "AI Solution Partner";
+  const heading = c.heading || "AI Solution Partner";
+  const subtitle = c.subtitle || "Your AI development partner — from roadmap to production.";
+  const whatItIs = c.what_it_is || "A partner-led engagement that combines AI consulting and implementation support to deliver PoC/MVP and deploy AI into real operations.";
   const outcomesEnabled = c.outcomes_enabled ?? DEFAULT_OUTCOMES;
   const useCaseCategories = c.use_case_categories ?? DEFAULT_USE_CASES;
-  const ctaText = c.cta_text ?? "Explore AI Solution Partner";
-  const ctaHref = c.cta_href ?? "#";
+  const ctaText = c.cta_text || "Explore AI Solution Partner";
+  const ctaHref = c.cta_href || "#";
   const bgColor = c.background_color || "#1E2E48";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>

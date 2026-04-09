@@ -24,13 +24,13 @@ const DEFAULT_CHIPS = ["# of sites", "Camera count", "Primary objective"];
 
 export default function SecurityCTASection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as CTAContent;
-  const heading = c.heading ?? "Share site count, camera count, ";
-  const headingHighlight = c.heading_highlight ?? "and objectives.";
-  const description = c.description ?? "We\u2019ll propose a pilot plan.";
+  const heading = c.heading || "Share site count, camera count, ";
+  const headingHighlight = c.heading_highlight || "and objectives.";
+  const description = c.description || "We\u2019ll propose a pilot plan.";
   const chips = c.chips ?? DEFAULT_CHIPS;
-  const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaPrimary = c.cta_primary || "Contact Us";
   const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
-  const ctaSecondary = c.cta_secondary ?? "All Services";
+  const ctaSecondary = c.cta_secondary || "All Services";
   const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const bgImage = c.background_image ? wpImageUrl(c.background_image) : "";
   const bgColor = c.background_color || "#070E24";

@@ -45,12 +45,12 @@ function ChevronRight() {
 
 export default function ServicesInitiativesSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as InitiativesContent;
-  const label = c.label ?? "Initiatives";
+  const label = c.label || "Initiatives";
   const headingLine1 = c.heading_line1 ?? "Example";
   const headingLine2 = c.heading_line2 ?? "Initiatives";
-  const description = c.description ?? "Examples of deliverables we commonly support across all three service lines.";
-  const ctaText = c.cta_text ?? "Contact Us";
-  const ctaHref = c.cta_href ?? "/#contact";
+  const description = c.description || "Examples of deliverables we commonly support across all three service lines.";
+  const ctaText = c.cta_text || "Contact Us";
+  const ctaHref = c.cta_href || "/#contact";
   const initiatives = (Array.isArray(c.initiatives) && c.initiatives.length > 0) ? c.initiatives : DEFAULT_INITIATIVES;
   const bgColor = c.background_color || "#102050";
   return (

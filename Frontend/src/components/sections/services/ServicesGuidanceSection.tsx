@@ -84,14 +84,14 @@ interface GuidanceContent {
 
 export default function ServicesGuidanceSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as GuidanceContent;
-  const label = c.label ?? "Getting Started";
-  const heading = c.heading ?? "\u201cWhere to start\u201d";
-  const headingHighlight = c.heading_highlight ?? "Guidance";
-  const description = c.description ?? "If you\u2019re unsure where to begin, pick the path that matches your most urgent goal.";
+  const label = c.label || "Getting Started";
+  const heading = c.heading || "\u201cWhere to start\u201d";
+  const headingHighlight = c.heading_highlight || "Guidance";
+  const description = c.description || "If you\u2019re unsure where to begin, pick the path that matches your most urgent goal.";
   const cards = (Array.isArray(c.cards) && c.cards.length > 0) ? c.cards : DEFAULT_CARDS;
-  const ctaPrompt = c.cta_prompt ?? "Ready to discuss your specific challenge?";
-  const ctaText = c.cta_text ?? "Contact Us Today";
-  const ctaHref = c.cta_href ?? "/#contact";
+  const ctaPrompt = c.cta_prompt || "Ready to discuss your specific challenge?";
+  const ctaText = c.cta_text || "Contact Us Today";
+  const ctaHref = c.cta_href || "/#contact";
   const bgImage = wpImageUrl((c.background_image as string) || "") || "/images/services-guidance-bg.png";
   const bgColor = c.background_color || "#102050";
   return (

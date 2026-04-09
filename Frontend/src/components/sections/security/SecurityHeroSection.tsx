@@ -42,16 +42,16 @@ const DEFAULT_STATS = [
 
 export default function SecurityHeroSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as HeroContent;
-  const chip = c.chip ?? "AI Security Solution";
-  const heading = c.heading ?? "AI Security Platform & Solution";
-  const description = c.description ?? "Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.";
+  const chip = c.chip || "AI Security Solution";
+  const heading = c.heading || "AI Security Platform & Solution";
+  const description = c.description || "Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.";
   const stats = c.stats ?? DEFAULT_STATS;
-  const ctaPrimary = c.cta_primary ?? "Contact Us";
+  const ctaPrimary = c.cta_primary || "Contact Us";
   const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
-  const ctaSecondary = c.cta_secondary ?? "All Services";
+  const ctaSecondary = c.cta_secondary || "All Services";
   const ctaSecondaryUrl = c.cta_secondary_url || "/services";
-  const detectionTitle = c.detection_title ?? "AI-Powered Detection";
-  const detectionSubtitle = c.detection_subtitle ?? "Camera \u2192 Alert \u2192 Incident \u2192 Report";
+  const detectionTitle = c.detection_title || "AI-Powered Detection";
+  const detectionSubtitle = c.detection_subtitle || "Camera \u2192 Alert \u2192 Incident \u2192 Report";
   const bgColor = c.background_color || "#070E24";
   const heroBgUrl = c.wpImageUrl ? toPublicUrl(c.wpImageUrl) : "";
   const heroCardUrl = c.wpContainerImageUrl ? toPublicUrl(c.wpContainerImageUrl) : "";

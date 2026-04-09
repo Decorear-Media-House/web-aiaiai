@@ -107,10 +107,10 @@ interface IncludedContent {
 
 export default function SecurityIncludedSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as IncludedContent;
-  const chip = c.chip ?? "What\u2019s Included";
-  const sectionHeading = c.heading ?? "What the Solution ";
-  const headingHighlight = c.heading_highlight ?? "Includes";
-  const sectionDescription = c.description ?? "Three pillars that work together to turn cameras into an operational intelligence system.";
+  const chip = c.chip || "What\u2019s Included";
+  const sectionHeading = c.heading || "What the Solution ";
+  const headingHighlight = c.heading_highlight || "Includes";
+  const sectionDescription = c.description || "Three pillars that work together to turn cameras into an operational intelligence system.";
   const pillars = c.pillars ?? PILLARS;
   const bgColor = c.background_color || "#1A4494";
   const cardImages = [

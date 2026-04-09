@@ -51,14 +51,14 @@ const DEFAULT_CHECK_ITEMS = [
 
 export default function ServicesRoboticsSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as RoboticsContent;
-  const number = c.number ?? "01";
-  const label = c.label ?? "Robotics";
-  const heading = c.heading ?? "Embodied AI & Humanoid Robotic Solution";
-  const subtitle = c.subtitle ?? "Humanoid robotics deployment with workflow integration.";
-  const whatItIs = c.what_it_is ?? "End-to-end enablement for humanoid robotics pilots and deployments: readiness planning, SOPs, training, integration, and scale playbooks.";
+  const number = c.number || "01";
+  const label = c.label || "Robotics";
+  const heading = c.heading || "Embodied AI & Humanoid Robotic Solution";
+  const subtitle = c.subtitle || "Humanoid robotics deployment with workflow integration.";
+  const whatItIs = c.what_it_is || "End-to-end enablement for humanoid robotics pilots and deployments: readiness planning, SOPs, training, integration, and scale playbooks.";
   const checkItems = c.check_items ?? DEFAULT_CHECK_ITEMS;
-  const ctaText = c.cta_text ?? "Explore Robotics";
-  const ctaHref = c.cta_href ?? "#";
+  const ctaText = c.cta_text || "Explore Robotics";
+  const ctaHref = c.cta_href || "#";
   const bgColor = c.background_color || "#102050";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>

@@ -30,13 +30,13 @@ interface HeroContent {
 
 export default function ServicesHeroSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as HeroContent;
-  const label = c.label ?? "AI Solution Partner";
-  const heading = c.heading ?? "Services built around\nmeasurable outcomes.";
+  const label = c.label || "AI Solution Partner";
+  const heading = c.heading || "Services built around\nmeasurable outcomes.";
   const description = c.description ?? `We don't start with "AI features." We start with outcomes you need. Then define the right delivery pathway and operational model — roadmap, architecture, and rollout plan — so AI can be deployed, governed, and scaled.`;
-  const ctaPrimaryText = c.cta_primary_text ?? "About Us";
-  const ctaPrimaryHref = c.cta_primary_href ?? "/about";
-  const ctaSecondaryText = c.cta_secondary_text ?? "Contact Us";
-  const ctaSecondaryHref = c.cta_secondary_href ?? "/#contact";
+  const ctaPrimaryText = c.cta_primary_text || "About Us";
+  const ctaPrimaryHref = c.cta_primary_href || "/about";
+  const ctaSecondaryText = c.cta_secondary_text || "Contact Us";
+  const ctaSecondaryHref = c.cta_secondary_href || "/#contact";
   const bgImage = wpImageUrl((c.background_image as string) || "/images/services-security-hero-bg.png");
   const bgColor = c.background_color || "#070E24";
 

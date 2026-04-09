@@ -51,14 +51,14 @@ const DEFAULT_CHECK_ITEMS = [
 
 export default function ServicesSecuritySection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as SecurityContent;
-  const number = c.number ?? "02";
-  const label = c.label ?? "Security";
-  const heading = c.heading ?? "AI Security Platform";
-  const subtitle = c.subtitle ?? "AI video analytics for security operations and asset protection.";
-  const whatItIs = c.what_it_is ?? "Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.";
+  const number = c.number || "02";
+  const label = c.label || "Security";
+  const heading = c.heading || "AI Security Platform";
+  const subtitle = c.subtitle || "AI video analytics for security operations and asset protection.";
+  const whatItIs = c.what_it_is || "Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.";
   const checkItems = c.check_items ?? DEFAULT_CHECK_ITEMS;
-  const ctaText = c.cta_text ?? "Explore Security Platform";
-  const ctaHref = c.cta_href ?? "#";
+  const ctaText = c.cta_text || "Explore Security Platform";
+  const ctaHref = c.cta_href || "#";
   const bgColor = c.background_color || "#070E24";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>

@@ -15,9 +15,9 @@ interface OverviewContent {
 
 export default function ServicesOverviewSection({ content }: { content?: Record<string, unknown> }) {
   const c = (content ?? {}) as OverviewContent;
-  const heading = c.heading ?? "Service Overview";
-  const subtitle = c.subtitle ?? "(Long-form cards)";
-  const description = c.description ?? "Three focused service lines — each designed to deploy, govern, and scale AI in your real operations.";
+  const heading = c.heading || "Service Overview";
+  const subtitle = c.subtitle || "(Long-form cards)";
+  const description = c.description || "Three focused service lines — each designed to deploy, govern, and scale AI in your real operations.";
   const bgImage = c.background_image ? wpImageUrl(c.background_image) : "";
 
   return (
