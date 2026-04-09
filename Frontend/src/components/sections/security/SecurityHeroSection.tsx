@@ -45,7 +45,12 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
   const chip = c.chip || "AI Security Solution";
   const heading = c.heading || "AI Security Platform & Solution";
   const description = c.description || "Computer Vision + AI video analytics for detection, alerts, and incident workflows — designed for real security operations.";
-  const stats = c.stats ?? DEFAULT_STATS;
+  const rawStats = c.stats ?? DEFAULT_STATS;
+  const stats = (Array.isArray(rawStats) ? rawStats : []).map((s: any) => ({
+    top: s.top || s.label || "",
+    bottom: s.bottom || s.value || "",
+  })).filter((s: any) => s.top || s.bottom);
+  const finalStats = stats.length > 0 ? stats : DEFAULT_STATS;
   const ctaPrimary = c.cta_primary || "Contact Us";
   const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
   const ctaSecondary = c.cta_secondary || "All Services";
@@ -178,7 +183,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
                     backgroundClip: "text",
                   }}
                 >
-                  {heading}
+                  {heading.replace(/&amp;/g, "&")}
                 </h1>
 
                 {/* Body */}
@@ -191,7 +196,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
             {/* Stat chips */}
             <FadeUp trigger="mount" delay={0.08}>
               <div className="max-sm:!gap-2" style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {stats.map(({ top, bottom }) => (
+                {finalStats.map(({ top, bottom }) => (
                   <div
                     key={top}
                     className="max-sm:!px-3 max-sm:!py-3 max-sm:!flex-1 max-sm:!min-w-0"

@@ -138,7 +138,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
 
         {/* Right — 6 cards in 3-column grid */}
         <div
-          className="max-sm:!grid-cols-1"
+          className="max-sm:!grid-cols-2"
           style={{
             flex: 1,
             minWidth: 0,

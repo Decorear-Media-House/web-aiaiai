@@ -28,6 +28,9 @@ const facultyGlyphic = Faculty_Glyphic({
 export const metadata: Metadata = {
   title: "Ai-Ai-Ai | AI Solution Partner",
   description: "Your AI Solution Partner from roadmap to production deployment.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default async function RootLayout({

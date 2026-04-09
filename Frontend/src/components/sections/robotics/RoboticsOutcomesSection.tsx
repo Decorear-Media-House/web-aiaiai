@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
 import { wpImageUrl } from "@/lib/wordpress";
@@ -111,6 +111,13 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
   }));
   const outcomesImage = c.outcomes_image ? wpImageUrl(c.outcomes_image) : "";
   const [open, setOpen] = useState<Set<number>>(new Set([0, 1, 2, 3]));
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (!didInit.current && window.innerWidth < 640) {
+      setOpen(new Set([0]));
+    }
+    didInit.current = true;
+  }, []);
 
   return (
     <section

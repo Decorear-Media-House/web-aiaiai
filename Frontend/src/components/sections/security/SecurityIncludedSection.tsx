@@ -113,10 +113,15 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
   const sectionDescription = c.description || "Three pillars that work together to turn cameras into an operational intelligence system.";
   const pillars = c.pillars ?? PILLARS;
   const bgColor = c.background_color || "#1A4494";
+  const DEFAULT_CARD_IMAGES = [
+    "/images/sec-included-card1.png",
+    "/images/sec-included-card2.png",
+    "/images/sec-included-card3.png",
+  ];
   const cardImages = [
-    c.card1_image ? wpImageUrl(c.card1_image) : "",
-    c.card2_image ? wpImageUrl(c.card2_image) : "",
-    c.card3_image ? wpImageUrl(c.card3_image) : "",
+    (c.card1_image ? wpImageUrl(c.card1_image) : "") || DEFAULT_CARD_IMAGES[0],
+    (c.card2_image ? wpImageUrl(c.card2_image) : "") || DEFAULT_CARD_IMAGES[1],
+    (c.card3_image ? wpImageUrl(c.card3_image) : "") || DEFAULT_CARD_IMAGES[2],
   ];
   const cardMobileImages = [
     c.card1_mobile_image ? wpImageUrl(c.card1_mobile_image) : "",

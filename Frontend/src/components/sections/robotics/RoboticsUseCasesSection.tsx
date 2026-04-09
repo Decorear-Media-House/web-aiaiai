@@ -374,11 +374,11 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
               {/* Video thumbnails with lightbox */}
               {robot.video_thumb && (
                 <FadeUp trigger="scroll" delay={0.09}>
-                  <div className="flex gap-2.5 max-sm:flex-col max-sm:w-full">
+                  <div className="flex gap-2.5 w-full">
                     <button
                       onClick={() => robot.video_url && setLightboxSrc(robot.video_url)}
-                      className="relative rounded-3xl overflow-hidden max-sm:!w-full max-sm:!h-[180px] max-sm:!shrink shrink-0"
-                      style={{ width: 356, height: 200, boxShadow: "0px 4px 12px rgba(0,119,255,0.5)", border: "none", padding: 0, cursor: "pointer" }}
+                      className="relative rounded-3xl overflow-hidden flex-1 min-w-0"
+                      style={{ height: 200, boxShadow: "0px 4px 12px rgba(0,119,255,0.5)", border: "none", padding: 0, cursor: "pointer" }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={wpImageUrl(robot.video_thumb)} alt="Video" className="size-full object-cover" />
@@ -387,7 +387,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                     {robot.video_thumb_2 && (
                       <button
                         onClick={() => robot.video_url_2 && setLightboxSrc(robot.video_url_2)}
-                        className="relative rounded-3xl overflow-hidden max-sm:!w-full max-sm:!h-[180px] shrink-0"
+                        className="relative rounded-3xl overflow-hidden shrink-0 max-sm:!w-[120px]"
                         style={{ width: 120, height: 200, boxShadow: "0px 4px 12px rgba(0,119,255,0.5)", border: "none", padding: 0, cursor: "pointer" }}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -412,7 +412,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
           >
             <FadeUp trigger="scroll" delay={0}>
               <div className="flex flex-col gap-6">
-                <h3 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>Specifications:</h3>
+                <h3 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>Specifications:</h3>
                 {/* Table-style layout like Figma */}
                 <div
                   className="rounded-2xl overflow-hidden"
@@ -424,13 +424,13 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                     return (
                       <div
                         key={i}
-                        className="flex max-sm:flex-col"
+                        className="flex"
                         style={{ background: hasAltBg ? "rgba(255,255,255,0.04)" : "transparent" }}
                       >
-                        <div className="w-1/2 max-sm:!w-full shrink-0 px-6 py-2 max-sm:!py-2 max-sm:!pb-0">
+                        <div className="w-1/2 shrink-0 px-4 py-2">
                           <span style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>{s.label}</span>
                         </div>
-                        <div className="w-1/2 max-sm:!w-full px-6 py-2 max-sm:!py-2">
+                        <div className="w-1/2 px-4 py-2">
                           <span style={{ fontFamily: font, fontSize: 16, color: "#fff", lineHeight: 1.5 }}>{s.value}</span>
                         </div>
                       </div>
@@ -458,7 +458,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
               <div className="flex-1 min-w-[300px] flex flex-col gap-10 max-sm:!min-w-0 max-sm:!w-full">
                 <FadeUp trigger="scroll" delay={0}>
                   <div className="flex flex-col gap-4">
-                    <h3 style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>Key Features:</h3>
+                    <h3 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, lineHeight: 1.3, color: "#fff" }}>Key Features:</h3>
                   </div>
                 </FadeUp>
 
@@ -504,7 +504,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                   </FadeUp>
                 )}
 
-                {/* Feature images below features (X2 ULTRA + A2 ULTRA) */}
+                {/* Feature image below features (X2 ULTRA) — single full-width */}
                 {isFirstRobot && (
                   <FadeUp trigger="scroll" delay={0.15}>
                     <div className="relative rounded-3xl overflow-hidden w-full" style={{ height: 200 }}>
@@ -513,14 +513,15 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                     </div>
                   </FadeUp>
                 )}
+                {/* Feature images (A2 ULTRA) — 2 GIFs row */}
                 {robotIdx === 2 && (
                   <FadeUp trigger="scroll" delay={0.15}>
-                    <div className="flex gap-6 w-full max-sm:!flex-col">
-                      <div className="relative rounded-3xl overflow-hidden flex-1 max-sm:!h-[160px]" style={{ height: 200 }}>
+                    <div className="flex gap-6 w-full">
+                      <div className="relative rounded-3xl overflow-hidden flex-1 min-w-0" style={{ height: 200 }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src="/images/a2-feature-1.gif" alt="" className="size-full object-cover" />
                       </div>
-                      <div className="relative rounded-3xl overflow-hidden flex-1 max-sm:!h-[160px]" style={{ height: 200 }}>
+                      <div className="relative rounded-3xl overflow-hidden flex-1 min-w-0" style={{ height: 200 }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src="/images/a2-feature-2.gif" alt="" className="size-full object-cover" />
                       </div>
@@ -535,7 +536,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                   <>
                     {/* X2 ULTRA / A2 ULTRA: robot image right */}
                     <FadeUp trigger="scroll" delay={0.1}>
-                      <div className="relative overflow-hidden max-sm:!w-full max-sm:!h-[300px]" style={{ width: 596, height: 470 }}>
+                      <div className="relative overflow-hidden max-sm:!w-full max-sm:!h-[280px]" style={{ width: 596, height: 470 }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={isFirstRobot ? "/images/feature-robot-right.png" : (featureImages[0] ? wpImageUrl(featureImages[0]) : "/images/feature-robot-right.png")}
@@ -564,15 +565,17 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                   </>
                 ) : (
                   <>
-                    {/* D1 EDU / G2: 2 feature images stacked right */}
-                    {featureImages.map((img, i) => (
-                      <FadeUp key={i} trigger="scroll" delay={0.1 + i * 0.05}>
-                        <div className="relative rounded-3xl overflow-hidden max-sm:!w-full max-sm:!h-[200px]" style={{ width: 493, height: 330 }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={wpImageUrl(img)} alt="" className="size-full object-cover" />
-                        </div>
-                      </FadeUp>
-                    ))}
+                    {/* D1 EDU / G2: 2 feature images — stacked on desktop, row on mobile */}
+                    <FadeUp trigger="scroll" delay={0.1}>
+                      <div className="flex flex-col gap-6">
+                        {featureImages.map((img, i) => (
+                          <div key={i} className="relative rounded-3xl overflow-hidden max-sm:!w-full max-sm:!h-[220px]" style={{ width: 493, height: 330 }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={wpImageUrl(img)} alt="" className="size-full object-cover" />
+                          </div>
+                        ))}
+                      </div>
+                    </FadeUp>
                   </>
                 )}
               </div>

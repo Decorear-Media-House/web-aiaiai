@@ -46,7 +46,10 @@ export default async function SecurityPage() {
     wpContainerImageUrl: m.sec_hero_card_image,
     wpContainerImageMobileUrl: m.sec_hero_card_mobile_image,
     background_color: m.sec_hero_bg_color,
-    stats: ensureArray(m.sec_hero_stats).length > 0 ? ensureArray(m.sec_hero_stats) : undefined,
+    stats: (() => {
+      const raw = ensureArray(m.sec_hero_stats).filter((s: any) => s?.top || s?.bottom || s?.label || s?.value);
+      return raw.length > 0 ? raw : undefined;
+    })(),
   };
 
   const outcomes: any = {
@@ -56,11 +59,16 @@ export default async function SecurityPage() {
     wpImageUrl: m.sec_outcomes_image,
     wpImageMobileUrl: m.sec_outcomes_mobile_image,
     background_color: m.sec_outcomes_bg_color,
-    accordion: ensureArray(m.sec_outcomes_accordion).map((item: Record<string, unknown>) => ({
-      iconBg: item.icon_gradient,
-      title: item.title,
-      checks: textareaToArray(item.checks),
-    })),
+    accordion: (() => {
+      const raw = ensureArray(m.sec_outcomes_accordion)
+        .map((item: Record<string, unknown>) => ({
+          iconBg: item.icon_gradient,
+          title: item.title,
+          checks: textareaToArray(item.checks),
+        }))
+        .filter((item: any) => item.title);
+      return raw.length > 0 ? raw : undefined;
+    })(),
   };
 
   const included: any = {
@@ -69,10 +77,15 @@ export default async function SecurityPage() {
     heading_highlight: m.sec_included_heading_hl,
     description: m.sec_included_description,
     background_color: m.sec_included_bg_color,
-    pillars: ensureArray(m.sec_included_pillars).map((p: Record<string, unknown>) => ({
-      title: p.title,
-      items: textareaToArray(p.items),
-    })),
+    pillars: (() => {
+      const raw = ensureArray(m.sec_included_pillars)
+        .map((p: Record<string, unknown>) => ({
+          title: p.title,
+          items: textareaToArray(p.items),
+        }))
+        .filter((p: any) => p.title);
+      return raw.length > 0 ? raw : undefined;
+    })(),
     card1_image: ensureArray(m.sec_included_pillars)[0]?.card_image,
     card2_image: ensureArray(m.sec_included_pillars)[1]?.card_image,
     card3_image: ensureArray(m.sec_included_pillars)[2]?.card_image,
@@ -86,7 +99,10 @@ export default async function SecurityPage() {
     heading: m.sec_phases_heading,
     description: m.sec_phases_description,
     background_color: m.sec_phases_bg_color,
-    phases: ensureArray(m.sec_phases_items),
+    phases: (() => {
+      const raw = ensureArray(m.sec_phases_items).filter((p: any) => p?.title || p?.phase);
+      return raw.length > 0 ? raw : undefined;
+    })(),
   };
 
   const cta: any = {
