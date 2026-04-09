@@ -9,9 +9,10 @@ STATIC_SITE_ROOT="/home/decorear-aiai/htdocs/aiaiai.decorear.com"
 
 echo "==> [$(date)] Starting rebuild..."
 
-# 1. Pull latest code
+# 1. Pull latest code (reset auto-generated files first)
 echo "==> Pulling latest code from GitHub..."
 cd "$SCRIPT_DIR"
+git checkout -- Frontend/next-env.d.ts 2>/dev/null || true
 git pull --ff-only
 
 # 2. Install dependencies (if needed)
