@@ -94,9 +94,27 @@ add_action('admin_head', function () {
     </style>';
 });
 
+/* ── AJAX proxy: trigger rebuild from server-side ── */
+add_action('wp_ajax_aiaiai_deploy_trigger', function () {
+    if (!current_user_can('manage_options')) wp_send_json_error('Forbidden', 403);
+    $url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9001/rebuild';
+    $res = wp_remote_post($url, ['timeout' => 5, 'body' => wp_json_encode(['trigger' => 'wordpress', 'user' => wp_get_current_user()->user_login]), 'headers' => ['Content-Type' => 'application/json']]);
+    if (is_wp_error($res)) wp_send_json_error($res->get_error_message());
+    wp_send_json_success(json_decode(wp_remote_retrieve_body($res), true));
+});
+
+add_action('wp_ajax_aiaiai_deploy_health', function () {
+    if (!current_user_can('manage_options')) wp_send_json_error('Forbidden', 403);
+    $url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9001/rebuild';
+    $health_url = preg_replace('#/rebuild$#', '/health', $url);
+    $res = wp_remote_get($health_url, ['timeout' => 5]);
+    if (is_wp_error($res)) wp_send_json_error($res->get_error_message());
+    wp_send_json_success(json_decode(wp_remote_retrieve_body($res), true));
+});
+
 function aiaiai_render_deploy() {
-    $webhook_url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9001/rebuild';
-    $health_url  = preg_replace('#/rebuild$#', '/health', $webhook_url);
+    $webhook_url = admin_url('admin-ajax.php?action=aiaiai_deploy_trigger&_wpnonce=' . wp_create_nonce('aiaiai_deploy_trigger'));
+    $health_url  = admin_url('admin-ajax.php?action=aiaiai_deploy_health&_wpnonce=' . wp_create_nonce('aiaiai_deploy_health'));
     $site_url    = 'https://aiaiai.decorear.com';
 
     echo '<div class="wrap">';
@@ -163,8 +181,8 @@ function aiaiai_render_deploy() {
     echo '    actions.style.display="none";bar.style.background="#4A99F5";';
     echo '    title.textContent="กำลัง Deploy...";status.textContent="กำลัง build...";';
     echo '    bar.style.width="5%";pct.textContent="5%";';
-    // Trigger webhook
-    echo '    fetch(webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({trigger:"wordpress",user:"' . esc_js(wp_get_current_user()->user_login) . '"})}).catch(function(){});';
+    // Trigger webhook via WP AJAX (server-side proxy)
+    echo '    fetch(webhookUrl,{method:"POST",credentials:"same-origin"}).catch(function(){});';
     // Animate progress
     echo '    progressTimer=setInterval(function(){';
     echo '      if(progress<85){progress+=Math.random()*3+0.5;if(progress>85)progress=85;}';
@@ -176,8 +194,9 @@ function aiaiai_render_deploy() {
     echo '    setTimeout(function(){pollBuild();},3000);';
     echo '  });';
     echo '  function pollBuild(){';
-    echo '    fetch(healthUrl).then(function(r){return r.json();}).then(function(d){';
-    echo '      if(d.building){pollTimer=setTimeout(pollBuild,3000);}';
+    echo '    fetch(healthUrl,{credentials:"same-origin"}).then(function(r){return r.json();}).then(function(d){';
+    echo '      var h=d.data||d;';
+    echo '      if(h.building){pollTimer=setTimeout(pollBuild,3000);}';
     echo '      else{deployDone(true);}';
     echo '    }).catch(function(){pollTimer=setTimeout(pollBuild,5000);});';
     echo '  }';
