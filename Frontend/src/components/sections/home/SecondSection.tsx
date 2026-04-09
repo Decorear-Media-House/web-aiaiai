@@ -48,7 +48,7 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
       />
 
       {/* Content — left aligned, padding 80px 112px */}
-      <div className="relative flex items-center max-sm:py-10 max-lg:px-8 max-sm:px-4 mx-auto" style={{ padding: "80px 112px",maxWidth:1440 }}>
+      <div className="relative flex items-center max-sm:!py-10 max-sm:!px-4 max-lg:!px-8 mx-auto" style={{ padding: "80px 112px", maxWidth: 1440 }}>
         <div className="flex flex-col gap-6 max-sm:gap-5" style={{ maxWidth: 560 }}>
 
           {/* Heading + paragraphs — gap 16px */}

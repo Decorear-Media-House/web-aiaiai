@@ -176,7 +176,7 @@ export default function ThirdSection({ content }: { content?: Record<string, unk
                 }}>{" "}{headingGradient}</span>
               </h2>
 
-              <p className="max-w-[560px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.6 }}>
+              <p className="max-w-[720px]" style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.6 }}>
                 {description}
               </p>
             </div>

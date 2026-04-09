@@ -107,6 +107,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const servicesBtnRef = useRef<HTMLAnchorElement>(null);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -132,6 +133,14 @@ export default function Navbar() {
     }
   }, [servicesOpen]);
 
+  /* Add background on scroll */
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   /* Lock body scroll when mobile menu is open */
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -142,10 +151,12 @@ export default function Navbar() {
     <>
       {/* ── Nav bar ── */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 w-full"
+        className="fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-300"
         style={{
-        
           height: 72,
+          background: scrolled ? "rgba(7, 14, 36, 0.50)" : "transparent",
+          backdropFilter: scrolled ? "blur(8px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(8px)" : "none",
         }}
       >
         <Container className="flex h-full items-center justify-between">

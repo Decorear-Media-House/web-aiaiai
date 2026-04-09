@@ -214,21 +214,23 @@ export default function FourthSection({ content }: { content?: FourthSectionCont
                     </span>
                   </div>
 
-                  {/* Heading */}
+                  {/* Heading — 2 lines */}
                   <h3
+                    className="line-clamp-2"
                     style={{
                       fontFamily: font, fontSize: 22, fontWeight: 400, lineHeight: 1.3,
+                      minHeight: "2.6em",
                       backgroundImage: svc.headingGradient,
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
                     }}
                   >
-                    {svc.heading}
+                    {svc.heading.replace(/&amp;/g, "&")}
                   </h3>
 
-                  {/* Description */}
-                  <p style={{ fontFamily: font, fontSize: 15, color: "#C0CEDA", lineHeight: 1.7 }}>
+                  {/* Description — 3 lines */}
+                  <p className="line-clamp-3" style={{ fontFamily: font, fontSize: 16, color: "#C0CEDA", lineHeight: 1.5, minHeight: "4.5em" }}>
                     {svc.description}
                   </p>
 
