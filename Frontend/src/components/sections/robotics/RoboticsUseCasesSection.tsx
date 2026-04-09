@@ -116,17 +116,17 @@ const DEFAULT_ROBOTS: Robot[] = [
       {
         title: "Entertainment & Commercial Performance",
         items: [
-          "Supports various activities such as TikTok dancing, drumming, and electric guitar playing",
-          "Enables synchronized group performances with multiple robots",
+          "· Supports various activities such as TikTok dancing, drumming, and electric guitar playing",
+          "· Enables synchronized group performances with multiple robots",
         ],
       },
       {
         title: "Automatic Presentation & Interaction",
         items: [
-          "Welcomes guests, guides visitors, and provides intelligent responses",
-          "Recognizes faces and initiates conversations automatically",
-          "Demonstrates over 30 pre-programmed actions with diverse assembly configurations",
-          "Adjustable voice system, facial expressions, and flexible motion control",
+          "· Welcomes guests, guides visitors, and provides intelligent responses",
+          "· Recognizes faces and initiates conversations automatically",
+          "· Demonstrates over 30 pre-programmed actions with diverse assembly configurations",
+          "· Adjustable voice system, facial expressions, and flexible motion control",
         ],
       },
     ],
@@ -183,17 +183,18 @@ const DEFAULT_ROBOTS: Robot[] = [
       {
         title: "Professional Reception & Service Assistant",
         items: [
-          "Provides intelligent greetings, VIP services, and guided assistance",
-          "Recognizes faces, delivers personalized greetings, and can serve drinks",
-          "Supports over 10 facial expressions and more than 100 motion combinations",
+          "· Provides intelligent greetings, VIP services, and guided assistance for visitors",
+          "· Recognizes faces, delivers personalized greetings, and can serve drinks or items",
+          "· Supports over 10 facial expressions and more than 100 motion combinations",
         ],
       },
       {
         title: "Brand Promotion & Event Hosting",
         items: [
-          "Customizable appearance, personality, and voice interaction",
-          "Supports brand promotion and social media content creation",
-          "Capable of remembering faces and engaging in interactive communication",
+          "· Customizable appearance, personality, movement programs, and voice interaction",
+          "· Supports brand promotion activities and social media content creation",
+          "· Welcomes guests, guides visitors, and provides intelligent responses",
+          "· Capable of remembering faces and engaging in interactive communication",
         ],
       },
     ],
@@ -260,21 +261,64 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
   const robots: Robot[] = Array.isArray(rawRobots) ? rawRobots : Object.values(rawRobots);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const closeLightbox = useCallback(() => setLightboxSrc(null), []);
+  const [activeTab, setActiveTab] = useState(0);
+  const [isSticky, setIsSticky] = useState(false);
+  const tabRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsSticky(!entry.isIntersecting),
+      { threshold: 1, rootMargin: "-1px 0px 0px 0px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  // Track which robot section is in view
+  useEffect(() => {
+    const sections = robots.map((_, i) => document.getElementById(`robot-${i}`));
+    if (sections.every((s) => !s)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const idx = sections.indexOf(entry.target as HTMLElement);
+            if (idx >= 0) setActiveTab(idx);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => s && observer.observe(s));
+    return () => observer.disconnect();
+  }, [robots]);
+
   if (robots.length === 0) return null;
 
   return (
     <>
       {lightboxSrc && <VideoLightbox src={lightboxSrc} onClose={closeLightbox} />}
-      {/* ── Tab Selector (anchor links) ── */}
-      <section style={{ background: "#070E24" }}>
+      {/* ── Sentinel for sticky detection ── */}
+      <div ref={tabRef} style={{ height: 0 }} />
+      {/* ── Tab Selector — sticky top ── */}
+      <div
+        className="sticky z-40 hidden md:block"
+        style={{
+          top: 72,
+          paddingBottom: 40,
+          background: isSticky ? "rgba(7,14,36,0.85)" : "#070E24",
+          backdropFilter: isSticky ? "blur(16px)" : "none",
+          WebkitBackdropFilter: isSticky ? "blur(16px)" : "none",
+          transition: "background 0.3s, backdrop-filter 0.3s",
+        }}
+      >
         <div
-          className="mx-auto max-sm:!px-4 lg:pt-10 lg:px-28 lg:pb-0"
+          className="mx-auto lg:pt-10 lg:px-28 lg:pb-0"
           style={{ maxWidth: 1440 }}
         >
-          <div className="hidden md:flex flex-col items-center gap-10 ">
+          <div className="flex flex-col items-center gap-10">
             <div className="flex justify-center">
               <div
-                className="inline-flex items-center p-2 rounded-full flex-wrap gap-1 justify-center max-sm:!rounded-2xl max-sm:!gap-2"
+                className="inline-flex items-center p-2 rounded-full flex-wrap gap-1 justify-center"
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   border: "1px solid rgba(255,255,255,0.08)",
@@ -286,18 +330,18 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                   <a
                     key={i}
                     href={`#robot-${i}`}
-                    className="max-sm:!text-xs max-sm:!px-3 max-sm:!py-2"
                     style={{
                       fontFamily: font,
                       fontSize: 16,
-                      color: i === 0 ? "#fff" : "#90A1B9",
+                      color: i === activeTab ? "#fff" : "#90A1B9",
                       padding: "12px 24px",
                       borderRadius: 99,
                       border: "none",
                       cursor: "pointer",
-                      background: i === 0 ? "#2D7AE8" : "transparent",
+                      background: i === activeTab ? "#2D7AE8" : "transparent",
                       whiteSpace: "nowrap",
                       textDecoration: "none",
+                      transition: "background 0.3s, color 0.3s",
                     }}
                   >
                     {r.name}
@@ -307,7 +351,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ── All Robot Use Cases (displayed sequentially) ── */}
       {robots.map((robot, robotIdx) => {
@@ -338,7 +382,7 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
           style={{ maxWidth: 1440, margin: "0 auto", padding: "80px 112px" }}
         >
           <div className="flex flex-wrap items-end gap-6 max-sm:!flex-col max-sm:!items-start max-sm:!gap-8">
-            <div className="flex flex-col gap-6 max-sm:w-full" style={{ maxWidth: 500 }}>
+            <div className="flex flex-col gap-6 max-sm:w-full" style={{ maxWidth: 596 }}>
               {/* Logo pill */}
               <FadeUp trigger="scroll" delay={0}>
                 <div
@@ -473,11 +517,16 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
                           <div className="flex flex-col gap-2">
                             <h4 style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff" }}>{decode(feature.title)}</h4>
                             <div className="flex flex-col gap-1">
-                              {featureItems.map((item, j) => (
-                                <p key={j} style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
-                                  {decode(item)}
-                                </p>
-                              ))}
+                              {featureItems.map((item, j) => {
+                                const decoded = decode(item);
+                                const hasBullet = /^[·•]\s*/.test(decoded);
+                                const text = decoded.replace(/^[·•]\s*/, "");
+                                return (
+                                  <p key={j} style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
+                                    {hasBullet && <span style={{ color: "#fff", marginRight: 8 }}>·</span>}{text}
+                                  </p>
+                                );
+                              })}
                             </div>
                           </div>
                         </div>

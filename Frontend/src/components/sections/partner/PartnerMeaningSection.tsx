@@ -168,6 +168,7 @@ export default function PartnerMeaningSection({ content }: { content?: Record<st
                   border: "1px solid rgba(43,127,255,0.2)",
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
+                  alignSelf: "flex-start"
                 }}
               >
                 <SparkleIcon />

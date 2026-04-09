@@ -37,8 +37,8 @@ $data = [
           [
             'title' => 'Entertainment & Commercial Performance',
             'items' => [
-              'Supports various activities such as TikTok dancing, drumming, and electric guitar playing',
-              'Enables synchronized group performances with multiple robots',
+              '· Supports various activities such as TikTok dancing, drumming, and electric guitar playing',
+              '· Enables synchronized group performances with multiple robots',
             ],
             'feature_image' => "$base/x2-feature1.png",
           ],

@@ -40,7 +40,7 @@ const TABS = [
   {
     label: "Cost Reduction",
     patterns: [
-      { text: "KPI dashboards", useSparkle: true },
+      { text: "KPI dashboards", useSparkle: false },
       { text: "Standard process flows and SOP alignment", useSparkle: false },
       { text: "Operational monitoring and improvement cadence", useSparkle: false },
     ],

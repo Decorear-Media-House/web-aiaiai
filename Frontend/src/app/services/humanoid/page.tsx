@@ -97,6 +97,19 @@ export default async function RoboticsPage() {
     };
   }
 
+  // Add bullet prefix to feature items if missing (robot 0 = X2 ULTRA, robot 2 = A2 ULTRA)
+  for (const idx of [0, 2]) {
+    if (robots.length > idx && robots[idx].features) {
+      const feats = Array.isArray(robots[idx].features) ? robots[idx].features : Object.values(robots[idx].features);
+      robots[idx].features = feats.map((f: any) => ({
+        ...f,
+        items: (Array.isArray(f.items) ? f.items : []).map((item: string) =>
+          /^[·•]/.test(item) ? item : `· ${item}`
+        ),
+      }));
+    }
+  }
+
   const useCases: any = robots.length > 0 ? { robots } : {};
 
   const rawAccordion = ensureArray(m.hum_outcomes_accordion);

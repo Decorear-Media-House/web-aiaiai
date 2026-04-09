@@ -51,6 +51,7 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
         overflow: "hidden",
       }}
     >
+      
       {bgImage && (
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -123,6 +124,7 @@ export default function PartnerDeliverablesSection({ content }: { content?: Reco
                   padding: "8px 16px", borderRadius: 8,
                   background: "rgba(43,127,255,0.1)", border: "1px solid rgba(43,127,255,0.2)",
                   backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
+                  alignSelf:"flex-start"
                 }}
               >
                 <GoalIcon />
