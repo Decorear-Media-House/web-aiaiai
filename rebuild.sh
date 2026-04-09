@@ -4,6 +4,7 @@ set -euo pipefail
 # ── Configuration ──
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 FRONTEND_DIR="$SCRIPT_DIR/Frontend"
+DEPLOY_HOST="aiaiai-deploy"
 STATIC_SITE_ROOT="/home/decorear-aiai/htdocs/aiaiai.decorear.com"
 
 echo "==> [$(date)] Starting rebuild..."
@@ -28,8 +29,8 @@ WORDPRESS_API_URL=https://aiaiai-cms.decorear.com/wp-json \
 NEXT_PUBLIC_WORDPRESS_URL=https://aiaiai-cms.decorear.com \
 NODE_ENV=production npm run build
 
-# 4. Deploy to nginx htdocs
-echo "==> Deploying to $STATIC_SITE_ROOT ..."
-rsync -a --delete "$FRONTEND_DIR/out/" "$STATIC_SITE_ROOT/"
+# 4. Deploy to frontend server
+echo "==> Deploying to $DEPLOY_HOST:$STATIC_SITE_ROOT ..."
+rsync -az --delete -e ssh "$FRONTEND_DIR/out/" "$DEPLOY_HOST:$STATIC_SITE_ROOT/"
 
 echo "==> [$(date)] Rebuild complete! Site live at https://aiaiai.decorear.com"
