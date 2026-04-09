@@ -88,7 +88,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
   const headingLine1 = c.heading_line1 ?? "Outcomes";
   const headingLine2 = c.heading_line2 ?? "We Deliver";
   const description = c.description ?? "Every engagement starts with the outcome you need. We map the right service to your specific goal.";
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
   return (
     <section className="relative" style={{ background: bgColor, overflowX: "clip" }}>
       {/* Glow blobs */}

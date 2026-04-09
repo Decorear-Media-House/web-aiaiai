@@ -40,7 +40,7 @@ export default function RoboticsHeroSection({ content }: { content?: Record<stri
   const ctaSecondary = c.cta_secondary || "All Services";
   const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const bgImage = wpImageUrl((c.hero_background_image as string) || "");
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
 
   return (
     <section className="relative overflow-hidden" style={{ background: bgColor }}>

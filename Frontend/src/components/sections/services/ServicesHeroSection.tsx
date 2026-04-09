@@ -38,7 +38,7 @@ export default function ServicesHeroSection({ content }: { content?: Record<stri
   const ctaSecondaryText = c.cta_secondary_text ?? "Contact Us";
   const ctaSecondaryHref = c.cta_secondary_href ?? "/#contact";
   const bgImage = wpImageUrl((c.background_image as string) || "/images/services-security-hero-bg.png");
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
 
   return (
     <section className="relative overflow-hidden" style={{ background: bgColor }}>

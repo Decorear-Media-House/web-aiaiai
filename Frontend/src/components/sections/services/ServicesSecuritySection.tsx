@@ -59,7 +59,7 @@ export default function ServicesSecuritySection({ content }: { content?: Record<
   const checkItems = c.check_items ?? DEFAULT_CHECK_ITEMS;
   const ctaText = c.cta_text ?? "Explore Security Platform";
   const ctaHref = c.cta_href ?? "#";
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Green glow blobs */}

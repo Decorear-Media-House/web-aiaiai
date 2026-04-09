@@ -116,7 +116,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
     <section
       style={{
         position: "relative",
-        background: c.background_color ?? "#1E2E48",
+        background: c.background_color || "#1E2E48",
         overflow: "hidden",
       }}
     >

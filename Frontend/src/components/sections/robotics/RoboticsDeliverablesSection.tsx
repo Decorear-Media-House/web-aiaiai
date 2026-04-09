@@ -44,7 +44,7 @@ export default function RoboticsDeliverablesSection({ content }: { content?: Rec
       className="max-sm:!px-6 max-sm:!py-10"
       style={{
         position: "relative",
-        background: c.background_color ?? "#070E24",
+        background: c.background_color || "#070E24",
         paddingTop: 80,
         paddingBottom: 80,
         paddingLeft: 112,

@@ -52,7 +52,7 @@ export default function SecurityHeroSection({ content }: { content?: Record<stri
   const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const detectionTitle = c.detection_title ?? "AI-Powered Detection";
   const detectionSubtitle = c.detection_subtitle ?? "Camera \u2192 Alert \u2192 Incident \u2192 Report";
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
   const heroBgUrl = c.wpImageUrl ? toPublicUrl(c.wpImageUrl) : "";
   const heroCardUrl = c.wpContainerImageUrl ? toPublicUrl(c.wpContainerImageUrl) : "";
   const heroCardMobileUrl = c.wpContainerImageMobileUrl ? toPublicUrl(c.wpContainerImageMobileUrl) : "";

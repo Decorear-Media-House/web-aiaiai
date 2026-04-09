@@ -68,7 +68,7 @@ export default function ServicesAISolutionSection({ content }: { content?: Recor
   const useCaseCategories = c.use_case_categories ?? DEFAULT_USE_CASES;
   const ctaText = c.cta_text ?? "Explore AI Solution Partner";
   const ctaHref = c.cta_href ?? "#";
-  const bgColor = c.background_color ?? "#1E2E48";
+  const bgColor = c.background_color || "#1E2E48";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Orange glow blobs */}

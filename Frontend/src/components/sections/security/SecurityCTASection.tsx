@@ -33,7 +33,7 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
   const ctaSecondary = c.cta_secondary ?? "All Services";
   const ctaSecondaryUrl = c.cta_secondary_url || "/services";
   const bgImage = c.background_image ? wpImageUrl(c.background_image) : "";
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
   return (
     <section className="relative max-sm:!-mt-px" style={{ background: bgColor }}>
       {/* 40px sides → 1360px card at 1440px viewport */}

@@ -148,7 +148,7 @@ export default function SecurityOutcomesSection({ content }: { content?: Record<
   const sectionHeading = c.heading ?? "What this Platform ";
   const headingHighlight = c.heading_highlight ?? "Achieves";
   const accordion = c.accordion ?? ACCORDION;
-  const bgColor = c.background_color ?? "#070E24";
+  const bgColor = c.background_color || "#070E24";
   const imageUrl = c.wpImageUrl ? toPublicUrl(c.wpImageUrl) : "";
   const mobileImageUrl = c.wpImageMobileUrl ? toPublicUrl(c.wpImageMobileUrl) : "";
   const [openIndex, setOpenIndex] = useState(0);

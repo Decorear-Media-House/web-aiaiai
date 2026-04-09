@@ -52,7 +52,7 @@ export default function ServicesInitiativesSection({ content }: { content?: Reco
   const ctaText = c.cta_text ?? "Contact Us";
   const ctaHref = c.cta_href ?? "/#contact";
   const initiatives = (Array.isArray(c.initiatives) && c.initiatives.length > 0) ? c.initiatives : DEFAULT_INITIATIVES;
-  const bgColor = c.background_color ?? "#102050";
+  const bgColor = c.background_color || "#102050";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Glow blobs */}

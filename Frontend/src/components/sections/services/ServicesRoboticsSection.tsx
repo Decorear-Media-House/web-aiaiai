@@ -59,7 +59,7 @@ export default function ServicesRoboticsSection({ content }: { content?: Record<
   const checkItems = c.check_items ?? DEFAULT_CHECK_ITEMS;
   const ctaText = c.cta_text ?? "Explore Robotics";
   const ctaHref = c.cta_href ?? "#";
-  const bgColor = c.background_color ?? "#102050";
+  const bgColor = c.background_color || "#102050";
   return (
     <section className="relative overflow-x-clip" style={{ background: bgColor }}>
       {/* Glow blobs */}
