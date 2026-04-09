@@ -70,12 +70,18 @@ export default function AboutLeadershipSection({ content }: { content?: AboutLea
         background: bgColor || "linear-gradient(110deg, #0e1d60 0%, #1a3a90 35%, #1e42a0 55%, #152e80 100%)",
       }}
     >
-      {bgImage && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={bgImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
-      )}
-      <WaveLines />
-      <DotGrid />
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 size-full object-cover pointer-events-none opacity-40"
+        aria-hidden="true"
+      >
+        <source src="/videos/CTA-Loop-leadership.mp4" type="video/mp4" />
+      </video>
+      {/* Overlay to ensure text readability */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(14,29,96,0.6)" }} aria-hidden="true" />
 
       <Container className="relative py-20 max-sm:py-10">
         <div className="flex flex-wrap items-center gap-6 max-sm:flex-col">

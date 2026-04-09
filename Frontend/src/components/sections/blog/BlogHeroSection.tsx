@@ -81,12 +81,12 @@ export default function BlogHeroSection({ search, onSearchChange, content }: Blo
                   fontFamily: font,
                   fontSize: "clamp(36px, 4vw, 48px)",
                   fontWeight: 400,
-                  lineHeight: 1.2,
-                  backgroundImage: "linear-gradient(90deg, #fff 0%, #8B95C5 31.25%, #fff 61.5%, #8B95C5 100%)",
+                  lineHeight: 1.5,
+                  backgroundImage: "linear-gradient(90deg, #fff 0%, #8B95C5 31%, #fff 62%, #8B95C5 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  textShadow: "0px 2px 8px rgba(0,0,0,0.8)",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.8))",
                 }}
               >
                 Blog

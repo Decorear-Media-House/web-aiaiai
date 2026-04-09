@@ -8,37 +8,43 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 const ROYAL_SHINE = "linear-gradient(135deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 const ROYAL_TEXT = "linear-gradient(160deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
+/* Phase 1: Target/Bullseye */
 function PilotIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="4" stroke="#fff" strokeWidth="1.5"/>
-      <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
+/* Phase 2: Bar chart */
 function ExpandIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 3v18M3 12h18" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
-      <rect x="5" y="5" width="14" height="14" rx="2" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M3 3V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M18 17V9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M13 17V5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8 17V14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
+/* Phase 3: Lightning bolt */
 function RolloutIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M4.00048 14.0002C3.81125 14.0008 3.62571 13.9477 3.46543 13.8471C3.30516 13.7465 3.17671 13.6025 3.09503 13.4318C3.01335 13.2611 2.98177 13.0707 3.00398 12.8828C3.02619 12.6949 3.10126 12.5171 3.22048 12.3702L13.1205 2.17016C13.1947 2.08444 13.2959 2.02652 13.4075 2.0059C13.519 1.98527 13.6342 2.00318 13.7342 2.05667C13.8342 2.11016 13.9131 2.19606 13.9578 2.30027C14.0026 2.40448 14.0106 2.52081 13.9805 2.63016L12.0605 8.65016C12.0039 8.80169 11.9849 8.96468 12.0051 9.12517C12.0253 9.28566 12.0841 9.43884 12.1766 9.57159C12.269 9.70434 12.3923 9.81268 12.5358 9.88732C12.6793 9.96197 12.8387 10.0007 13.0005 10.0002H20.0005C20.1897 9.99952 20.3752 10.0526 20.5355 10.1532C20.6958 10.2538 20.8242 10.3978 20.9059 10.5685C20.9876 10.7392 21.0192 10.9296 20.997 11.1175C20.9748 11.3054 20.8997 11.4832 20.7805 11.6302L10.8805 21.8302C10.8062 21.9159 10.705 21.9738 10.5935 21.9944C10.482 22.0151 10.3668 21.9972 10.2668 21.9437C10.1667 21.8902 10.0879 21.8043 10.0431 21.7001C9.9984 21.5958 9.9904 21.4795 10.0205 21.3702L11.9405 15.3502C11.9971 15.1986 12.0161 15.0356 11.9959 14.8752C11.9757 14.7147 11.9168 14.5615 11.8244 14.4287C11.732 14.296 11.6087 14.1876 11.4652 14.113C11.3217 14.0384 11.1622 13.9996 11.0005 14.0002H4.00048Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
+/* Chip icon: Lightning bolt */
 function DevelopmentChipIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2l8 4.5v7L12 18l-8-4.5v-7L12 2z" stroke="#4A99F5" strokeWidth="1.5" strokeLinejoin="round"/>
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/images/sec-dev-chip-ico.svg" alt="" width={14} height={14} />
   );
 }
 
@@ -174,7 +180,7 @@ export default function SecurityPhasesSection({ content }: { content?: Record<st
                     border: "1px solid rgba(255,255,255,0.08)",
                   }}
                 >
-                  <h3 className="max-sm:!text-[20px]" style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff", textAlign: "center" }}>{title}</h3>
+                  <h3 className="max-sm:!text-[20px]" style={{ fontFamily: font, fontSize: 24, fontWeight: 400, lineHeight: 1.4, color: "#fff", textAlign: "center" }}>{typeof title === "string" ? title.replace(/&amp;/g, "&") : title}</h3>
                   {subtitle && (
                     <p style={{ fontFamily: font, fontSize: 14, color: "#00BAF2", lineHeight: 1.5, textAlign: "center" }}>{subtitle}</p>
                   )}

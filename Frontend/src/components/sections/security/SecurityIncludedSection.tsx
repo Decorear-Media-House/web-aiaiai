@@ -17,38 +17,10 @@ function CheckCircleIcon() {
   );
 }
 
-function AnalyticsPacksIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.5"/>
-      <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.5"/>
-      <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.5"/>
-      <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.5"/>
-    </svg>
-  );
-}
-
-function WorkflowsIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 6h16M4 12h16M4 18h10" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
-function DeploymentIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2l8 4.5v7L12 18l-8-4.5v-7L12 2z" stroke="#fff" strokeWidth="1.5" strokeLinejoin="round"/>
-      <path d="M12 18v4M12 10l8-4.5M12 10L4 5.5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-
-const PILLAR_ICONS = [
-  <AnalyticsPacksIcon key="ap" />,
-  <WorkflowsIcon key="wf" />,
-  <DeploymentIcon key="dp" />,
+const PILLAR_ICON_SRCS = [
+  "/images/sec-pillar-ico-1.svg",
+  "/images/sec-pillar-ico-2.svg",
+  "/images/sec-pillar-ico-3.svg",
 ];
 
 function CheckItem({ text }: { text: string }) {
@@ -212,16 +184,8 @@ export default function SecurityIncludedSection({ content }: { content?: Record<
                     />
                   )}
                   {/* Icon */}
-                  <div
-                    className="relative flex items-center justify-center rounded-xl shrink-0"
-                    style={{
-                      width: 48,
-                      height: 48,
-                      backgroundImage: ROYAL_SHINE,
-                    }}
-                  >
-                    {PILLAR_ICONS[i]}
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={PILLAR_ICON_SRCS[i] || PILLAR_ICON_SRCS[0]} alt="" width={48} height={48} className="relative shrink-0 rounded-xl" />
                 </div>
 
                 {/* Text content */}

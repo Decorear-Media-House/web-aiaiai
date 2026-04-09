@@ -184,7 +184,7 @@ export default function AboutTeamSection({ content }: { content?: AboutTeamConte
                 {/* Footer */}
                 <CardGlassFooter>
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-baseline gap-2 whitespace-nowrap max-sm:flex-wrap max-sm:whitespace-normal max-sm:justify-center">
+                    <div className="flex items-baseline gap-2 whitespace-nowrap justify-center max-sm:flex-wrap max-sm:whitespace-normal">
                       <span className="max-sm:!text-[18px]" style={{ fontFamily: font, fontSize: 24, lineHeight: 1.4, backgroundImage: ROYAL_SHINE, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                         {ceoRole}
                       </span>

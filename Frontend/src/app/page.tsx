@@ -109,6 +109,7 @@ export default async function Home() {
     address: m.home_contact_address,
     google_map_url: m.home_contact_google_map_url,
     background_color: m.home_contact_background_color,
+    recaptcha_site_key: m.home_recaptcha_site_key,
   };
 
   return (

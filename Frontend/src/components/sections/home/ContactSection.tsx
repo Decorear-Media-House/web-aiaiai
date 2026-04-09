@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import FadeUp from "@/components/animations/FadeUp";
 import Container from "@/components/layouts/Container";
 
@@ -72,6 +72,7 @@ interface ContactContent {
   address?: string;
   google_map_url?: string;
   background_color?: string;
+  recaptcha_site_key?: string;
 }
 
 /* ── Component ──────────────────────────────────────────────────── */
@@ -86,6 +87,8 @@ export default function ContactSection({ content }: { content?: Record<string, u
   const contactAddress =
     c.address ||
     "1104/2 4th floor, Pattanakarn Road,\nSuan Luang, Bangkok, Thailand 10250";
+  const isDev = process.env.NODE_ENV === "development";
+  const recaptchaSiteKey = isDev ? "" : (c.recaptcha_site_key || "6Le9YK4sAAAAAACYfwldjc-sSuico5etsWAj8YRqJ");
   const backgroundColor = c.background_color || "#070E24";
   const mapUrl = c.google_map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.0!2d100.6308!3d13.7230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQzJzIyLjgiTiAxMDDCsDM3JzUwLjkiRQ!5e0!3m2!1sen!2sth!4v1700000000000";
 
@@ -98,6 +101,39 @@ export default function ContactSection({ content }: { content?: Record<string, u
     terms: false,
   });
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitResult, setSubmitResult] = useState<{ ok: boolean; message: string } | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const recaptchaRef = useRef<HTMLDivElement>(null);
+
+  // Load reCAPTCHA script
+  useEffect(() => {
+    if (!recaptchaSiteKey) return;
+    if (document.querySelector('script[src*="recaptcha"]')) return;
+    const script = document.createElement("script");
+    script.src = "https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit";
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }, [recaptchaSiteKey]);
+
+  const renderRecaptcha = useCallback(() => {
+    if (!recaptchaRef.current || !recaptchaSiteKey) return;
+    if (recaptchaRef.current.childNodes.length > 0) return;
+    try {
+      (window as any).grecaptcha.render(recaptchaRef.current, {
+        sitekey: recaptchaSiteKey,
+        theme: "dark",
+        callback: (token: string) => setRecaptchaToken(token),
+        "expired-callback": () => setRecaptchaToken(""),
+      });
+    } catch { /* already rendered */ }
+  }, [recaptchaSiteKey]);
+
+  useEffect(() => {
+    (window as any).onRecaptchaLoad = renderRecaptcha;
+    if ((window as any).grecaptcha?.render) renderRecaptcha();
+  }, [renderRecaptcha]);
 
   const set = (k: keyof typeof form) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -106,7 +142,7 @@ export default function ContactSection({ content }: { content?: Record<string, u
     if (errors[k]) setErrors(prev => ({ ...prev, [k]: false }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, boolean> = {};
     if (!form.fullName.trim()) newErrors.fullName = true;
@@ -116,8 +152,42 @@ export default function ContactSection({ content }: { content?: Record<string, u
       setErrors(newErrors);
       return;
     }
+    if (recaptchaSiteKey && !recaptchaToken) {
+      setSubmitResult({ ok: false, message: "Please complete the reCAPTCHA." });
+      return;
+    }
     setErrors({});
-    // TODO: submit logic
+    setSubmitting(true);
+    setSubmitResult(null);
+    try {
+      const wpApi = process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://aiaiai-cms.decorear.com";
+      const res = await fetch(`${wpApi}/wp-json/aiaiai/v1/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: form.fullName,
+          email: form.email,
+          phone: form.phone,
+          company: form.company,
+          role: form.role,
+          message: form.message,
+          recaptchaToken,
+        }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setSubmitResult({ ok: true, message: "Message sent successfully!" });
+        setForm({ fullName: "", email: "", phone: "", company: "", role: "", message: "", terms: false });
+        setRecaptchaToken("");
+        if ((window as any).grecaptcha) (window as any).grecaptcha.reset();
+      } else {
+        setSubmitResult({ ok: false, message: data.message || "Failed to send. Please try again." });
+      }
+    } catch {
+      setSubmitResult({ ok: false, message: "Network error. Please try again." });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -287,25 +357,8 @@ export default function ContactSection({ content }: { content?: Record<string, u
                   />
                 </div>
 
-                {/* reCAPTCHA mockup */}
-                <div className="flex items-center justify-between rounded-xl px-4 py-4"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <div className="flex items-center gap-3">
-                    <div className="rounded-[4px]" style={{
-                      width: 20, height: 20,
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                    }} />
-                    <span style={{ fontFamily: font, fontSize: 13, color: "#8099BE" }}>I'm not a robot</span>
-                  </div>
-                  {/* reCAPTCHA logo */}
-                  <div className="flex flex-col items-center gap-1">
-                    <svg width="32" height="32" viewBox="0 0 42 42" fill="none" aria-hidden="true">
-                      <path d="M21 3C11.06 3 3 11.06 3 21s8.06 18 18 18 18-8.06 18-18S30.94 3 21 3z" fill="#4A99F5" opacity="0.3"/>
-                      <text x="50%" y="54%" textAnchor="middle" dominantBaseline="middle" fill="#4A99F5" fontSize="10" fontFamily="sans-serif">reCAPTCHA</text>
-                    </svg>
-                  </div>
-                </div>
+                {/* reCAPTCHA */}
+                {recaptchaSiteKey && <div ref={recaptchaRef} />}
 
                 {/* Terms */}
                 <label className="flex items-center gap-3 cursor-pointer">
@@ -327,21 +380,38 @@ export default function ContactSection({ content }: { content?: Record<string, u
                   <span style={{ fontFamily: font, fontSize: 13, color: "#8099BE" }}>I accept the Terms</span>
                 </label>
 
+                {/* Submit result */}
+                {submitResult && (
+                  <div
+                    className="rounded-lg px-4 py-3"
+                    style={{
+                      background: submitResult.ok ? "rgba(0,188,125,0.1)" : "rgba(239,68,68,0.1)",
+                      border: `1px solid ${submitResult.ok ? "rgba(0,188,125,0.3)" : "rgba(239,68,68,0.3)"}`,
+                      color: submitResult.ok ? "#00BC7D" : "#EF4444",
+                      fontFamily: font,
+                      fontSize: 14,
+                    }}
+                  >
+                    {submitResult.message}
+                  </div>
+                )}
+
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90"
+                  disabled={submitting}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg transition-opacity hover:opacity-90 disabled:opacity-50"
                   style={{
                     fontFamily: font, fontSize: 15, color: "#fff",
                     padding: "12px 24px",
                     background: "linear-gradient(90deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)",
                     border: "1px solid rgba(74,153,245,1.0)",
                     borderRadius: 8,
-                    cursor: "pointer",
+                    cursor: submitting ? "not-allowed" : "pointer",
                   }}
                 >
-                  Submit
-                  <SendIcon />
+                  {submitting ? "Sending..." : "Submit"}
+                  {!submitting && <SendIcon />}
                 </button>
 
               </form>

@@ -47,10 +47,15 @@ export default async function BlogArticlePage({ params }: PageProps) {
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const relatedPosts = await getRelatedPosts(
+  let relatedPosts = await getRelatedPosts(
     post.category.toLowerCase().replace(/\s+/g, "-"),
     post.slug
   );
+  // Fallback: if no related posts in same category, show latest posts
+  if (relatedPosts.length === 0) {
+    const allPosts = await getPosts();
+    relatedPosts = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  }
 
   return (
     <>

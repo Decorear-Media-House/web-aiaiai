@@ -68,11 +68,13 @@ export default function ServicesOverviewSection({ content }: { content?: Record<
             </div>
           </FadeUp>
 
-          <FadeUp trigger="scroll" delay={0.1}>
-            <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
-              {description}
-            </p>
-          </FadeUp>
+          {description && description !== subtitle && (
+            <FadeUp trigger="scroll" delay={0.1}>
+              <p style={{ fontFamily: font, fontSize: 16, color: "#C0CEEA", lineHeight: 1.5 }}>
+                {description}
+              </p>
+            </FadeUp>
+          )}
         </div>
       </Container>
     </section>

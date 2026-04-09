@@ -206,7 +206,7 @@ export default function ThirdSection({ content }: { content?: Record<string, unk
                         alt={card.title}
                         fill
                         unoptimized={card.img.startsWith("http")}
-                        className="object-cover"
+                        className="object-cover pointer-events-none"
                         sizes="286px"
                       />
                       {/* Text overlay — bottom of card with blur */}

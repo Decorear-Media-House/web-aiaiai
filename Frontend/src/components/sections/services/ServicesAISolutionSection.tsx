@@ -21,8 +21,8 @@ function CheckItem({ text }: { text: string }) {
   return (
     <div className="flex items-start gap-3">
       <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="shrink-0 mt-0.5" aria-hidden="true">
-        <circle cx="10" cy="10" r="9" stroke="#4A99F5" strokeWidth="1.5" />
-        <path d="M6 10l3 3 5-5" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="10" cy="10" r="9" stroke="#FF8904" strokeWidth="1.5" />
+        <path d="M6 10l3 3 5-5" stroke="#FF8904" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <p style={{ fontFamily: font, fontSize: 16, color: "#E8EEF8", lineHeight: 1.5 }}>{text}</p>
     </div>
