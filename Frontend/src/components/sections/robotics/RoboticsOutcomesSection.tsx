@@ -110,14 +110,7 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
     icon: item.icon || DEFAULT_ICONS[i] || DEFAULT_ICONS[0],
   }));
   const outcomesImage = c.outcomes_image ? wpImageUrl(c.outcomes_image) : "";
-  const [open, setOpen] = useState<Set<number>>(new Set([0, 1, 2, 3]));
-  const didInit = useRef(false);
-  useEffect(() => {
-    if (!didInit.current && window.innerWidth < 640) {
-      setOpen(new Set([0]));
-    }
-    didInit.current = true;
-  }, []);
+  const [open, setOpen] = useState<Set<number>>(new Set([0]));
 
   return (
     <section
@@ -257,11 +250,9 @@ export default function RoboticsOutcomesSection({ content }: { content?: Record<
           <div className="max-sm:!min-w-0 max-sm:!w-full" style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
             {accordionItems.map(({ label, icon, items }, i) => {
               const isOpen = open.has(i);
-              const toggle = () => setOpen(prev => {
-                const next = new Set(prev);
-                if (next.has(i)) next.delete(i); else next.add(i);
-                return next;
-              });
+              const toggle = () => setOpen(prev =>
+                prev.has(i) ? new Set() : new Set([i])
+              );
               return (
               <FadeUp key={label} trigger="scroll" delay={i * 0.07}>
                 <div

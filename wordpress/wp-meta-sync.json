@@ -104,7 +104,16 @@
     "home_smtp_from_email": "thatsayut@decorear.com",
     "home_smtp_from_name": "AI-AI-AI",
     "home_recaptcha_site_key": "6Le9YK4sAAAAAACYfwldjc-sSuico5etsWAj8YRqJ",
-    "home_recaptcha_secret_key": "6Le9YK4sAAAAAGpH2uTJgcKpZfC2z28L-wGlnTXw"
+    "home_recaptcha_secret_key": "6Le9YK4sAAAAAGpH2uTJgcKpZfC2z28L-wGlnTXw",
+    "home_footer_email": "info@ai-ai-ai.co",
+    "home_footer_phone": "(66) 82 335 2444",
+    "home_footer_line": "Contact us via LINE",
+    "home_footer_copyright": "© 2026 Ai-Ai-Ai Co., Ltd. All rights reserved. | Powered by Decorear",
+    "home_footer_email_label": "info@ai-ai-ai.co",
+    "home_footer_email_url": "mailto:info@ai-ai-ai.co",
+    "home_footer_phone_label": "(66) 82 335 2444",
+    "home_footer_phone_url": "tel:+66823352444",
+    "home_footer_line_label": "Contact us via LINE"
   },
   "about": {
     "about_hero_label": "About Us",

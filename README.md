@@ -33,6 +33,7 @@
 - แก้กี่ครั้งก็ได้ แล้วค่อย Deploy ทีเดียว
 - ถ้า Deploy ผิดพลาด เว็บเก่ายังอยู่ ไม่พัง
 - รูปภาพรองรับ JPG, PNG, WebP, SVG (แนะนำ WebP)
+- reCAPTCHA ต้องใช้ **v2 ("I'm not a robot" Checkbox)** — v3 ใช้ไม่ได้ สร้างที่ [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin) แล้วใส่ key ที่ Decorear Tools → Email Settings
 
 ---
 

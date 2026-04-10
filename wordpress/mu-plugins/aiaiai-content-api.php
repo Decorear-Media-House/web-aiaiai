@@ -7,6 +7,52 @@
 
 defined('ABSPATH') || exit;
 
+/* ================================================================== */
+/*  Auto-sync: import wp-meta-sync.json into WP on first load          */
+/*  This seeds all page meta from the git-tracked JSON export.         */
+/*  Only runs once per deploy (uses a version hash to detect changes). */
+/* ================================================================== */
+add_action('admin_init', function () {
+    // Find the JSON file relative to this mu-plugin
+    $json_paths = [
+        dirname(ABSPATH) . '/web-aiaiai/wordpress/wp-meta-sync.json',   // server: ~/web-aiaiai/
+        dirname(__DIR__, 2) . '/wordpress/wp-meta-sync.json',            // relative to mu-plugins
+        dirname(__DIR__, 2) . '/wp-meta-sync.json',                      // fallback
+    ];
+    $json_file = null;
+    foreach ($json_paths as $p) {
+        if (file_exists($p)) { $json_file = $p; break; }
+    }
+    if (!$json_file) return;
+
+    // Check if this version was already imported
+    $hash = md5_file($json_file);
+    if (get_option('aiaiai_sync_hash') === $hash) return;
+
+    $data = json_decode(file_get_contents($json_file), true);
+    if (!$data || !is_array($data)) return;
+
+    $count = 0;
+    foreach ($data as $slug => $meta) {
+        $page = get_page_by_path($slug);
+        if (!$page) continue;
+        $pid = $page->ID;
+        foreach ($meta as $key => $value) {
+            // Only seed if field is currently empty
+            $current = get_post_meta($pid, $key, true);
+            if ($current === '' || $current === null || $current === false) {
+                update_post_meta($pid, $key, wp_slash($value));
+                $count++;
+            }
+        }
+    }
+
+    update_option('aiaiai_sync_hash', $hash);
+    if ($count > 0) {
+        error_log("[AIAIAI] Auto-synced $count empty fields from wp-meta-sync.json");
+    }
+}, 1);
+
 /* Disable Gutenberg starter patterns modal */
 add_action('enqueue_block_editor_assets', function () {
     wp_add_inline_script('wp-block-editor', "wp.data && wp.data.dispatch('core/preferences')?.set('core/edit-post','isPatternModalDismissed',true);", 'after');
@@ -221,3 +267,75 @@ function aiaiai_render_deploy() {
 
     echo '</div>';
 }
+
+/* ================================================================== */
+/*  Footer Settings meta box on Home page                              */
+/* ================================================================== */
+
+/* Auto-seed footer defaults if empty */
+add_action('admin_init', function () {
+    if (get_option('aiaiai_footer_seeded')) return;
+    $home = get_page_by_path('home');
+    if (!$home) return;
+    $pid = $home->ID;
+    $defaults = [
+        'home_footer_email_label' => 'info@ai-ai-ai.co',
+        'home_footer_email_url'   => 'mailto:info@ai-ai-ai.co',
+        'home_footer_phone_label' => '(66) 82 335 2444',
+        'home_footer_phone_url'   => 'tel:+66823352444',
+        'home_footer_line_label'  => 'Contact us via LINE',
+        'home_footer_line_url'    => '',
+        'home_footer_copyright'   => '© 2026 Ai-Ai-Ai Co., Ltd. All rights reserved. | Powered by Decorear',
+    ];
+    foreach ($defaults as $k => $v) {
+        if (!get_post_meta($pid, $k, true)) {
+            update_post_meta($pid, $k, $v);
+        }
+    }
+    update_option('aiaiai_footer_seeded', 1);
+}, 5);
+
+$aiaiai_footer_fields = [
+    ['key' => 'home_footer_email_label', 'label' => 'Email — Label',     'type' => 'text', 'placeholder' => 'info@ai-ai-ai.co'],
+    ['key' => 'home_footer_email_url',   'label' => 'Email — Link',      'type' => 'text', 'placeholder' => 'mailto:info@ai-ai-ai.co'],
+    ['key' => 'home_footer_phone_label', 'label' => 'Phone — Label',     'type' => 'text', 'placeholder' => '(66) 82 335 2444'],
+    ['key' => 'home_footer_phone_url',   'label' => 'Phone — Link',      'type' => 'text', 'placeholder' => 'tel:+66823352444'],
+    ['key' => 'home_footer_line_label',  'label' => 'LINE — Label',      'type' => 'text', 'placeholder' => 'Contact us via LINE'],
+    ['key' => 'home_footer_line_url',    'label' => 'LINE — Link',       'type' => 'url',  'placeholder' => 'https://line.me/ti/p/xxx'],
+    ['key' => 'home_footer_copyright',   'label' => 'Copyright Text',    'type' => 'text', 'placeholder' => '© 2026 Ai-Ai-Ai Co., Ltd. All rights reserved.'],
+];
+
+add_action('add_meta_boxes', function () {
+    $home = get_page_by_path('home');
+    if (!$home) return;
+    add_meta_box('aiaiai-footer-settings', 'Footer Settings', 'aiaiai_render_footer_meta_box', 'page', 'normal', 'default');
+});
+
+function aiaiai_render_footer_meta_box($post) {
+    global $aiaiai_footer_fields;
+    $home = get_page_by_path('home');
+    if (!$home || $post->ID !== $home->ID) {
+        echo '<p style="color:#999;">This meta box only applies to the Home page.</p>';
+        return;
+    }
+    wp_nonce_field('aiaiai_footer_meta', '_aiaiai_footer_nonce');
+    echo '<table class="form-table"><tbody>';
+    foreach ($aiaiai_footer_fields as $f) {
+        $val = get_post_meta($post->ID, $f['key'], true);
+        echo '<tr><th><label for="' . esc_attr($f['key']) . '">' . esc_html($f['label']) . '</label></th>';
+        echo '<td><input type="' . esc_attr($f['type']) . '" id="' . esc_attr($f['key']) . '" name="' . esc_attr($f['key']) . '" value="' . esc_attr($val) . '" placeholder="' . esc_attr($f['placeholder']) . '" class="regular-text" style="width:100%;max-width:500px;" /></td></tr>';
+    }
+    echo '</tbody></table>';
+}
+
+add_action('save_post_page', function ($post_id) {
+    global $aiaiai_footer_fields;
+    if (!isset($_POST['_aiaiai_footer_nonce']) || !wp_verify_nonce($_POST['_aiaiai_footer_nonce'], 'aiaiai_footer_meta')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    foreach ($aiaiai_footer_fields as $f) {
+        if (isset($_POST[$f['key']])) {
+            update_post_meta($post_id, $f['key'], sanitize_text_field(wp_unslash($_POST[$f['key']])));
+        }
+    }
+});

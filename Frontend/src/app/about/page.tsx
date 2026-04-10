@@ -44,17 +44,24 @@ export default async function AboutPage() {
 
   const mission: any = {
     label: m.about_mission_label,
-    heading: m.about_mission_heading,
+    headingWhite1: m.about_mission_headingWhite1,
+    headingHighlight: m.about_mission_headingHighlight,
+    headingWhite2: m.about_mission_headingWhite2,
     description: m.about_mission_description,
-    paragraphs: textareaToArray(m.about_mission_paragraphs).length > 0 ? textareaToArray(m.about_mission_paragraphs) : undefined,
     background_image: m.about_mission_background_image,
+    background_mobile_image: m.about_mission_background_mobile_image,
   };
 
   const philosophy: any = {
     label: m.about_philosophy_label,
-    heading: m.about_philosophy_heading,
-    description: m.about_philosophy_description,
-    items: ensureArray(m.about_philosophy_items).length > 0 ? ensureArray(m.about_philosophy_items) : undefined,
+    headingPrefix: m.about_philosophy_headingPrefix,
+    headingHighlight: m.about_philosophy_headingHighlight,
+    subtitle: m.about_philosophy_subtitle,
+    introText: m.about_philosophy_introText,
+    items: (() => {
+      const raw = ensureArray(m.about_philosophy_principles || m.about_philosophy_items);
+      return raw.length > 0 ? raw : undefined;
+    })(),
     background_color: m.about_philosophy_background_color,
   };
 
@@ -81,7 +88,7 @@ export default async function AboutPage() {
     label: m.about_team_label,
     headingPrefix: m.about_team_headingPrefix,
     headingHighlight: m.about_team_headingHighlight,
-    description: m.about_team_description,
+    description: m.about_team_sectionDescription || m.about_team_description,
     ceoName: m.about_team_ceoName,
     ceoRole: m.about_team_ceoRole,
     ceoBio: m.about_team_ceoBio,
@@ -93,6 +100,9 @@ export default async function AboutPage() {
     ceo_photo_image: m.about_team_ceo_photo_image,
     cto_photo_image: m.about_team_cto_photo_image,
     coo_photo_image: m.about_team_coo_photo_image,
+    ceo_photo_mobile_image: m.about_team_ceo_photo_mobile_image,
+    cto_photo_mobile_image: m.about_team_cto_photo_mobile_image,
+    coo_photo_mobile_image: m.about_team_coo_photo_mobile_image,
   };
 
   return (

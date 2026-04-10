@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai, Libre_Baskerville, Faculty_Glyphic } from "next/font/google";
 import "@/styles/globals.css";
 import Footer from "@/components/layouts/Footer";
-import { getTrackingTags } from "@/lib/wordpress";
+import { getTrackingTags, getPageMeta } from "@/lib/wordpress";
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   variable: "--font-ibm-plex-sans-thai",
@@ -38,7 +38,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const tags = await getTrackingTags();
+  const [tags, m] = await Promise.all([getTrackingTags(), getPageMeta("home")]);
 
   return (
     <html
@@ -55,7 +55,15 @@ export default async function RootLayout({
           <div dangerouslySetInnerHTML={{ __html: tags.body_open_scripts }} />
         )}
         {children}
-        <Footer />
+        <Footer
+          email_label={(m as any).home_footer_email_label || undefined}
+          email_url={(m as any).home_footer_email_url || undefined}
+          phone_label={(m as any).home_footer_phone_label || undefined}
+          phone_url={(m as any).home_footer_phone_url || undefined}
+          line_label={(m as any).home_footer_line_label || undefined}
+          line_url={(m as any).home_footer_line_url || undefined}
+          copyright={(m as any).home_footer_copyright || undefined}
+        />
         {tags.body_close_scripts && (
           <div dangerouslySetInnerHTML={{ __html: tags.body_close_scripts }} />
         )}
