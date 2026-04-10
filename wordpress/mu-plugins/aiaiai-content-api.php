@@ -38,12 +38,42 @@ add_action('admin_init', function () {
         if (!$page) continue;
         $pid = $page->ID;
         foreach ($meta as $key => $value) {
-            // Only seed if field is currently empty
             $current = get_post_meta($pid, $key, true);
-            if ($current === '' || $current === null || $current === false) {
+            $is_empty = ($current === '' || $current === null || $current === false);
+
+            // Case 1: field is empty → just set it
+            if ($is_empty) {
                 update_post_meta($pid, $key, wp_slash($value));
                 $count++;
+                continue;
             }
+
+            // Case 2: both are arrays (repeater) → merge missing sub-fields
+            if (is_array($current) && is_array($value)) {
+                $merged = $current;
+                $changed = false;
+                foreach ($value as $item_key => $item_value) {
+                    if (!isset($merged[$item_key])) {
+                        // New item — add it
+                        $merged[$item_key] = $item_value;
+                        $changed = true;
+                    } elseif (is_array($item_value) && is_array($merged[$item_key])) {
+                        // Merge missing sub-fields (e.g. feature_image_1 inside robot)
+                        foreach ($item_value as $sub_key => $sub_value) {
+                            $existing_sub = $merged[$item_key][$sub_key] ?? null;
+                            if ($existing_sub === null || $existing_sub === '' || $existing_sub === false) {
+                                $merged[$item_key][$sub_key] = $sub_value;
+                                $changed = true;
+                            }
+                        }
+                    }
+                }
+                if ($changed) {
+                    update_post_meta($pid, $key, $merged);
+                    $count++;
+                }
+            }
+            // Case 3: scalar field with data → skip (don't overwrite user edits)
         }
     }
 
