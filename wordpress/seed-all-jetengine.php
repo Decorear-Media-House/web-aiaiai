@@ -15,7 +15,7 @@ function add_meta_box_je($id, $name, $page_id, $fields) {
     $item = [
         "id" => $id,
         "labels" => ["name" => $name],
-        "args" => ["object_type"=>"post","allowed_post_type"=>["page"],"active"=>true,"show_in_rest"=>true,"position"=>"normal","allowed_pages"=>[strval($page_id)]],
+        "args" => ["object_type"=>"post","allowed_post_type"=>["page"],"active"=>true,"show_in_rest"=>true,"position"=>"normal","allowed_posts"=>[strval($page_id)],"active_conditions"=>["allowed_posts"]],
         "meta_fields" => $fields,
     ];
     $raw = get_option("jet_engine_meta_boxes", []);
@@ -37,15 +37,17 @@ function get_sections($page_id) {
 }
 
 function seed($page_id, $key, $val) {
-    if ($val !== '' && $val !== null) {
-        update_post_meta($page_id, $key, $val);
-    }
+    if ($val === '' || $val === null) return;
+    $existing = get_post_meta($page_id, $key, true);
+    if ($existing !== '' && $existing !== null && $existing !== false) return; // don't overwrite
+    update_post_meta($page_id, $key, $val);
 }
 
 function seed_repeater($page_id, $key, $data) {
-    if (is_array($data) && !empty($data)) {
-        update_post_meta($page_id, $key, $data);
-    }
+    if (!is_array($data) || empty($data)) return;
+    $existing = get_post_meta($page_id, $key, true);
+    if (!empty($existing)) return; // don't overwrite
+    update_post_meta($page_id, $key, $data);
 }
 
 function arr_to_text($arr) {
@@ -359,7 +361,8 @@ $s = get_sections($pid);
 add_meta_box_je("hum-hero", "Humanoid — Hero", $pid, [
     tf("hum_hero_chip","Label"), tf("hum_hero_heading","Heading"), ta("hum_hero_description","Description"),
     mf("hum_hero_bg_image","BG Image"), cf("hum_hero_bg_color","BG Color"),
-    tf("hum_hero_cta_primary","Primary CTA"), tf("hum_hero_cta_secondary","Secondary CTA"),
+    tf("hum_hero_cta_primary","Primary CTA"), tf("hum_hero_cta_primary_url","Primary CTA URL"),
+    tf("hum_hero_cta_secondary","Secondary CTA"), tf("hum_hero_cta_secondary_url","Secondary CTA URL"),
     rf("hum_hero_stats","Stats",[tf("top","Top"),tf("bottom","Bottom")]),
 ]);
 
@@ -374,7 +377,13 @@ seed($pid, "hum_hero_cta_secondary", $h['cta_secondary'] ?? '');
 seed_repeater($pid, "hum_hero_stats", $h['stats'] ?? []);
 
 add_meta_box_je("hum-usecases", "Humanoid — Use Cases", $pid, [
-    rf("hum_robots","Robot Models",[tf("name","Name"),mf("header_image","Header Image"),tf("title","Title"),ta("description","Description"),mf("video_thumb","Video Thumb 1"),mf("video_thumb_2","Video Thumb 2"),tf("note","Note")]),
+    rf("hum_robots","Robot Models",[
+        tf("name","Name"), mf("header_image","Header Image"), tf("title","Title"), ta("description","Description"),
+        mf("video_thumb","Video Thumb 1"), tf("video_url","Video URL 1"),
+        mf("video_thumb_2","Video Thumb 2"), tf("video_url_2","Video URL 2"),
+        ta("specs","Specs (label|value per line)"),
+        tf("note","Note"),
+    ]),
 ]);
 
 $uc = $s['useCases'] ?? [];
@@ -399,7 +408,7 @@ if (is_array($robots)) {
 add_meta_box_je("hum-outcomes", "Humanoid — Outcomes", $pid, [
     tf("hum_outcomes_chip","Label"), tf("hum_outcomes_heading","Heading"), tf("hum_outcomes_heading_hl","Highlight"),
     ta("hum_outcomes_description","Description"), mf("hum_outcomes_image","Photo"), cf("hum_outcomes_bg_color","BG Color"),
-    rf("hum_outcomes_accordion","Accordion",[tf("label","Label"),tf("icon_gradient","Icon Gradient"),ta("items","Items (1/line)")]),
+    rf("hum_outcomes_accordion","Accordion",[tf("label","Label"),tf("icon_gradient","Icon Gradient"),mf("icon_image","Icon Image"),ta("items","Items (1/line)")]),
 ]);
 
 $oc = $s['outcomes'] ?? [];
@@ -426,7 +435,7 @@ if (is_array($acc)) {
 add_meta_box_je("hum-deliverables", "Humanoid — Deliverables", $pid, [
     tf("hum_deliverables_chip","Label"), tf("hum_deliverables_heading","Heading"), tf("hum_deliverables_heading_hl","Highlight"),
     ta("hum_deliverables_description","Description"), cf("hum_deliverables_bg_color","BG Color"),
-    rf("hum_deliverables_items","Items",[tf("num","Number"),tf("title","Title")]),
+    rf("hum_deliverables_items","Items",[tf("num","Number"),tf("title","Title"),mf("icon","Icon Image")]),
 ]);
 
 $dl = $s['deliverables'] ?? [];
@@ -438,7 +447,9 @@ seed_repeater($pid, "hum_deliverables_items", $dl['items'] ?? []);
 
 add_meta_box_je("hum-cta", "Humanoid — CTA", $pid, [
     tf("hum_cta_heading","Heading"), tf("hum_cta_heading_hl","Highlight"), ta("hum_cta_description","Description"),
-    ta("hum_cta_chips","Chips (1/line)"), tf("hum_cta_primary","Primary CTA"), tf("hum_cta_secondary","Secondary CTA"),
+    ta("hum_cta_chips","Chips (1/line)"),
+    tf("hum_cta_primary","Primary CTA"), tf("hum_cta_primary_url","Primary CTA URL"),
+    tf("hum_cta_secondary","Secondary CTA"), tf("hum_cta_secondary_url","Secondary CTA URL"),
     mf("hum_cta_bg_image","BG Image"), cf("hum_cta_bg_color","BG Color"),
 ]);
 

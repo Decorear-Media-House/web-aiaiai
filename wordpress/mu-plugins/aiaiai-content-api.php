@@ -339,3 +339,103 @@ add_action('save_post_page', function ($post_id) {
         }
     }
 });
+
+/* ================================================================== */
+/*  Robot Features Editor (rich text per robot) on Humanoid page       */
+/* ================================================================== */
+
+$aiaiai_robot_names = ['AGIBOT X2 ULTRA', 'AGIBOT D1 EDU', 'A2 ULTRA', 'AGIBOT G2'];
+
+add_action('add_meta_boxes', function () {
+    $hum = get_page_by_path('humanoid');
+    if (!$hum) return;
+    add_meta_box(
+        'aiaiai-robot-features',
+        'Robot Features (Rich Editor)',
+        'aiaiai_render_robot_features_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+});
+
+function aiaiai_render_robot_features_meta_box($post) {
+    global $aiaiai_robot_names;
+    $hum = get_page_by_path('humanoid');
+    if (!$hum || $post->ID !== $hum->ID) {
+        echo '<p style="color:#999;">This meta box only applies to the Humanoid page.</p>';
+        return;
+    }
+
+    wp_nonce_field('aiaiai_robot_features', '_aiaiai_robot_features_nonce');
+
+    echo '<p style="color:#666;">Use <code>## Heading</code> for feature titles, and <code>- item</code> for list items. Example:</p>';
+    echo '<pre style="background:#f5f5f5;padding:10px;border-radius:4px;font-size:13px;">## Entertainment &amp; Commercial Performance
+- Supports TikTok dancing, drumming
+- Enables group performances
+
+## Automatic Presentation &amp; Interaction
+- Welcomes guests and guides visitors
+- Recognizes faces automatically</pre>';
+
+    $robots = maybe_unserialize(get_post_meta($post->ID, 'hum_robots', true));
+    if (!is_array($robots)) return;
+
+    $i = 0;
+    foreach ($robots as $key => $r) {
+        $name = $r['name'] ?? ($aiaiai_robot_names[$i] ?? "Robot $i");
+        $features_raw = $r['features_json'] ?? '';
+
+        // Convert textarea format to markdown-like for editor
+        if ($features_raw && !str_contains($features_raw, '##')) {
+            // Convert "title|item1|item2" per line → "## title\n- item1\n- item2"
+            $lines = explode("\n", $features_raw);
+            $md = '';
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (!$line) continue;
+                $parts = explode('|', $line);
+                $title = trim(array_shift($parts));
+                $md .= "## $title\n";
+                foreach ($parts as $item) {
+                    $item = trim($item);
+                    if ($item) $md .= "- $item\n";
+                }
+                $md .= "\n";
+            }
+            $features_raw = trim($md);
+        }
+
+        $field_id = "robot_features_$i";
+        echo '<h3 style="margin:20px 0 8px;padding-top:16px;border-top:1px solid #ddd;">' . esc_html($name) . '</h3>';
+        wp_editor($features_raw, $field_id, [
+            'textarea_name' => $field_id,
+            'textarea_rows' => 8,
+            'media_buttons' => false,
+            'teeny'         => true,
+            'quicktags'     => true,
+        ]);
+        $i++;
+    }
+}
+
+add_action('save_post_page', function ($post_id) {
+    if (!isset($_POST['_aiaiai_robot_features_nonce']) ||
+        !wp_verify_nonce($_POST['_aiaiai_robot_features_nonce'], 'aiaiai_robot_features')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $robots = maybe_unserialize(get_post_meta($post_id, 'hum_robots', true));
+    if (!is_array($robots)) return;
+
+    $i = 0;
+    foreach ($robots as $key => &$r) {
+        $field_id = "robot_features_$i";
+        if (isset($_POST[$field_id])) {
+            // Store the raw editor content (HTML or markdown-like)
+            $r['features_json'] = wp_kses_post(wp_unslash($_POST[$field_id]));
+        }
+        $i++;
+    }
+    update_post_meta($post_id, 'hum_robots', $robots);
+});

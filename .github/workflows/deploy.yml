@@ -7,13 +7,53 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Trigger rebuild via SSH
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_deploy
           chmod 600 ~/.ssh/id_deploy
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy \
+
+      - name: Trigger rebuild
+        run: |
+          echo "🚀 Triggering rebuild on server..."
+          RESULT=$(ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "curl -s -X POST http://127.0.0.1:9001/rebuild"
-          echo "Rebuild triggered!"
+            "curl -s -X POST http://127.0.0.1:9001/rebuild")
+          echo "$RESULT"
+          if echo "$RESULT" | grep -q '"ok":true'; then
+            echo "✅ Rebuild triggered successfully"
+          else
+            echo "❌ Failed to trigger rebuild"
+            exit 1
+          fi
+
+      - name: Wait for build to complete
+        run: |
+          echo "⏳ Waiting for build..."
+          ELAPSED=0
+          while [ $ELAPSED -lt 300 ]; do
+            sleep 10
+            ELAPSED=$((ELAPSED + 10))
+            HEALTH=$(ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_deploy \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+              "curl -s http://127.0.0.1:9001/health" 2>/dev/null || echo '{}')
+            BUILDING=$(echo "$HEALTH" | grep -o '"building":true' || true)
+            if [ -z "$BUILDING" ]; then
+              echo "✅ Build complete! (${ELAPSED}s)"
+              exit 0
+            fi
+            echo "  🔨 Building... (${ELAPSED}s)"
+          done
+          echo "❌ Timed out after 300s"
+          exit 1
+
+      - name: Verify site
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://aiaiai.decorear.com/ --max-time 10 || echo "000")
+          if [ "$STATUS" = "200" ]; then
+            echo "✅ Site is live! (HTTP $STATUS)"
+          else
+            echo "⚠️ Site returned HTTP $STATUS"
+          fi

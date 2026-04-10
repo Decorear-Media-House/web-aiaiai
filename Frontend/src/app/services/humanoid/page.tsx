@@ -54,10 +54,49 @@ export default async function RoboticsPage() {
   } catch { /* ignore */ }
   const repeaterArr = ensureArray(m.hum_robots);
   if (repeaterArr.length > 0) {
-    // Merge: repeater overrides simple fields, JSON provides specs/features
+    // Merge: repeater overrides simple fields, JSON provides specs/features fallback
     robots = repeaterArr.map((rep: any, i: number) => {
       const base = jsonRobots[i] || {};
-      return { ...base, ...rep };
+      const merged = { ...base, ...rep };
+      // Parse specs from "label|value" per line format
+      if (typeof merged.specs === "string" && merged.specs.trim()) {
+        merged.specs = merged.specs.split("\n").filter((l: string) => l.trim()).map((l: string) => {
+          const [label, ...rest] = l.split("|");
+          return { label: label.trim(), value: rest.join("|").trim() };
+        });
+      }
+      // Parse features from multiple formats
+      if (typeof merged.features_json === "string" && merged.features_json.trim()) {
+        const raw = merged.features_json.trim();
+        if (raw.startsWith("[")) {
+          // JSON format (legacy)
+          try { merged.features = JSON.parse(raw); } catch { /* keep existing */ }
+        } else if (raw.includes("##")) {
+          // Markdown format: "## title\n- item1\n- item2"
+          const features: { title: string; items: string[] }[] = [];
+          let current: { title: string; items: string[] } | null = null;
+          // Strip HTML tags from wp_editor
+          const clean = raw.replace(/<[^>]+>/g, "\n");
+          for (const line of clean.split("\n")) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith("##")) {
+              if (current) features.push(current);
+              current = { title: trimmed.replace(/^#+\s*/, ""), items: [] };
+            } else if (trimmed.startsWith("-") && current) {
+              current.items.push(trimmed.replace(/^-\s*/, ""));
+            }
+          }
+          if (current) features.push(current);
+          if (features.length > 0) merged.features = features;
+        } else {
+          // Pipe format: "title|item1|item2" per line
+          merged.features = raw.split("\n").filter((l: string) => l.trim()).map((l: string) => {
+            const [title, ...items] = l.split("|").map((s: string) => s.trim());
+            return { title, items: items.filter(Boolean) };
+          });
+        }
+      }
+      return merged;
     });
   } else if (jsonRobots.length > 0) {
     robots = jsonRobots;
