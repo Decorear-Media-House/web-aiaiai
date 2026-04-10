@@ -54,10 +54,14 @@ export default async function RoboticsPage() {
   } catch { /* ignore */ }
   const repeaterArr = ensureArray(m.hum_robots);
   if (repeaterArr.length > 0) {
-    // Merge: repeater overrides simple fields, JSON provides specs/features fallback
     robots = repeaterArr.map((rep: any, i: number) => {
       const base = jsonRobots[i] || {};
       const merged = { ...base, ...rep };
+      // Read features from separate meta key (not inside repeater)
+      const separateFeatures = m[`hum_robot_${i}_features`] as string;
+      if (separateFeatures && typeof separateFeatures === "string" && separateFeatures.trim()) {
+        merged.features_json = separateFeatures;
+      }
       // Parse specs from "label|value" per line format
       if (typeof merged.specs === "string" && merged.specs.trim()) {
         merged.specs = merged.specs.split("\n").filter((l: string) => l.trim()).map((l: string) => {

@@ -341,7 +341,7 @@ add_action('save_post_page', function ($post_id) {
 });
 
 /* ================================================================== */
-/*  Robot Features Editor (rich text per robot) on Humanoid page       */
+/*  Robot Features Editor (textarea per robot) on Humanoid page        */
 /* ================================================================== */
 
 $aiaiai_robot_names = ['AGIBOT X2 ULTRA', 'AGIBOT D1 EDU', 'A2 ULTRA', 'AGIBOT G2'];
@@ -351,7 +351,7 @@ add_action('add_meta_boxes', function () {
     if (!$hum) return;
     add_meta_box(
         'aiaiai-robot-features',
-        'Robot Features (Rich Editor)',
+        'Robot Features',
         'aiaiai_render_robot_features_meta_box',
         'page',
         'normal',
@@ -369,14 +369,15 @@ function aiaiai_render_robot_features_meta_box($post) {
 
     wp_nonce_field('aiaiai_robot_features', '_aiaiai_robot_features_nonce');
 
-    echo '<p style="color:#666;">Use <code>## Heading</code> for feature titles, and <code>- item</code> for list items. Example:</p>';
-    echo '<pre style="background:#f5f5f5;padding:10px;border-radius:4px;font-size:13px;">## Entertainment &amp; Commercial Performance
+    echo '<div style="background:#f0f6ff;padding:12px 16px;border-radius:6px;margin-bottom:16px;border:1px solid #c3d9f7;">';
+    echo '<strong>Format:</strong> Use <code>## Heading</code> for feature titles, and <code>- item</code> for list items.<br>';
+    echo '<pre style="background:#fff;padding:8px;border-radius:4px;margin:8px 0 0;font-size:13px;">## Entertainment &amp; Commercial Performance
 - Supports TikTok dancing, drumming
 - Enables group performances
 
 ## Automatic Presentation &amp; Interaction
-- Welcomes guests and guides visitors
-- Recognizes faces automatically</pre>';
+- Welcomes guests and guides visitors</pre>';
+    echo '</div>';
 
     $robots = maybe_unserialize(get_post_meta($post->ID, 'hum_robots', true));
     if (!is_array($robots)) return;
@@ -384,41 +385,18 @@ function aiaiai_render_robot_features_meta_box($post) {
     $i = 0;
     foreach ($robots as $key => $r) {
         $name = $r['name'] ?? ($aiaiai_robot_names[$i] ?? "Robot $i");
-        $features_raw = $r['features_json'] ?? '';
-
-        // Convert textarea format to markdown-like for editor
-        if ($features_raw && !str_contains($features_raw, '##')) {
-            // Convert "title|item1|item2" per line → "## title\n- item1\n- item2"
-            $lines = explode("\n", $features_raw);
-            $md = '';
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (!$line) continue;
-                $parts = explode('|', $line);
-                $title = trim(array_shift($parts));
-                $md .= "## $title\n";
-                foreach ($parts as $item) {
-                    $item = trim($item);
-                    if ($item) $md .= "- $item\n";
-                }
-                $md .= "\n";
-            }
-            $features_raw = trim($md);
-        }
+        // Read from SEPARATE meta key (not inside repeater)
+        $meta_key = "hum_robot_{$i}_features";
+        $features_raw = get_post_meta($post->ID, $meta_key, true);
 
         $field_id = "robot_features_$i";
-        echo '<h3 style="margin:20px 0 8px;padding-top:16px;border-top:1px solid #ddd;">' . esc_html($name) . '</h3>';
-        wp_editor($features_raw, $field_id, [
-            'textarea_name' => $field_id,
-            'textarea_rows' => 8,
-            'media_buttons' => false,
-            'teeny'         => true,
-            'quicktags'     => true,
-        ]);
+        echo '<h3 style="margin:20px 0 8px;padding-top:16px;border-top:1px solid #ddd;font-size:16px;">' . esc_html($name) . '</h3>';
+        echo '<textarea name="' . esc_attr($field_id) . '" id="' . esc_attr($field_id) . '" rows="10" style="width:100%;font-family:monospace;font-size:14px;padding:10px;">' . esc_textarea($features_raw) . '</textarea>';
         $i++;
     }
 }
 
+// Save features as SEPARATE meta keys (not inside repeater — JetEngine can't overwrite)
 add_action('save_post_page', function ($post_id) {
     if (!isset($_POST['_aiaiai_robot_features_nonce']) ||
         !wp_verify_nonce($_POST['_aiaiai_robot_features_nonce'], 'aiaiai_robot_features')) return;
@@ -429,13 +407,12 @@ add_action('save_post_page', function ($post_id) {
     if (!is_array($robots)) return;
 
     $i = 0;
-    foreach ($robots as $key => &$r) {
+    foreach ($robots as $key => $r) {
         $field_id = "robot_features_$i";
         if (isset($_POST[$field_id])) {
-            // Store the raw editor content (HTML or markdown-like)
-            $r['features_json'] = wp_kses_post(wp_unslash($_POST[$field_id]));
+            $meta_key = "hum_robot_{$i}_features";
+            update_post_meta($post_id, $meta_key, sanitize_textarea_field(wp_unslash($_POST[$field_id])));
         }
         $i++;
     }
-    update_post_meta($post_id, 'hum_robots', $robots);
 });
