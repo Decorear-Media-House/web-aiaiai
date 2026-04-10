@@ -382,6 +382,8 @@ add_meta_box_je("hum-usecases", "Humanoid — Use Cases", $pid, [
         mf("video_thumb","Video Thumb 1"), tf("video_url","Video URL 1"),
         mf("video_thumb_2","Video Thumb 2"), tf("video_url_2","Video URL 2"),
         ta("specs","Specs (label|value per line)"),
+        mf("feature_image_1","Feature Image 1"),
+        mf("feature_image_2","Feature Image 2"),
         tf("note","Note"),
     ]),
 ]);

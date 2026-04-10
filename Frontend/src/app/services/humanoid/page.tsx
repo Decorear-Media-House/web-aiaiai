@@ -62,6 +62,12 @@ export default async function RoboticsPage() {
       if (separateFeatures && typeof separateFeatures === "string" && separateFeatures.trim()) {
         merged.features_json = separateFeatures;
       }
+      // Collect feature images from repeater fields
+      const feat1 = (rep as any).feature_image_1;
+      const feat2 = (rep as any).feature_image_2;
+      if (feat1 || feat2) {
+        merged.feature_images = [feat1, feat2].filter(Boolean);
+      }
       // Parse specs from "label|value" per line format
       if (typeof merged.specs === "string" && merged.specs.trim()) {
         merged.specs = merged.specs.split("\n").filter((l: string) => l.trim()).map((l: string) => {

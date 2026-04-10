@@ -357,7 +357,11 @@ export default function RoboticsUseCasesSection({ content }: { content?: Record<
       {robots.map((robot, robotIdx) => {
         const specs: { label: string; value: string }[] = Array.isArray(robot.specs) ? robot.specs : robot.specs ? Object.values(robot.specs) : [];
         const features: { title: string; items: string[]; feature_image?: string }[] = Array.isArray(robot.features) ? robot.features : robot.features ? Object.values(robot.features) : [];
-        const featureImages = features.filter((f) => f.feature_image).map((f) => f.feature_image!);
+        let featureImages = features.filter((f) => f.feature_image).map((f) => f.feature_image!);
+        // Fallback: use images from robot.feature_images array if features don't have them
+        if (featureImages.length === 0 && Array.isArray(robot.feature_images)) {
+          featureImages = robot.feature_images.filter(Boolean);
+        }
         const leftImage = featureImages[0] || "";
         const rightImage = featureImages[1] || "";
         const isFirstRobot = robotIdx === 0;
