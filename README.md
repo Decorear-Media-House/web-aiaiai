@@ -2,6 +2,8 @@
 
 เว็บไซต์ AI-AI-AI Co., Ltd. — Static site + WordPress headless CMS
 
+---
+
 ## สำหรับลูกค้า (Content Editor)
 
 ### แก้ไข Content
@@ -33,116 +35,136 @@
 - แก้กี่ครั้งก็ได้ แล้วค่อย Deploy ทีเดียว
 - ถ้า Deploy ผิดพลาด เว็บเก่ายังอยู่ ไม่พัง
 - รูปภาพรองรับ JPG, PNG, WebP, SVG (แนะนำ WebP)
-- reCAPTCHA ต้องใช้ **v2 ("I'm not a robot" Checkbox)** — v3 ใช้ไม่ได้ สร้างที่ [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin) แล้วใส่ key ที่ Decorear Tools → Email Settings
 
 ---
 
 ## สำหรับ Developer
 
 ### Stack
-- **Frontend**: Next.js 16, React 19, Tailwind CSS 4, Framer Motion
+
+- **Frontend**: Next.js, React, Tailwind CSS, Framer Motion
 - **CMS**: WordPress 6 + JetEngine Pro + RankMath
-- **Hosting**: CloudPanel (AWS Lightsail) หรือ Vercel + Cloudflare CDN
-
-### Development
-
-```bash
-docker compose up -d                  # Start local WordPress (localhost:8080)
-cd Frontend && npm run dev            # Start dev server (localhost:3000)
-```
-
-### Architecture
-
-```
-Content Editor → WordPress CMS
-                      ↓ กด Deploy Site
-                 AJAX → PHP → webhook (:9001) → rebuild.sh
-                      ↓
-                 git pull → copy mu-plugins → npm run build → rsync to nginx
-                      ↓
-                 Static Site → Cloudflare → Visitors
-```
+- **Hosting**: CloudPanel (AWS Lightsail) — static site + WordPress headless CMS
 
 ### Project Structure
 
 ```
-Frontend/src/
-├── app/                    # Pages (routes)
-├── components/sections/    # Page sections (per page)
-├── components/layouts/     # Navbar, Footer, Container
-└── lib/wordpress.ts        # WP API helpers
-
+Frontend/             # Next.js static site
 wordpress/
-├── mu-plugins/             # Auto-loaded WP plugins
-│   ├── aiaiai-content-api.php      # Deploy button + page creation + REST API
-│   ├── aiaiai-jetengine-fields.php # JetEngine meta registration
-│   ├── aiaiai-security.php         # Security + SVG/WebP upload
-│   ├── aiaiai-decorear-tools.php   # Tracking Tags + Backup + Email Settings
-│   ├── aiaiai-contact-form.php     # Contact form REST API + SMTP
-│   └── aiaiai-jetengine-fix-ids.php # Auto-fix meta box IDs per environment
+├── mu-plugins/       # Auto-loaded WP plugins (content API, fields, security, tools)
+├── uploads/          # Production media assets (73 files) — committed to git
+├── seed-content.sh   # Seed all page content via WP-CLI
+├── seed-blog.php     # Seed blog posts
 ├── seed-all-jetengine.php  # Create JetEngine meta boxes + seed data
-├── import-data.php         # Import content to WP
-├── export-data.json        # Exported WP content
-├── fix-urls.php            # Fix localhost → production URLs
-└── upload-images.php       # Import images to WP Media Library
-
-deploy.sh                   # Deploy script (quick / --full / --sync)
-rebuild.sh                  # Server-side rebuild (used by webhook)
-webhook.js                  # Webhook listener (port 9001)
-export-wp.py                # Export local WP meta to JSON
+├── upload-images.php # Import images from wordpress/uploads/ into WP Media Library
+└── export-content.sh # Export current WP content back to seed-content.sh
+docker-compose.yml    # Local dev: MySQL + WordPress + Frontend
+rebuild.sh            # Server-side rebuild (triggered by Deploy button)
 ```
 
 ---
 
-## Deploy: Vercel (แนะนำ — ง่ายที่สุด)
+## Local Dev Setup (Environment ใหม่)
 
-ใช้ Vercel แทน self-hosted server สำหรับ frontend ไม่ต้องจัดการ server, webhook, pm2
+### Prerequisites
+
+- Docker Desktop
+- Node.js 20+
+- Git
 
 ### ขั้นตอน
 
-#### 1. Connect GitHub → Vercel
+**1. Clone repo**
 
-1. เข้า [vercel.com](https://vercel.com) → New Project → Import GitHub repo
-2. ตั้งค่า:
-   - **Framework Preset**: Next.js
-   - **Root Directory**: `Frontend`
-   - **Build Command**: `next build`
-   - **Output Directory**: `out`
-
-#### 2. ตั้ง Environment Variables
-
-ใน Vercel Dashboard → Settings → Environment Variables:
-
-| Key | Value |
-|-----|-------|
-| `WORDPRESS_API_URL` | `https://your-cms-domain.com/wp-json` |
-| `NEXT_PUBLIC_WORDPRESS_URL` | `https://your-cms-domain.com` |
-
-#### 3. สร้าง Deploy Hook
-
-1. Vercel Dashboard → Settings → Git → **Deploy Hooks**
-2. สร้าง hook ชื่อ "WordPress Deploy" → branch: `main`
-3. Copy URL ที่ได้ (เช่น `https://api.vercel.com/v1/integrations/deploy/xxx`)
-
-#### 4. ตั้ง Deploy Hook ใน WordPress
-
-เพิ่มใน `wp-config.php` ของ production WordPress:
-```php
-define('AIAIAI_WEBHOOK_URL', 'https://api.vercel.com/v1/integrations/deploy/xxx');
+```bash
+git clone https://github.com/Decorear-Media-House/web-aiaiai.git
+cd web-aiaiai
 ```
 
-#### 5. เสร็จ!
+**2. Start containers**
 
-- **แก้ code** → `git push` → Vercel auto-deploy
-- **แก้ content ใน WP** → กด Deploy Site → Vercel rebuild
-- ไม่ต้องมี webhook.js, pm2, rebuild.sh
+```bash
+docker compose up -d
+```
 
-### WordPress CMS ไว้ที่ไหน?
+รอประมาณ 30–60 วินาทีจนกว่า WordPress จะพร้อม ตรวจสอบได้ด้วย:
 
-Vercel host แค่ frontend — WordPress ยังต้อง host แยก:
-- **ง่ายสุด**: [WordPress.com Business](https://wordpress.com) หรือ managed WP hosting
-- **ถูกสุด**: VPS (DigitalOcean, Lightsail) + Docker หรือ CloudPanel
-- **ต้องการ**: PHP 8+, MySQL 8+, JetEngine Pro plugin, RankMath plugin
+```bash
+docker exec aiaiai-wordpress curl -sf http://localhost/wp-login.php > /dev/null && echo "WordPress ready"
+```
+
+**3. ติดตั้ง WordPress**
+
+เข้า `http://localhost:8080` แล้วทำ WordPress install ตามปกติ (ตั้ง admin user/password)
+
+**4. Activate plugins**
+
+เข้า `http://localhost:8080/wp-admin/` → Plugins → Activate ทุกตัวที่มี
+
+> **หมายเหตุ**: JetEngine Pro และ RankMath ต้องติดตั้งแยก (premium plugins) — upload .zip ผ่าน Plugins → Add New → Upload Plugin
+
+**5. สร้าง JetEngine meta boxes**
+
+```bash
+docker exec aiaiai-wordpress wp --allow-root eval-file /var/www/html/wp-content/mu-plugins/../seed-all-jetengine.php
+```
+
+**6. Upload รูปภาพเข้า WordPress Media Library**
+
+```bash
+docker exec aiaiai-wordpress wp --allow-root eval-file /var/www/html/wp-content/mu-plugins/../upload-images.php
+```
+
+รูปภาพทั้งหมดอยู่ใน `wordpress/uploads/` ใน repo (73 ไฟล์, ตรงกับ production)
+
+**7. Seed page content**
+
+```bash
+docker exec aiaiai-wordpress bash /var/www/html/wp-content/mu-plugins/../seed-content.sh
+```
+
+Seed 6 หน้า: Home, About, Services, Partner, Humanoid, Security พร้อม image URLs ครบ
+
+**8. Seed blog posts** (ถ้าต้องการ)
+
+```bash
+docker exec aiaiai-wordpress wp --allow-root eval-file /var/www/html/wp-content/mu-plugins/../seed-blog.php
+```
+
+**9. Start frontend**
+
+```bash
+cd Frontend && npm install && npm run dev
+```
+
+เปิด `http://localhost:3000`
+
+---
+
+## ตาราง URLs (Local Dev)
+
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:3000 |
+| WordPress Admin | http://localhost:8080/wp-admin/ |
+| WordPress REST API | http://localhost:8080/wp-json/wp/v2/ |
+
+---
+
+## Sync Content จาก Production → Git
+
+เมื่อมีการแก้ content บน production แล้วต้องการ export กลับเข้า repo:
+
+```bash
+# รันบน production server (SSH เข้าก่อน)
+cd /home/decorear-aiai/web-aiaiai
+bash wordpress/export-content.sh
+
+# จากนั้น commit และ push
+git add wordpress/seed-content.sh
+git commit -m "sync content from production"
+git push
+```
 
 ---
 
@@ -180,28 +202,28 @@ wp plugin install seo-by-rank-math --activate
 # JetEngine Pro → upload .zip ผ่าน WP Admin (premium plugin)
 ```
 
-### ขั้นตอนที่ 2: Deploy mu-plugins + Content
+### ขั้นตอนที่ 2: Copy mu-plugins + Seed Content
 
-จาก local machine รัน:
 ```bash
-bash deploy.sh --full
-```
+# Clone repo
+git clone https://github.com/Decorear-Media-House/web-aiaiai.git
+cd web-aiaiai
 
-สิ่งที่ script ทำ:
-1. Push code → GitHub
-2. Copy mu-plugins → CMS server
-3. Upload images → WP Media Library
-4. Import content + JetEngine meta boxes
-5. Fix URLs (localhost → production)
-6. Build static site → deploy
+# Copy mu-plugins
+cp wordpress/mu-plugins/*.php /var/www/cms.example.com/wp-content/mu-plugins/
 
-**ก่อนรัน** ต้องแก้ค่าใน `deploy.sh`:
-```bash
-CMS_HOST="your-cms-ssh-host"        # SSH host ของ WordPress
-CMS_ROOT="~/path/to/wordpress"       # WordPress root path
-DEPLOY_HOST="your-deploy-ssh-host"   # SSH host ของ frontend server
-DEPLOY_ROOT="~/path/to/static-site"  # Nginx root path
-PROD_WP_URL="https://cms.example.com"
+# Upload images
+cd /var/www/cms.example.com
+wp --allow-root eval-file /path/to/web-aiaiai/wordpress/upload-images.php
+
+# Seed JetEngine meta boxes
+wp --allow-root eval-file /path/to/web-aiaiai/wordpress/seed-all-jetengine.php
+
+# Seed page content
+bash /path/to/web-aiaiai/wordpress/seed-content.sh
+
+# Fix URLs (localhost → production)
+PROD_URL=https://cms.example.com wp --allow-root eval-file /path/to/web-aiaiai/wordpress/fix-urls.php
 ```
 
 ### ขั้นตอนที่ 3: ตั้ง Nginx
@@ -236,82 +258,79 @@ server {
 ```
 
 ```bash
-# Enable + SSL
-sudo ln -s /etc/nginx/sites-available/cms.example.com /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/aiaiai.example.com /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d cms.example.com -d aiaiai.example.com
 ```
 
-### ขั้นตอนที่ 4: ตั้ง Auto-Deploy (Webhook)
+### ขั้นตอนที่ 4: Build และ Deploy Frontend
 
-บน CMS server:
 ```bash
-# Clone repo
-cd ~ && git clone https://github.com/YOUR_USER/web-aiaiai.git
-cd web-aiaiai/Frontend && npm install
+cd web-aiaiai/Frontend
+WORDPRESS_API_URL=https://cms.example.com/wp-json \
+NEXT_PUBLIC_WORDPRESS_URL=https://cms.example.com \
+npm run build
 
+rsync -az --delete out/ user@server:/var/www/aiaiai.example.com/
+```
+
+### ขั้นตอนที่ 5: ตั้ง Auto-Deploy (Webhook)
+
+```bash
 # ติดตั้ง pm2
-mkdir -p ~/.npm-global && npm config set prefix '~/.npm-global'
-echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
 npm install -g pm2
 
-# Start webhook (port 9001)
-cd ~/web-aiaiai
+# Start webhook listener (port 9001)
+cd web-aiaiai
 WEBHOOK_PORT=9001 pm2 start webhook.js --name aiaiai-webhook
 pm2 save
 ```
 
 แก้ `rebuild.sh` ให้ตรงกับ path ของ server:
+
 ```bash
 DEPLOY_HOST="your-deploy-ssh-host"
 STATIC_SITE_ROOT="/var/www/aiaiai.example.com"
 ```
 
-### ขั้นตอนที่ 5: ตั้ง SSH (local → server)
+### Setup Checklist
 
-เพิ่มใน `~/.ssh/config`:
-```
-Host your-cms-ssh-host
-  HostName YOUR_SERVER_IP
-  User YOUR_USER
-  IdentityFile ~/.ssh/YOUR_KEY
-
-Host your-deploy-ssh-host
-  HostName YOUR_SERVER_IP
-  User YOUR_USER
-  IdentityFile ~/.ssh/YOUR_KEY
-```
-
-### ขั้นตอนที่ 6: ทดสอบ
-
-```bash
-# WordPress ทำงาน
-curl -s https://cms.example.com/wp-json/wp/v2/pages?slug=home | head -c 100
-
-# Static site ทำงาน
-curl -s -o /dev/null -w "%{http_code}" https://aiaiai.example.com/
-
-# Webhook ทำงาน (SSH เข้า server แล้วรัน)
-curl -s http://127.0.0.1:9001/health
-# ควรได้: {"ok":true,"building":false}
-
-# ทดสอบ Deploy button
-# เข้า WP Admin → กด Deploy Site → ดู modal progress
-```
-
-### Checklist
-
-- [ ] WordPress + MySQL ติดตั้ง
-- [ ] JetEngine Pro + RankMath activate
+- [ ] WordPress + MySQL ติดตั้งแล้ว
+- [ ] JetEngine Pro + RankMath activate แล้ว
 - [ ] mu-plugins copy แล้ว (6 ไฟล์)
-- [ ] Content + images import แล้ว (`deploy.sh --full`)
-- [ ] Nginx config + SSL ทั้ง 2 domains
+- [ ] Images upload แล้ว (`upload-images.php`)
+- [ ] JetEngine meta boxes สร้างแล้ว (`seed-all-jetengine.php`)
+- [ ] Page content seed แล้ว (`seed-content.sh`)
+- [ ] URLs แก้แล้ว (`fix-urls.php`)
+- [ ] Nginx + SSL ทั้ง 2 domains
 - [ ] Webhook (pm2) รันอยู่ port 9001
-- [ ] `.env.production` ชี้ไป CMS domain ใหม่
+- [ ] Frontend build และ deploy แล้ว
 - [ ] Deploy button ใน WP Admin ทำงาน
-- [ ] Static site เข้าได้
+
+---
+
+## Deploy: Vercel (แนะนำ — ง่ายที่สุด)
+
+ใช้ Vercel สำหรับ frontend แทน self-hosted ไม่ต้องจัดการ server, webhook, pm2
+
+### ขั้นตอน
+
+1. เข้า [vercel.com](https://vercel.com) → New Project → Import repo นี้
+2. ตั้งค่า: **Root Directory**: `Frontend`, **Output Directory**: `out`
+3. ตั้ง Environment Variables:
+
+| Key | Value |
+|-----|-------|
+| `WORDPRESS_API_URL` | `https://cms.example.com/wp-json` |
+| `NEXT_PUBLIC_WORDPRESS_URL` | `https://cms.example.com` |
+
+4. Vercel Dashboard → Settings → Git → **Deploy Hooks** → สร้าง hook สำหรับ branch `main`
+5. Copy hook URL ใส่ใน `wp-config.php`:
+
+```php
+define('AIAIAI_WEBHOOK_URL', 'https://api.vercel.com/v1/integrations/deploy/xxx');
+```
+
+**ผลลัพธ์**: แก้ code → `git push` → auto deploy / แก้ content ใน WP → กด Deploy Site → Vercel rebuild
 
 ---
 
@@ -321,15 +340,4 @@ curl -s http://127.0.0.1:9001/health
 |-----|--------|------|
 | ลูกค้า | แก้ content ใน WP | กด **Deploy Site** ใน WP Admin |
 | Developer | แก้ code | `git push` → กด **Deploy Site** |
-| Developer | แก้ code + content ใน local WP | `python export-wp.py` → `git push` → กด **Deploy Site** |
-| Developer (ครั้งแรก/sync ทุกอย่าง) | Full deploy | `bash deploy.sh --full` |
-
-### JetEngine Meta Field Naming
-
-```
-{prefix}_{section}_{field}
-
-home_    → Home        about_   → About
-svc_     → Services    sec_     → Security
-hum_     → Humanoid    ptr_     → Partner
-```
+| Developer | sync content จาก production | `bash wordpress/export-content.sh` → commit → push |
