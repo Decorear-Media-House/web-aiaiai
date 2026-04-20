@@ -1,19 +1,22 @@
 <?php
 /**
- * Import images from a local directory into WordPress Media Library.
- * Run via: wp --allow-root eval-file upload-images.php
+ * Import images from wordpress/uploads/ into WordPress Media Library.
+ * Run via: wp --allow-root eval-file /var/www/html/wp-content/mu-plugins/../upload-images.php
  *
- * Expects images to be in /tmp/aiaiai-images/ on the server.
+ * Images are stored in wordpress/uploads/ in the repo and mounted into the container.
  */
 
 require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
-$image_dir = '/tmp/aiaiai-images/';
+// Try repo-relative path first (mounted via docker-compose), fallback to /tmp
+$image_dir = dirname(__FILE__) . '/../uploads/';
 if (!is_dir($image_dir)) {
-    echo "Image directory not found: $image_dir\n";
-    echo "Upload images there first: scp -r Frontend/public/images/* server:/tmp/aiaiai-images/\n";
+    $image_dir = '/tmp/aiaiai-images/';
+}
+if (!is_dir($image_dir)) {
+    echo "Image directory not found. Expected: wordpress/uploads/ (mounted) or /tmp/aiaiai-images/\n";
     exit(1);
 }
 
