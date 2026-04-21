@@ -8,31 +8,36 @@ services:
     ports:
       - "3050:3000"
     environment:
-      WORDPRESS_API_URL: http://aiaiai-wordpress:80/wp-json
-      WORDPRESS_BASE_URL: http://aiaiai-wordpress:80
-      NEXT_PUBLIC_WORDPRESS_URL: http://localhost:8080
+      WORDPRESS_API_URL: ${WORDPRESS_API_URL}
+      WORDPRESS_BASE_URL: ${WORDPRESS_BASE_URL}
+      NEXT_PUBLIC_WORDPRESS_URL: ${NEXT_PUBLIC_WORDPRESS_URL}
     depends_on:
       aiaiai-wordpress:
         condition: service_healthy
 
   aiaiai-wordpress:
-    image: wordpress:6-apache
+    build:
+      context: ./wordpress
+      dockerfile: Dockerfile
+    image: aiaiai-wordpress:local
     container_name: aiaiai-wordpress
     restart: unless-stopped
     ports:
       - "8080:80"
     environment:
-      WORDPRESS_DB_HOST: aiaiai-mysql:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress_password
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_HOME', 'http://localhost:8080');
-        define('WP_SITEURL', 'http://localhost:8080');
+        define('WP_HOME', '${WP_HOME}');
+        define('WP_SITEURL', '${WP_SITEURL}');
+        define('DISALLOW_FILE_EDIT', true);
     volumes:
       - wp-content:/var/www/html/wp-content
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
       - ./wordpress/backups:/var/www/html/wp-content/backups
+      - ./wordpress:/var/www/html/wp-content/vendor-seed
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
       interval: 10s
@@ -48,14 +53,23 @@ services:
     container_name: aiaiai-mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress_password
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - wp-db-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uwordpress", "-pwordpress_password"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "127.0.0.1",
+          "-u${MYSQL_USER}",
+          "-p${MYSQL_PASSWORD}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 10

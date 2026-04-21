@@ -3,24 +3,37 @@
  * Import images from wordpress/uploads/ into WordPress Media Library.
  * Run via: wp --allow-root eval-file /var/www/html/wp-content/mu-plugins/../upload-images.php
  *
- * Images are stored in wordpress/uploads/ in the repo and mounted into the container.
+ * Tries local repo paths first, then falls back to /tmp/aiaiai-images/.
  */
 
 require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
-// Try repo-relative path first (mounted via docker-compose), fallback to /tmp
-$image_dir = dirname(__FILE__) . '/../uploads/';
-if (!is_dir($image_dir)) {
-    $image_dir = '/tmp/aiaiai-images/';
+$candidate_dirs = [
+    dirname(__FILE__) . '/uploads',
+    ABSPATH . 'wp-content/vendor-seed/uploads',
+    '/tmp/aiaiai-images/',
+];
+
+$image_dir = null;
+foreach ($candidate_dirs as $candidate_dir) {
+    if (is_dir($candidate_dir)) {
+        $image_dir = $candidate_dir;
+        break;
+    }
 }
-if (!is_dir($image_dir)) {
-    echo "Image directory not found. Expected: wordpress/uploads/ (mounted) or /tmp/aiaiai-images/\n";
+
+if (!$image_dir) {
+    echo "Image directory not found.\n";
+    echo "Checked:\n";
+    foreach ($candidate_dirs as $candidate_dir) {
+        echo " - $candidate_dir\n";
+    }
     exit(1);
 }
 
-$files = glob($image_dir . '*');
+$files = glob(rtrim($image_dir, '/\\') . DIRECTORY_SEPARATOR . '*');
 $count = 0;
 $skipped = 0;
 
