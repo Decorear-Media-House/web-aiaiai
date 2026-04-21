@@ -512,11 +512,11 @@ add_meta_box_je("sec-hero", "Security — Hero", $pid, [
     tf("sec_hero_detection_subtitle","Detection Subtitle"),
     tf("sec_hero_detection_title","Detection Title"),
     tf("sec_hero_heading","Heading"),
-    rf("sec_hero_stats","Stats",[tf("label","Label"),tf("value","Value")]),
+    rf("sec_hero_stats","Stats",[tf("top","Top"),tf("bottom","Bottom")]),
 ]);
 
 add_meta_box_je("sec-outcomes", "Security — Outcomes", $pid, [
-    rf("sec_outcomes_accordion","Accordion",[tf("label","Label"),tf("value","Value")]),
+    rf("sec_outcomes_accordion","Accordion",[cf("icon_gradient","Icon Gradient"),tf("title","Title"),ta("checks","Checks (1/line)")]),
     cf("sec_outcomes_bg_color","Bg Color"),
     tf("sec_outcomes_chip","Chip"),
     tf("sec_outcomes_heading","Heading"),
@@ -531,7 +531,7 @@ add_meta_box_je("sec-included", "Security — Included", $pid, [
     tf("sec_included_description","Description"),
     tf("sec_included_heading","Heading"),
     tf("sec_included_heading_hl","Heading Hl"),
-    rf("sec_included_pillars","Pillars",[tf("label","Label"),tf("value","Value")]),
+    rf("sec_included_pillars","Pillars",[tf("title","Title"),ta("items","Items (1/line)"),mf("card_image","Card Image"),mf("card_mobile_image","Card Mobile Image")]),
 ]);
 
 add_meta_box_je("sec-phases", "Security — Phases", $pid, [
@@ -539,7 +539,7 @@ add_meta_box_je("sec-phases", "Security — Phases", $pid, [
     tf("sec_phases_chip","Chip"),
     tf("sec_phases_description","Description"),
     tf("sec_phases_heading","Heading"),
-    rf("sec_phases_items","Items",[tf("label","Label"),tf("value","Value")]),
+    rf("sec_phases_items","Items",[tf("phase","Phase"),tf("title","Title"),tf("subtitle","Subtitle"),ta("description","Description")]),
 ]);
 
 add_meta_box_je("sec-cta", "Security — CTA", $pid, [

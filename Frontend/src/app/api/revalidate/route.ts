@@ -1,9 +1,16 @@
-import { revalidateTag } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 
 // On-demand revalidation: WP Admin's "Deploy Site" button POSTs here.
 // Immediately invalidates every fetch tagged "wordpress" so the next page
 // render pulls fresh data from WordPress instead of serving the ISR cache.
+//
+// Uses both revalidateTag (data cache) and revalidatePath (route cache).
+// revalidateTag alone in Next.js 16 has stale-while-revalidate semantics —
+// the first request after the call serves stale and kicks off a background
+// re-fetch, so the edit only surfaces on the second visit. Pairing it with
+// revalidatePath("/", "layout") forces immediate route-level invalidation
+// so the very next request renders fresh data.
 export async function POST(request: NextRequest) {
   const secret =
     request.headers.get("x-revalidate-secret") ??
@@ -14,9 +21,8 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Next.js 16 requires a cache profile as the second arg — "default" uses
-  // the default profile semantics, which matches our fetch `{ revalidate: 60 }`.
   revalidateTag("wordpress", "default");
+  revalidatePath("/", "layout");
   return Response.json({ revalidated: true, at: Date.now() });
 }
 

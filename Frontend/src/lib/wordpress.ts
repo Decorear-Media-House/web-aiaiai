@@ -369,24 +369,23 @@ export async function getPageMeta(slug: string): Promise<Record<string, unknown>
   const meta = pages[0].meta ?? {};
 
   // Decide which data shape this page uses:
-  //   - JetEngine individual fields (new — admin can edit fields in meta boxes)
+  //   - JetEngine individual fields (admin edits each field in meta boxes)
   //   - page_sections JSON (legacy — nested shape from seed-content.sh)
   //
-  // Use JetEngine only if at least one REPEATER (array field) is populated.
-  // Scalars aren't a reliable signal — import-meta-sync.php prefills scalars
-  // from wp-meta-sync.json which doesn't carry repeaters yet, so a page can
-  // have all scalars set while its repeaters are still empty. Falling to the
-  // legacy branch there keeps repeater sections rendering until a full prod
-  // export (with repeaters) lands in wp-meta-sync.json.
-  const hasPopulatedRepeater = Object.entries(meta).some(
-    ([k, v]) =>
-      !k.startsWith("page_") &&
-      !k.startsWith("rank_math") &&
-      Array.isArray(v) &&
-      v.length > 0
-  );
+  // Use JetEngine if any scalar has meaningful content OR any repeater is
+  // populated. Repeater sections with empty data fall back to their
+  // component-level DEFAULT_* arrays, so no empty-section risk. The signal
+  // just needs to say "admin actually populated something on this page".
+  const hasRealJetEngineData = Object.entries(meta).some(([k, val]) => {
+    if (k.startsWith("page_") || k.startsWith("rank_math")) return false;
+    const v: unknown = val;
+    if (typeof v === "string") return v.trim().length > 0;
+    if (Array.isArray(v)) return (v as unknown[]).length > 0;
+    if (v && typeof v === "object") return Object.keys(v as object).length > 0;
+    return false;
+  });
 
-  if (hasPopulatedRepeater) {
+  if (hasRealJetEngineData) {
     return meta as Record<string, unknown>;
   }
 
