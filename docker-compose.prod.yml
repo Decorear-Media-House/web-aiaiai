@@ -39,6 +39,8 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_HOME', '${WP_PROTOCOL:-https}://${WP_DOMAIN}');
         define('WP_SITEURL', '${WP_PROTOCOL:-https}://${WP_DOMAIN}');
+        define('AIAIAI_WEBHOOK_URL', 'http://aiaiai-frontend:3000/api/revalidate');
+        define('AIAIAI_REVALIDATE_SECRET', '${REVALIDATE_SECRET}');
     volumes:
       # Full WP install shared with aiaiai-wp-init so wp-cli can operate on it.
       - wp-html:/var/www/html
@@ -103,6 +105,10 @@ services:
       WORDPRESS_BASE_URL: http://aiaiai-wordpress:80
       # Client-side code needs the public URL (already baked in at build, repeated here for SSR).
       NEXT_PUBLIC_WORDPRESS_URL: ${WP_PROTOCOL:-https}://${WP_DOMAIN}
+      # Shared secret: WP Admin's Deploy button POSTs /api/revalidate with this
+      # in the x-revalidate-secret header. Must match AIAIAI_REVALIDATE_SECRET
+      # defined in the WordPress service above.
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:?REVALIDATE_SECRET required}
     depends_on:
       aiaiai-wordpress:
         condition: service_healthy

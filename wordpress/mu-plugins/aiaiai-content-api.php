@@ -174,7 +174,11 @@ add_action('admin_head', function () {
 add_action('wp_ajax_aiaiai_deploy_trigger', function () {
     if (!current_user_can('manage_options')) wp_send_json_error('Forbidden', 403);
     $url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9001/rebuild';
-    $res = wp_remote_post($url, ['timeout' => 5, 'body' => wp_json_encode(['trigger' => 'wordpress', 'user' => wp_get_current_user()->user_login]), 'headers' => ['Content-Type' => 'application/json']]);
+    $headers = ['Content-Type' => 'application/json'];
+    if (defined('AIAIAI_REVALIDATE_SECRET') && AIAIAI_REVALIDATE_SECRET) {
+        $headers['x-revalidate-secret'] = AIAIAI_REVALIDATE_SECRET;
+    }
+    $res = wp_remote_post($url, ['timeout' => 5, 'body' => wp_json_encode(['trigger' => 'wordpress', 'user' => wp_get_current_user()->user_login]), 'headers' => $headers]);
     if (is_wp_error($res)) wp_send_json_error($res->get_error_message());
     wp_send_json_success(json_decode(wp_remote_retrieve_body($res), true));
 });
@@ -182,6 +186,9 @@ add_action('wp_ajax_aiaiai_deploy_trigger', function () {
 add_action('wp_ajax_aiaiai_deploy_health', function () {
     if (!current_user_can('manage_options')) wp_send_json_error('Forbidden', 403);
     $url = defined('AIAIAI_WEBHOOK_URL') ? AIAIAI_WEBHOOK_URL : 'http://127.0.0.1:9001/rebuild';
+    // Legacy webhook endpoints expose /rebuild + /health; Next.js revalidate
+    // endpoint is GETtable on the same URL. Swap /rebuild→/health for legacy;
+    // leave other paths (e.g. /api/revalidate) unchanged.
     $health_url = preg_replace('#/rebuild$#', '/health', $url);
     $res = wp_remote_get($health_url, ['timeout' => 5]);
     if (is_wp_error($res)) wp_send_json_error($res->get_error_message());

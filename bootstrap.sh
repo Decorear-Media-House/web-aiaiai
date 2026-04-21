@@ -56,6 +56,7 @@ if [ ! -f .env.prod ]; then
   WP_PASS=$(openssl rand -hex 16)
   DB_PASS=$(openssl rand -hex 16)
   DB_ROOT=$(openssl rand -hex 16)
+  REVAL_SECRET=$(openssl rand -hex 16)
 
   # Portable in-place edit (works on macOS + GNU sed).
   sed -i.bak \
@@ -64,12 +65,20 @@ if [ ! -f .env.prod ]; then
     -e "s|^WP_ADMIN_PASS=.*|WP_ADMIN_PASS=${WP_PASS}|" \
     -e "s|^MYSQL_PASSWORD=.*|MYSQL_PASSWORD=${DB_PASS}|" \
     -e "s|^MYSQL_ROOT_PASSWORD=.*|MYSQL_ROOT_PASSWORD=${DB_ROOT}|" \
+    -e "s|^REVALIDATE_SECRET=.*|REVALIDATE_SECRET=${REVAL_SECRET}|" \
     .env.prod
   rm -f .env.prod.bak
 
   log "detected domain: ${DETECTED_DOMAIN} (edit .env.prod to customize)"
 else
   log ".env.prod already present — reusing existing secrets"
+  # Migration: older .env.prod files (pre-Option B) lack REVALIDATE_SECRET.
+  # Append a freshly generated one so docker compose doesn't abort.
+  if ! grep -q '^REVALIDATE_SECRET=' .env.prod; then
+    REVAL_SECRET=$(openssl rand -hex 16)
+    printf '\n# Added by bootstrap.sh migration\nREVALIDATE_SECRET=%s\n' "$REVAL_SECRET" >> .env.prod
+    log "migrated .env.prod — added REVALIDATE_SECRET"
+  fi
 fi
 
 # --- 3. Build + start stack --------------------------------------------------
@@ -99,13 +108,17 @@ FE_PORT=$(get_env FRONTEND_HTTP_PORT)
 ADMIN_USER=$(get_env WP_ADMIN_USER)
 ADMIN_PASS=$(get_env WP_ADMIN_PASS)
 
+# WP_DOMAIN may already include :PORT (appended during first-run detection)
+# so the printed URLs need the bare host for unambiguous formatting.
+HOST=$(printf '%s' "$DOMAIN" | cut -d: -f1)
+
 cat <<EOF
 
 ════════════════════════════════════════════════════════
   ✓ Deployment ready
 ════════════════════════════════════════════════════════
-  Frontend:     http://${DOMAIN}:${FE_PORT}
-  WordPress:    ${PROTO}://${DOMAIN}:${WP_PORT}/wp-admin
+  Frontend:     http://${HOST}:${FE_PORT}
+  WordPress:    ${PROTO}://${HOST}:${WP_PORT}/wp-admin
   Admin user:   ${ADMIN_USER}
   Admin pass:   ${ADMIN_PASS}
 

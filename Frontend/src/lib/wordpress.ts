@@ -179,7 +179,13 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
 async function wpFetch<T>(endpoint: string, fallback: T): Promise<T> {
   try {
     const res = await fetch(`${WP_API_URL}${endpoint}`, {
-      cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
+      // Dev: bypass cache. Prod: ISR — refresh at most every 60s, or
+      // immediately on demand via `revalidateTag("wordpress")` (triggered
+      // by the Deploy button in WP Admin → /api/revalidate).
+      next:
+        process.env.NODE_ENV === "development"
+          ? { revalidate: 0 }
+          : { revalidate: 60, tags: ["wordpress"] },
     });
     if (!res.ok) throw new Error(`WP API error: ${res.status} ${endpoint}`);
     return res.json();
@@ -362,9 +368,18 @@ export async function getPageMeta(slug: string): Promise<Record<string, unknown>
   if (pages.length === 0) return {};
   const meta = pages[0].meta ?? {};
 
-  // If JetEngine fields are present (any non-page_sections field has a value), use them directly
+  // If JetEngine fields are present (any non-page_sections field has a value), use them directly.
+  // Empty arrays / empty objects don't count — they leak in from cross-page meta
+  // (e.g. home_hero_stats = [] appears on the security page) and would otherwise
+  // trick us into skipping the legacy page_sections fallback.
+  const hasRealValue = (v: unknown): boolean => {
+    if (v === "" || v === null || v === undefined) return false;
+    if (Array.isArray(v)) return v.length > 0;
+    if (typeof v === "object") return Object.keys(v as object).length > 0;
+    return true;
+  };
   const jetEngineFields = Object.entries(meta).filter(
-    ([k, v]) => !k.startsWith("page_") && !k.startsWith("rank_math") && v !== "" && v !== null
+    ([k, v]) => !k.startsWith("page_") && !k.startsWith("rank_math") && hasRealValue(v)
   );
 
   if (jetEngineFields.length > 0) {
