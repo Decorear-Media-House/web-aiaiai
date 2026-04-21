@@ -98,18 +98,24 @@ fi
 log "uploading images (wordpress/uploads → Media Library)"
 $WP eval-file /seed/upload-images.php
 
-# --- 7. Register JetEngine meta boxes ----------------------------------------
-log "seeding JetEngine meta boxes"
-$WP eval-file /seed/seed-all-jetengine.php
-
-# --- 8. Seed page content ----------------------------------------------------
+# --- 7. Seed page content ----------------------------------------------------
+# Must run BEFORE seed-all-jetengine.php so pages exist when meta boxes are
+# registered (otherwise allowed_posts resolves to ["0"] and boxes get mis-gated).
 log "seeding page content"
 bash /seed/seed-content.sh
 
-# --- 9. Rewrite baked-in URLs to this domain ---------------------------------
+# --- 8. Register JetEngine meta boxes ----------------------------------------
+log "registering JetEngine meta boxes"
+$WP eval-file /seed/seed-all-jetengine.php
+
+# --- 9. Import JetEngine field values from wp-meta-sync.json -----------------
+log "importing JetEngine meta from wp-meta-sync.json"
+$WP eval-file /seed/import-meta-sync.php
+
+# --- 10. Rewrite baked-in URLs to this domain --------------------------------
 log "rewriting seed URLs → $SITE_URL"
 PROD_URL="$SITE_URL" $WP eval-file /seed/fix-urls.php
 
-# --- 10. Mark done -----------------------------------------------------------
+# --- 11. Mark done -----------------------------------------------------------
 date -u +"%Y-%m-%dT%H:%M:%SZ" > "$FLAG"
 log "zero-touch install complete ✓"

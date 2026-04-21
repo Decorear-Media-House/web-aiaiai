@@ -36,19 +36,12 @@ function get_sections($page_id) {
     return $raw ? (json_decode($raw, true) ?: []) : [];
 }
 
-function seed($page_id, $key, $val) {
-    if ($val === '' || $val === null) return;
-    $existing = get_post_meta($page_id, $key, true);
-    if ($existing !== '' && $existing !== null && $existing !== false) return; // don't overwrite
-    update_post_meta($page_id, $key, $val);
-}
-
-function seed_repeater($page_id, $key, $data) {
-    if (!is_array($data) || empty($data)) return;
-    $existing = get_post_meta($page_id, $key, true);
-    if (!empty($existing)) return; // don't overwrite
-    update_post_meta($page_id, $key, $data);
-}
+// Value seeding is now handled by import-meta-sync.php which imports from
+// wordpress/wp-meta-sync.json (the production-accurate export). These helpers
+// are kept as no-ops so the existing add_meta_box_je() call sites below can
+// remain unchanged — this file's sole job now is to register meta box schemas.
+function seed($page_id, $key, $val) { /* no-op: see import-meta-sync.php */ }
+function seed_repeater($page_id, $key, $data) { /* no-op: see import-meta-sync.php */ }
 
 function arr_to_text($arr) {
     if (is_array($arr)) return implode("\n", $arr);
@@ -497,6 +490,49 @@ foreach ($partner_sections as $sec) {
 }
 
 echo "PARTNER: done\n";
+
+// ═══════════════════════════════════════════════════════
+//  SECURITY PAGE
+// ═══════════════════════════════════════════════════════
+$pid = $pages['security'];
+
+add_meta_box_je("sec-hero", "Security — Hero", $pid, [
+    tf("sec_hero_chip","Chip"), tf("sec_hero_heading","Heading"), ta("sec_hero_description","Description"),
+    tf("sec_hero_cta_primary","Primary CTA"), tf("sec_hero_cta_primary_url","Primary CTA URL"),
+    tf("sec_hero_cta_secondary","Secondary CTA"), tf("sec_hero_cta_secondary_url","Secondary CTA URL"),
+    tf("sec_hero_detection_title","Detection Title"), tf("sec_hero_detection_subtitle","Detection Subtitle"),
+    mf("sec_hero_bg_image","BG Image"), mf("sec_hero_card_image","Card Image"), mf("sec_hero_card_mobile_image","Card Mobile Image"),
+    cf("sec_hero_bg_color","BG Color"),
+    rf("sec_hero_stats","Stats",[tf("top","Top"),tf("bottom","Bottom")]),
+]);
+
+add_meta_box_je("sec-outcomes", "Security — Outcomes", $pid, [
+    tf("sec_outcomes_chip","Chip"), tf("sec_outcomes_heading","Heading"), tf("sec_outcomes_heading_hl","Highlight"),
+    mf("sec_outcomes_image","Image"), mf("sec_outcomes_mobile_image","Mobile Image"), cf("sec_outcomes_bg_color","BG Color"),
+    rf("sec_outcomes_accordion","Accordion",[tf("icon_gradient","Icon Gradient"),tf("title","Title"),ta("checks","Checks (1/line)")]),
+]);
+
+add_meta_box_je("sec-included", "Security — Included", $pid, [
+    tf("sec_included_chip","Chip"), tf("sec_included_heading","Heading"), tf("sec_included_heading_hl","Highlight"),
+    ta("sec_included_description","Description"), cf("sec_included_bg_color","BG Color"),
+    rf("sec_included_pillars","Pillars",[tf("title","Title"),ta("items","Items (1/line)"),mf("card_image","Card Image"),mf("card_mobile_image","Card Mobile Image")]),
+]);
+
+add_meta_box_je("sec-phases", "Security — Phases", $pid, [
+    tf("sec_phases_chip","Chip"), tf("sec_phases_heading","Heading"), ta("sec_phases_description","Description"),
+    cf("sec_phases_bg_color","BG Color"),
+    rf("sec_phases_items","Phases",[tf("phase","Phase"),tf("title","Title"),tf("subtitle","Subtitle"),ta("description","Description")]),
+]);
+
+add_meta_box_je("sec-cta", "Security — CTA", $pid, [
+    tf("sec_cta_heading","Heading"), tf("sec_cta_heading_hl","Highlight"), ta("sec_cta_description","Description"),
+    ta("sec_cta_chips","Chips (1/line)"),
+    tf("sec_cta_primary","Primary CTA"), tf("sec_cta_primary_url","Primary CTA URL"),
+    tf("sec_cta_secondary","Secondary CTA"), tf("sec_cta_secondary_url","Secondary CTA URL"),
+    mf("sec_cta_bg_image","BG Image"), cf("sec_cta_bg_color","BG Color"),
+]);
+
+echo "SECURITY: done\n";
 
 // Summary
 $total = count(get_option("jet_engine_meta_boxes", []));

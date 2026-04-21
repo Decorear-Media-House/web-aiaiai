@@ -77,8 +77,11 @@ add_action('admin_init', function () {
         }
     }
 
-    update_option('aiaiai_sync_hash', $hash);
+    // Only mark this JSON version as imported if something actually got
+    // imported — otherwise admin visits before pages exist would lock out
+    // future syncs with a stored hash and zero work done.
     if ($count > 0) {
+        update_option('aiaiai_sync_hash', $hash);
         error_log("[AIAIAI] Auto-synced $count empty fields from wp-meta-sync.json");
     }
 }, 1);

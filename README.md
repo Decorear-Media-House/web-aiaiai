@@ -239,15 +239,27 @@ cd Frontend && npm install && npm run dev
 
 ## Sync Content (Production → Git)
 
-เมื่อมีการแก้ content บน production แล้วต้องการ export กลับเข้า repo:
+มี 2 script คู่กัน — รันทั้งคู่เมื่อ sync prod content กลับเข้า repo (fresh installs จะได้ข้อมูลชุดล่าสุด):
+
+**1. JetEngine fields** (ทำให้ wp-admin แสดง prefilled fields หลัง bootstrap) — รันบนเครื่อง dev ได้เลย, ไม่ต้อง SSH:
 
 ```bash
-# รันบน production server (SSH เข้าก่อน)
-cd /home/decorear-aiai/web-aiaiai
-bash wordpress/export-content.sh
+bash wordpress/export-meta-sync.sh
+# → ดึงจาก https://aiaiai-cms.decorear.com ผ่าน REST API → เขียน wordpress/wp-meta-sync.json
+```
 
-# commit และ push
-git add wordpress/seed-content.sh
+**2. Legacy `page_sections` JSON** (fallback สำหรับ frontend เมื่อ JetEngine fields ว่าง) — ต้อง SSH เข้า prod server:
+
+```bash
+ssh decorear-aiai@<prod>
+cd /home/decorear-aiai/web-aiaiai
+bash wordpress/export-content.sh   # writes wordpress/seed-content.sh
+```
+
+แล้ว commit ทั้ง 2 ไฟล์:
+
+```bash
+git add wordpress/wp-meta-sync.json wordpress/seed-content.sh
 git commit -m "sync content from production"
 git push
 ```

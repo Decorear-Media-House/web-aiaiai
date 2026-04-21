@@ -368,21 +368,25 @@ export async function getPageMeta(slug: string): Promise<Record<string, unknown>
   if (pages.length === 0) return {};
   const meta = pages[0].meta ?? {};
 
-  // If JetEngine fields are present (any non-page_sections field has a value), use them directly.
-  // Empty arrays / empty objects don't count — they leak in from cross-page meta
-  // (e.g. home_hero_stats = [] appears on the security page) and would otherwise
-  // trick us into skipping the legacy page_sections fallback.
-  const hasRealValue = (v: unknown): boolean => {
-    if (v === "" || v === null || v === undefined) return false;
-    if (Array.isArray(v)) return v.length > 0;
-    if (typeof v === "object") return Object.keys(v as object).length > 0;
-    return true;
-  };
-  const jetEngineFields = Object.entries(meta).filter(
-    ([k, v]) => !k.startsWith("page_") && !k.startsWith("rank_math") && hasRealValue(v)
+  // Decide which data shape this page uses:
+  //   - JetEngine individual fields (new — admin can edit fields in meta boxes)
+  //   - page_sections JSON (legacy — nested shape from seed-content.sh)
+  //
+  // Use JetEngine only if at least one REPEATER (array field) is populated.
+  // Scalars aren't a reliable signal — import-meta-sync.php prefills scalars
+  // from wp-meta-sync.json which doesn't carry repeaters yet, so a page can
+  // have all scalars set while its repeaters are still empty. Falling to the
+  // legacy branch there keeps repeater sections rendering until a full prod
+  // export (with repeaters) lands in wp-meta-sync.json.
+  const hasPopulatedRepeater = Object.entries(meta).some(
+    ([k, v]) =>
+      !k.startsWith("page_") &&
+      !k.startsWith("rank_math") &&
+      Array.isArray(v) &&
+      v.length > 0
   );
 
-  if (jetEngineFields.length > 0) {
+  if (hasPopulatedRepeater) {
     return meta as Record<string, unknown>;
   }
 
