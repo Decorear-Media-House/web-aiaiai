@@ -494,42 +494,63 @@ echo "PARTNER: done\n";
 // ═══════════════════════════════════════════════════════
 //  SECURITY PAGE
 // ═══════════════════════════════════════════════════════
+// Schema mirrored 1:1 from production (aiaiai-cms.decorear.com) — see
+// wordpress/prod-jetengine-schema.json for the source dump. Fields are
+// alphabetically ordered by meta_key (matches production's fix-metaboxes.php
+// output). Repeater sub-fields are generic label/value — matches production.
 $pid = $pages['security'];
 
 add_meta_box_je("sec-hero", "Security — Hero", $pid, [
-    tf("sec_hero_chip","Chip"), tf("sec_hero_heading","Heading"), ta("sec_hero_description","Description"),
-    tf("sec_hero_cta_primary","Primary CTA"), tf("sec_hero_cta_primary_url","Primary CTA URL"),
-    tf("sec_hero_cta_secondary","Secondary CTA"), tf("sec_hero_cta_secondary_url","Secondary CTA URL"),
-    tf("sec_hero_detection_title","Detection Title"), tf("sec_hero_detection_subtitle","Detection Subtitle"),
-    mf("sec_hero_bg_image","BG Image"), mf("sec_hero_card_image","Card Image"), mf("sec_hero_card_mobile_image","Card Mobile Image"),
-    cf("sec_hero_bg_color","BG Color"),
-    rf("sec_hero_stats","Stats",[tf("top","Top"),tf("bottom","Bottom")]),
+    cf("sec_hero_bg_color","Bg Color"),
+    mf("sec_hero_bg_image","Bg Image"),
+    mf("sec_hero_card_image","Card Image"),
+    mf("sec_hero_card_mobile_image","Card Mobile Image"),
+    tf("sec_hero_chip","Chip"),
+    tf("sec_hero_cta_primary","Cta Primary"),
+    tf("sec_hero_cta_secondary","Cta Secondary"),
+    ta("sec_hero_description","Description"),
+    tf("sec_hero_detection_subtitle","Detection Subtitle"),
+    tf("sec_hero_detection_title","Detection Title"),
+    tf("sec_hero_heading","Heading"),
+    rf("sec_hero_stats","Stats",[tf("label","Label"),tf("value","Value")]),
 ]);
 
 add_meta_box_je("sec-outcomes", "Security — Outcomes", $pid, [
-    tf("sec_outcomes_chip","Chip"), tf("sec_outcomes_heading","Heading"), tf("sec_outcomes_heading_hl","Highlight"),
-    mf("sec_outcomes_image","Image"), mf("sec_outcomes_mobile_image","Mobile Image"), cf("sec_outcomes_bg_color","BG Color"),
-    rf("sec_outcomes_accordion","Accordion",[tf("icon_gradient","Icon Gradient"),tf("title","Title"),ta("checks","Checks (1/line)")]),
+    rf("sec_outcomes_accordion","Accordion",[tf("label","Label"),tf("value","Value")]),
+    cf("sec_outcomes_bg_color","Bg Color"),
+    tf("sec_outcomes_chip","Chip"),
+    tf("sec_outcomes_heading","Heading"),
+    tf("sec_outcomes_heading_hl","Heading Hl"),
+    mf("sec_outcomes_image","Image"),
+    mf("sec_outcomes_mobile_image","Mobile Image"),
 ]);
 
 add_meta_box_je("sec-included", "Security — Included", $pid, [
-    tf("sec_included_chip","Chip"), tf("sec_included_heading","Heading"), tf("sec_included_heading_hl","Highlight"),
-    ta("sec_included_description","Description"), cf("sec_included_bg_color","BG Color"),
-    rf("sec_included_pillars","Pillars",[tf("title","Title"),ta("items","Items (1/line)"),mf("card_image","Card Image"),mf("card_mobile_image","Card Mobile Image")]),
+    cf("sec_included_bg_color","Bg Color"),
+    tf("sec_included_chip","Chip"),
+    tf("sec_included_description","Description"),
+    tf("sec_included_heading","Heading"),
+    tf("sec_included_heading_hl","Heading Hl"),
+    rf("sec_included_pillars","Pillars",[tf("label","Label"),tf("value","Value")]),
 ]);
 
 add_meta_box_je("sec-phases", "Security — Phases", $pid, [
-    tf("sec_phases_chip","Chip"), tf("sec_phases_heading","Heading"), ta("sec_phases_description","Description"),
-    cf("sec_phases_bg_color","BG Color"),
-    rf("sec_phases_items","Phases",[tf("phase","Phase"),tf("title","Title"),tf("subtitle","Subtitle"),ta("description","Description")]),
+    cf("sec_phases_bg_color","Bg Color"),
+    tf("sec_phases_chip","Chip"),
+    tf("sec_phases_description","Description"),
+    tf("sec_phases_heading","Heading"),
+    rf("sec_phases_items","Items",[tf("label","Label"),tf("value","Value")]),
 ]);
 
 add_meta_box_je("sec-cta", "Security — CTA", $pid, [
-    tf("sec_cta_heading","Heading"), tf("sec_cta_heading_hl","Highlight"), ta("sec_cta_description","Description"),
-    ta("sec_cta_chips","Chips (1/line)"),
-    tf("sec_cta_primary","Primary CTA"), tf("sec_cta_primary_url","Primary CTA URL"),
-    tf("sec_cta_secondary","Secondary CTA"), tf("sec_cta_secondary_url","Secondary CTA URL"),
-    mf("sec_cta_bg_image","BG Image"), cf("sec_cta_bg_color","BG Color"),
+    cf("sec_cta_bg_color","Bg Color"),
+    mf("sec_cta_bg_image","Bg Image"),
+    tf("sec_cta_chips","Chips"),
+    tf("sec_cta_description","Description"),
+    tf("sec_cta_heading","Heading"),
+    tf("sec_cta_heading_hl","Heading Hl"),
+    tf("sec_cta_primary","Primary"),
+    tf("sec_cta_secondary","Secondary"),
 ]);
 
 echo "SECURITY: done\n";

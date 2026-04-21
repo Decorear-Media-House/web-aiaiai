@@ -1,0 +1,2894 @@
+{
+  "home-hero": {
+    "id": "home-hero",
+    "labels": {
+      "name": "Home — Hero"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_hero_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_hero_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_hero_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_hero_cta_text",
+        "title": "CTA Text",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_hero_cta_subtext",
+        "title": "CTA Subtext",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_hero_brand_logo_image",
+        "title": "Brand Logo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "home_hero_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "home_hero_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "home_hero_stats",
+        "title": "Stats",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "value",
+            "title": "Value",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "home-about": {
+    "id": "home-about",
+    "labels": {
+      "name": "Home — About"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_about_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_about_paragraphs",
+        "title": "Paragraphs (1/line)",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_about_section_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "home-services": {
+    "id": "home-services",
+    "labels": {
+      "name": "Home — Services"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_services_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_services_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_services_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_services_items",
+        "title": "Service Items",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "heading",
+            "title": "Heading",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "description",
+            "title": "Description",
+            "type": "textarea",
+            "object_type": "field"
+          },
+          {
+            "name": "cta",
+            "title": "CTA Text",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "href",
+            "title": "Link",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "card_background_image",
+            "title": "BG Image",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          }
+        ]
+      }
+    ]
+  },
+  "home-outcomes": {
+    "id": "home-outcomes",
+    "labels": {
+      "name": "Home — Outcomes"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_outcomes_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_outcomes_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_outcomes_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_outcomes_decorative_image",
+        "title": "Decorative Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "home-process": {
+    "id": "home-process",
+    "labels": {
+      "name": "Home — Process"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_process_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_process_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_process_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_process_side_panel_image",
+        "title": "Side Panel Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "home-cta": {
+    "id": "home-cta",
+    "labels": {
+      "name": "Home — CTA"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_cta_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_cta_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_cta_background_video",
+        "title": "BG Video",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "home-contact": {
+    "id": "home-contact",
+    "labels": {
+      "name": "Home — Contact"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_contact_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_contact_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_contact_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_contact_email",
+        "title": "Email",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_contact_address",
+        "title": "Address",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_contact_google_map_url",
+        "title": "Map URL",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_contact_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "home-other": {
+    "id": "home-other",
+    "labels": {
+      "name": "Home — Other"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "active_conditions": [
+        "allowed_posts"
+      ],
+      "allowed_posts": [
+        "6"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_problems_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_footer_text",
+        "title": "Footer Text",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_headingGradient",
+        "title": "HeadingGradient",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_headingWhite",
+        "title": "HeadingWhite",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "about-hero": {
+    "id": "about-hero",
+    "labels": {
+      "name": "About — Hero"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "7"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "about_hero_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_hero_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_hero_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_hero_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "about-mission": {
+    "id": "about-mission",
+    "labels": {
+      "name": "About — Mission"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "7"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "about_mission_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_mission_headingWhite1",
+        "title": "Heading 1",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_mission_headingHighlight",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_mission_headingWhite2",
+        "title": "Heading 2",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_mission_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_mission_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_mission_background_mobile_image",
+        "title": "BG Mobile",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "about-philosophy": {
+    "id": "about-philosophy",
+    "labels": {
+      "name": "About — Philosophy"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "7"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "about_philosophy_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_philosophy_headingPrefix",
+        "title": "Heading Prefix",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_philosophy_headingHighlight",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_philosophy_subtitle",
+        "title": "Subtitle",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_philosophy_introText",
+        "title": "Intro Text",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_philosophy_principles",
+        "title": "Principles",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "num",
+            "title": "Number",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "about-edge": {
+    "id": "about-edge",
+    "labels": {
+      "name": "About — Edge"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "7"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "about_edge_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_edge_headingPrefix",
+        "title": "Heading Prefix",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_edge_headingHighlight",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_edge_photo_image",
+        "title": "Edge Photo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_edge_edges",
+        "title": "Edge Cards",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "title",
+            "title": "Title",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "description",
+            "title": "Description",
+            "type": "textarea",
+            "object_type": "field"
+          },
+          {
+            "name": "icon_image",
+            "title": "Icon",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          }
+        ]
+      }
+    ]
+  },
+  "about-leadership": {
+    "id": "about-leadership",
+    "labels": {
+      "name": "About — Leadership"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "7"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "about_leadership_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_leadership_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_leadership_logo_image",
+        "title": "Logo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_leadership_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "about-team": {
+    "id": "about-team",
+    "labels": {
+      "name": "About — Team"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "7"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "about_team_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_headingPrefix",
+        "title": "Heading Prefix",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_headingHighlight",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_sectionDescription",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_ceoName",
+        "title": "CEO Name",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_ceoRole",
+        "title": "CEO Role",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_ceoBio",
+        "title": "CEO Bio",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_ceoTags",
+        "title": "CEO Tags (1/line)",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_ceo_photo_image",
+        "title": "CEO Photo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_team_ceo_photo_mobile_image",
+        "title": "CEO Photo Mobile",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_team_ctoName",
+        "title": "CTO Name",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_ctoRole",
+        "title": "CTO Role",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_cto_photo_image",
+        "title": "CTO Photo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_team_cto_photo_mobile_image",
+        "title": "CTO Photo Mobile",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_team_cooName",
+        "title": "COO Name",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_cooRole",
+        "title": "COO Role",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "about_team_coo_photo_image",
+        "title": "COO Photo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "about_team_coo_photo_mobile_image",
+        "title": "COO Photo Mobile",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "svc-hero": {
+    "id": "svc-hero",
+    "labels": {
+      "name": "Services — Hero"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_hero_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_hero_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_hero_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_hero_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_hero_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "svc-outcomes": {
+    "id": "svc-outcomes",
+    "labels": {
+      "name": "Services — Outcomes"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_outcomes_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_outcomes_heading_line1",
+        "title": "Heading Line 1",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_outcomes_heading_line2",
+        "title": "Heading Line 2",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_outcomes_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_outcomes_outcome1_image",
+        "title": "Outcome 1 Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_outcomes_outcome2_image",
+        "title": "Outcome 2 Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_outcomes_outcome3_image",
+        "title": "Outcome 3 Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_outcomes_outcome4_image",
+        "title": "Outcome 4 Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_outcomes_outcome5_image",
+        "title": "Outcome 5 Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "svc-overview": {
+    "id": "svc-overview",
+    "labels": {
+      "name": "Services — Overview"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_overview_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_overview_subtitle",
+        "title": "Subtitle",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_overview_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_overview_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "svc-robotics": {
+    "id": "svc-robotics",
+    "labels": {
+      "name": "Services — Robotics"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_robotics_number",
+        "title": "Number",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_subtitle",
+        "title": "Subtitle",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_what_it_is",
+        "title": "What It Is",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_cta_text",
+        "title": "CTA Text",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_cta_href",
+        "title": "CTA Link",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_robotics_section_image",
+        "title": "Section Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_robotics_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "svc-security": {
+    "id": "svc-security",
+    "labels": {
+      "name": "Services — Security"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_security_number",
+        "title": "Number",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_subtitle",
+        "title": "Subtitle",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_what_it_is",
+        "title": "What It Is",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_cta_text",
+        "title": "CTA Text",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_cta_href",
+        "title": "CTA Link",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_security_section_image",
+        "title": "Section Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_security_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "svc-ai_solution": {
+    "id": "svc-ai_solution",
+    "labels": {
+      "name": "Services — Ai_solution"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_ai_solution_number",
+        "title": "Number",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_subtitle",
+        "title": "Subtitle",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_what_it_is",
+        "title": "What It Is",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_cta_text",
+        "title": "CTA Text",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_cta_href",
+        "title": "CTA Link",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_ai_solution_section_image",
+        "title": "Section Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_ai_solution_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "svc-initiatives": {
+    "id": "svc-initiatives",
+    "labels": {
+      "name": "Services — Initiatives"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_initiatives_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_initiatives_heading_line1",
+        "title": "Heading Line 1",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_initiatives_heading_line2",
+        "title": "Heading Line 2",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_initiatives_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_initiatives_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "svc-guidance": {
+    "id": "svc-guidance",
+    "labels": {
+      "name": "Services — Guidance"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "8"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "svc_guidance_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_guidance_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_guidance_heading_highlight",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_guidance_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "svc_guidance_background_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "svc_guidance_background_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-hero": {
+    "id": "ptr-hero",
+    "labels": {
+      "name": "Partner — Hero"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_hero_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_hero_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_hero_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_hero_primaryCta",
+        "title": "PrimaryCta",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_hero_secondaryCta",
+        "title": "SecondaryCta",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_hero_hero_background_image",
+        "title": "Hero Background Image",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_hero_background_color",
+        "title": "Background Color",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-statement": {
+    "id": "ptr-statement",
+    "labels": {
+      "name": "Partner — Statement"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_statement_textWhite",
+        "title": "TextWhite",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_statement_textHighlight",
+        "title": "TextHighlight",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-meaning": {
+    "id": "ptr-meaning",
+    "labels": {
+      "name": "Partner — Meaning"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_meaning_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_meaning_headingPrefix",
+        "title": "HeadingPrefix",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_meaning_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_meaning_headingSuffix",
+        "title": "HeadingSuffix",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_meaning_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-outcomes": {
+    "id": "ptr-outcomes",
+    "labels": {
+      "name": "Partner — Outcomes"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_outcomes_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_outcomes_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_outcomes_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_outcomes_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-phases": {
+    "id": "ptr-phases",
+    "labels": {
+      "name": "Partner — Phases"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_phases_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_phases_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_phases_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_phases_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-deliverables": {
+    "id": "ptr-deliverables",
+    "labels": {
+      "name": "Partner — Deliverables"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_deliverables_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_deliverables_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_deliverables_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_deliverables_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-engagement": {
+    "id": "ptr-engagement",
+    "labels": {
+      "name": "Partner — Engagement"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_engagement_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_engagement_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_engagement_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_engagement_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-process": {
+    "id": "ptr-process",
+    "labels": {
+      "name": "Partner — Process"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_process_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_process_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_process_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-faq": {
+    "id": "ptr-faq",
+    "labels": {
+      "name": "Partner — Faq"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_faq_chipLabel",
+        "title": "ChipLabel",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_faq_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_faq_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_faq_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_faq_ctaText",
+        "title": "CtaText",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "ptr-cta": {
+    "id": "ptr-cta",
+    "labels": {
+      "name": "Partner — Cta"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "9"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "ptr_cta_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_cta_headingHighlight",
+        "title": "HeadingHighlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_cta_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_cta_primaryCta",
+        "title": "PrimaryCta",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "ptr_cta_secondaryCta",
+        "title": "SecondaryCta",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "hum-hero": {
+    "id": "hum-hero",
+    "labels": {
+      "name": "Humanoid — Hero"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "10"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "hum_hero_chip",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_bg_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "hum_hero_bg_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_cta_primary",
+        "title": "Primary CTA",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_cta_primary_url",
+        "title": "Primary CTA URL",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_cta_secondary",
+        "title": "Secondary CTA",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_cta_secondary_url",
+        "title": "Secondary CTA URL",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_hero_stats",
+        "title": "Stats",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "top",
+            "title": "Top",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "bottom",
+            "title": "Bottom",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "hum-usecases": {
+    "id": "hum-usecases",
+    "labels": {
+      "name": "Humanoid — Use Cases"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "10"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "hum_robots",
+        "title": "Robot Models",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "name",
+            "title": "Name",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "header_image",
+            "title": "Header Image",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          },
+          {
+            "name": "title",
+            "title": "Title",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "description",
+            "title": "Description",
+            "type": "textarea",
+            "object_type": "field"
+          },
+          {
+            "name": "video_thumb",
+            "title": "Video Thumb 1",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          },
+          {
+            "name": "video_url",
+            "title": "Video URL 1",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "video_thumb_2",
+            "title": "Video Thumb 2",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          },
+          {
+            "name": "video_url_2",
+            "title": "Video URL 2",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "specs",
+            "title": "Specs (label|value per line)",
+            "type": "textarea",
+            "object_type": "field"
+          },
+          {
+            "name": "feature_image_1",
+            "title": "Feature Image 1",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          },
+          {
+            "name": "feature_image_2",
+            "title": "Feature Image 2",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          },
+          {
+            "name": "note",
+            "title": "Note",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "hum-outcomes": {
+    "id": "hum-outcomes",
+    "labels": {
+      "name": "Humanoid — Outcomes"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "10"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "hum_outcomes_chip",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_outcomes_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_outcomes_heading_hl",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_outcomes_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_outcomes_image",
+        "title": "Photo",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "hum_outcomes_bg_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_outcomes_accordion",
+        "title": "Accordion",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "icon_gradient",
+            "title": "Icon Gradient",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "icon_image",
+            "title": "Icon Image",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          },
+          {
+            "name": "items",
+            "title": "Items (1/line)",
+            "type": "textarea",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "hum-deliverables": {
+    "id": "hum-deliverables",
+    "labels": {
+      "name": "Humanoid — Deliverables"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "10"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "hum_deliverables_chip",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_deliverables_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_deliverables_heading_hl",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_deliverables_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_deliverables_bg_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_deliverables_items",
+        "title": "Items",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "num",
+            "title": "Number",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "title",
+            "title": "Title",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "icon",
+            "title": "Icon Image",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          }
+        ]
+      }
+    ]
+  },
+  "hum-cta": {
+    "id": "hum-cta",
+    "labels": {
+      "name": "Humanoid — CTA"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "10"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "hum_cta_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_heading_hl",
+        "title": "Highlight",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_chips",
+        "title": "Chips (1/line)",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_primary",
+        "title": "Primary CTA",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_primary_url",
+        "title": "Primary CTA URL",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_secondary",
+        "title": "Secondary CTA",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_secondary_url",
+        "title": "Secondary CTA URL",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "hum_cta_bg_image",
+        "title": "BG Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "hum_cta_bg_color",
+        "title": "BG Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      }
+    ]
+  },
+  "sec-hero": {
+    "id": "sec-hero",
+    "labels": {
+      "name": "Security — Hero"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "active_conditions": [
+        "allowed_posts"
+      ],
+      "allowed_posts": [
+        "11"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "sec_hero_bg_color",
+        "title": "Bg Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_bg_image",
+        "title": "Bg Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "sec_hero_card_image",
+        "title": "Card Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "sec_hero_card_mobile_image",
+        "title": "Card Mobile Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "sec_hero_chip",
+        "title": "Chip",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_cta_primary",
+        "title": "Cta Primary",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_cta_secondary",
+        "title": "Cta Secondary",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_detection_subtitle",
+        "title": "Detection Subtitle",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_detection_title",
+        "title": "Detection Title",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_hero_stats",
+        "title": "Stats",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "value",
+            "title": "Value",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "sec-outcomes": {
+    "id": "sec-outcomes",
+    "labels": {
+      "name": "Security — Outcomes"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "active_conditions": [
+        "allowed_posts"
+      ],
+      "allowed_posts": [
+        "11"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "sec_outcomes_accordion",
+        "title": "Accordion",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "value",
+            "title": "Value",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      },
+      {
+        "name": "sec_outcomes_bg_color",
+        "title": "Bg Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_outcomes_chip",
+        "title": "Chip",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_outcomes_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_outcomes_heading_hl",
+        "title": "Heading Hl",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_outcomes_image",
+        "title": "Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "sec_outcomes_mobile_image",
+        "title": "Mobile Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      }
+    ]
+  },
+  "sec-included": {
+    "id": "sec-included",
+    "labels": {
+      "name": "Security — Included"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "active_conditions": [
+        "allowed_posts"
+      ],
+      "allowed_posts": [
+        "11"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "sec_included_bg_color",
+        "title": "Bg Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_included_chip",
+        "title": "Chip",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_included_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_included_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_included_heading_hl",
+        "title": "Heading Hl",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_included_pillars",
+        "title": "Pillars",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "value",
+            "title": "Value",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "sec-phases": {
+    "id": "sec-phases",
+    "labels": {
+      "name": "Security — Phases"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "active_conditions": [
+        "allowed_posts"
+      ],
+      "allowed_posts": [
+        "11"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "sec_phases_bg_color",
+        "title": "Bg Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_phases_chip",
+        "title": "Chip",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_phases_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_phases_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_phases_items",
+        "title": "Items",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "label",
+            "title": "Label",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "value",
+            "title": "Value",
+            "type": "text",
+            "object_type": "field"
+          }
+        ]
+      }
+    ]
+  },
+  "sec-cta": {
+    "id": "sec-cta",
+    "labels": {
+      "name": "Security — CTA"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "active_conditions": [
+        "allowed_posts"
+      ],
+      "allowed_posts": [
+        "11"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "sec_cta_bg_color",
+        "title": "Bg Color",
+        "type": "colorpicker",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_cta_bg_image",
+        "title": "Bg Image",
+        "type": "media",
+        "object_type": "field",
+        "value_format": "url"
+      },
+      {
+        "name": "sec_cta_chips",
+        "title": "Chips",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_cta_description",
+        "title": "Description",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_cta_heading",
+        "title": "Heading",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_cta_heading_hl",
+        "title": "Heading Hl",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_cta_primary",
+        "title": "Primary",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "sec_cta_secondary",
+        "title": "Secondary",
+        "type": "text",
+        "object_type": "field"
+      }
+    ]
+  },
+  "home-problems": {
+    "id": "home-problems",
+    "labels": {
+      "name": "Home — Problems"
+    },
+    "args": {
+      "object_type": "post",
+      "allowed_post_type": [
+        "page"
+      ],
+      "active": true,
+      "show_in_rest": true,
+      "position": "normal",
+      "allowed_posts": [
+        "6"
+      ],
+      "active_conditions": [
+        "allowed_posts"
+      ]
+    },
+    "meta_fields": [
+      {
+        "name": "home_problems_label",
+        "title": "Label",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_headingWhite",
+        "title": "Heading White",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_headingGradient",
+        "title": "Heading Gradient",
+        "type": "text",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_description",
+        "title": "Description",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_footer_text",
+        "title": "Footer Text",
+        "type": "textarea",
+        "object_type": "field"
+      },
+      {
+        "name": "home_problems_cards",
+        "title": "Cards",
+        "type": "repeater",
+        "object_type": "field",
+        "repeater-fields": [
+          {
+            "name": "title",
+            "title": "Title",
+            "type": "text",
+            "object_type": "field"
+          },
+          {
+            "name": "description",
+            "title": "Description",
+            "type": "textarea",
+            "object_type": "field"
+          },
+          {
+            "name": "card_image",
+            "title": "Image",
+            "type": "media",
+            "object_type": "field",
+            "value_format": "url"
+          }
+        ]
+      }
+    ]
+  }
+}
