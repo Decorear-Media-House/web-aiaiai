@@ -1,5 +1,8 @@
-// URLs come from .env (local) or .env.production (server build)
+// URLs come from .env (local) or .env.production (server build).
+// WORDPRESS_BUILD_API_URL is only for Docker/EC2 production builds because
+// Docker build cannot resolve Compose runtime hostnames like aiaiai-wordpress.
 const WP_API_URL =
+  process.env.WORDPRESS_BUILD_API_URL ||
   process.env.WORDPRESS_API_URL || "https://aiaiai-cms.decorear.com/wp-json";
 const WP_BASE_URL =
   process.env.WORDPRESS_BASE_URL ||

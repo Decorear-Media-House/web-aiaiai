@@ -2,6 +2,13 @@ services:
   aiaiai-frontend:
     build:
       context: ./Frontend
+      args:
+        # Next.js fetches WordPress during production builds. Build containers
+        # cannot resolve Compose runtime names, so use WORDPRESS_BUILD_API_URL.
+        WORDPRESS_BUILD_API_URL: ${WORDPRESS_BUILD_API_URL}
+        WORDPRESS_API_URL: ${WORDPRESS_API_URL}
+        WORDPRESS_BASE_URL: ${WORDPRESS_BASE_URL}
+        NEXT_PUBLIC_WORDPRESS_URL: ${NEXT_PUBLIC_WORDPRESS_URL}
     image: aiaiai-frontend:latest
     container_name: aiaiai-frontend
     restart: unless-stopped

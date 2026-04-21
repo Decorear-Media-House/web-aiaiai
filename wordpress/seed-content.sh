@@ -2,6 +2,10 @@
 # Seed WordPress pages with AIAIAI content
 # Auto-generated from production on 2026-04-20
 # Run inside WordPress container: bash /var/www/html/wp-content/mu-plugins/../seed-content.sh
+#
+# Legacy fallback: this seeds page_sections JSON. For production-like low-code
+# editing, run import-data.php first, then seed-all-jetengine.php so JetEngine
+# meta boxes are populated for wp-admin editors.
 
 WP="wp --allow-root"
 
