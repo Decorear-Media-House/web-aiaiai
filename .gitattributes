@@ -1,0 +1,24 @@
+# Scripts and PHP files that run inside Linux containers must stay LF —
+# CRLF breaks bash parsing (e.g. `set -euo pipefail\r` → "invalid option").
+*.sh   text eol=lf
+*.bash text eol=lf
+*.php  text eol=lf
+
+# Other text files: normalize to LF in the repo, let Git decide on checkout.
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.md   text
+
+# Binaries — never touch.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.zip  binary
+*.gz   binary
+*.pdf  binary
+*.woff  binary
+*.woff2 binary
