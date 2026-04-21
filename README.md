@@ -82,6 +82,29 @@ cd web-aiaiai
 - **Database**: MySQL 8
 - **Orchestration**: Docker Compose (prod), ecosystem tools (Caddy/Nginx optional for SSL)
 
+```
+┌──────────────────────────────────────────────────────────┐
+│  EC2 instance                                            │
+│                                                          │
+│  ┌──────────────┐          ┌──────────────┐              │
+│  │ aiaiai-      │ SSR/ISR  │ aiaiai-      │              │
+│  │ frontend     │◄─────────┤ wordpress    │              │
+│  │ (Next.js)    │  wp-json │ (REST API)   │              │
+│  │ :3000        │          │ :8080        │              │
+│  └──────┬───────┘          └──────┬───────┘              │
+│         │                         ▼                      │
+│         │                  ┌──────────────┐              │
+│         │                  │ aiaiai-mysql │              │
+│         │                  │ (internal)   │              │
+│         │                  └──────────────┘              │
+│         │                                                │
+│         └── /api/revalidate ◄── "Deploy Site" in wp-admin│
+│             (ISR tag invalidation, shared secret)        │
+│                                                          │
+│  [once]  aiaiai-wp-init  (seeds DB + media on first run) │
+└──────────────────────────────────────────────────────────┘
+```
+
 ### Docker services (`docker-compose.prod.yml`)
 
 ```
@@ -254,6 +277,45 @@ define('AIAIAI_WEBHOOK_URL', 'https://api.vercel.com/v1/integrations/deploy/xxx'
 ### Self-Hosted (manual, ไม่ใช้ Docker)
 
 Deprecated in favor of `./bootstrap.sh` ถ้าจำเป็นจริงๆ ดู git history commit `1f45716` สำหรับขั้นตอนเต็มที่ต้องตั้ง Nginx + PHP-FPM + MySQL + WP-CLI + pm2 webhook เอง
+
+---
+
+## How the Deploy Button Works
+
+```
+wp-admin (Deploy Site)
+  └─ POST /wp-admin/admin-ajax.php?action=aiaiai_deploy_trigger
+     └─ mu-plugin → POST http://aiaiai-frontend:3000/api/revalidate
+        with header: x-revalidate-secret: $REVALIDATE_SECRET
+        └─ Next.js: revalidateTag("wordpress")
+           └─ next page render hits fresh WP REST data
+```
+
+- Secret อยู่ใน `.env.prod` ชื่อ `REVALIDATE_SECRET` — shared ระหว่าง WP (`AIAIAI_REVALIDATE_SECRET`) และ Next.js (`REVALIDATE_SECRET`)
+- `wpFetch()` ใน `Frontend/src/lib/wordpress.ts` ติด tag `"wordpress"` + `revalidate: 60` — โดน revalidateTag ล้างเมื่อไหร่ ได้ fresh data ทันที, ถ้าไม่กด ISR refresh ทุก 60s
+- ถ้า secret ไม่ตรง → endpoint ตอบ 401; ถ้าไม่มี secret ใน WP constant → mu-plugin ไม่ส่ง header
+- Health check (GET `/api/revalidate`) ไม่ต้อง secret — WP admin ใช้ show status dot
+
+---
+
+## Developer Landmarks
+
+ถ้าจะแก้ของที่อยู่ลึกกว่า content editing:
+
+| Path | บทบาท |
+|------|-------|
+| `bootstrap.sh` | One-command deploy — gen `.env.prod`, detect EC2 IP, `docker compose up` |
+| `docker-compose.prod.yml` | Stack 4 services + WP constants (`WP_HOME`, `AIAIAI_WEBHOOK_URL`, `AIAIAI_REVALIDATE_SECRET`) ผ่าน `apache_config:` |
+| `wordpress/docker/init.sh` | ลำดับ install — wait WP healthy → core install → install free plugin (`seo-by-rank-math`) → loop `premium-plugins/*.zip` → upload-images → seed-all-jetengine → seed-content → fix-urls → touch flag |
+| `wordpress/seed-content.sh` | JSON blob ของ 6 หน้า (hero/outcomes/cta ฯลฯ) — แก้ default content ที่นี่ |
+| `wordpress/seed-all-jetengine.php` | Register JetEngine meta boxes (idempotent) |
+| `wordpress/upload-images.php` | Import `wordpress/uploads/*` → WP Media Library |
+| `wordpress/fix-urls.php` | Rewrite `aiaiai-cms.decorear.com` → `$WP_PROTOCOL://$WP_DOMAIN` ใน DB (env-driven, idempotent) |
+| `wordpress/mu-plugins/aiaiai-content-api.php` | Content REST endpoints + Deploy button AJAX handler |
+| `Frontend/src/lib/wordpress.ts` | `wpFetch` (tagged ISR), `getPageMeta` (JetEngine → `page_sections` legacy fallback), `wpImageUrl` (rewrite internal hostname) |
+| `Frontend/src/app/api/revalidate/route.ts` | Receives Deploy button POST, calls `revalidateTag("wordpress")` |
+
+Files ใน `wordpress/mu-plugins/` mount read-only เข้า container — แก้ไฟล์ใน git แล้ว restart WP เห็นผลทันที ไม่ต้อง rebuild image
 
 ---
 
