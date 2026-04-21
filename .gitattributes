@@ -1,0 +1,10 @@
+# Shell scripts are executed inside Linux containers/servers.
+# Force LF so Windows checkouts do not produce `$'\r': command not found`.
+*.sh text eol=lf
+
+# Keep Dockerfiles Linux-friendly for local Docker and EC2 builds.
+Dockerfile text eol=lf
+
+# Let Git normalize these without forcing a platform-specific line ending.
+*.php text=auto
+*.yml text=auto

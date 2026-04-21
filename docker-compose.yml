@@ -8,6 +8,7 @@ services:
     ports:
       - "3050:3000"
     environment:
+      # Keep URLs in .env so the same compose file works for local and EC2.
       WORDPRESS_API_URL: ${WORDPRESS_API_URL}
       WORDPRESS_BASE_URL: ${WORDPRESS_BASE_URL}
       NEXT_PUBLIC_WORDPRESS_URL: ${NEXT_PUBLIC_WORDPRESS_URL}
@@ -16,6 +17,9 @@ services:
         condition: service_healthy
 
   aiaiai-wordpress:
+    # Custom local/EC2 image based on official WordPress with WP-CLI added.
+    # The app still runs as normal wordpress:6-apache; WP-CLI is only for
+    # bootstrap tasks such as seeding content, JetEngine meta, and media import.
     build:
       context: ./wordpress
       dockerfile: Dockerfile
@@ -37,6 +41,8 @@ services:
       - wp-content:/var/www/html/wp-content
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
       - ./wordpress/backups:/var/www/html/wp-content/backups
+      # Mount repo seed scripts/assets into WordPress without copying them into
+      # wp-content. This keeps production bootstrap repeatable from Git.
       - ./wordpress:/var/www/html/wp-content/vendor-seed
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
@@ -53,6 +59,7 @@ services:
     container_name: aiaiai-mysql
     restart: unless-stopped
     environment:
+      # Database credentials come from .env; do not use WordPress admin login here.
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}

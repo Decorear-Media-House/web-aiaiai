@@ -3,7 +3,9 @@
  * Import images from wordpress/uploads/ into WordPress Media Library.
  * Run via: wp --allow-root eval-file /var/www/html/wp-content/mu-plugins/../upload-images.php
  *
- * Tries local repo paths first, then falls back to /tmp/aiaiai-images/.
+ * Tries Git-mounted repo paths first, then falls back to /tmp/aiaiai-images/.
+ * This supports both local Docker (`./wordpress:/.../vendor-seed`) and EC2
+ * bootstrap runs from a checked-out repo.
  */
 
 require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -11,8 +13,11 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
 $candidate_dirs = [
+    // Direct repo execution: php/wp-cli runs this file from wordpress/.
     dirname(__FILE__) . '/uploads',
+    // Docker/EC2 compose execution: repo is mounted into wp-content/vendor-seed.
     ABSPATH . 'wp-content/vendor-seed/uploads',
+    // Legacy/manual server workflow: images copied to a temporary directory.
     '/tmp/aiaiai-images/',
 ];
 
