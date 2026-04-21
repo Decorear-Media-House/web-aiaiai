@@ -34,6 +34,7 @@ yarn-error.log*
 pnpm-debug.log*
 .env
 .env.*
+!.env.*.example
 .vercel/
 
 # Claude
@@ -47,3 +48,6 @@ Frontend/.env.*
 # SSH setup (sensitive)
 ssh-setup
 CLAUDE.md
+
+# Licensed WordPress plugin archives (drop-in folder for EC2 init container)
+wordpress/premium-plugins/*.zip

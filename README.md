@@ -168,6 +168,103 @@ git push
 
 ---
 
+## Deploy: AWS EC2 (Docker — Full Stack, Zero-Touch)
+
+วิธีนี้ใช้ `docker-compose.prod.yml` รัน **ทั้ง stack (Frontend + WordPress + MySQL)** บน EC2 เครื่องเดียว พร้อม init container ที่ติดตั้ง WordPress, activate plugins, upload รูป, และ seed content ให้อัตโนมัติ **ในครั้งเดียว** (no manual WP installer UI).
+
+### สิ่งที่ต้องเตรียม
+
+| รายการ | รายละเอียด |
+|--------|-----------|
+| **EC2** | Ubuntu 22+, RAM 2GB+ (แนะนำ 4GB สำหรับ build frontend), Storage 20GB+ |
+| **Software** | Docker Engine + Docker Compose plugin (`sudo apt install docker.io docker-compose-v2`) |
+| **Domain** | 1 domain สำหรับ CMS (เช่น `cms.example.com`) ชี้ A-record ไปที่ EC2 elastic IP — ใช้ทั้งกับ WordPress และ client-side ของ frontend |
+| **Premium plugins** (optional) | `jet-engine.zip` (ต้องใช้สำหรับ meta boxes); `seo-by-rank-math-pro.zip` (free version ติดตั้งให้อัตโนมัติ) |
+
+### Architecture
+
+```
+EC2
+├── aiaiai-mysql      (internal only)
+├── aiaiai-wordpress  (:${WP_HTTP_PORT}, default 8080)
+├── aiaiai-wp-init    (one-shot; exits when seeded)
+└── aiaiai-frontend   (:${FRONTEND_HTTP_PORT}, default 3000)
+```
+
+- Frontend เรียก WordPress REST API ผ่าน Docker network (`http://aiaiai-wordpress:80` — ไม่ออก internet)
+- Client-side browser เรียก WordPress ผ่าน public domain (ที่ตั้งใน `WP_DOMAIN`) สำหรับรูปและ contact form
+- **Reverse proxy (SSL) = BYO** — แนะนำใส่ Nginx/Caddy หน้า compose แล้ว proxy:
+  - `aiaiai.example.com` → `localhost:3000` (frontend)
+  - `cms.example.com` → `localhost:8080` (WordPress)
+
+### ขั้นตอน (One Command)
+
+```bash
+git clone https://github.com/Decorear-Media-House/web-aiaiai.git
+cd web-aiaiai
+./bootstrap.sh
+```
+
+แค่นั้น `bootstrap.sh` จะจัดการให้ทุกอย่าง:
+
+1. เช็ค Docker + compose plugin (ถ้าไม่มี → แจ้งคำสั่งติดตั้ง)
+2. สร้าง `.env.prod` ให้อัตโนมัติ (random 32-char passwords) ถ้ายังไม่มี
+3. Auto-detect EC2 public IPv4 (ผ่าน IMDSv2) → ใช้เป็น `WP_DOMAIN` (fallback = `localhost`)
+4. Build + start ทั้ง 4 services รอจน `aiaiai-wp-init` exit 0
+5. Print admin URL + credentials ให้ save ไว้
+
+เรียกซ้ำได้ (idempotent) — ถ้า `.env.prod` มีอยู่แล้วจะใช้ค่าเดิม ไม่ gen ใหม่
+
+### Customize
+
+**ใช้ domain จริงแทน EC2 IP** (แนะนำสำหรับ production):
+
+```bash
+# หลัง bootstrap run ครั้งแรก
+nano .env.prod           # เปลี่ยน WP_DOMAIN=cms.example.com, WP_PROTOCOL=https
+docker compose -p aiaiai-prod -f docker-compose.prod.yml --env-file .env.prod down
+docker compose -p aiaiai-prod -f docker-compose.prod.yml --env-file .env.prod up -d --build
+```
+
+หมายเหตุ: `NEXT_PUBLIC_WORDPRESS_URL` ถูก bake เข้า Next.js bundle ตอน build — เปลี่ยน domain ต้อง `--build` ซ้ำ
+
+**(Optional) เพิ่ม premium plugin zips ก่อน bootstrap**:
+
+```bash
+scp jet-engine.zip ubuntu@EC2_IP:~/web-aiaiai/wordpress/premium-plugins/
+```
+
+**EC2 Security Group** — เปิด inbound TCP:
+- `$FRONTEND_HTTP_PORT` (default 3000) — หรือ 80/443 ถ้ามี reverse proxy
+- `$WP_HTTP_PORT` (default 8080) — สำหรับ wp-admin + REST API
+
+SSL: แนะนำใส่ Caddy/Nginx หน้า compose แล้ว proxy ไปที่ ports ภายใน (auto-HTTPS จาก Let's Encrypt)
+
+### เปลี่ยน Frontend อย่างเดียว
+
+เมื่อ push code frontend ใหม่:
+
+```bash
+git pull
+docker compose -p aiaiai-prod -f docker-compose.prod.yml --env-file .env.prod up -d --build aiaiai-frontend
+```
+
+WP + DB จะไม่ถูกแตะ init container จะข้าม (เจอ flag file เดิม)
+
+### Re-seed / Reset
+
+```bash
+# ลบทุกอย่าง (DB + wp-content) แล้ว seed ใหม่หมด
+docker compose -p aiaiai-prod -f docker-compose.prod.yml down -v
+./bootstrap.sh    # หรือ docker compose ... up -d --build
+
+# รัน init ซ้ำโดยไม่ลบข้อมูล — ต้องลบ flag ก่อน
+docker exec aiaiai-wordpress rm -f /var/www/html/wp-content/.wp-init-installed
+docker compose -p aiaiai-prod -f docker-compose.prod.yml up -d --force-recreate aiaiai-wp-init
+```
+
+---
+
 ## Deploy: Self-Hosted (Server เอง)
 
 ### สิ่งที่ต้องเตรียม

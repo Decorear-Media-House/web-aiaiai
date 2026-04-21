@@ -1,0 +1,114 @@
+# EC2-ready full-stack compose — Frontend + WordPress + MySQL with zero-touch
+# install on first boot. See README "Deploy: AWS EC2 (Docker — Full Stack)".
+#
+# Usage:
+#   cp .env.prod.example .env.prod  &&  edit .env.prod
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+#   docker compose -f docker-compose.prod.yml logs -f aiaiai-wp-init
+
+services:
+  aiaiai-mysql:
+    image: mysql:8.0
+    container_name: aiaiai-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
+      MYSQL_USER: ${MYSQL_USER:-wordpress}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD required}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD required}
+    volumes:
+      - wp-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u${MYSQL_USER:-wordpress}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  aiaiai-wordpress:
+    image: wordpress:6-apache
+    container_name: aiaiai-wordpress
+    restart: unless-stopped
+    ports:
+      - "${WP_HTTP_PORT:-8080}:80"
+    environment:
+      WORDPRESS_DB_HOST: aiaiai-mysql:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', '${WP_PROTOCOL:-https}://${WP_DOMAIN}');
+        define('WP_SITEURL', '${WP_PROTOCOL:-https}://${WP_DOMAIN}');
+    volumes:
+      # Full WP install shared with aiaiai-wp-init so wp-cli can operate on it.
+      - wp-html:/var/www/html
+      - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
+      - ./wordpress/backups:/var/www/html/wp-content/backups
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      aiaiai-mysql:
+        condition: service_healthy
+
+  aiaiai-wp-init:
+    image: wordpress:cli
+    container_name: aiaiai-wp-init
+    restart: "no"
+    # Run as root so we can mkdir/chown inside the shared wp-html volume.
+    # wp-cli is invoked with --allow-root; files end up chowned to www-data.
+    user: "0:0"
+    depends_on:
+      aiaiai-wordpress:
+        condition: service_healthy
+    environment:
+      WP_DOMAIN: ${WP_DOMAIN:?WP_DOMAIN required}
+      WP_PROTOCOL: ${WP_PROTOCOL:-https}
+      WP_SITE_TITLE: ${WP_SITE_TITLE:-AIAIAI CMS}
+      WP_ADMIN_USER: ${WP_ADMIN_USER:?WP_ADMIN_USER required}
+      WP_ADMIN_PASS: ${WP_ADMIN_PASS:?WP_ADMIN_PASS required}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL:?WP_ADMIN_EMAIL required}
+      WORDPRESS_DB_HOST: aiaiai-mysql:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+    volumes:
+      # Share the same WP install as aiaiai-wordpress — wp-cli needs core files.
+      - wp-html:/var/www/html
+      - ./wordpress:/seed:ro
+      # upload-images.php resolves `dirname(__FILE__) . '/../uploads/'`, so the
+      # uploads folder must sit one level above /seed/upload-images.php.
+      - ./wordpress/uploads:/uploads:ro
+      - ./wordpress/premium-plugins:/premium-plugins:ro
+      - ./wordpress/docker/init.sh:/usr/local/bin/init.sh:ro
+    entrypoint: ["/bin/bash", "/usr/local/bin/init.sh"]
+
+  aiaiai-frontend:
+    build:
+      context: ./Frontend
+      args:
+        # Baked into the JS bundle at build time (NEXT_PUBLIC_* is compile-time).
+        NEXT_PUBLIC_WORDPRESS_URL: ${WP_PROTOCOL:-https}://${WP_DOMAIN}
+    image: aiaiai-frontend:latest
+    container_name: aiaiai-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_HTTP_PORT:-3000}:3000"
+    environment:
+      # Server-side fetches use the internal Docker hostname — no egress hop.
+      WORDPRESS_API_URL: http://aiaiai-wordpress:80/wp-json
+      WORDPRESS_BASE_URL: http://aiaiai-wordpress:80
+      # Client-side code needs the public URL (already baked in at build, repeated here for SSR).
+      NEXT_PUBLIC_WORDPRESS_URL: ${WP_PROTOCOL:-https}://${WP_DOMAIN}
+    depends_on:
+      aiaiai-wordpress:
+        condition: service_healthy
+      aiaiai-wp-init:
+        condition: service_completed_successfully
+
+volumes:
+  wp-html:
+  wp-db-data:

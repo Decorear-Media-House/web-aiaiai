@@ -6,12 +6,16 @@
 
 global $wpdb;
 
+$replace = getenv('PROD_URL') ?: 'https://aiaiai-cms.decorear.com';
+
 $search = [
     'http://localhost:8080',
     'http://aiaiai-wordpress:80',
     'http://aiaiai-wordpress',
+    'https://aiaiai-cms.decorear.com',
+    'http://aiaiai-cms.decorear.com',
 ];
-$replace = 'https://aiaiai-cms.decorear.com';
+$search = array_values(array_filter($search, fn($u) => $u !== $replace));
 
 $total = 0;
 foreach ($search as $old_url) {
@@ -26,8 +30,15 @@ foreach ($search as $old_url) {
 }
 
 // Also fix serialized data (JetEngine repeaters store URLs in serialized arrays)
+$where_parts = [];
+$where_args  = [];
+foreach ($search as $old_url) {
+    $where_parts[] = 'meta_value LIKE %s';
+    $where_args[]  = '%' . $wpdb->esc_like($old_url) . '%';
+}
+$where_sql = implode(' OR ', $where_parts);
 $rows = $wpdb->get_results(
-    "SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE meta_value LIKE '%localhost:8080%' OR meta_value LIKE '%aiaiai-wordpress%'"
+    $wpdb->prepare("SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE $where_sql", $where_args)
 );
 foreach ($rows as $row) {
     $val = maybe_unserialize($row->meta_value);

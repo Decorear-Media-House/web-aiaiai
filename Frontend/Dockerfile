@@ -9,6 +9,10 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# NEXT_PUBLIC_* vars are inlined by Next.js at build time, so they must be
+# passed as build args. Defaults cover local dev; override for prod.
+ARG NEXT_PUBLIC_WORDPRESS_URL=https://aiaiai-cms.decorear.com
+ENV NEXT_PUBLIC_WORDPRESS_URL=$NEXT_PUBLIC_WORDPRESS_URL
 RUN npm run build
 
 # Stage 3: Production runner
