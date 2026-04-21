@@ -49,5 +49,8 @@ Frontend/.env.*
 ssh-setup
 CLAUDE.md
 
-# Licensed WordPress plugin archives (drop-in folder for EC2 init container)
-wordpress/premium-plugins/*.zip
+# Licensed WordPress plugin archives (drop-in folder for EC2 init container).
+# This repo is private, so we commit the zips for zero-touch bootstrap.
+# If the repo ever goes public, re-enable this ignore to avoid redistributing
+# licensed binaries.
+#wordpress/premium-plugins/*.zip

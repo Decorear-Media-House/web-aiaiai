@@ -46,6 +46,7 @@ services:
       - wp-html:/var/www/html
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
       - ./wordpress/backups:/var/www/html/wp-content/backups
+      - ./wordpress/docker/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
       interval: 10s
@@ -77,6 +78,8 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+      # Optional: JetEngine / Crocoblock license — init.sh will register it if set.
+      JET_ENGINE_LICENSE: ${JET_ENGINE_LICENSE:-}
     volumes:
       # Share the same WP install as aiaiai-wordpress — wp-cli needs core files.
       - wp-html:/var/www/html

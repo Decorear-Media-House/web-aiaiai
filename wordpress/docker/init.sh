@@ -84,6 +84,16 @@ else
   log "no premium plugin zips in /premium-plugins — skipping"
 fi
 
+# --- 5b. Register JetEngine / Crocoblock license (optional) ------------------
+# The actual activation roundtrip to Crocoblock happens the first time an admin
+# opens Crocoblock → License. Storing the key here means no one has to paste it
+# by hand after a fresh bootstrap.
+if [ -n "${JET_ENGINE_LICENSE:-}" ] && $WP plugin is-active jet-engine 2>/dev/null; then
+  log "registering JetEngine license key"
+  $WP option update jet_engine_license "$JET_ENGINE_LICENSE" >/dev/null \
+    || log "  (could not set jet_engine_license option — check via wp-admin)"
+fi
+
 # --- 6. Upload images into Media Library -------------------------------------
 log "uploading images (wordpress/uploads → Media Library)"
 $WP eval-file /seed/upload-images.php
