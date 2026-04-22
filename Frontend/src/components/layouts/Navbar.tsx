@@ -10,8 +10,8 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 const ROYAL_SHINE = "linear-gradient(148deg, #1A4494 0%, #2D7AE8 50%, #4A99F5 100%)";
 
 const SERVICES = [
-  { label: "AI Security Guard Solution", href: "/services/security" },
   { label: "AI-Enhanced Humanoid Robotics", href: "/services/humanoid" },
+  { label: "AI Security Guard Solution", href: "/services/security" },
   { label: "AI Solution Partner", href: "/services/partner" },
 ] as const;
 
@@ -162,7 +162,7 @@ export default function Navbar() {
         <Container className="flex h-full items-center justify-between">
 
           {/* Logo + tagline */}
-          <a href="/" className="flex items-center gap-3 shrink-0" aria-label="Ai-Ai-Ai Home">
+          <a href="/" className="flex items-center gap-3 shrink-0" aria-label="AI-AI-AI Home">
             <Image src="/images/aiaiai-logo.svg" alt="ai·ai·ai" width={160} height={26} priority />
             <span
               className="hidden sm:block"
@@ -299,30 +299,17 @@ export default function Navbar() {
             >
               Services
             </a>
-            <a
-              href="/services/security"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center h-6 transition-opacity hover:opacity-80"
-              style={{ fontFamily: font, fontSize: 16, color: "#fff" }}
-            >
-              AI Security Platform &amp; Solution
-            </a>
-            <a
-              href="/services/humanoid"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center h-6 transition-opacity hover:opacity-80"
-              style={{ fontFamily: font, fontSize: 16, color: "#fff" }}
-            >
-              AI-Enhanced Humanoid Robotic
-            </a>
-            <a
-              href="/services/partner"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center h-6 transition-opacity hover:opacity-80"
-              style={{ fontFamily: font, fontSize: 16, color: "#fff" }}
-            >
-              AI Solution Partner
-            </a>
+            {SERVICES.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center h-6 transition-opacity hover:opacity-80"
+                style={{ fontFamily: font, fontSize: 16, color: "#fff" }}
+              >
+                {item.label}
+              </a>
+            ))}
             <a
               href="/blog"
               onClick={() => setMobileOpen(false)}

@@ -545,7 +545,7 @@ add_meta_box_je("sec-phases", "Security — Phases", $pid, [
 add_meta_box_je("sec-cta", "Security — CTA", $pid, [
     cf("sec_cta_bg_color","Bg Color"),
     mf("sec_cta_bg_image","Bg Image"),
-    tf("sec_cta_chips","Chips"),
+    ta("sec_cta_chips","Chips (1/line)"),
     tf("sec_cta_description","Description"),
     tf("sec_cta_heading","Heading"),
     tf("sec_cta_heading_hl","Heading Hl"),

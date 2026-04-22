@@ -8,7 +8,7 @@ import SecurityCTASection from "@/components/sections/security/SecurityCTASectio
 import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("security", "AI Security Platform & Solution | Ai-Ai-Ai", "Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.");
+  return getPageSEO("security", "AI Security Platform & Solution | AI-AI-AI", "Computer Vision analytics, alerting, and incident workflows that convert cameras into operational intelligence.");
 }
 
 export default async function SecurityPage() {
@@ -109,7 +109,7 @@ export default async function SecurityPage() {
     heading: m.sec_cta_heading,
     heading_highlight: m.sec_cta_heading_hl,
     description: m.sec_cta_description,
-    chips: textareaToArray(m.sec_cta_chips).length > 0 ? textareaToArray(m.sec_cta_chips) : undefined,
+    chips: textareaToArray(m.sec_cta_chips),
     cta_primary: m.sec_cta_primary,
     cta_primary_url: m.sec_cta_primary_url,
     cta_secondary: m.sec_cta_secondary,

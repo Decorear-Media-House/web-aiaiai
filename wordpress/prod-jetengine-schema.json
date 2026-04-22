@@ -2775,8 +2775,8 @@
       },
       {
         "name": "sec_cta_chips",
-        "title": "Chips",
-        "type": "text",
+        "title": "Chips (1/line)",
+        "type": "textarea",
         "object_type": "field"
       },
       {

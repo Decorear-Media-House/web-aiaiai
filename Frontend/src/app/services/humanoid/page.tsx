@@ -8,7 +8,7 @@ import RoboticsCTASection from "@/components/sections/robotics/RoboticsCTASectio
 import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("humanoid", "AI-Enhanced Humanoid Robotics Solution | Ai-Ai-Ai", "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, and scalable rollout.");
+  return getPageSEO("humanoid", "AI-Enhanced Humanoid Robotics Solution | AI-AI-AI", "Deployment-ready embodied & humanoid robotics with pilot planning, training, SOPs, integration, and scalable rollout.");
 }
 
 export default async function RoboticsPage() {

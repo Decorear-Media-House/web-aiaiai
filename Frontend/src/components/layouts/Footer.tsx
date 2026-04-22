@@ -65,7 +65,7 @@ export default function Footer({ background_image, email_label, email_url, phone
   const phoneHref = phone_url || "tel:+66823352444";
   const lineText = line_label || "Contact us via LINE";
   const lineHref = line_url || "#";
-  const copyrightText = copyright || "© 2026 Ai-Ai-Ai Co., Ltd. All rights reserved. | Powered by Decorear";
+  const copyrightText = copyright || "© 2026 AI-AI-AI Co., Ltd. All rights reserved. | Powered by Decorear";
 
   return (
     <footer
@@ -111,7 +111,7 @@ export default function Footer({ background_image, email_label, email_url, phone
               </div>
               <div className="flex flex-col" style={{ gap: 24 }}>
                 <p className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 32, fontWeight: 400, color: "#4A99F5", lineHeight: 1.3 }}>
-                  Ai-Ai-Ai Co., Ltd.
+                  AI-AI-AI Co., Ltd.
                 </p>
                 <p style={{ fontFamily: font, fontSize: 16, color: "#8099BE", lineHeight: 1.5 }}>
                   1104/2 4th floor, Pattanakarn Road, Suan Luang, Bangkok, Thailand 10250

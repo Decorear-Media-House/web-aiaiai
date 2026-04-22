@@ -76,3 +76,12 @@ video {
   max-width: 100%;
   display: block;
 }
+
+/* Hide scrollbar cross-browser (used for swipeable horizontal rails on mobile) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

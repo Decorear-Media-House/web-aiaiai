@@ -4,7 +4,7 @@ import BlogContent from "@/components/sections/blog/BlogContent";
 import { getPosts, getFeaturedPost, getCategories, getPageSEO } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("blog", "Blog | Ai-Ai-Ai", "Practical thinking on AI delivery, governance, security, and robotics — from the people doing the work.");
+  return getPageSEO("blog", "Blog | AI-AI-AI", "Practical thinking on AI delivery, governance, security, and robotics — from the people doing the work.");
 }
 
 export default async function BlogPage() {

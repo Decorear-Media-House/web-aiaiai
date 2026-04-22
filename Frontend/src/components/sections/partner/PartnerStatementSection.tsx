@@ -4,9 +4,10 @@ import FadeUp from "@/components/animations/FadeUp";
 
 const font = "var(--font-faculty-glyphic), sans-serif";
 
-export default function PartnerStatementSection({ content }: { content?: Record<string, unknown> }) {
-  const textWhite = (content?.textWhite as string) ?? "Share your objective and constraints. ";
-  const textHighlight = (content?.textHighlight as string) ?? "We\u2019ll propose a practical first step.";
+export default function PartnerStatementSection({ content: _content }: { content?: Record<string, unknown> }) {
+  // Brand copy is hardcoded (frontend is source of truth). Seed scripts mirror these values.
+  const textWhite = "Share your objective and constraints. ";
+  const textHighlight = "We\u2019ll propose a practical first step.";
 
   return (
     <section

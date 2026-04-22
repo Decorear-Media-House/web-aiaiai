@@ -3,8 +3,8 @@ $pid = 9; // Partner page
 $base = 'http://localhost:8080/wp-content/uploads/2026/04';
 
 // Hero
-update_post_meta($pid, 'ptr_hero_chipLabel', 'AI Solution Partner');
-update_post_meta($pid, 'ptr_hero_heading', 'From Roadmap to Production — Delivered');
+update_post_meta($pid, 'ptr_hero_chipLabel', 'From Roadmap to Production — Delivered');
+update_post_meta($pid, 'ptr_hero_heading', 'AI Solution Partner');
 update_post_meta($pid, 'ptr_hero_description', 'Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.');
 update_post_meta($pid, 'ptr_hero_primaryCta', 'Contact Us');
 update_post_meta($pid, 'ptr_hero_secondaryCta', 'All Services');
@@ -12,7 +12,8 @@ update_post_meta($pid, 'ptr_hero_hero_background_image', "$base/hero-bg-1.png");
 echo "Hero: done\n";
 
 // Statement
-update_post_meta($pid, 'ptr_statement_textWhite', "Share your objective and constraints. We'll propose a practical first step.");
+update_post_meta($pid, 'ptr_statement_textWhite', "Share your objective and constraints. ");
+update_post_meta($pid, 'ptr_statement_textHighlight', "We\xE2\x80\x99ll propose a practical first step.");
 echo "Statement: done\n";
 
 // Meaning

@@ -9,61 +9,37 @@ const font = "var(--font-faculty-glyphic), sans-serif";
 
 function AssessIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M23 31C27.4183 31 31 27.4183 31 23C31 18.5817 27.4183 15 23 15C18.5817 15 23 31 23 31Z" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <circle cx="23" cy="23" r="8" stroke="#51A2FF" strokeWidth="2"/>
-      <path d="M33 33L28.7 28.7" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
+    <Image src="/images/process-icons/step-01.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function RoadmapIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M14.106 5.55277C14.3836 5.69149 14.6897 5.7637 15 5.7637C15.3103 5.7637 15.6164 5.69149 15.894 5.55277L19.553 3.72277C19.7056 3.64653 19.8751 3.61058 20.0455 3.61834C20.2159 3.6261 20.3814 3.67731 20.5265 3.7671C20.6715 3.8569 20.7911 3.98229 20.874 4.13135C20.9569 4.28042 21.0003 4.44821 21 4.61877V17.3828C20.9999 17.5684 20.9481 17.7504 20.8505 17.9083C20.7528 18.0662 20.6131 18.1938 20.447 18.2768L15.894 20.5538C15.6164 20.6925 15.3103 20.7647 15 20.7647C14.6897 20.7647 14.3836 20.6925 14.106 20.5538L9.894 18.4478C9.6164 18.3091 9.31033 18.2368 9 18.2368C8.68967 18.2368 8.3836 18.3091 8.106 18.4478L4.447 20.2778C4.29436 20.3541 4.12473 20.39 3.95426 20.3822C3.78379 20.3744 3.61816 20.3231 3.47312 20.2332C3.32808 20.1433 3.20846 20.0177 3.12565 19.8685C3.04284 19.7193 2.99958 19.5514 3 19.3808V6.61777C3.0001 6.43211 3.05189 6.25014 3.14956 6.09225C3.24722 5.93435 3.38692 5.80676 3.553 5.72377L8.106 3.44677C8.3836 3.30805 8.68967 3.23584 9 3.23584C9.31033 3.23584 9.6164 3.30805 9.894 3.44677L14.106 5.55277Z" stroke="#A684FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M15 5.76416V20.7642" stroke="#A684FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M9 3.23584V18.2358" stroke="#A684FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
+    <Image src="/images/process-icons/step-02.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function PocIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M26 14V20C26 20.34 26.08 20.67 26.25 20.96L31.76 31.04C31.92 31.34 32.01 31.69 32 32.03C31.99 32.38 31.9 32.72 31.73 33.02C31.56 33.32 31.31 33.57 31.02 33.74C30.72 33.91 30.39 34 30.05 34H17.95C17.61 34 17.28 33.91 16.98 33.74C16.69 33.57 16.44 33.32 16.27 33.02C16.1 32.72 16.01 32.38 16 32.03C15.99 31.69 16.08 31.34 16.24 31.04L21.75 20.96C21.92 20.67 22 20.34 22 20V14" stroke="#00BAF2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M18.45 27H29.55" stroke="#00BAF2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M20.5 14H27.5" stroke="#00BAF2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
+    <Image src="/images/process-icons/step-03.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function MvpIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M23 33.73C23.3 33.91 23.65 34 24 34C24.35 34 24.7 33.91 25 33.73L32 29.73C32.3 29.56 32.56 29.3 32.73 28.99C32.91 28.68 33 28.34 33 27.99V20.01C33 19.66 32.91 19.32 32.73 19.01C32.56 18.7 32.3 18.44 32 18.27L25 14.27C24.7 14.09 24.35 14 24 14C23.65 14 23.3 14.09 23 14.27L16 18.27C15.7 18.44 15.44 18.7 15.27 19.01C15.09 19.32 15 19.66 15 20.01V27.99C15 28.34 15.09 28.68 15.27 28.99C15.44 29.3 15.7 29.56 16 29.73L23 33.73Z" stroke="#00D492" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M24 34V24" stroke="#00D492" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M15.29 19L24 24L32.71 19" stroke="#00D492" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
+    <Image src="/images/process-icons/step-04.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function ProductionIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M16.5 28.5C15 29.76 14.5 33.5 14.5 33.5C14.5 33.5 18.24 33 19.5 31.5C20.21 30.66 20.2 29.37 19.41 28.59C18.62 27.8 17.22 27.8 16.5 28.5Z" stroke="#FF8904" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M24 27L21 24C21.53 22.62 22.2 21.3 23 20.05C24.17 18.19 25.79 16.65 27.71 15.59C29.64 14.53 31.8 13.97 34 14C34 16.2 33.47 18.36 32.41 20.29C31.35 22.21 29.81 23.83 27.95 25L24 27Z" stroke="#FF8904" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M21 24H16C16 24 16.55 20.97 18 20C19.62 18.92 23 20 23 20" stroke="#FF8904" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M24 27V32C24 32 27.03 31.45 28 30C29.08 28.38 28 25 28 25" stroke="#FF8904" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
+    <Image src="/images/process-icons/step-05.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function ScaleIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M34 19L25.5 27.5L20.5 22.5L14 29" stroke="#FF637E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M28 19H34V25" stroke="#FF637E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
+    <Image src="/images/process-icons/step-06.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 

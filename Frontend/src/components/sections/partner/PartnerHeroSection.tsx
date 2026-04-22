@@ -26,8 +26,10 @@ const STATS = [
 ];
 
 export default function PartnerHeroSection({ content }: { content?: Record<string, unknown> }) {
-  const chipLabel = (content?.chipLabel as string) ?? "From Roadmap to Production \u2014 Delivered";
-  const heading = (content?.heading as string) ?? "AI Solution Partner";
+  // Chip + heading are intentionally hardcoded (frontend is source of truth for brand copy).
+  // Seed scripts in wordpress/ mirror these values; WordPress cannot override them.
+  const chipLabel = "From Roadmap to Production \u2014 Delivered";
+  const heading = "AI Solution Partner";
   const description = (content?.description as string) ??
     "Roadmap to MVP to production deployment\u2014delivered with governance, integration, and operational constraints in mind.";
   const primaryCta = (content?.primaryCta as string) ?? "Contact Us";
@@ -211,10 +213,11 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
             </FadeUp>
 
             {/* CTAs */}
-            <FadeUp trigger="mount" delay={0.1}>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
+            <FadeUp trigger="mount" delay={0.1} className="max-sm:!w-full">
+              <div className="max-sm:!w-full" style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
                 <a
                   href={primaryCtaUrl}
+                  className="max-sm:!flex-1"
                   style={{
                     fontFamily: font,
                     fontSize: 16,
@@ -235,6 +238,7 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
                 </a>
                 <a
                   href={secondaryCtaUrl}
+                  className="max-sm:!flex-1"
                   style={{
                     fontFamily: font,
                     fontSize: 16,
@@ -259,19 +263,19 @@ export default function PartnerHeroSection({ content }: { content?: Record<strin
 
             {/* Stat chips */}
             <FadeUp trigger="mount" delay={0.15}>
-              <div className="max-sm:!flex-col" style={{ display: "flex", flexWrap: "wrap", gap: 8, width: "100%" }}>
+              <div className="max-sm:!justify-center" style={{ display: "flex", flexWrap: "wrap", gap: 8, width: "100%" }}>
                 {STATS.map(({ top, bottom }) => (
                   <div
                     key={top}
-                    className="max-sm:!px-4 max-sm:!py-3"
+                    className="max-sm:!px-4 max-sm:!py-3 max-sm:!flex-[0_1_calc(50%-4px)]"
                     style={{
                       flex: "1 0 0",
-                      minWidth: 100,
+                      minWidth: 120,
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
                       gap: 4,
-                      padding: "16px 32px",
+                      padding: "16px 24px",
                       borderRadius: 16,
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",

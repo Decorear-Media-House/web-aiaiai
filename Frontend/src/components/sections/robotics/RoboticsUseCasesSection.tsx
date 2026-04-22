@@ -936,7 +936,7 @@ export default function RoboticsUseCasesSection({
                           <FadeUp trigger="scroll" delay={0.1}>
                             <div
                               className="relative overflow-hidden max-sm:!w-full max-sm:!h-[280px]"
-                              style={{ width: 596, height: 470 }}
+                              style={{ width: 596, height: "100%" }}
                             >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
@@ -969,7 +969,7 @@ export default function RoboticsUseCasesSection({
                                     fontSize: 16,
                                     color: "#fff",
                                     lineHeight: 1.5,
-                                    textAlign: "center",
+                                    textAlign: "left",
                                   }}
                                 >
                                   <span style={{ color: "#4A99F5" }}>

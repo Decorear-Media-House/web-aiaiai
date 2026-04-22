@@ -34,21 +34,20 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
         alt="AI-AI-AI"
         fill
         unoptimized={bgImage.startsWith("http")}
-        className="object-cover"
+        className="z-0 object-cover"
         sizes="100vw"
         priority
       />
 
-      {/* Gradient overlay — dark left, transparent right */}
+      {/* Full-bleed dark scrim over photo (reference: ~55–60% black) */}
       <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(270deg, rgba(7,17,47,0) 0%, rgba(7,17,47,1) 100%)",
-        }}
+        className="pointer-events-none absolute inset-0 z-[1]"
+        aria-hidden="true"
+        style={{ background: "rgba(0,0,0,0.58)" }}
       />
 
       {/* Content — left aligned, padding 80px 112px */}
-      <div className="relative flex items-center max-sm:!py-10 max-sm:!px-4 max-lg:!px-8 mx-auto" style={{ padding: "80px 112px", maxWidth: 1440 }}>
+      <div className="relative z-[2] flex items-center max-sm:!py-10 max-sm:!px-4 max-lg:!px-8 mx-auto" style={{ padding: "80px 112px", maxWidth: 1440 }}>
         <div className="flex flex-col gap-6 max-sm:gap-5" style={{ maxWidth: 560 }}>
 
           {/* Heading + paragraphs — gap 16px */}
@@ -72,9 +71,9 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
 
           {/* CTA buttons — no chevrons, gap 16px */}
           <FadeUp trigger="scroll" delay={0.2}>
-            <div className="flex items-center gap-4 max-sm:flex-col max-sm:items-start">
+            <div className="flex items-center gap-4 w-full">
               <a href={ctaPrimaryUrl}
-                className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
+                className="inline-flex items-center justify-center transition-opacity hover:opacity-90 flex-1 min-w-px"
                 style={{
                   fontFamily: font,
                   fontSize: 16,
@@ -88,7 +87,7 @@ export default function SecondSection({ content }: { content?: SecondSectionCont
                 {ctaPrimaryText}
               </a>
               <a href={ctaSecondaryUrl}
-                className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
+                className="inline-flex items-center justify-center transition-opacity hover:opacity-80 shrink-0"
                 style={{
                   fontFamily: font,
                   fontSize: 16,

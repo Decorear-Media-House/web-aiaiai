@@ -51,47 +51,31 @@ function AwardIcon() {
 
 function CostIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M34 29L25.5 20.5L20.5 25.5L14 19" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M28 29H34V23" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img src="/images/impact-icons/cost.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function RevenueIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M34 19L25.5 27.5L20.5 22.5L14 29" stroke="#00D492" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M28 19H34V25" stroke="#00D492" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img src="/images/impact-icons/revenue.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function ComplianceIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M27 14H18C17.47 14 16.96 14.21 16.59 14.59C16.21 14.96 16 15.47 16 16V32C16 32.53 16.21 33.04 16.59 33.41C16.96 33.79 17.47 34 18 34H30C30.53 34 31.04 33.79 31.41 33.41C31.79 33.04 32 32.53 32 32V19L27 14Z" stroke="#A684FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M26 14V18C26 18.53 26.21 19.04 26.59 19.41C26.96 19.79 27.47 20 28 20H32" stroke="#A684FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M21 27L23 29L27 25" stroke="#A684FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img src="/images/impact-icons/compliance.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function SecurityIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <path d="M32 25C32 30 28.5 32.5 24.34 33.95C24.12 34.02 23.89 34.02 23.67 33.94C19.5 32.5 16 30 16 25V18C16 17.74 16.11 17.48 16.29 17.29C16.48 17.11 16.73 17 17 17C19 17 21.5 15.8 23.24 14.28C23.45 14.1 23.72 14 24 14C24.28 14 24.55 14.1 24.76 14.28C26.51 15.81 29 17 31 17C31.27 17 31.52 17.11 31.71 17.29C31.89 17.48 32 17.74 32 18V25Z" stroke="#FF8904" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img src="/images/impact-icons/security.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 
 function AutomationIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-      <circle cx="24" cy="24" r="8" stroke="#00BAF2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="24" cy="24" r="2" stroke="#00BAF2" strokeWidth="2" />
-      <path d="M24 14V16M24 32V34M19 32.66L20 30.93M28 17.07L29 15.34M32.66 29L30.93 28M15.34 19L17.07 20M26 24H34M14 24H16M32.66 19L30.93 20M15.34 29L17.07 28M29 32.66L28 30.93M23 22.27L19 15.34" stroke="#00BAF2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img src="/images/impact-icons/automation.svg" alt="" width={24} height={24} aria-hidden="true" />
   );
 }
 

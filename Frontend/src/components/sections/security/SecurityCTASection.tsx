@@ -27,7 +27,7 @@ export default function SecurityCTASection({ content }: { content?: Record<strin
   const heading = c.heading || "Share site count, camera count, ";
   const headingHighlight = c.heading_highlight || "and objectives.";
   const description = c.description || "We\u2019ll propose a pilot plan.";
-  const chips = c.chips ?? DEFAULT_CHIPS;
+  const chips = Array.isArray(c.chips) ? c.chips.filter(Boolean) : DEFAULT_CHIPS;
   const ctaPrimary = c.cta_primary || "Contact Us";
   const ctaPrimaryUrl = c.cta_primary_url || "/#contact";
   const ctaSecondary = c.cta_secondary || "All Services";

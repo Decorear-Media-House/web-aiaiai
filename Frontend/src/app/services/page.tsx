@@ -11,7 +11,7 @@ import ServicesGuidanceSection from "@/components/sections/services/ServicesGuid
 import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("services", "Services | Ai-Ai-Ai", "AI services built around measurable outcomes — from roadmap to production deployment.");
+  return getPageSEO("services", "Services | AI-AI-AI", "AI services built around measurable outcomes — from roadmap to production deployment.");
 }
 
 export default async function ServicesPage() {

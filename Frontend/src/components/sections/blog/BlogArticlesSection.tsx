@@ -356,8 +356,8 @@ export default function BlogArticlesSection({
                 <source src="/videos/CTA-Loop.mp4" type="video/mp4" />
               </video>
 
-              <div className="relative flex flex-wrap items-center justify-between gap-y-10 w-full max-w-[1200px] mx-auto">
-                <div className="flex flex-col gap-5 flex-1 min-w-[300px] max-w-[672px] max-sm:!min-w-0">
+              <div className="relative mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-y-10 max-sm:!flex-col max-sm:!items-stretch max-sm:!justify-start max-sm:!gap-6 max-sm:!text-left">
+                <div className="flex min-w-[300px] max-w-[672px] flex-1 flex-col gap-5 max-sm:!min-w-0 max-sm:!w-full max-sm:!max-w-none max-sm:!flex-none max-sm:!items-start max-sm:!text-left">
                   <h2 className="max-sm:!text-[28px]" style={{ fontFamily: font, fontSize: 48, color: "#fff", lineHeight: 1.2, fontWeight: 400 }}>
                     Stay up to date
                   </h2>
@@ -365,10 +365,10 @@ export default function BlogArticlesSection({
                     Practical AI insights delivered when we publish — no noise, no spam.
                   </p>
                 </div>
-                <div className="flex items-center justify-end">
+                <div className="mt-0 flex w-full items-center justify-end max-sm:!order-last max-sm:!justify-center sm:w-auto">
                   <a
                     href="/#contact"
-                    className="inline-flex items-center gap-1 rounded-lg px-6 py-3"
+                    className="inline-flex w-full items-center justify-center gap-1 rounded-lg px-6 py-3 sm:w-auto"
                     style={{
                       fontFamily: font,
                       fontSize: 16,

@@ -21,10 +21,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     getRankMathSEO(slug, "post"),
   ]);
 
-  if (!post) return { title: "Post Not Found | Ai-Ai-Ai" };
+  if (!post) return { title: "Post Not Found | AI-AI-AI" };
 
   return {
-    title: seo?.title || `${post.title} | Ai-Ai-Ai`,
+    title: seo?.title || `${post.title} | AI-AI-AI`,
     description: seo?.description || post.excerpt,
     robots: seo?.robots || undefined,
     openGraph: {

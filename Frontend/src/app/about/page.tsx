@@ -9,7 +9,7 @@ import AboutTeamSection from "@/components/sections/about/AboutTeamSection";
 import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("about", "About Us | Ai-Ai-Ai", "Learn about Ai-Ai-Ai Co., Ltd. — Thailand's AI Solution Partner from roadmap to production deployment.");
+  return getPageSEO("about", "About Us | AI-AI-AI", "Learn about AI-AI-AI Co., Ltd. — Thailand's AI Solution Partner from roadmap to production deployment.");
 }
 
 export default async function AboutPage() {

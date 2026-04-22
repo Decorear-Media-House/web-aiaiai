@@ -29,7 +29,7 @@ function ChevronRight() {
 function CostIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 14C3.81 14 3.63 13.95 3.46 13.85C3.3 13.75 3.18 13.6 3.09 13.43C3.01 13.26 2.98 13.07 3 12.88C3.03 12.7 3.1 12.52 3.22 12.37L8.12 7.17C8.19 7.08 8.3 7.03 8.41 7.01C8.52 6.99 8.63 7 8.73 7.06C8.83 7.11 8.91 7.2 8.96 7.3C9 7.4 9.01 7.52 8.98 7.63L8.06 10.65C8 10.8 7.98 10.96 8 11.13C8.02 11.29 8.08 11.44 8.18 11.57C8.27 11.7 8.39 11.81 8.54 11.89C8.68 11.96 8.84 12 9 12H13C13.19 12 13.37 12.05 13.54 12.15C13.7 12.25 13.82 12.4 13.91 12.57C13.99 12.74 14.02 12.93 14 13.12C13.97 13.31 13.9 13.48 13.78 13.63L8.88 18.83C8.81 18.92 8.7 18.97 8.59 18.99C8.48 19.02 8.37 19 8.27 18.94C8.17 18.89 8.09 18.8 8.04 18.7C8 18.6 7.99 18.48 8.02 18.37L8.94 15.35C9 15.2 9.02 15.04 9 14.88C8.98 14.71 8.92 14.56 8.82 14.43C8.73 14.3 8.61 14.19 8.46 14.11C8.32 14.04 8.16 14 8 14H4Z" stroke="#00BAF2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4.00048 13.9997C3.81125 14.0003 3.62571 13.9473 3.46543 13.8467C3.30516 13.746 3.17671 13.602 3.09503 13.4313C3.01335 13.2606 2.98177 13.0703 3.00398 12.8823C3.02619 12.6944 3.10126 12.5166 3.22048 12.3697L13.1205 2.16967C13.1947 2.08396 13.2959 2.02603 13.4075 2.00541C13.519 1.98478 13.6342 2.00269 13.7342 2.05618C13.8342 2.10967 13.9131 2.19557 13.9578 2.29978C14.0026 2.40399 14.0106 2.52032 13.9805 2.62967L12.0605 8.64967C12.0039 8.8012 11.9849 8.96419 12.0051 9.12468C12.0253 9.28517 12.0841 9.43836 12.1766 9.5711C12.269 9.70385 12.3923 9.81219 12.5358 9.88684C12.6793 9.96148 12.8387 10.0002 13.0005 9.99967H20.0005C20.1897 9.99903 20.3752 10.0521 20.5355 10.1527C20.6958 10.2533 20.8242 10.3973 20.9059 10.568C20.9876 10.7387 21.0192 10.9291 20.997 11.117C20.9748 11.3049 20.8997 11.4827 20.7805 11.6297L10.8805 21.8297C10.8062 21.9154 10.705 21.9733 10.5935 21.9939C10.482 22.0146 10.3668 21.9967 10.2668 21.9432C10.1667 21.8897 10.0879 21.8038 10.0431 21.6996C9.9984 21.5954 9.9904 21.479 10.0205 21.3697L11.9405 15.3497C11.9971 15.1982 12.0161 15.0352 11.9959 14.8747C11.9757 14.7142 11.9168 14.561 11.8244 14.4282C11.732 14.2955 11.6087 14.1872 11.4652 14.1125C11.3217 14.0379 11.1622 13.9991 11.0005 13.9997H4.00048Z" stroke="#00BAF2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -37,7 +37,7 @@ function CostIcon() {
 function SecurityIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4A99F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20.0002 13.0003C20.0002 18.0003 16.5002 20.5003 12.3402 21.9503C12.1224 22.0241 11.8857 22.0205 11.6702 21.9403C7.5002 20.5003 4.0002 18.0003 4.0002 13.0003V6.00025C4.0002 5.73504 4.10555 5.48068 4.29309 5.29315C4.48063 5.10561 4.73498 5.00025 5.0002 5.00025C7.0002 5.00025 9.5002 3.80025 11.2402 2.28025C11.4521 2.09925 11.7215 1.9998 12.0002 1.9998C12.2788 1.9998 12.5483 2.09925 12.7602 2.28025C14.5102 3.81025 17.0002 5.00025 19.0002 5.00025C19.2654 5.00025 19.5198 5.10561 19.7073 5.29315C19.8948 5.48068 20.0002 5.73504 20.0002 6.00025V13.0003Z" stroke="#4A99F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -45,8 +45,16 @@ function SecurityIcon() {
 function RoboticsIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="3" stroke="#4A99F5" strokeWidth="1.5" />
-      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="#4A99F5" strokeWidth="1.5" />
+      <path d="M17.9998 3.99982H5.99982C4.89525 3.99982 3.99982 4.89525 3.99982 5.99982V17.9998C3.99982 19.1044 4.89525 19.9998 5.99982 19.9998H17.9998C19.1044 19.9998 19.9998 19.1044 19.9998 17.9998V5.99982C19.9998 4.89525 19.1044 3.99982 17.9998 3.99982Z" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14 9H10C9.44772 9 9 9.44772 9 10V14C9 14.5523 9.44772 15 10 15H14C14.5523 15 15 14.5523 15 14V10C15 9.44772 14.5523 9 14 9Z" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 2.00018V4.00018" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 20.0002V22.0002" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2.00018 15H4.00018" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2.00018 9H4.00018" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20.0002 15H22.0002" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20.0002 9H22.0002" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 2.00018V4.00018" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 20.0002V22.0002" stroke="#51A2FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -149,7 +157,7 @@ export default function ServicesGuidanceSection({ content }: { content?: Record<
           {/* Cards */}
           <div className="flex flex-wrap gap-6 items-start justify-center w-full">
             {cards.map(({ icon, title, body }, i) => (
-              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="flex-1 min-w-[312px] max-sm:!min-w-0 max-sm:w-full">
+              <FadeUp key={i} trigger="scroll" delay={i * 0.1} className="w-full sm:flex-1 sm:min-w-[312px]">
                 <div
                   className="flex flex-col gap-4 rounded-2xl p-6 h-full"
                   style={{

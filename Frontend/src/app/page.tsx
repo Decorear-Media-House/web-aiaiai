@@ -11,7 +11,7 @@ import ContactSection from "@/components/sections/home/ContactSection";
 import { getPageMeta, getPageSEO, ensureArray, textareaToArray, getRecaptchaKey } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("home", "Ai-Ai-Ai | AI Solution Partner", "Thailand's AI Solution Partner — from roadmap to production deployment.");
+  return getPageSEO("home", "AI-AI-AI | AI Solution Partner", "Thailand's AI Solution Partner — from roadmap to production deployment.");
 }
 
 export default async function Home() {

@@ -97,7 +97,9 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
   const headingHighlight = (content?.headingHighlight as string) ?? "Target";
   const description = (content?.description as string) ??
     "Every engagement is anchored to real outcomes \u2014 not just capabilities.";
-  const sectionImage = wpImageUrl((content?.section_image as string) || (content?.placeholder_image as string) || "");
+  const cmsOutcomesImage = wpImageUrl((content?.section_image as string) || (content?.placeholder_image as string) || "");
+  /** Local fallback so mobile/desktop always show art when CMS field is empty or URL breaks */
+  const sectionImage = cmsOutcomesImage || "/images/partner/outcomes-image.png";
   const bgImage = wpImageUrl((content?.background_image as string) || "");
   const bgColor = (content?.background_color as string) ?? "#070E24";
   const [activeTab, setActiveTab] = useState(0);
@@ -205,9 +207,10 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
           </div>
         </FadeUp>
 
-        {/* Pill tab switcher */}
-        <FadeUp trigger="scroll" delay={0.06}>
+        {/* Pill tab switcher — swipeable horizontal rail on mobile */}
+        <FadeUp trigger="scroll" delay={0.06} className="max-sm:!w-full">
           <div
+            className="max-sm:!flex max-sm:!flex-nowrap max-sm:!overflow-x-auto max-sm:!justify-start max-sm:!w-full scrollbar-hide"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -220,13 +223,15 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
               flexWrap: "wrap",
               gap: 4,
               justifyContent: "center",
+              WebkitOverflowScrolling: "touch",
+              scrollSnapType: "x proximity",
             }}
           >
             {TABS.map((t, i) => (
               <button
                 key={t.label}
                 onClick={() => setActiveTab(i)}
-                className="max-sm:!text-[13px] max-sm:!px-3 max-sm:!py-2"
+                className="max-sm:!text-[13px] max-sm:!px-3 max-sm:!py-2 max-sm:!shrink-0"
                 style={{
                   fontFamily: font,
                   fontSize: 16,
@@ -238,6 +243,7 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
                   transition: "background 0.2s",
                   background: activeTab === i ? "#2D7AE8" : "transparent",
                   color: activeTab === i ? "#fff" : "#90A1B9",
+                  scrollSnapAlign: "start",
                 }}
               >
                 {t.label}
@@ -249,45 +255,38 @@ export default function PartnerOutcomesSection({ content }: { content?: Record<s
         {/* Content row */}
         <div className="max-sm:!flex-col max-sm:!gap-6" style={{ display: "flex", gap: 40, alignItems: "flex-start", width: "100%" }}>
 
-          {/* Left — photo placeholder */}
-          <FadeUp trigger="scroll" delay={0.1} className="flex-1 min-w-0 self-stretch max-sm:!min-h-[220px]">
+          {/* Left — photo (explicit mobile height + h-full inner so absolute img always paints) */}
+          <FadeUp
+            trigger="scroll"
+            delay={0.1}
+            className="flex-1 min-w-0 self-stretch w-full max-sm:!h-[220px] max-sm:!max-h-[220px] max-sm:!flex-none"
+          >
             <div
+              className="h-full w-full"
               style={{
                 position: "relative",
-                height: "100%",
+                minHeight: 0,
                 borderRadius: 16,
                 overflow: "hidden",
               }}
             >
-              {sectionImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={sectionImage}
-                  alt=""
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    maxWidth: "none",
-                    objectFit: "cover",
-                    borderRadius: 16,
-                    display: "block",
-                    pointerEvents: "none",
-                  }}
-                />
-              ) : (
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: 16,
-                    background: "linear-gradient(135deg, #0A1430 0%, #1A2A50 50%, #0E1E3E 100%)",
-                  }}
-                />
-              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={sectionImage}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: "none",
+                  objectFit: "cover",
+                  borderRadius: 16,
+                  display: "block",
+                  pointerEvents: "none",
+                }}
+              />
             </div>
           </FadeUp>
 

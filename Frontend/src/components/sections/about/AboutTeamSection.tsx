@@ -93,7 +93,7 @@ export default function AboutTeamSection({ content }: { content?: AboutTeamConte
   const ceoName = content?.ceoName ?? "Dr. Chanwit Boonchuay";
   const ceoRole = content?.ceoRole ?? "CEO";
   const ceoBio = content?.ceoBio ??
-    "President of the AI Entrepreneur Association of Thailand (AIEAT). With decades of experience in AI strategy and implementation, Dr. Chanwit leads Ai-Ai-Ai\u0027s vision of making AI adoption practical and production-ready across Southeast Asia.";
+    "President of the AI Entrepreneur Association of Thailand (AIEAT). With decades of experience in AI strategy and implementation, Dr. Chanwit leads AI-AI-AI\u0027s vision of making AI adoption practical and production-ready across Southeast Asia.";
   const ceoTags = content?.ceoTags ?? CEO_TAGS;
   const ctoName = content?.ctoName ?? "Sivarat Malapet";
   const ctoRole = content?.ctoRole ?? "CTO";

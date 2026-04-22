@@ -41,7 +41,7 @@ $data['problems'] = array_merge($data['problems'] ?? [], [
         ['title' => 'Data Not Ready', 'description' => "Data exists but isn't structured, governed, or production-grade."],
         ['title' => 'Physical Automation Risk', 'description' => 'Deploying robots requires safety SOPs, maintenance plans, and escalation paths.'],
     ],
-    'footer_text' => 'Ai-Ai-Ai exists to turn AI ambition into deployed solutions that teams can operate and scale — from day one to full production.',
+    'footer_text' => 'AI-AI-AI exists to turn AI ambition into deployed solutions that teams can operate and scale — from day one to full production.',
 ]);
 
 $data['services'] = array_merge($data['services'] ?? [], [

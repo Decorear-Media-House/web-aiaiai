@@ -13,7 +13,7 @@ import PartnerCTASection from "@/components/sections/partner/PartnerCTASection";
 import { getPageMeta, getPageSEO, ensureArray, textareaToArray } from "@/lib/wordpress";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageSEO("partner", "AI Solution Partner | Ai-Ai-Ai", "Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.");
+  return getPageSEO("partner", "AI Solution Partner | AI-AI-AI", "Roadmap to MVP to production deployment—delivered with governance, integration, and operational constraints in mind.");
 }
 
 export default async function PartnerPage() {

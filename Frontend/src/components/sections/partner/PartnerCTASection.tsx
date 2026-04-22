@@ -52,6 +52,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
 
         {/* Content row */}
         <div
+          className="max-sm:!flex-col max-sm:!items-stretch max-sm:!gap-8"
           style={{
             position: "relative",
             maxWidth: 1200,
@@ -64,7 +65,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
           }}
         >
           {/* LEFT — heading + body + chips */}
-          <FadeUp trigger="scroll" delay={0} className="flex-[1_0_0] min-w-[300px]">
+          <FadeUp trigger="scroll" delay={0} className="min-w-[300px] flex-[1_0_0] max-sm:!min-w-0 max-sm:!w-full">
             <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", maxWidth: 672 }}>
               {/* Heading */}
               <h2 className="max-sm:!text-[24px]" style={{ fontFamily: font, fontSize: 48, fontWeight: 400, lineHeight: 1.2, margin: 0, color: "#fff" }}>
@@ -94,12 +95,13 @@ export default function PartnerCTASection({ content }: { content?: Record<string
             </div>
           </FadeUp>
 
-          {/* RIGHT — two buttons */}
-          <FadeUp trigger="scroll" delay={0.08}>
-            <div className="max-sm:!items-stretch max-sm:!w-full" style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end", justifyContent: "center" }}>
+          {/* RIGHT — two buttons (desktop: stacked right; mobile: full-width row, equal split) */}
+          <FadeUp trigger="scroll" delay={0.08} className="max-sm:!w-full sm:shrink-0">
+            <div className="flex w-full flex-col items-end justify-center gap-4 max-sm:!flex-row max-sm:!items-stretch max-sm:!gap-4">
               {/* Primary CTA */}
               <a
                 href={primaryCtaUrl}
+                className="max-sm:!min-w-0 max-sm:!flex-1"
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "12px 24px", borderRadius: 8,
@@ -114,6 +116,7 @@ export default function PartnerCTASection({ content }: { content?: Record<string
               {/* Secondary CTA */}
               <a
                 href={secondaryCtaUrl}
+                className="max-sm:!min-w-0 max-sm:!flex-1"
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "12px 24px", borderRadius: 8,

@@ -325,7 +325,7 @@ add_action('admin_init', function () {
         'home_footer_phone_url'   => 'tel:+66823352444',
         'home_footer_line_label'  => 'Contact us via LINE',
         'home_footer_line_url'    => '',
-        'home_footer_copyright'   => '© 2026 Ai-Ai-Ai Co., Ltd. All rights reserved. | Powered by Decorear',
+        'home_footer_copyright'   => '© 2026 AI-AI-AI Co., Ltd. All rights reserved. | Powered by Decorear',
     ];
     foreach ($defaults as $k => $v) {
         if (!get_post_meta($pid, $k, true)) {
@@ -342,7 +342,7 @@ $aiaiai_footer_fields = [
     ['key' => 'home_footer_phone_url',   'label' => 'Phone — Link',      'type' => 'text', 'placeholder' => 'tel:+66823352444'],
     ['key' => 'home_footer_line_label',  'label' => 'LINE — Label',      'type' => 'text', 'placeholder' => 'Contact us via LINE'],
     ['key' => 'home_footer_line_url',    'label' => 'LINE — Link',       'type' => 'url',  'placeholder' => 'https://line.me/ti/p/xxx'],
-    ['key' => 'home_footer_copyright',   'label' => 'Copyright Text',    'type' => 'text', 'placeholder' => '© 2026 Ai-Ai-Ai Co., Ltd. All rights reserved.'],
+    ['key' => 'home_footer_copyright',   'label' => 'Copyright Text',    'type' => 'text', 'placeholder' => '© 2026 AI-AI-AI Co., Ltd. All rights reserved.'],
 ];
 
 add_action('add_meta_boxes', function () {

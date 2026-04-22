@@ -241,7 +241,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                 </div>
                 <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[620px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#1A4494] to-[#4A99F5]">
+                  <div className="w-full h-[200px] md:flex-1 md:min-w-[270px] md:max-w-[282px] md:h-auto md:self-stretch rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#1A4494] to-[#4A99F5]">
                     {c.outcome1_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome1_image)} alt="" className="size-full object-cover" />
@@ -298,7 +298,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                     </InfoCard>
                   </div>
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[528px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 relative bg-gradient-to-br from-[#00bc7d] to-[#00bba7]">
+                  <div className="w-full h-[240px] sm:flex-1 sm:min-w-[270px] sm:max-w-[282px] sm:h-auto sm:self-stretch rounded-2xl overflow-hidden shrink-0 relative bg-gradient-to-br from-[#00bc7d] to-[#00bba7]">
                     {c.outcome2_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome2_image)} alt="" className="absolute inset-0 size-full object-cover" />
@@ -321,7 +321,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                 </div>
                 <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[562px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#8e51ff] to-[#ad46ff]">
+                  <div className="w-full h-[240px] sm:flex-1 sm:min-w-[270px] sm:max-w-[282px] sm:h-auto sm:self-stretch rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#8e51ff] to-[#ad46ff]">
                     {c.outcome3_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome3_image)} alt="" className="size-full object-cover" />
@@ -378,7 +378,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                     </InfoCard>
                   </div>
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[538px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#ff8904] to-[#ff6467]">
+                  <div className="w-full h-[240px] sm:flex-1 sm:min-w-[270px] sm:max-w-[282px] sm:h-auto sm:self-stretch rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#ff8904] to-[#ff6467]">
                     {c.outcome4_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome4_image)} alt="" className="size-full object-cover" />
@@ -401,7 +401,7 @@ export default function ServicesOutcomesSection({ content }: { content?: Record<
                 </div>
                 <div className="flex flex-wrap gap-4 items-start max-sm:flex-col">
                   {/* Photo */}
-                  <div className="flex-1 min-w-[270px] max-w-[282px] h-[504px] max-sm:!h-[240px] max-sm:!max-w-full max-sm:!min-w-0 rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#00b8db] to-[#2b7fff]">
+                  <div className="w-full h-[240px] sm:flex-1 sm:min-w-[270px] sm:max-w-[282px] sm:h-auto sm:self-stretch rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-[#00b8db] to-[#2b7fff]">
                     {c.outcome5_image && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={wpImageUrl(c.outcome5_image)} alt="" className="size-full object-cover" />
