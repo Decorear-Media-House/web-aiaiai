@@ -7,16 +7,9 @@
  * because the init.sh flag file prevents re-runs on an already-seeded system.
  */
 
-// Resolve JSON file using the same path-fallback order as aiaiai-content-api.php
-$json_paths = [
-    dirname(ABSPATH) . '/web-aiaiai/wordpress/wp-meta-sync.json',
-    dirname(__DIR__) . '/wp-meta-sync.json',
-    '/seed/wp-meta-sync.json',
-];
-$json_file = null;
-foreach ($json_paths as $p) {
-    if (file_exists($p)) { $json_file = $p; break; }
-}
+require_once __DIR__ . '/seed-helpers.php';
+
+$json_file = aiaiai_find_seed_file('wp-meta-sync.json');
 if (!$json_file) {
     echo "wp-meta-sync.json not found — skipping JetEngine value import\n";
     return;

@@ -17,6 +17,8 @@
  * Idempotent, read-only — never writes to the database.
  */
 
+require_once __DIR__ . '/seed-helpers.php';
+
 // ── helpers ──────────────────────────────────────────────────────────────
 function arr_to_text($v) {
     // textareaToArray in the frontend splits on \n — this is the inverse.
@@ -237,6 +239,9 @@ $flatteners = [
     'security' => 'flatten_security',
 ];
 
+// Rank Math SEO lives in post meta (not page_sections), so read it direct.
+$rankmath_keys = aiaiai_rankmath_meta_keys();
+
 $all = [];
 foreach ($flatteners as $slug => $fn) {
     $sec = get_sections($slug);
@@ -248,8 +253,22 @@ foreach ($flatteners as $slug => $fn) {
         if ($is_empty) continue;
         $filtered[$k] = $v;
     }
+
+    $page = get_page_by_path($slug);
+    $rm_count = 0;
+    if ($page) {
+        foreach ($rankmath_keys as $rk) {
+            $rv = get_post_meta($page->ID, $rk, true);
+            if ($rv !== '' && $rv !== null) {
+                $filtered[$rk] = $rv;
+                $rm_count++;
+            }
+        }
+    }
+
     $all[$slug] = $filtered;
-    fwrite(STDERR, "  $slug: " . count($filtered) . " keys (page_sections has " . count($sec) . " sections)\n");
+    fwrite(STDERR, "  $slug: " . count($filtered) . " keys (page_sections=" . count($sec)
+        . ", rank_math=$rm_count)\n");
 }
 
 // Emit JSON to stdout (caller redirects into wp-meta-sync.json)
