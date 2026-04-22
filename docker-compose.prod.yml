@@ -97,6 +97,8 @@ services:
       args:
         # Baked into the JS bundle at build time (NEXT_PUBLIC_* is compile-time).
         NEXT_PUBLIC_WORDPRESS_URL: ${WP_PROTOCOL:-https}://${WP_DOMAIN}
+        # Override via .env.prod if the public domain isn't reachable during build.
+        WORDPRESS_BUILD_API_URL: ${WORDPRESS_BUILD_API_URL:-${WP_PROTOCOL:-https}://${WP_DOMAIN}/wp-json}
     image: aiaiai-frontend:latest
     container_name: aiaiai-frontend
     restart: unless-stopped

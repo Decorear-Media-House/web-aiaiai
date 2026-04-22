@@ -9,10 +9,13 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# NEXT_PUBLIC_* vars are inlined by Next.js at build time, so they must be
-# passed as build args. Defaults cover local dev; override for prod.
-ARG NEXT_PUBLIC_WORDPRESS_URL=https://aiaiai-cms.decorear.com
+# NEXT_PUBLIC_* is inlined into the client bundle at build time.
+ARG NEXT_PUBLIC_WORDPRESS_URL=http://localhost:8080
 ENV NEXT_PUBLIC_WORDPRESS_URL=$NEXT_PUBLIC_WORDPRESS_URL
+# URL used by SSG fetches during `npm run build`. Override when the public
+# domain isn't reachable from the builder (e.g. fresh EC2 before DNS flip).
+ARG WORDPRESS_BUILD_API_URL
+ENV WORDPRESS_API_URL=${WORDPRESS_BUILD_API_URL:-${NEXT_PUBLIC_WORDPRESS_URL}/wp-json}
 RUN npm run build
 
 # Stage 3: Production runner

@@ -2,6 +2,9 @@ services:
   aiaiai-frontend:
     build:
       context: ./Frontend
+      args:
+        NEXT_PUBLIC_WORDPRESS_URL: http://localhost:8080
+        WORDPRESS_BUILD_API_URL: http://aiaiai-wordpress:80/wp-json
     image: aiaiai-frontend:latest
     container_name: aiaiai-frontend
     restart: unless-stopped
