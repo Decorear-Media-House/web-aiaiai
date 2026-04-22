@@ -18,13 +18,29 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WP_DIR="$SCRIPT_DIR/wordpress"
 FE_DIR="$SCRIPT_DIR/Frontend"
 
-CMS_HOST="aiaiai-cms"
-CMS_ROOT="~/htdocs/aiaiai-cms.decorear.com"
-DEPLOY_HOST="aiaiai-deploy"
-DEPLOY_ROOT="~/htdocs/aiaiai.decorear.com"
+# Source per-environment deploy targets. Copy .env.deploy.example to
+# .env.deploy and edit before first run. .env.deploy is gitignored
+# (covered by the .env.* rule).
+if [ -f "$SCRIPT_DIR/.env.deploy" ]; then
+  set -a; source "$SCRIPT_DIR/.env.deploy"; set +a
+else
+  cat >&2 <<EOF
+[deploy.sh] Missing .env.deploy.
 
-PROD_WP_URL="https://aiaiai-cms.decorear.com"
-PROD_API_URL="https://aiaiai-cms.decorear.com/wp-json"
+  cp .env.deploy.example .env.deploy
+  # then edit .env.deploy with your SSH host aliases + production URLs
+
+EOF
+  exit 1
+fi
+
+: "${CMS_HOST:?Set CMS_HOST in .env.deploy (SSH host alias for the WordPress server)}"
+: "${CMS_ROOT:?Set CMS_ROOT in .env.deploy (path to WP install on CMS_HOST)}"
+: "${DEPLOY_HOST:?Set DEPLOY_HOST in .env.deploy (SSH host alias for the static frontend host)}"
+: "${DEPLOY_ROOT:?Set DEPLOY_ROOT in .env.deploy (path to web root on DEPLOY_HOST)}"
+: "${PROD_WP_URL:?Set PROD_WP_URL in .env.deploy (public CMS URL, e.g. https://cms.example.com)}"
+: "${PROD_API_URL:=${PROD_WP_URL%/}/wp-json}"
+: "${PROD_SITE_URL:=$PROD_WP_URL}"
 
 MODE="${1:-quick}"
 
@@ -122,11 +138,11 @@ WORDPRESS_API_URL="$PROD_API_URL" \
 NEXT_PUBLIC_WORDPRESS_URL="$PROD_WP_URL" \
 NODE_ENV=production npx next build
 
-echo "→ Deploying to aiaiai.decorear.com..."
+echo "→ Deploying to $DEPLOY_HOST..."
 scp -r out/* "$DEPLOY_HOST:$DEPLOY_ROOT/"
 
 echo ""
 echo "========================================="
 echo "  ✓ Deploy complete!"
-echo "  https://aiaiai.decorear.com"
+echo "  $PROD_SITE_URL"
 echo "========================================="

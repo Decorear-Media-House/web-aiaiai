@@ -45,7 +45,7 @@ cd web-aiaiai
 
 ### แก้ไข Content
 
-1. เข้า WordPress Admin: `https://aiaiai-cms.decorear.com/wp-admin/`
+1. เข้า WordPress Admin: `https://<your-cms-domain>/wp-admin/`
 2. ไปที่ **Pages** → เลือกหน้าที่ต้องการ → แก้ไขข้อความ, รูป, สี ใน Meta Boxes
 3. กด **Update** บันทึก
 4. กด **Deploy Site** (ปุ่มสีน้ำเงินด้านบน) → รอ ~1 นาที → เว็บอัพเดทอัตโนมัติ
@@ -280,6 +280,15 @@ cd Frontend && npm install && npm run dev
 
 ## Sync Content (Production → Git)
 
+> **Setup**: `deploy.sh`, `wordpress/export-meta-sync.sh`, and `wordpress/fix-urls.php` read deploy targets from `.env.deploy`. Copy the example file once per environment:
+>
+> ```bash
+> cp .env.deploy.example .env.deploy
+> # edit CMS_HOST, CMS_ROOT, DEPLOY_HOST, DEPLOY_ROOT, PROD_WP_URL
+> ```
+>
+> `.env.deploy` is gitignored (covered by `.env.*`). Required for `deploy.sh`; optional but recommended for the others.
+
 3 JSON ไฟล์ที่ `.planning/` ไม่แตะ แต่ fresh installs อ่าน — sync ครบทั้งสามเมื่ออยาก pin content snapshot ปัจจุบัน:
 
 **1. JetEngine fields** (`wordpress/wp-meta-sync.json`) — prefill meta box values ตอนเปิด wp-admin หลัง bootstrap. Dev-machine ก็รันได้, ดึงผ่าน REST API:
@@ -375,7 +384,7 @@ wp-admin (Deploy Site)
 | `wordpress/seed-content.sh` | JSON blob ของ 6 หน้า (hero/outcomes/cta ฯลฯ) — แก้ default content ที่นี่ |
 | `wordpress/seed-all-jetengine.php` | Register JetEngine meta boxes (idempotent) |
 | `wordpress/upload-images.php` | Import `wordpress/uploads/*` → WP Media Library |
-| `wordpress/fix-urls.php` | Rewrite `aiaiai-cms.decorear.com` → `$WP_PROTOCOL://$WP_DOMAIN` ใน DB (env-driven, idempotent) |
+| `wordpress/fix-urls.php` | Rewrite seeded vendor URLs → `WP_HOME` (or `PROD_URL` env) ใน DB (idempotent) |
 | `wp.sh` | WP-CLI wrapper — spawns `wordpress:cli` against the live `aiaiai-wordpress` stack |
 | `wordpress/mu-plugins/aiaiai-content-api.php` | Content REST endpoints + Deploy button AJAX handler |
 | `Frontend/src/lib/wordpress.ts` | `wpFetch` (tagged ISR), `getPageMeta` (JetEngine → `page_sections` legacy fallback), `wpImageUrl` (rewrite internal hostname) |

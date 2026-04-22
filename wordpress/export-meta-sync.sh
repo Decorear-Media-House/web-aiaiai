@@ -5,12 +5,25 @@
 # the new default for future bootstraps.
 #
 # Usage:
-#   bash wordpress/export-meta-sync.sh
-#   PROD_URL=https://cms.otherdomain.com bash wordpress/export-meta-sync.sh
+#   PROD_URL=https://cms.example.com bash wordpress/export-meta-sync.sh
+#
+# PROD_URL also picked up from .env.deploy if you've set it there
+# for use by deploy.sh.
 
 set -euo pipefail
 
-PROD_URL="${PROD_URL:-https://aiaiai-cms.decorear.com}"
+# Source .env.deploy if present (so PROD_URL/PROD_WP_URL configured for
+# deploy.sh works here too without re-typing).
+ENV_DEPLOY="$(cd "$(dirname "$0")/.." && pwd)/.env.deploy"
+if [ -f "$ENV_DEPLOY" ]; then
+  set -a; source "$ENV_DEPLOY"; set +a
+fi
+
+PROD_URL="${PROD_URL:-${PROD_WP_URL:-}}"
+if [ -z "$PROD_URL" ]; then
+  echo "Set PROD_URL=https://your-cms.example.com (or PROD_WP_URL in .env.deploy)" >&2
+  exit 1
+fi
 AUTH="${WP_AUTH:-}"   # optional: "user:app_password" for authenticated REST
 OUT="$(dirname "$0")/wp-meta-sync.json"
 TMP="${OUT}.tmp"

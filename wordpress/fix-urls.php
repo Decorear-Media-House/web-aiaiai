@@ -6,7 +6,13 @@
 
 global $wpdb;
 
-$replace = getenv('PROD_URL') ?: 'https://aiaiai-cms.decorear.com';
+// Replacement URL: PROD_URL env override (deploy.sh / external scripts) →
+// WP_HOME (set from WP_DOMAIN/.env.prod by docker-compose) → bail if neither.
+$replace = getenv('PROD_URL') ?: rtrim(get_option('home', ''), '/');
+if (!$replace) {
+    echo "fix-urls.php: no PROD_URL or WP_HOME set; aborting (nothing to rewrite to)\n";
+    return;
+}
 
 $search = [
     'http://localhost:8080',
