@@ -19,6 +19,20 @@
 
 require_once __DIR__ . '/seed-helpers.php';
 
+// Contact-form secrets that must NEVER be exported to wp-meta-sync.json.
+// Operators set these via .env.prod (SMTP_*, RECAPTCHA_SECRET_KEY) and the
+// contact-form mu-plugin reads them via getenv() at request time.
+const AIAIAI_SECRET_META_KEYS = [
+    'home_smtp_host',
+    'home_smtp_port',
+    'home_smtp_username',
+    'home_smtp_password',
+    'home_smtp_encryption',
+    'home_smtp_from_email',
+    'home_smtp_from_name',
+    'home_recaptcha_secret_key',
+];
+
 // ── helpers ──────────────────────────────────────────────────────────────
 function arr_to_text($v) {
     // textareaToArray in the frontend splits on \n — this is the inverse.
@@ -246,9 +260,11 @@ $all = [];
 foreach ($flatteners as $slug => $fn) {
     $sec = get_sections($slug);
     $flat = $fn($sec);
-    // Drop empty scalars but keep non-empty arrays (repeaters)
+    // Drop empty scalars but keep non-empty arrays (repeaters).
+    // Drop secret keys unconditionally — they must come from env at runtime.
     $filtered = [];
     foreach ($flat as $k => $v) {
+        if (in_array($k, AIAIAI_SECRET_META_KEYS, true)) continue;
         $is_empty = ($v === '' || $v === null || $v === [] || $v === false);
         if ($is_empty) continue;
         $filtered[$k] = $v;

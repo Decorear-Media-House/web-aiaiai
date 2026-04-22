@@ -951,24 +951,35 @@ function aiaiai_email_render_page() {
     <?php
 }
 
-/** Configure SMTP from the options table */
+/**
+ * Configure SMTP. Env vars (SMTP_HOST/PORT/USERNAME/PASSWORD/ENCRYPTION/
+ * FROM_EMAIL/FROM_NAME from .env.prod) take precedence over the options
+ * table so production credentials never need to live in the WP database
+ * or in `wp-meta-sync.json`.
+ */
 function aiaiai_configure_smtp_from_option() {
     $s = get_option( AIAIAI_EMAIL_OPTION, [] );
-    $host     = $s['smtp_host'] ?? '';
-    $username = $s['smtp_username'] ?? '';
-    $password = $s['smtp_password'] ?? '';
-    if ( empty( $host ) || empty( $username ) || empty( $password ) ) return;
+    $cfg = [
+        'host'       => getenv( 'SMTP_HOST' )       ?: ( $s['smtp_host']       ?? '' ),
+        'port'       => getenv( 'SMTP_PORT' )       ?: ( $s['smtp_port']       ?? '' ),
+        'username'   => getenv( 'SMTP_USERNAME' )   ?: ( $s['smtp_username']   ?? '' ),
+        'password'   => getenv( 'SMTP_PASSWORD' )   ?: ( $s['smtp_password']   ?? '' ),
+        'encryption' => getenv( 'SMTP_ENCRYPTION' ) ?: ( $s['smtp_encryption'] ?? '' ),
+        'from_email' => getenv( 'SMTP_FROM_EMAIL' ) ?: ( $s['smtp_from_email'] ?? '' ),
+        'from_name'  => getenv( 'SMTP_FROM_NAME' )  ?: ( $s['smtp_from_name']  ?? '' ),
+    ];
+    if ( empty( $cfg['host'] ) || empty( $cfg['username'] ) || empty( $cfg['password'] ) ) return;
 
-    add_action( 'phpmailer_init', function ( $phpmailer ) use ( $s ) {
+    add_action( 'phpmailer_init', function ( $phpmailer ) use ( $cfg ) {
         $phpmailer->isSMTP();
-        $phpmailer->Host       = $s['smtp_host'];
-        $phpmailer->Port       = intval( $s['smtp_port'] ) ?: 587;
+        $phpmailer->Host       = $cfg['host'];
+        $phpmailer->Port       = intval( $cfg['port'] ) ?: 587;
         $phpmailer->SMTPAuth   = true;
-        $phpmailer->Username   = $s['smtp_username'];
-        $phpmailer->Password   = $s['smtp_password'];
-        $phpmailer->SMTPSecure = $s['smtp_encryption'] ?: 'tls';
-        if ( ! empty( $s['smtp_from_email'] ) ) {
-            $phpmailer->setFrom( $s['smtp_from_email'], $s['smtp_from_name'] ?: 'AI-AI-AI' );
+        $phpmailer->Username   = $cfg['username'];
+        $phpmailer->Password   = $cfg['password'];
+        $phpmailer->SMTPSecure = $cfg['encryption'] ?: 'tls';
+        if ( ! empty( $cfg['from_email'] ) ) {
+            $phpmailer->setFrom( $cfg['from_email'], $cfg['from_name'] ?: 'AI-AI-AI' );
         }
     });
 }

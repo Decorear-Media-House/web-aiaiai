@@ -81,9 +81,11 @@ function aiaiai_handle_contact_form(WP_REST_Request $request) {
     // Get settings from Decorear Tools → Email Settings
     $s = get_option('aiaiai_email_settings', []);
 
-    // Verify reCAPTCHA
+    // Verify reCAPTCHA. Env var (RECAPTCHA_SECRET_KEY from .env.prod) takes
+    // precedence over the options table so the secret never needs to live
+    // in the WP database or wp-meta-sync.json.
     $recaptcha_token  = sanitize_text_field($body['recaptchaToken'] ?? '');
-    $recaptcha_secret = $s['recaptcha_secret'] ?? '';
+    $recaptcha_secret = getenv('RECAPTCHA_SECRET_KEY') ?: ($s['recaptcha_secret'] ?? '');
     if ($recaptcha_secret && $recaptcha_token) {
         $verify = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
             'body' => [
