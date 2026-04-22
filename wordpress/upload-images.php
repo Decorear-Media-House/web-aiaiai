@@ -49,32 +49,48 @@ foreach ($files as $file) {
         continue;
     }
 
-    // Upload to WordPress
-    $upload = wp_upload_bits($filename, null, file_get_contents($file));
-    if ($upload['error']) {
-        echo "  ERROR: $filename - {$upload['error']}\n";
+    // Copy directly instead of wp_upload_bits() — the latter runs the
+    // filename through wp_unique_filename() which appends "-1" to any
+    // "*-scaled.*" name (WordPress reserves that suffix for its own
+    // auto-scaled variants). That rename makes metadata URLs 404.
+    $upload_dir = wp_upload_dir();
+    if (!empty($upload_dir['error'])) {
+        echo "  ERROR: $filename - {$upload_dir['error']}\n";
+        continue;
+    }
+    if (!wp_mkdir_p($upload_dir['path'])) {
+        echo "  ERROR: $filename - cannot create {$upload_dir['path']}\n";
         continue;
     }
 
-    $attachment = [
-        'post_title' => pathinfo($filename, PATHINFO_FILENAME),
+    $target_path = trailingslashit($upload_dir['path']) . $filename;
+    $target_url  = trailingslashit($upload_dir['url'])  . $filename;
+
+    if (!@copy($file, $target_path)) {
+        echo "  ERROR: $filename - copy to {$target_path} failed\n";
+        continue;
+    }
+
+    $attach_id = wp_insert_attachment([
+        'post_title'     => pathinfo($filename, PATHINFO_FILENAME),
         'post_mime_type' => $mime,
-        'post_status' => 'inherit',
-    ];
-    $attach_id = wp_insert_attachment($attachment, $upload['file']);
+        'post_status'    => 'inherit',
+        'guid'           => $target_url,
+    ], $target_path);
 
     if (is_wp_error($attach_id)) {
         echo "  ERROR: $filename - " . $attach_id->get_error_message() . "\n";
+        @unlink($target_path);
         continue;
     }
 
     // Generate thumbnails for raster images
     if ($mime !== 'image/svg+xml') {
-        $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
+        $attach_data = wp_generate_attachment_metadata($attach_id, $target_path);
         wp_update_attachment_metadata($attach_id, $attach_data);
     }
 
-    echo "  OK: $filename → ID $attach_id ({$upload['url']})\n";
+    echo "  OK: $filename → ID $attach_id ($target_url)\n";
     $count++;
 }
 
