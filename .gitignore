@@ -54,3 +54,4 @@ CLAUDE.md
 # If the repo ever goes public, re-enable this ignore to avoid redistributing
 # licensed binaries.
 #wordpress/premium-plugins/*.zip
+comments.md

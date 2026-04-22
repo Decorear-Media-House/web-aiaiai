@@ -82,6 +82,8 @@ cd web-aiaiai
 - **Database**: MySQL 8
 - **Orchestration**: Docker Compose (prod), ecosystem tools (Caddy/Nginx optional for SSL)
 
+> **Headless split:** ผู้ใช้ปลายทางเห็นแค่ Next.js ที่ `:3000` เท่านั้น ส่วน `:8080` เป็น wp-admin + REST API สำหรับให้ admin แก้ content — theme ที่ render บน `:8080` เป็น preview ภายใน ไม่ใช่หน้าเว็บจริง ขึ้นโปรดักชันจริงควรซ่อน port นี้หลัง reverse proxy/VPN
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  EC2 instance                                            │
@@ -109,10 +111,12 @@ cd web-aiaiai
 
 ```
 aiaiai-mysql      ← internal only, healthchecked
-aiaiai-wordpress  ← :${WP_HTTP_PORT}→:80 (Apache)
-aiaiai-wp-init    ← one-shot installer (wp-cli); exits when seeded
+aiaiai-wordpress  ← :${WP_HTTP_PORT}→:80 (Apache, no WP-CLI in this image)
+aiaiai-wp-init    ← one-shot installer (wordpress:cli image); exits when seeded
 aiaiai-frontend   ← :${FRONTEND_HTTP_PORT}→:3000 (Next.js standalone)
 ```
+
+WP-CLI lives only in `aiaiai-wp-init`. Ad-hoc commands go through `./wp.sh <args>` (see "WP-CLI access" below) — running `docker exec aiaiai-wordpress wp …` will fail.
 
 - Server-side frontend fetches ผ่าน Docker network (`http://aiaiai-wordpress:80`) — ไม่ออก internet
 - Browser fetches (รูป, form submit) ไปที่ public `WP_DOMAIN`
@@ -156,6 +160,14 @@ docker compose -p aiaiai-prod -f docker-compose.prod.yml --env-file .env.prod do
 
 `NEXT_PUBLIC_WORDPRESS_URL` ถูก bake เข้า Next.js bundle ตอน build — เปลี่ยน domain ต้อง rebuild
 
+Frontend แยก WP URL เป็น 3 ตัวตาม stage:
+
+| Env | Stage | ค่าที่ใช้จริง |
+|-----|-------|---------------|
+| `NEXT_PUBLIC_WORDPRESS_URL` | build-time bake + client-side | `${WP_PROTOCOL}://${WP_DOMAIN}` |
+| `WORDPRESS_BUILD_API_URL` | `docker compose build` (SSG fetches) | default = public URL `/wp-json` — override ถ้า domain ยังไม่ live ตอน build |
+| `WORDPRESS_API_URL` | runtime SSR ใน container | `http://aiaiai-wordpress:80/wp-json` |
+
 ### เพิ่ม premium plugin (JetEngine Pro, RankMath Pro)
 
 ```bash
@@ -187,9 +199,38 @@ rm .env.prod
 
 ## Production / EC2 Notes
 
+### Deterministic fresh-install checklist
+
+รันจาก fresh EC2 ในลำดับนี้ — ไม่มี manual step ซ่อน:
+
+1. **Drop premium plugin zips** — ใส่ `jet-engine.zip`, `jet-elements.zip` ฯลฯ ลง `wordpress/premium-plugins/` ก่อน bootstrap; init loop `*.zip` install + activate ทุกตัว
+2. **`./bootstrap.sh`** — gen `.env.prod`, detect host IP, `docker compose up -d --build`
+3. **รอ `aiaiai-wp-init` exit 0** — bootstrap.sh block จนกว่าจะเสร็จ และจะ fail loud ถ้า init container exit ไม่เป็น 0
+4. **ตรวจ init log missing media** — init step 10b รัน `verify-media.php` เป็น non-fatal report ว่ามีรูปไหน export-data.json อ้างแต่ไม่มีใน `wordpress/uploads/` — ถ้ามี ให้เติมรูปแล้ว reset ตามข้อถัดไป
+5. **Smoke test** —
+   ```bash
+   curl -fsS http://$WP_DOMAIN/wp-json/wp/v2/pages?per_page=1 | jq '.[0].slug'  # "home"
+   curl -fsS http://$WP_DOMAIN/wp-json/wp/v2/posts?per_page=1 | jq '.[0].title'
+   curl -fsSI http://$FE_HOST:$FRONTEND_HTTP_PORT/ | head -1                     # 200 OK
+   ```
+6. **Reset ถ้าต้องการเริ่มใหม่** — `docker compose -p aiaiai-prod -f docker-compose.prod.yml down -v && rm .env.prod && ./bootstrap.sh`
+
 ### Host auto-detection
 
 `bootstrap.sh` อ่าน EC2 public IPv4 ผ่าน IMDSv2 ใช้เป็น `WP_DOMAIN` ถ้าไม่ใช่ EC2 จะ fallback เป็น `localhost` ทั้ง 2 กรณี append port (`:8080`) ให้อัตโนมัติเพื่อให้ wp-admin redirect ทำงานถูก
+
+### WP-CLI access
+
+`wordpress:6-apache` image ไม่มี `wp` binary — ใช้ `./wp.sh` wrapper ที่ run throwaway `wordpress:cli` container แทน:
+
+```bash
+./wp.sh post list
+./wp.sh plugin status
+./wp.sh eval-file /seed/verify-media.php
+./wp.sh option get permalink_structure
+```
+
+wrapper share volume `wp-html` และ network ของ `aiaiai-wordpress` → แก้ DB ตัวเดียวกับ stack ที่รันอยู่ ต้องมี `.env.prod` + stack ขึ้นก่อนถึงจะ run ได้
 
 ### Security Group / Firewall
 
@@ -239,27 +280,35 @@ cd Frontend && npm install && npm run dev
 
 ## Sync Content (Production → Git)
 
-มี 2 script คู่กัน — รันทั้งคู่เมื่อ sync prod content กลับเข้า repo (fresh installs จะได้ข้อมูลชุดล่าสุด):
+3 JSON ไฟล์ที่ `.planning/` ไม่แตะ แต่ fresh installs อ่าน — sync ครบทั้งสามเมื่ออยาก pin content snapshot ปัจจุบัน:
 
-**1. JetEngine fields** (ทำให้ wp-admin แสดง prefilled fields หลัง bootstrap) — รันบนเครื่อง dev ได้เลย, ไม่ต้อง SSH:
+**1. JetEngine fields** (`wordpress/wp-meta-sync.json`) — prefill meta box values ตอนเปิด wp-admin หลัง bootstrap. Dev-machine ก็รันได้, ดึงผ่าน REST API:
 
 ```bash
 bash wordpress/export-meta-sync.sh
-# → ดึงจาก https://aiaiai-cms.decorear.com ผ่าน REST API → เขียน wordpress/wp-meta-sync.json
 ```
 
-**2. Legacy `page_sections` JSON** (fallback สำหรับ frontend เมื่อ JetEngine fields ว่าง) — ต้อง SSH เข้า prod server:
+**2. Legacy `page_sections` JSON** (`wordpress/seed-content.sh`) — fallback ให้ frontend เมื่อ JetEngine fields ว่าง; ต้อง SSH เข้า prod server:
 
 ```bash
 ssh decorear-aiai@<prod>
 cd /home/decorear-aiai/web-aiaiai
-bash wordpress/export-content.sh   # writes wordpress/seed-content.sh
+bash wordpress/export-content.sh
 ```
 
-แล้ว commit ทั้ง 2 ไฟล์:
+**3. Full export** (`wordpress/export-data.json`) — pages + blog posts + categories + site options (permalink, custom_logo, Rank Math). Consumed by `import-options.php` (init) และ `import-data.php` (deploy.sh remote sync). ต้อง SSH เข้า prod server แล้วรันตรง — `/seed` mount เป็น `:ro` ใน Docker ไม่ให้เขียนทับไฟล์:
 
 ```bash
-git add wordpress/wp-meta-sync.json wordpress/seed-content.sh
+ssh decorear-aiai@<prod>
+cd /home/decorear-aiai/web-aiaiai
+wp --allow-root eval-file wordpress/export-data.php
+# copy wordpress/export-data.json back to dev machine via scp / git
+```
+
+แล้ว commit ทั้ง 3 ไฟล์:
+
+```bash
+git add wordpress/wp-meta-sync.json wordpress/seed-content.sh wordpress/export-data.json
 git commit -m "sync content from production"
 git push
 ```
@@ -318,11 +367,16 @@ wp-admin (Deploy Site)
 |------|-------|
 | `bootstrap.sh` | One-command deploy — gen `.env.prod`, detect EC2 IP, `docker compose up` |
 | `docker-compose.prod.yml` | Stack 4 services + WP constants (`WP_HOME`, `AIAIAI_WEBHOOK_URL`, `AIAIAI_REVALIDATE_SECRET`) ผ่าน `apache_config:` |
-| `wordpress/docker/init.sh` | ลำดับ install — wait WP healthy → core install → install free plugin (`seo-by-rank-math`) → loop `premium-plugins/*.zip` → upload-images → seed-all-jetengine → seed-content → fix-urls → touch flag |
+| `wordpress/docker/init.sh` | ลำดับ install — wait WP healthy → core install → install free plugin (`seo-by-rank-math`) → loop `premium-plugins/*.zip` → upload-images → seed-content → seed-blog → seed-all-jetengine → import-meta-sync → import-options → fix-urls → verify-media → touch flag |
+| `wordpress/seed-helpers.php` | Shared helpers: `aiaiai_attachment_id_by_basename`, `aiaiai_rankmath_meta_keys`, `aiaiai_find_seed_file` |
+| `wordpress/seed-blog.php` | Seed blog page + sample posts (featured image via filename lookup, Rank Math meta) |
+| `wordpress/import-options.php` | Apply site options (permalink, custom_logo, theme mods, Rank Math) from `export-data.json` |
+| `wordpress/verify-media.php` | Report image basenames referenced by export/sync JSON that aren't in `uploads/` (non-fatal in init) |
 | `wordpress/seed-content.sh` | JSON blob ของ 6 หน้า (hero/outcomes/cta ฯลฯ) — แก้ default content ที่นี่ |
 | `wordpress/seed-all-jetengine.php` | Register JetEngine meta boxes (idempotent) |
 | `wordpress/upload-images.php` | Import `wordpress/uploads/*` → WP Media Library |
 | `wordpress/fix-urls.php` | Rewrite `aiaiai-cms.decorear.com` → `$WP_PROTOCOL://$WP_DOMAIN` ใน DB (env-driven, idempotent) |
+| `wp.sh` | WP-CLI wrapper — spawns `wordpress:cli` against the live `aiaiai-wordpress` stack |
 | `wordpress/mu-plugins/aiaiai-content-api.php` | Content REST endpoints + Deploy button AJAX handler |
 | `Frontend/src/lib/wordpress.ts` | `wpFetch` (tagged ISR), `getPageMeta` (JetEngine → `page_sections` legacy fallback), `wpImageUrl` (rewrite internal hostname) |
 | `Frontend/src/app/api/revalidate/route.ts` | Receives Deploy button POST, calls `revalidateTag("wordpress")` |
