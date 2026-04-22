@@ -5,19 +5,19 @@
 .playwright-mcp/
 
 # WordPress core (track only your custom theme/plugins)
-Wordpress/wp-admin/
-Wordpress/wp-includes/
-Wordpress/wp-content/uploads/
-Wordpress/wp-content/cache/
-Wordpress/wp-content/upgrade/
-Wordpress/wp-content/themes/twenty*/
-Wordpress/wp-content/plugins/*
-!Wordpress/wp-content/plugins/your-custom-plugin/
-Wordpress/wp-*.php
-Wordpress/xmlrpc.php
-Wordpress/license.txt
-Wordpress/readme.html
-Wordpress/index.php
+wordpress/wp-admin/
+wordpress/wp-includes/
+wordpress/wp-content/uploads/
+wordpress/wp-content/cache/
+wordpress/wp-content/upgrade/
+wordpress/wp-content/themes/twenty*/
+wordpress/wp-content/plugins/*
+!wordpress/wp-content/plugins/your-custom-plugin/
+wordpress/wp-*.php
+wordpress/xmlrpc.php
+wordpress/license.txt
+wordpress/readme.html
+wordpress/index.php
 
 # Node
 node_modules/
@@ -55,3 +55,4 @@ CLAUDE.md
 # licensed binaries.
 #wordpress/premium-plugins/*.zip
 comments.md
+comments2.md
