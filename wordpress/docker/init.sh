@@ -104,6 +104,11 @@ $WP eval-file /seed/upload-images.php
 log "seeding page content"
 bash /seed/seed-content.sh
 
+# --- 7b. Seed blog page + sample posts ---------------------------------------
+# Runs after upload-images so featured_image filenames resolve to attachment IDs.
+log "seeding blog page + sample posts"
+$WP eval-file /seed/seed-blog.php
+
 # --- 8. Register JetEngine meta boxes ----------------------------------------
 log "registering JetEngine meta boxes"
 $WP eval-file /seed/seed-all-jetengine.php
@@ -112,9 +117,19 @@ $WP eval-file /seed/seed-all-jetengine.php
 log "importing JetEngine meta from wp-meta-sync.json"
 $WP eval-file /seed/import-meta-sync.php
 
+# --- 9b. Import site-level options (permalink, logo, theme mods, Rank Math) --
+log "importing site options from export-data.json"
+$WP eval-file /seed/import-options.php
+
 # --- 10. Rewrite baked-in URLs to this domain --------------------------------
 log "rewriting seed URLs → $SITE_URL"
 PROD_URL="$SITE_URL" $WP eval-file /seed/fix-urls.php
+
+# --- 10b. Report any image references missing from wordpress/uploads/ --------
+# Non-fatal — a fresh install may not have every production image committed.
+# Install still completes; the log surfaces what's missing for follow-up.
+log "verifying media references"
+$WP eval-file /seed/verify-media.php || log "  (see missing images above)"
 
 # --- 11. Mark done -----------------------------------------------------------
 date -u +"%Y-%m-%dT%H:%M:%SZ" > "$FLAG"

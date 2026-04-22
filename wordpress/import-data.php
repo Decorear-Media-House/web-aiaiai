@@ -1,9 +1,12 @@
 <?php
 /**
  * Import page data from export-data.json to WordPress.
- * Imports page_sections (legacy), JetEngine meta fields, blog posts, and categories.
+ * Imports page_sections (legacy), JetEngine meta fields, blog posts
+ * (including featured images + Rank Math SEO meta), and categories.
  * Automatically replaces localhost URLs with production URLs.
  */
+
+require_once __DIR__ . '/seed-helpers.php';
 
 $json_file = dirname(__FILE__) . '/export-data.json';
 if (!file_exists($json_file)) {
@@ -63,8 +66,17 @@ foreach ($posts as $post_data) {
         'post_date' => $post_data['date'] ?? current_time('mysql'),
     ]);
 
-    if ($post_id && !is_wp_error($post_id)) {
-        echo "Created post: {$post_data['title']} (ID: $post_id)\n";
+    if (!$post_id || is_wp_error($post_id)) continue;
+    echo "Created post: {$post_data['title']} (ID: $post_id)\n";
+
+    $basename = $post_data['featured_image_basename'] ?? '';
+    if ($basename) {
+        $attach_id = aiaiai_attachment_id_by_basename($basename);
+        if ($attach_id) set_post_thumbnail($post_id, $attach_id);
+    }
+
+    foreach (($post_data['rankmath_meta'] ?? []) as $k => $v) {
+        update_post_meta($post_id, $k, $v);
     }
 }
 

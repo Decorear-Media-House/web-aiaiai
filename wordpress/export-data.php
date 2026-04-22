@@ -4,6 +4,8 @@
  * Run via: wp --allow-root eval-file export-data.php
  */
 
+require_once __DIR__ . '/seed-helpers.php';
+
 $output = [];
 
 // ── Export pages ──
@@ -47,6 +49,7 @@ foreach ($slugs as $slug) {
 }
 
 // ── Export blog posts ──
+$rankmath_keys = aiaiai_rankmath_meta_keys();
 $posts = get_posts(['numberposts' => -1, 'post_status' => 'publish']);
 $blog_posts = [];
 foreach ($posts as $post) {
@@ -54,6 +57,12 @@ foreach ($posts as $post) {
     $tags = wp_get_post_tags($post->ID, ['fields' => 'names']);
     $thumb_id = get_post_thumbnail_id($post->ID);
     $thumb_url = $thumb_id ? wp_get_attachment_url($thumb_id) : '';
+
+    $rm_meta = [];
+    foreach ($rankmath_keys as $k) {
+        $v = get_post_meta($post->ID, $k, true);
+        if ($v !== '' && $v !== null) $rm_meta[$k] = $v;
+    }
 
     $blog_posts[] = [
         'title' => $post->post_title,
@@ -63,6 +72,8 @@ foreach ($posts as $post) {
         'categories' => $cats,
         'tags' => $tags,
         'featured_image' => $thumb_url,
+        'featured_image_basename' => $thumb_url ? wp_basename($thumb_url) : '',
+        'rankmath_meta' => $rm_meta,
         'date' => $post->post_date,
     ];
 }
@@ -73,6 +84,47 @@ $categories = get_categories(['hide_empty' => false]);
 $output['_categories'] = array_map(function($cat) {
     return ['name' => $cat->name, 'slug' => $cat->slug];
 }, $categories);
+
+// ── Export site-level options ──
+// siteurl/home are pinned by WORDPRESS_CONFIG_EXTRA so they're skipped.
+// nav_menu_locations skipped — term IDs aren't portable across installs.
+// Rank Math settings groups are stored with hyphens (verified via wp_options
+// dump); `rank_math_modules` is underscore. Both conventions coexist — keep them.
+$option_keys = [
+    'blogname', 'blogdescription',
+    'permalink_structure', 'date_format', 'time_format', 'timezone_string',
+    'start_of_week', 'posts_per_page', 'default_category',
+    'custom_logo',
+    'rank_math_modules',
+    'rank-math-options-general',
+    'rank-math-options-titles',
+    'rank-math-options-sitemap',
+    'rank-math-options-redirections',
+    'rank-math-options-instant-indexing',
+];
+$exported_options = [];
+foreach ($option_keys as $key) {
+    $val = get_option($key);
+    if ($val !== false && $val !== '') $exported_options[$key] = $val;
+}
+
+// Pair custom_logo with its filename — attachment IDs differ across installs.
+if (!empty($exported_options['custom_logo'])) {
+    $logo_url = wp_get_attachment_url((int) $exported_options['custom_logo']);
+    if ($logo_url) $exported_options['_custom_logo_basename'] = wp_basename($logo_url);
+}
+
+// theme_mods are keyed by stylesheet slug — import remaps to the active theme.
+$stylesheet = get_option('stylesheet');
+if ($stylesheet) {
+    $mods = get_option("theme_mods_{$stylesheet}");
+    if ($mods !== false) {
+        $exported_options["theme_mods_{$stylesheet}"] = $mods;
+        $exported_options['_stylesheet'] = $stylesheet;
+    }
+}
+$output['_options'] = $exported_options;
+echo "options: " . count($exported_options) . " keys\n";
 
 // Write JSON
 $json_file = dirname(__FILE__) . '/export-data.json';
