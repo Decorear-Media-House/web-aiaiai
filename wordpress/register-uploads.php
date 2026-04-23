@@ -52,7 +52,8 @@ foreach ($files as $file) {
     $mime = wp_check_filetype($file);
     if (!$mime['type']) continue;
     if (!in_array($mime['type'], [
-        'image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif'
+        'image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif',
+        'video/mp4',
     ])) continue;
 
     // Skip if already registered

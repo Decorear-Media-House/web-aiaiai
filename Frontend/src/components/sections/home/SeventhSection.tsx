@@ -46,7 +46,7 @@ export default function SeventhSection({ content }: { content?: Record<string, u
   const ctaSecondaryUrl = c.cta_secondary_url || "/about";
 
   return (
-    <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 494 }}>
+    <section className="relative overflow-hidden max-sm:!min-h-0" style={{ minHeight: 494, background: "#0A1530" }}>
 
       {/* Video background */}
       <video

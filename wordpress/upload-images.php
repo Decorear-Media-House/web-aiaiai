@@ -30,9 +30,12 @@ foreach ($files as $file) {
     $filename = basename($file);
     $mime = mime_content_type($file);
 
-    // Skip non-image files
-    if (!in_array($mime, ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'image/gif'])) {
-        echo "  SKIP (not image): $filename\n";
+    // Skip files outside the allowed media list
+    if (!in_array($mime, [
+        'image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'image/gif',
+        'video/mp4',
+    ])) {
+        echo "  SKIP (not allowed): $filename\n";
         continue;
     }
 
